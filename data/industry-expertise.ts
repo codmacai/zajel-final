@@ -138,11 +138,7 @@ export const INDUSTRIES: Industry[] = [
       "The energy sector operates on tight project timelines where equipment delays can halt operations and escalate costs across entire project schedules. Zajel has direct experience moving oil and gas cargo, including our landmark freight forwarding project transporting approximately 500 tons of equipment from Jebel Ali Port to Umm Qasr Port in Iraq, comprising modules, tools, pipes, and specialized apparatus, with individual items weighing over 80 tons and exceeding 22 meters in length.",
     ],
     capabilities: oilGasCapabilities,
-    proof: [
-      { value: "500 t", label: "moved, Jebel Ali to Umm Qasr" },
-      { value: "80 t", label: "heaviest single item" },
-      { value: "22 m", label: "longest single item" },
-    ],
+    proof: [], // Proof metrics removed as requested
     tone: "white",
   },
   {

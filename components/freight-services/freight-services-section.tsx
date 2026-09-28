@@ -20,29 +20,31 @@ interface FreightCardProps {
 
 function FreightCard({ card }: FreightCardProps) {
   return (
-    <div
-      className="group relative flex min-h-[320px] sm:min-h-[360px] flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border border-emerald-500/20 p-6 sm:p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-      style={{ backgroundColor: BRAND.green }}
-    >
-      {/* Text */}
-      <div className="z-10 max-w-full sm:max-w-[85%]">
-        <h3 className="mb-2 text-base sm:text-lg md:text-xl font-medium leading-snug tracking-tight text-white">
+    <div className="group relative h-[280px] sm:h-[340px] md:h-[380px] w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-sm transition-all duration-500 hover:shadow-xl cursor-pointer">
+      {/* Full Cover Background Image */}
+      <Image
+        src={card.imageSrc}
+        alt={card.imageAlt}
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+        className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+      />
+
+      {/* Ambient Gradient Overlay for Contrast */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/5 to-transparent transition-opacity duration-300 group-hover:opacity-80" />
+
+      {/* Floating White Banner Overlay */}
+      <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 flex items-center justify-between rounded-xl sm:rounded-2xl bg-white px-5 py-4 sm:px-6 sm:py-5 shadow-lg backdrop-blur-md transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-2xl">
+        <h3 className="text-base sm:text-lg md:text-xl font-medium tracking-tight text-[#0D2A22]">
           {card.title}
         </h3>
-        <p className="text-xs sm:text-sm font-normal leading-relaxed text-white/85">
-          {card.description}
-        </p>
-      </div>
-
-      {/* Vehicle cutout, bottom-right */}
-      <div className="relative mt-4 flex h-36 sm:h-44 w-full items-end justify-end pointer-events-none">
-        <Image
-          src={card.imageSrc}
-          alt={card.imageAlt}
-          width={400}
-          height={220}
-          className="h-full max-h-full w-auto max-w-[110%] object-contain object-bottom-right transition-transform duration-500 ease-out group-hover:scale-105"
-        />
+        <span
+          className="text-lg sm:text-xl font-light transition-transform duration-300 group-hover:translate-x-1.5"
+          style={{ color: BRAND.green }}
+          aria-hidden="true"
+        >
+          →
+        </span>
       </div>
     </div>
   );
@@ -68,8 +70,8 @@ export default function FreightServicesSection() {
           </h2>
         </div>
 
-        {/* Card grid */}
-        <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3">
+        {/* Card Grid */}
+        <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-3">
           {FREIGHT_SERVICES.map((card) => (
             <FreightCard key={card.title} card={card} />
           ))}

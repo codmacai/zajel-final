@@ -1,147 +1,118 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
-const EASE = [0.2, 0.8, 0.2, 1] as const;
+const ANIMATION_EASE = [0.2, 0.8, 0.2, 1] as const;
 
-const stops = [
+const coverageStops = [
   {
     label: 'Domestic',
     blurb: 'Distribution within the UAE, city to city.',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
-        <path
-          d="M12 21s-6.5-5.7-6.5-11A6.5 6.5 0 1 1 18.5 10c0 5.3-6.5 11-6.5 11Z"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinejoin="round"
-        />
-        <circle cx="12" cy="10" r="2.3" stroke="currentColor" strokeWidth="1.6" />
-      </svg>
-    ),
+    iconSrc: '/customs_icon/magnific_other-a-white-line-drawin_jU2KSWjLD0.png',
   },
   {
     label: 'Import',
     blurb: 'Bringing cargo into the UAE by road from regional origins.',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
-        <rect x="10" y="4" width="12" height="12" rx="1.5" stroke="currentColor" strokeWidth="1.6" />
-        <path d="M10 10h12" stroke="currentColor" strokeWidth="1.6" />
-        <path d="M16 4v12" stroke="currentColor" strokeWidth="1.6" />
-        <path d="M1 10h7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-        <path d="M5 7l3 3-3 3" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
+    iconSrc: '/customs_icon/magnific_other-a-white-line-drawin_jU2KSWjLD0 (1).png',
   },
   {
     label: 'Export',
     blurb: 'Sending cargo out of the UAE to regional and cross-border destinations.',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
-        <rect x="2" y="4" width="12" height="12" rx="1.5" stroke="currentColor" strokeWidth="1.6" />
-        <path d="M2 10h12" stroke="currentColor" strokeWidth="1.6" />
-        <path d="M8 4v12" stroke="currentColor" strokeWidth="1.6" />
-        <path d="M15 10h8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-        <path d="M19 7l3 3-3 3" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
+    iconSrc: '/customs_icon/magnific_other-a-white-line-drawin_jU2KSWjLD0 (2).png',
   },
   {
     label: 'Cross-Border',
     blurb: 'Coverage across the GCC, Turkey, Jordan, Syria, and Europe.',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
-        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
-        <path d="M3 12h18" stroke="currentColor" strokeWidth="1.6" />
-        <path
-          d="M12 3c2.4 2.4 3.7 5.5 3.7 9s-1.3 6.6-3.7 9c-2.4-2.4-3.7-5.5-3.7-9S9.6 5.4 12 3Z"
-          stroke="currentColor"
-          strokeWidth="1.6"
-        />
-      </svg>
-    ),
+    iconSrc: '/customs_icon/magnific_other-a-white-line-drawin_jU2KSWjLD0 (3).png',
   },
 ];
 
-const RoadFreightCoverage = () => {
+export default function RoadFreightCoverage() {
   return (
-    <section
-      className="w-full py-[clamp(3rem,8vw,7rem)] px-[clamp(1rem,4vw,1.5rem)] overflow-hidden font-sans"
-      style={{ background: 'linear-gradient(180deg, #1b4332 0%, #073018 55%, #052611 100%)' }}
-    >
-      <div className="max-w-[1080px] mx-auto text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 1, ease: EASE }}
-          className="mb-6 sm:mb-8"
-        >
-          <div className="flex items-center justify-center gap-3 mb-3">
-            <span className="w-8 h-[2px]" style={{ backgroundColor: '#36B936' }} />
-            <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
-              Land Freight Coverage
-            </span>
-          </div>
+    <section className="w-full py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-slate-50/50 font-sans">
+      {/* Rectangular Banner Container */}
+      <div className="max-w-[1320px] mx-auto relative rounded-3xl overflow-hidden shadow-2xl border border-[#36B936]/20 bg-[#132219]">
+        
+        {/* Mobile Background Image (Visible only on mobile/tablet, hidden on desktop) */}
+        <div className="absolute inset-0 z-0 lg:hidden">
+          <Image
+            src="/roadcustoms/magnific_photorealistic-premium-lo_xSZbr02jfW.jpg"
+            alt="Land Freight Coverage Background"
+            fill
+            className="object-cover object-center"
+            priority
+          />
+          {/* Dark greenish overlay for mobile text legibility */}
+          <div className="absolute inset-0 bg-[#132219]/90 sm:bg-[#132219]/85" />
+        </div>
 
-          <h2 className="text-2xl sm:text-3xl md:text-4xl text-white font-medium leading-[1.15] mb-6 max-w-[720px] mx-auto tracking-tight">
-            Domestic, Import, Export &amp; Cross-Border Coverage
-          </h2>
+        {/* Layout Grid: Full background on mobile, Side-by-side on desktop */}
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 w-full items-stretch">
+          
+          {/* Content Column */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8, ease: ANIMATION_EASE }}
+            className="flex flex-col justify-center py-12 sm:py-16 px-6 sm:px-12 lg:px-14 z-10 bg-transparent lg:bg-[#132219]"
+          >
+            <h2 className="text-2xl sm:text-4xl md:text-5xl text-white font-medium leading-[1.12] tracking-tight mb-4">
+              Land Freight <br className="hidden sm:block" />
+              <span className="text-white sm:text-[#36B936]">Coverage</span>
+            </h2>
 
-          <span className="inline-flex items-center gap-2 bg-white/5 border border-white/15 rounded-full px-4 sm:px-5 py-2 sm:py-2.5 text-white/85 font-light text-sm sm:text-base tracking-tight">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#36B936] flex-shrink-0" aria-hidden="true" />
-            Door-to-door by default — pickup at origin, delivery to final destination, every time.
-          </span>
-        </motion.div>
+            <p className="text-white/70 font-light text-sm sm:text-base leading-relaxed mb-8 max-w-[480px]">
+              Complete the information and documentation needed for a successful import and export of your products and materials.
+            </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 1, ease: EASE, delay: 0.15 }}
-          className="mt-14 sm:mt-16 lg:mt-20"
-        >
-          <div className="hidden md:flex md:items-start">
-            {stops.map((stop, i) => (
-              <div key={stop.label} className="contents">
-                {i > 0 && (
-                  <div className="flex-1 border-t border-dashed border-[#36B936]/40 mt-7" aria-hidden="true" />
-                )}
-                <div className="flex flex-col items-center text-center w-[11rem] lg:w-[13rem] flex-shrink-0">
-                  <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-[#1b4332] shadow-[0_10px_28px_-8px_rgba(0,0,0,0.45)]">
-                    {stop.icon}
+            <div className="flex flex-col">
+              {coverageStops.map((stop, index) => (
+                <div key={stop.label}>
+                  <div className="flex items-center justify-between py-4 sm:py-4.5 pr-2">
+                    <div>
+                      <h3 className="text-white font-medium text-base sm:text-lg mb-0.5">{stop.label}</h3>
+                      <p className="text-white/60 font-light text-xs sm:text-sm">{stop.blurb}</p>
+                    </div>
+                    <div className="relative w-8 h-8 sm:w-9 sm:h-9 flex-shrink-0 ml-4">
+                      <Image
+                        src={stop.iconSrc}
+                        alt={stop.label}
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
                   </div>
-                  <p className="text-white font-medium text-base mt-5 mb-1.5">{stop.label}</p>
-                  <p className="text-white/60 font-light text-sm leading-[1.55]">{stop.blurb}</p>
+                  {index < coverageStops.length - 1 && (
+                    <div className="w-full h-px bg-white/10" aria-hidden="true" />
+                  )}
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </motion.div>
 
-          <div className="flex md:hidden flex-col text-left">
-            {stops.map((stop, i) => (
-              <div key={stop.label}>
-                <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-[#1b4332] shadow-[0_10px_28px_-8px_rgba(0,0,0,0.45)] flex-shrink-0">
-                    {stop.icon}
-                  </div>
-                  <div className="pt-2.5">
-                    <p className="text-white font-medium text-base mb-1.5">{stop.label}</p>
-                    <p className="text-white/60 font-light text-sm leading-[1.55]">{stop.blurb}</p>
-                  </div>
-                </div>
-                {i < stops.length - 1 && (
-                  <div className="w-14 flex justify-center py-2" aria-hidden="true">
-                    <div className="w-px h-6 border-l border-dashed border-[#36B936]/40" />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </motion.div>
+          {/* Desktop Image Column (Hidden on mobile, side-by-side right column on desktop) */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8, ease: ANIMATION_EASE, delay: 0.1 }}
+            className="hidden lg:block relative w-full h-full min-h-[450px] bg-[#132219]"
+          >
+            <Image
+              src="/roadcustoms/magnific_photorealistic-premium-lo_xSZbr02jfW.jpg"
+              alt="Land Freight Coverage"
+              fill
+              className="object-cover object-center"
+              priority
+            />
+            {/* Gradient blend into the dark greenish side */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#132219] via-[#132219]/30 to-transparent w-3/4" />
+          </motion.div>
+
+        </div>
       </div>
     </section>
   );
-};
-
-export default RoadFreightCoverage;
+}

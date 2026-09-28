@@ -139,17 +139,14 @@ export default function BondedWarehouseStorage({
 
       {/* CTA — centered */}
       <div className="mx-auto mt-[clamp(2.5rem,6vw,4.5rem)] flex flex-col items-center gap-5 text-center">
+        {/* Same button style as the solutions cards */}
         <button
           type="button"
           onClick={onLearnMore}
-          className="group inline-flex items-center gap-3 rounded-full bg-[#36B936] py-2.5 pl-6 pr-2.5 sm:pl-7 text-sm text-white shadow-[0_1px_2px_rgba(10,77,38,0.15)] transition-shadow duration-300 hover:shadow-[0_10px_24px_rgba(10,77,38,0.28)]"
+          className="bg-[#36B936] hover:bg-[#31a631] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 text-[#0B140F] rounded-full inline-flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 text-xs sm:text-[13px] shadow-sm font-medium tracking-wide"
         >
-          <span className="transition-transform duration-300 group-hover:-translate-x-0.5">
-            Learn More About Our Warehousing
-          </span>
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:rotate-[135deg]">
-            <ArrowRight className="h-4 w-4" strokeWidth={2} />
-          </span>
+          <span>Learn More About Our Warehousing</span>
+          <span aria-hidden="true">→</span>
         </button>
 
         <a

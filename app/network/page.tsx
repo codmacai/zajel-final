@@ -7,6 +7,7 @@ import StrategicAlliancesSection from "@/components/strategic-alliances/strategi
 import LogisticsInfrastructureSection from "@/components/logistics-infrastructure/logistics-infrastructure-section";
 import ReachInNumbersSection from "@/components/reach-in-numbers/reach-in-numbers-section";
 import NetworkFaq from "@/components/logistics-infrastructure/faq";
+import ContactBand from "@/components/dynamic-contact";
 
 export const metadata: Metadata = {
   title: "Our Logistics Network in the UAE | Zajel",
@@ -25,6 +26,7 @@ export default function NetworkPage() {
       <LogisticsInfrastructureSection/>
       <ReachInNumbersSection/>
       <NetworkFaq/>
+      <ContactBand />
       
 
       {/* Rest of the Network page content goes below. */}

@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { Industry } from "@/data/industry-expertise";
-import IndustryIcon from "./industry-icons";
 
 interface IndustryBlockProps {
   industry: Industry;
@@ -24,7 +23,7 @@ export default function IndustryBlock({ industry, zIndex }: IndustryBlockProps) 
           observer.disconnect();
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -32,160 +31,108 @@ export default function IndustryBlock({ industry, zIndex }: IndustryBlockProps) 
 
   const bg = isGreen ? "#36B936" : "#FFFFFF";
   const textPrimary = isGreen ? "#FFFFFF" : "#0B140F";
-  const textMuted = isGreen ? "rgba(255,255,255,0.78)" : "#4B5750";
-  const indexColor = isGreen ? "rgba(11,20,15,0.65)" : "#36B936";
-  const dividerColor = isGreen ? "rgba(255,255,255,0.22)" : "rgba(11, 20, 15, 0.1)";
-  const iconColor = isGreen ? "#FFFFFF" : "#36B936";
+  const textMuted = isGreen ? "rgba(255,255,255,0.8)" : "#4B5750";
+  const badgeBg = isGreen ? "rgba(255,255,255,0.18)" : "rgba(54, 185, 54, 0.12)";
+  const badgeText = isGreen ? "#FFFFFF" : "#36B936";
+  const dividerColor = isGreen ? "rgba(255,255,255,0.2)" : "rgba(11, 20, 15, 0.1)";
   const featureIconBg = isGreen ? "rgba(255,255,255,0.16)" : "rgba(54, 185, 54, 0.12)";
   const featureIconColor = isGreen ? "#FFFFFF" : "#36B936";
 
   return (
     <div
       ref={ref}
-      className="sticky top-0 flex min-h-screen w-full items-center overflow-y-auto"
+      className="sticky top-0 w-full min-h-screen flex items-center transition-shadow duration-300 font-['Manrope',sans-serif]"
       style={{
         backgroundColor: bg,
         zIndex,
-        padding: "clamp(40px, 6vw, 88px) clamp(1.25rem, 4vw, 3rem)",
-        boxShadow: isGreen ? "0 -24px 48px rgba(0,0,0,0.10)" : "0 -24px 48px rgba(0,0,0,0.06)",
+        boxShadow: isGreen
+          ? "0 -20px 40px rgba(0,0,0,0.12)"
+          : "0 -20px 40px rgba(0,0,0,0.06)",
       }}
     >
-      <div
-        className="mx-auto grid w-full max-w-[1280px] grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] my-auto"
-        style={{ gap: "clamp(28px, 4vw, 64px)" }}
-      >
-        {/* Left: large icon, index, subheader, paragraphs */}
-        <div className="min-w-0">
-          <div
-            style={{
-              width: "clamp(56px, 6.4vw, 96px)",
-              height: "clamp(56px, 6.4vw, 96px)",
-              marginBottom: "clamp(18px, 2.4vw, 28px)",
-              color: iconColor,
-            }}
-          >
-            <IndustryIcon name={industry.icon} />
-          </div>
+      <div className="w-full py-16 sm:py-20 px-5 sm:px-8 md:px-12 lg:px-20 my-auto">
+        <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-16">
+          
+          {/* Left Column: Index Badge, Subheader, Paragraphs & Proof Metrics */}
+          <div className="min-w-0">
+            {/* Minimal Index Pill */}
+            <div className="mb-3.5 sm:mb-4 inline-flex items-center gap-2 rounded-full px-3 py-1" style={{ backgroundColor: badgeBg }}>
+              <span className="font-mono text-xs font-semibold tracking-wider" style={{ color: badgeText }}>
+                //{industry.index}
+              </span>
+            </div>
 
-          <span
-            className="block font-['Manrope',sans-serif] font-normal"
-            style={{
-              fontSize: "clamp(0.75rem, 1vw, 0.85rem)",
-              color: indexColor,
-              fontVariantNumeric: "tabular-nums",
-              letterSpacing: "0.02em",
-              marginBottom: "clamp(10px, 1.4vw, 14px)",
-            }}
-          >
-            {industry.index}
-          </span>
-
-          <h3
-            className="font-['Manrope',sans-serif] font-medium"
-            style={{
-              fontSize: "clamp(1.35rem, 2.6vw, 2.1rem)",
-              lineHeight: 1.2,
-              color: textPrimary,
-              maxWidth: "18ch",
-            }}
-          >
-            {industry.subheader}
-          </h3>
-
-          <div style={{ marginTop: "clamp(14px, 2vw, 20px)" }}>
-            {industry.paragraphs.map((p, i) => (
-              <p
-                key={i}
-                className="font-['Manrope',sans-serif] font-normal"
-                style={{
-                  fontSize: "clamp(0.85rem, 1.15vw, 1rem)",
-                  lineHeight: 1.6,
-                  color: textMuted,
-                  maxWidth: "58ch",
-                  marginTop: i === 0 ? 0 : "12px",
-                }}
-              >
-                {p}
-              </p>
-            ))}
-          </div>
-
-          {industry.proof && (
-            <div
-              className="flex flex-wrap"
-              style={{
-                gap: "clamp(20px, 3vw, 36px)",
-                marginTop: "clamp(20px, 3vw, 32px)",
-                paddingTop: "clamp(16px, 2.4vw, 24px)",
-                borderTop: `1px solid ${dividerColor}`,
-              }}
+            <h3
+              className="text-2xl sm:text-3xl lg:text-4xl font-medium leading-tight tracking-tight"
+              style={{ color: textPrimary, maxWidth: "20ch" }}
             >
-              {industry.proof.map((stat) => (
-                <div key={stat.label}>
-                  <p
-                    className="font-['Manrope',sans-serif] font-semibold"
-                    style={{ fontSize: "clamp(1.3rem, 2.2vw, 1.9rem)", color: textPrimary }}
-                  >
-                    {stat.value}
-                  </p>
-                  <p
-                    className="font-['Manrope',sans-serif] font-normal"
-                    style={{
-                      fontSize: "clamp(0.65rem, 0.85vw, 0.78rem)",
-                      color: textMuted,
-                      marginTop: "2px",
-                      maxWidth: "16ch",
-                      lineHeight: 1.35,
-                    }}
-                  >
-                    {stat.label}
-                  </p>
-                </div>
+              {industry.subheader}
+            </h3>
+
+            <div className="mt-4 sm:mt-6 space-y-3">
+              {industry.paragraphs.map((paragraph, idx) => (
+                <p
+                  key={idx}
+                  className="text-xs sm:text-sm md:text-base font-normal leading-relaxed"
+                  style={{ color: textMuted, maxWidth: "58ch" }}
+                >
+                  {paragraph}
+                </p>
               ))}
             </div>
-          )}
-        </div>
 
-        {/* Right: capabilities as a two-column feature grid, icon-led */}
-        <div
-          className="grid min-w-0 grid-cols-2"
-          style={{
-            gap: "clamp(24px, 2.8vw, 36px) clamp(24px, 3vw, 44px)",
-            borderTop: `1px solid ${dividerColor}`,
-            paddingTop: "clamp(28px, 3.4vw, 40px)",
-          }}
-        >
-          {industry.capabilities.map((cap, i) => {
-            const Icon = cap.icon;
-            return (
+            {industry.proof && industry.proof.length > 0 && (
               <div
-                key={i}
-                style={{
-                  opacity: visible ? 1 : 0,
-                  transform: visible ? "translateY(0)" : "translateY(6px)",
-                  transition: `opacity 0.5s ease ${i * 60}ms, transform 0.5s ease ${i * 60}ms`,
-                }}
+                className="mt-6 sm:mt-8 pt-5 sm:pt-6 flex flex-wrap gap-6 sm:gap-10"
+                style={{ borderTop: `1px solid ${dividerColor}` }}
               >
-                <span
-                  className="flex items-center justify-center rounded-full"
+                {industry.proof.map((stat) => (
+                  <div key={stat.label}>
+                    <p className="text-xl sm:text-2xl lg:text-3xl font-semibold tracking-tight" style={{ color: textPrimary }}>
+                      {stat.value}
+                    </p>
+                    <p className="mt-0.5 text-xs sm:text-sm font-normal leading-snug" style={{ color: textMuted, maxWidth: "16ch" }}>
+                      {stat.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Right Column: 2-Column Capability Grid */}
+          <div
+            className="grid min-w-0 grid-cols-2 gap-4 sm:gap-6 lg:gap-8 pt-6 lg:pt-0"
+            style={{
+              borderTop: `1px solid ${dividerColor}`,
+            }}
+          >
+            {industry.capabilities.map((cap, i) => {
+              const Icon = cap.icon;
+              return (
+                <div
+                  key={i}
+                  className="flex flex-col items-start"
                   style={{
-                    width: "clamp(34px, 3.4vw, 42px)",
-                    height: "clamp(34px, 3.4vw, 42px)",
-                    backgroundColor: featureIconBg,
-                    marginBottom: "12px",
+                    opacity: visible ? 1 : 0,
+                    transform: visible ? "translateY(0)" : "translateY(12px)",
+                    transition: `opacity 0.5s ease ${i * 60}ms, transform 0.5s ease ${i * 60}ms`,
                   }}
                 >
-                  <Icon size={18} strokeWidth={1.75} color={featureIconColor} aria-hidden="true" />
-                </span>
-                <p
-                  className="font-['Manrope',sans-serif] font-normal"
-                  style={{ fontSize: "clamp(0.82rem, 1.05vw, 0.94rem)", lineHeight: 1.5, color: textPrimary }}
-                >
-                  {cap.text}
-                </p>
-              </div>
-            );
-          })}
+                  <span
+                    className="mb-2.5 sm:mb-3 flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-xl transition-transform hover:scale-105"
+                    style={{ backgroundColor: featureIconBg }}
+                  >
+                    <Icon size={18} strokeWidth={1.75} color={featureIconColor} aria-hidden="true" />
+                  </span>
+                  <p className="text-xs sm:text-sm font-normal leading-relaxed" style={{ color: textPrimary }}>
+                    {cap.text}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+
         </div>
       </div>
     </div>

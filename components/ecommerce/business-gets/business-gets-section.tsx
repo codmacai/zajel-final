@@ -14,7 +14,7 @@ const LIGHT_GREEN = "#36B936";
 
 const BusinessGetsSection = () => {
   return (
-    <section className="w-full py-16 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-10 bg-white overflow-hidden font-['Manrope',sans-serif]">
+    <section className="w-full py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-10 bg-white overflow-hidden font-sans">
       <div className="max-w-[1200px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 32 }}
@@ -28,18 +28,26 @@ const BusinessGetsSection = () => {
             <span className="text-xs sm:text-sm font-medium tracking-wider uppercase" style={{ color: LIGHT_GREEN }}>
               Core Benefits
             </span>
+            <span className="h-[2px] w-6 sm:w-8" style={{ backgroundColor: LIGHT_GREEN }} />
           </div>
 
-          <h2 className="text-2xl sm:text-3xl md:text-4xl text-[#0A4D26] font-medium tracking-tight leading-[1.15] whitespace-pre-line px-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl text-[#0A4D26] font-medium tracking-tight leading-[1.15] whitespace-pre-line px-2 max-w-[800px] mx-auto">
             {HEADING}
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
+        {/* Structured Tile Grid matching the FeatureCard design style */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full bg-gray-200/80 gap-[1px] rounded-2xl sm:rounded-[2rem] border border-gray-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.02)] overflow-hidden items-stretch"
+        >
           {BUSINESS_CARDS.map((card, i) => (
             <BusinessGetsCard key={card.title} {...card} index={i} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

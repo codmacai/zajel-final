@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowRight, Globe, Clock, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Clock, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
@@ -32,50 +32,40 @@ const InternationalShippingTimes = ({
   bannerImageAlt = 'Zajel courier delivering an international shipment',
 }: InternationalShippingTimesProps) => {
   return (
-    <section className="w-full relative overflow-hidden py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-10 bg-white font-['Manrope',sans-serif]">
-      {/* Background ambient glows */}
-      <div
-        className="absolute right-[-8%] bottom-[-10%] w-[55%] h-[85%] pointer-events-none"
-        style={{ background: 'radial-gradient(closest-side, rgba(10,77,38,0.06) 0%, rgba(10,77,38,0) 70%)' }}
-      />
-      <div
-        className="absolute left-[-5%] top-[10%] w-[45%] h-[65%] pointer-events-none opacity-70 blur-[100px]"
-        style={{ background: 'radial-gradient(circle, rgba(10,77,38,0.04) 0%, rgba(10,77,38,0) 70%)' }}
-      />
-
-      <div className="max-w-[1200px] mx-auto relative z-10">
+    <section className="w-full relative overflow-hidden py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-10 bg-white font-['Manrope',sans-serif]">
+      <div className="max-w-[1100px] mx-auto relative z-10">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 32 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ ...SMOOTH_TRANSITION, duration: 0.8 }}
-          className="text-center mb-12 sm:mb-16 lg:mb-20"
+          transition={{ ...SMOOTH_TRANSITION, duration: 0.7 }}
+          className="text-center mb-8 sm:mb-10 lg:mb-12"
         >
-          <div className="mb-3 sm:mb-4 flex items-center justify-center gap-3">
-            <span className="h-[2px] w-6 sm:w-8" style={{ backgroundColor: LIGHT_GREEN }} />
-            <span className="text-xs sm:text-sm font-medium tracking-widest uppercase" style={{ color: LIGHT_GREEN }}>
+          <div className="mb-2.5 flex items-center justify-center gap-2.5">
+            <span className="h-[2px] w-5 sm:w-6" style={{ backgroundColor: LIGHT_GREEN }} />
+            <span className="text-[11px] sm:text-xs font-medium tracking-widest uppercase" style={{ color: LIGHT_GREEN }}>
               {EYEBROW}
             </span>
-            <span className="h-[2px] w-6 sm:w-8" style={{ backgroundColor: LIGHT_GREEN }} />
+            <span className="h-[2px] w-5 sm:w-6" style={{ backgroundColor: LIGHT_GREEN }} />
           </div>
 
-          <h2 className="text-2xl sm:text-3xl md:text-5xl text-[#0A4D26] font-medium tracking-tight leading-[1.15] max-w-[760px] mx-auto px-2">
+          <h2 className="text-[1.5rem] sm:text-[1.75rem] md:text-4xl lg:text-[2.5rem] text-[#0A4D26] font-medium tracking-tight leading-[1.2] max-w-[820px] mx-auto px-2">
             {HEADING}
           </h2>
 
-          <p className="mt-5 text-[#2D6A4F] font-light text-[14px] sm:text-[16px] leading-relaxed max-w-[560px] mx-auto px-2">
+          <p className="mt-3 text-[#2D6A4F] font-light text-[13px] sm:text-[15px] leading-relaxed max-w-[520px] mx-auto px-2">
             {DESCRIPTION}
           </p>
         </motion.div>
 
-        {/* Modernized & Minimal Hero Banner Card */}
+        {/* Minimal Banner */}
         <motion.div
-          initial={{ opacity: 0, y: 36 }}
+          initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ ...SMOOTH_TRANSITION, duration: 0.8, delay: 0.1 }}
-          className="relative w-full overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] border border-[#0A4D26]/15 aspect-[4/5] sm:aspect-[16/9] lg:aspect-[21/9] bg-[#0A4D26]/[0.04] shadow-[0_24px_60px_-15px_rgba(10,77,38,0.18)]"
+          transition={{ ...SMOOTH_TRANSITION, duration: 0.7, delay: 0.1 }}
+          className="relative w-full overflow-hidden rounded-2xl border border-[#0A4D26]/10 aspect-[4/3] sm:aspect-[2/1] lg:aspect-[21/8] bg-[#0A4D26]/[0.04]"
         >
           {bannerImageSrc ? (
             <Image
@@ -83,40 +73,34 @@ const InternationalShippingTimes = ({
               alt={bannerImageAlt}
               fill
               priority
-              sizes="(max-width: 768px) 100vw, 1200px"
+              sizes="(max-width: 768px) 100vw, 1100px"
               className="object-cover object-center"
             />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center border border-dashed border-[#0A4D26]/20 bg-gradient-to-br from-[#0A4D26]/[0.03] to-[#36B936]/[0.08]">
+            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#0A4D26]/[0.03] to-[#36B936]/[0.08]">
               <span className="text-[#0A4D26]/50 text-sm font-medium">Add banner image</span>
             </div>
           )}
 
-          {/* Sophisticated multi-stop editorial gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#051F10]/90 via-[#051F10]/30 to-transparent" />
+          {/* Light bottom gradient just for text legibility */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#051F10]/70 via-[#051F10]/10 to-transparent" />
 
-          {/* Minimal & Modernized Floating Overlay */}
-          <div className="absolute left-6 bottom-6 sm:left-10 sm:bottom-10 lg:left-12 lg:bottom-12 max-w-[90%]">
-            <motion.div
-              initial={{ opacity: 0, x: -10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ ...SMOOTH_TRANSITION, delay: 0.25 }}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white/90 text-[10px] sm:text-[11px] font-normal tracking-wider uppercase mb-2.5 shadow-sm"
-            >
+          {/* Overlay */}
+          <div className="absolute left-5 bottom-5 sm:left-8 sm:bottom-8 max-w-[90%]">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white/90 text-[10px] font-normal tracking-wider uppercase mb-2">
               <span className="w-1 h-1 rounded-full bg-[#36B936]" />
               <span>Express Transit</span>
-            </motion.div>
+            </div>
 
-            <div className="flex items-baseline gap-2.5 sm:gap-3.5">
-              <span className="text-white font-normal tracking-tight leading-none text-[clamp(2.5rem,7vw,4.5rem)]">
+            <div className="flex items-baseline gap-2.5">
+              <span className="text-white font-normal tracking-tight leading-none text-[clamp(2rem,5vw,3.25rem)]">
                 3&ndash;4
               </span>
               <div className="flex flex-col">
-                <span className="text-white/90 font-medium text-[clamp(0.95rem,2vw,1.35rem)] tracking-tight leading-none mb-0.5">
+                <span className="text-white/90 font-medium text-[clamp(0.85rem,1.6vw,1.1rem)] tracking-tight leading-none mb-0.5">
                   Business Days
                 </span>
-                <span className="text-white/60 font-light text-[11px] sm:text-xs tracking-wide">
+                <span className="text-white/60 font-light text-[11px] tracking-wide">
                   Global Door-to-Door Delivery
                 </span>
               </div>
@@ -125,7 +109,7 @@ const InternationalShippingTimes = ({
         </motion.div>
 
         {/* Note & Disclaimer Cards */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -164,7 +148,7 @@ const InternationalShippingTimes = ({
           </motion.div>
         </div>
 
-        {/* CTA (Primary button + inline clean text link matching Customs Duty guide) */}
+        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -175,12 +159,10 @@ const InternationalShippingTimes = ({
           <button
             type="button"
             onClick={onGetQuote}
-            className="group inline-flex items-center gap-2 sm:gap-3 bg-[#36B936] text-white font-medium rounded-full pl-6 sm:pl-7 pr-2.5 py-3 sm:py-3.5 text-xs sm:text-sm tracking-tight shadow-[0_10px_30px_rgba(54,185,54,0.2)] transition-all duration-200 hover:bg-[#36B936]/90 whitespace-nowrap"
+            className="inline-flex items-center gap-2 rounded-full bg-[#36B936] px-[clamp(1.25rem,2vw,1.75rem)] py-[clamp(0.55rem,1vw,0.85rem)] text-xs sm:text-sm font-medium text-[#0B140F] shadow-md transition-transform hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0A4D26] whitespace-nowrap"
           >
             <span>Get a Shipping Quote</span>
-            <span className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-white/15 text-white flex items-center justify-center transition-transform duration-300 ease-out group-hover:translate-x-0.5 shrink-0">
-              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" strokeWidth={2} />
-            </span>
+            <span aria-hidden="true">→</span>
           </button>
 
           <button

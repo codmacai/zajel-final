@@ -7,6 +7,7 @@ import WarehousingSolutions from "@/components/warehouse/warehousing-solutions";
 import IndustriesWeServe from "@/components/warehouse/industry";
 import { Warehouse_FAQS } from "@/data/warehouse-faq";
 import WarehouseFaqSection from "@/components/warehouse/faq";
+import ContactBand from "@/components/dynamic-contact";
 
 export const metadata: Metadata = {
   title: "Warehousing Services in Dubai | Zajel",
@@ -24,6 +25,21 @@ export default function WarehousePage() {
       <StrategicLocations/>
       <IndustriesWeServe/>
       <WarehouseFaqSection/>
+      <ContactBand
+  badgeText="Get a Warehousing Services Quote"
+  title="Get a Warehousing Services Quote"
+  descriptionLead="Whether you need short-term holding for goods in transit, full-service e-commerce fulfillment, or temperature-controlled storage for regulated products, Zajel's warehousing team can design a solution around your supply chain."
+  descriptionDetail="Contact us to discuss your storage requirements, tour our facilities, or request a warehousing quote."
+  contactInfo={{
+    email: "sales@zajel.com",
+    phone: "600 53 11 11",
+    address: "Dubai Office, Al Rostamani Building, Al Ittihad Rd, E11, Dubai",
+  }}
+  primaryCta={{ 
+    label: "Get a Warehousing Quote", 
+    url: "/contact" 
+  }}
+/>
 
       {/* Rest of the Warehousing page content goes below. */}
     </main>

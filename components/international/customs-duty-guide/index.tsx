@@ -101,18 +101,7 @@ const TermCard = ({ term, onSelect }: TermCardProps) => {
           </ul>
         </div>
 
-        <div className="mt-2 w-full pt-4 sm:max-w-xs">
-          <button
-            type="button"
-            onClick={onSelect}
-            className="group inline-flex items-center justify-between w-full rounded-xl py-3 px-4 text-xs sm:text-sm font-medium transition-all duration-300 bg-[#0A4D26] text-white hover:bg-[#0d5c2f]"
-          >
-            <span>Get a Shipping Quote</span>
-            <span className="w-7 h-7 rounded-full flex items-center justify-center transition-transform duration-300 ease-out group-hover:translate-x-0.5 bg-white/15 text-white">
-              <ArrowRight className="w-3.5 h-3.5" strokeWidth={2} />
-            </span>
-          </button>
-        </div>
+        
       </div>
     </motion.div>
   );
@@ -145,7 +134,7 @@ const CustomsDutyGuide = ({ onGetQuote, onContactSupport }: CustomsDutyGuideProp
             <span className="h-[2px] w-6 sm:w-8" style={{ backgroundColor: LIME }} />
           </div>
 
-          <h2 className="text-2xl sm:text-3xl md:text-5xl text-[#0A4D26] font-medium tracking-tight leading-[1.15] max-w-[760px] mx-auto px-2">
+          <h2 className="text-[1.5rem] sm:text-[1.75rem] md:text-4xl lg:text-[2.5rem] text-[#0A4D26] font-medium tracking-tight leading-[1.2] max-w-[820px] mx-auto px-2">
             {HEADING}
           </h2>
 
@@ -178,7 +167,7 @@ const CustomsDutyGuide = ({ onGetQuote, onContactSupport }: CustomsDutyGuideProp
           </div>
         </motion.div>
 
-        {/* CTA (Primary button + inline clean text link) */}
+        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -189,12 +178,10 @@ const CustomsDutyGuide = ({ onGetQuote, onContactSupport }: CustomsDutyGuideProp
           <button
             type="button"
             onClick={onGetQuote}
-            className="group inline-flex items-center gap-2 sm:gap-3 bg-[#36B936] text-white font-medium rounded-full pl-6 sm:pl-7 pr-2.5 py-3 sm:py-3.5 text-xs sm:text-sm tracking-tight shadow-[0_10px_30px_rgba(54,185,54,0.2)] transition-all duration-200 hover:bg-[#36B936]/90 whitespace-nowrap"
+            className="inline-flex items-center gap-2 rounded-full bg-[#36B936] px-[clamp(1.25rem,2vw,1.75rem)] py-[clamp(0.55rem,1vw,0.85rem)] text-xs sm:text-sm font-medium text-[#0B140F] shadow-md transition-transform hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0A4D26] whitespace-nowrap"
           >
             <span>Get a Shipping Quote</span>
-            <span className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-white/15 text-white flex items-center justify-center transition-transform duration-300 ease-out group-hover:translate-x-0.5 shrink-0">
-              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" strokeWidth={2} />
-            </span>
+            <span aria-hidden="true">→</span>
           </button>
 
           <button

@@ -5,12 +5,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Box, Package, Truck, Layers, Flame, Wind } from 'lucide-react';
 
-const BRAND = {
-  hairline: 'rgba(6,68,35,0.12)',
-};
-
 const EASE = [0.22, 1, 0.36, 1] as const;
-const smoothTransition = { duration: 0.5, ease: EASE };
 
 type VesselType = 'container' | 'general' | 'roro' | 'bulk' | 'gas' | 'livestock';
 
@@ -85,12 +80,13 @@ function VesselCard({ vessel, index }: { vessel: Vessel; index: number }) {
       transition={{ duration: 1, ease: EASE, delay: index * 0.09 }}
       className="flex flex-col"
     >
-      <div className="relative w-full aspect-[3/4] rounded-xl sm:rounded-2xl overflow-hidden border border-[#0A4D26]/10 bg-[#F0F0EE]">
+      {/* Mobile: 1 column, medium square card. sm+: 3/4 in a 2/3-col grid */}
+      <div className="relative w-full aspect-square sm:aspect-[3/4] rounded-2xl overflow-hidden border border-[#0A4D26]/10 bg-[#F0F0EE]">
         <Image
           src={vessel.image}
           alt={vessel.name}
           fill
-          sizes="(min-width: 1024px) 33vw, 50vw"
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
           className="object-cover"
         />
         <div
@@ -101,21 +97,21 @@ function VesselCard({ vessel, index }: { vessel: Vessel; index: number }) {
           }}
         />
 
-        <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 md:p-6 flex flex-col justify-end">
-          <div className="flex items-center gap-2 mb-1.5 sm:mb-2">
-            <span className="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#36B936] text-white shrink-0">
-              <Icon size={13} strokeWidth={2} />
+        <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end p-4 sm:p-4 md:p-6">
+          <div className="mb-2 flex items-center gap-2">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#36B936] text-white">
+              <Icon size={14} strokeWidth={2} />
             </span>
-            <h3 className="text-white text-[0.85rem] xs:text-[0.95rem] sm:text-[1.05rem] md:text-[1.2rem] font-medium leading-tight">
+            <h3 className="text-[1.1rem] font-medium leading-tight text-white sm:text-[1.05rem] md:text-[1.2rem]">
               {vessel.name}
             </h3>
           </div>
 
-          <p className="text-[0.75rem] xs:text-[0.8rem] sm:text-[0.85rem] leading-snug mb-1.5 sm:mb-2 text-white/90 line-clamp-2 sm:line-clamp-none">
+          <p className="mb-2 text-[0.85rem] leading-snug text-white/90 sm:text-[0.85rem]">
             {vessel.purpose}
           </p>
-          
-          <p className="text-[0.7rem] xs:text-[0.75rem] sm:text-[0.8rem] leading-snug pt-1.5 sm:pt-2 border-t border-white/20 text-white line-clamp-2 sm:line-clamp-none">
+
+          <p className="border-t border-white/20 pt-2 text-[0.8rem] leading-snug text-white sm:text-[0.8rem]">
             {vessel.feature}
           </p>
         </div>
@@ -151,7 +147,7 @@ export default function OceanCargoVessels() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 xs:gap-4 sm:gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {VESSELS.map((vessel, i) => (
             <VesselCard key={vessel.type} vessel={vessel} index={i} />
           ))}

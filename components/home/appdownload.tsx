@@ -3,18 +3,18 @@ import React from "react";
 /**
  * CompactSaaSBanner
  * -------------------
- * ZAJEL app download banner. Deep emerald gradient card, large headline, short
- * description and glass CTAs; uses separate image props for mobile and desktop 
- * with adjusted spacing to shift the desktop mockup further left.
+ * ZAJEL app download banner. Brand lime (#36B936) gradient card, white headline
+ * and description, dark store buttons; uses separate image props for
+ * mobile and desktop.
  */
 
 const BANNER_BG = `
-  radial-gradient(70% 90% at 82% 55%, rgba(54,185,54,0.30) 0%, rgba(54,185,54,0) 60%),
-  radial-gradient(60% 80% at 0% 0%, rgba(20,110,62,0.55) 0%, rgba(20,110,62,0) 65%),
-  radial-gradient(80% 60% at 100% 100%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 60%),
-  linear-gradient(135deg, #04200F 0%, #063A1F 38%, #0A5029 68%, #052914 100%)
+  radial-gradient(70% 90% at 82% 55%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 60%),
+  radial-gradient(60% 80% at 0% 0%, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 65%),
+  radial-gradient(80% 60% at 100% 100%, rgba(10,77,38,0.35) 0%, rgba(10,77,38,0) 60%),
+  linear-gradient(135deg, #3CC23C 0%, #36B936 50%, #2FA82F 100%)
 `;
-const PATTERN = "#36B936";
+const PATTERN = "#FFFFFF";
 
 interface CompactSaaSBannerProps {
   headlineLine1?: string;
@@ -52,11 +52,11 @@ const StoreButton: React.FC<{
   <a
     href={href}
     onClick={onClick}
-    className="inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/20 px-3.5 py-2 text-white backdrop-blur-sm transition-colors duration-300 hover:bg-white/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+    className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-[#0B140F] px-3.5 py-2 text-white shadow-md transition-transform duration-300 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
   >
     {icon}
     <span className="flex flex-col text-left leading-tight">
-      <span className="text-[9px] font-medium text-white/85">Download on the</span>
+      <span className="text-[9px] font-medium text-white/75">Download on the</span>
       <span className="text-xs font-medium sm:text-sm">{label}</span>
     </span>
   </a>
@@ -76,26 +76,26 @@ const CompactSaaSBanner: React.FC<CompactSaaSBannerProps> = ({
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-white p-4 sm:p-6 md:p-8">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap');
         .compact-banner { font-family: 'Manrope', ui-sans-serif, system-ui, -apple-system, sans-serif; font-weight: 500; }
       `}</style>
 
       {/* Main Banner Card: overflow-visible on desktop allows top overflow */}
       <div
-        className="compact-banner relative my-16 w-full max-w-[1140px] overflow-hidden rounded-[28px] shadow-[0_20px_60px_-15px_rgba(6,68,35,0.55)] sm:overflow-visible"
+        className="compact-banner relative my-16 w-full max-w-[1140px] overflow-hidden rounded-[28px] shadow-[0_20px_60px_-15px_rgba(54,185,54,0.55)] sm:overflow-visible"
         style={{ background: BANNER_BG }}
       >
         {/* Desktop pattern: outlined diamonds behind the phone */}
         <div className="pointer-events-none absolute inset-0 hidden overflow-hidden sm:block" aria-hidden="true">
-          <div className="absolute right-[6%] top-1/2 h-[460px] w-[460px] -translate-y-1/2 rotate-45 border" style={{ borderColor: `${PATTERN}99` }} />
-          <div className="absolute right-[-6%] top-[62%] h-[420px] w-[420px] -translate-y-1/2 rotate-45 border" style={{ borderColor: `${PATTERN}66` }} />
+          <div className="absolute right-[6%] top-1/2 h-[460px] w-[460px] -translate-y-1/2 rotate-45 border" style={{ borderColor: `${PATTERN}8C` }} />
+          <div className="absolute right-[-6%] top-[62%] h-[420px] w-[420px] -translate-y-1/2 rotate-45 border" style={{ borderColor: `${PATTERN}59` }} />
         </div>
 
         <div className="relative z-10 flex flex-col sm:min-h-[400px] sm:flex-row sm:items-center">
           {/* Left column: copy and CTA */}
           <div className="relative z-20 w-full px-6 pb-6 pt-12 text-center sm:w-[58%] sm:py-14 sm:pl-16 sm:pr-4 sm:text-left md:pl-20">
             <h1
-              className="mx-auto max-w-[560px] font-medium leading-[1.15] tracking-tight text-white sm:mx-0"
+              className="mx-auto max-w-[560px] font-semibold leading-[1.15] tracking-tight text-white [text-shadow:0_2px_12px_rgba(10,77,38,0.35)] sm:mx-0"
               style={{ fontSize: "clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem)" }}
             >
               {headlineLine1}
@@ -104,7 +104,7 @@ const CompactSaaSBanner: React.FC<CompactSaaSBannerProps> = ({
             </h1>
 
             <p
-              className="mx-auto mt-4 max-w-[380px] font-medium leading-relaxed text-white/90 sm:mx-0"
+              className="mx-auto mt-4 max-w-[380px] font-medium leading-relaxed text-white [text-shadow:0_1px_8px_rgba(10,77,38,0.3)] sm:mx-0"
               style={{ fontSize: "clamp(0.75rem, 0.7rem + 0.2vw, 0.85rem)" }}
             >
               {description}
@@ -130,8 +130,8 @@ const CompactSaaSBanner: React.FC<CompactSaaSBannerProps> = ({
           <div className="relative flex w-full justify-center overflow-hidden sm:absolute sm:inset-y-0 sm:right-16 sm:w-[40%] sm:overflow-visible">
             {/* Mobile pattern */}
             <div className="pointer-events-none absolute inset-0 sm:hidden" aria-hidden="true">
-              <div className="absolute left-1/2 top-[52%] aspect-square w-[92%] -translate-x-1/2 -translate-y-1/2 rotate-45 border" style={{ borderColor: `${PATTERN}99` }} />
-              <div className="absolute left-1/2 top-[68%] aspect-square w-[110%] -translate-x-1/2 -translate-y-1/2 rotate-45 border" style={{ borderColor: `${PATTERN}66` }} />
+              <div className="absolute left-1/2 top-[52%] aspect-square w-[92%] -translate-x-1/2 -translate-y-1/2 rotate-45 border" style={{ borderColor: `${PATTERN}8C` }} />
+              <div className="absolute left-1/2 top-[68%] aspect-square w-[110%] -translate-x-1/2 -translate-y-1/2 rotate-45 border" style={{ borderColor: `${PATTERN}59` }} />
             </div>
 
             {/* Mobile Image */}
@@ -139,7 +139,7 @@ const CompactSaaSBanner: React.FC<CompactSaaSBannerProps> = ({
               <img
                 src={phoneImageSrc}
                 alt="ZAJEL app preview mobile"
-                className="pointer-events-none relative mb-[-45%] h-auto w-[58%] max-w-[260px] object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.35)] sm:hidden"
+                className="pointer-events-none relative mb-[-45%] h-auto w-[58%] max-w-[260px] object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.3)] sm:hidden"
               />
             )}
 
@@ -148,7 +148,7 @@ const CompactSaaSBanner: React.FC<CompactSaaSBannerProps> = ({
               <img
                 src={desktopImageSrc}
                 alt="ZAJEL app preview desktop"
-                className="pointer-events-none hidden sm:block sm:absolute sm:bottom-0 sm:right-0 sm:h-[115%] sm:w-auto sm:object-contain sm:drop-shadow-[0_20px_35px_rgba(0,0,0,0.35)]"
+                className="pointer-events-none hidden sm:block sm:absolute sm:bottom-0 sm:right-0 sm:h-[115%] sm:w-auto sm:object-contain sm:drop-shadow-[0_20px_35px_rgba(0,0,0,0.3)]"
               />
             )}
           </div>

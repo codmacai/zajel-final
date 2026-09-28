@@ -33,7 +33,7 @@ export default function ServiceHero({ variant }: { variant: ServiceHeroKey }) {
   return (
     <section
       // Bottom padding on mobile provides generous room for the dock and CTA button below it
-      className="box-border w-full bg-[#F9FAFB] pb-24 font-sans md:h-svh md:max-h-svh md:overflow-hidden md:pb-[clamp(3rem,5vw,4.5rem)]"
+      className="box-border w-full bg-[#F9FAFB] pb-24 font-['Manrope',sans-serif] md:h-svh md:max-h-svh md:overflow-hidden md:pb-[clamp(3rem,5vw,4.5rem)]"
       style={{ paddingTop: "calc(var(--navbar-h, 76px) + 0.5rem)" }}
     >
       <div className="mx-auto flex h-full w-full max-w-[1600px] items-center px-[clamp(1rem,4vw,3.5rem)]">
@@ -81,18 +81,19 @@ export default function ServiceHero({ variant }: { variant: ServiceHeroKey }) {
             </div>
           </div>
 
-          {/* Text: above the image on mobile, overlaid on md+ */}
-          <div className="order-first shrink-0 pb-3 pt-1 md:absolute md:inset-0 md:z-10 md:flex md:flex-col md:justify-between md:p-[clamp(1.75rem,4vw,4rem)] md:pb-[clamp(4.5rem,8vw,7rem)] md:pt-[clamp(1.75rem,4vw,4rem)]">
-            <div className="mb-[clamp(0.375rem,1.2vw,1rem)] flex items-center justify-center gap-3 md:mb-0 md:justify-start">
-              <span className="h-[2px] w-[clamp(1.5rem,2.4vw,2.25rem)] shrink-0 bg-[#36B936]" />
-              <span className="text-[clamp(0.6875rem,0.75vw,0.875rem)] font-medium uppercase tracking-wider text-[#36B936]">
+          {/* Text: above the image on mobile, overlaid at the TOP on md+ */}
+          <div className="order-first shrink-0 pb-3 pt-1 md:absolute md:inset-x-0 md:top-0 md:z-10 md:flex md:flex-col md:p-[clamp(1.75rem,4vw,4rem)]">
+            <div className="mb-[clamp(0.25rem,1vw,0.75rem)] flex items-center justify-center gap-2.5 md:mb-3 md:justify-start">
+              <span className="h-[2px] w-[clamp(1.25rem,2vw,2rem)] shrink-0 bg-[#36B936]" />
+              <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-[#36B936]">
                 {badgeText}
               </span>
             </div>
 
-            <div className="grid w-full grid-cols-1 items-end gap-6 lg:grid-cols-2 lg:gap-8">
+            <div className="grid w-full grid-cols-1 items-start gap-4 lg:grid-cols-2 lg:gap-8">
               <div className="flex flex-col items-center text-center md:items-start md:text-left">
-                <h1 className="max-w-[26ch] text-balance break-words text-[clamp(1.375rem,min(1rem_+_2.4vw,5.5svh),3.5rem)] font-medium leading-[1.15] tracking-tight text-[#0A4D26] md:text-white">
+                {/* Heading: minimal scale on mobile (text-2xl), full scale on md+ (lg:text-5xl) */}
+                <h1 className="max-w-[26ch] text-balance break-words text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium leading-[1.12] tracking-tight text-[#0B140F] md:text-white">
                   {headingPrimary}
                   <br />
                   <span className="text-[#36B936]">{headingHighlight}</span>
@@ -102,9 +103,9 @@ export default function ServiceHero({ variant }: { variant: ServiceHeroKey }) {
                 <div className="hidden md:block">
                   <Link
                     href={ctaHref}
-                    className="mt-[clamp(0.75rem,2vw,1.75rem)] inline-flex items-center gap-2 rounded-full bg-[#36B936] px-[clamp(1.25rem,2vw,1.75rem)] py-[clamp(0.55rem,1vw,0.85rem)] text-[clamp(0.8rem,1.4vw,0.9rem)] font-medium text-[#0B140F] transition-transform hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 md:focus-visible:outline-white"
+                    className="mt-[clamp(0.75rem,2vw,1.75rem)] inline-flex items-center gap-2 rounded-full bg-[#36B936] px-[clamp(1.25rem,2vw,1.75rem)] py-[clamp(0.55rem,1vw,0.85rem)] text-xs sm:text-sm font-medium text-[#0B140F] shadow-md transition-transform hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 md:focus-visible:outline-white"
                   >
-                    {ctaText}
+                    <span>{ctaText}</span>
                     <span aria-hidden="true">→</span>
                   </Link>
                 </div>
@@ -112,10 +113,10 @@ export default function ServiceHero({ variant }: { variant: ServiceHeroKey }) {
 
               {/* Description: desktop only */}
               <div className="hidden space-y-4 text-left lg:block">
-                <p className="max-w-[60ch] text-[clamp(0.8125rem,min(0.6rem_+_0.7vw,2.6svh),1.1rem)] font-light leading-relaxed text-white/80">
+                <p className="max-w-[58ch] text-xs sm:text-sm md:text-base font-normal leading-relaxed text-white/85">
                   {leadParagraph}
                 </p>
-                <p className="max-w-[60ch] text-[clamp(0.8125rem,min(0.6rem_+_0.7vw,2.6svh),1.1rem)] font-light leading-relaxed text-white/80">
+                <p className="max-w-[58ch] text-xs sm:text-sm md:text-base font-normal leading-relaxed text-white/85">
                   {detailParagraph}
                 </p>
               </div>
@@ -138,14 +139,14 @@ export default function ServiceHero({ variant }: { variant: ServiceHeroKey }) {
                     return (
                       <div key={stat.title} className={`${cellBase} group`}>
                         <div className="flex min-w-0 items-center gap-2 md:gap-3">
-                          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-[#F4F6F4] text-[#36B936] transition-all duration-300 group-hover:border-[#36B936]/40 group-hover:bg-[#36B936]/10 md:h-11 md:w-11 md:rounded-xl">
+                          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-[#F4F6F4] text-[#36B936] transition-all duration-300 group-hover:border-[#36B936]/40 group-hover:bg-[#36B936]/10 md:h-11 md:w-11">
                             <Icon className="h-4 w-4 md:h-5 md:w-5" strokeWidth={1.75} />
                           </span>
                           <span className="flex min-w-0 flex-col text-left">
-                            <span className="truncate text-[11px] font-medium leading-tight tracking-tight text-[#0A4D26] sm:text-sm lg:text-base">
+                            <span className="truncate text-xs sm:text-sm font-medium leading-tight tracking-tight text-[#0B140F]">
                               {stat.title}
                             </span>
-                            <span className="text-[9px] font-light leading-tight text-[#0A4D26]/70 sm:text-xs">
+                            <span className="text-[10px] sm:text-xs font-normal leading-tight text-[#4B5750]">
                               {stat.subtitle}
                             </span>
                           </span>
@@ -157,7 +158,7 @@ export default function ServiceHero({ variant }: { variant: ServiceHeroKey }) {
                   const animate = stat.animate ?? typeof stat.value === "number";
                   return (
                     <div key={stat.label} className={`${cellBase} flex-col text-center`}>
-                      <span className="mb-0.5 text-[clamp(1.125rem,2.2vw,2.75rem)] font-medium leading-none tracking-tight text-[#0A4D26] md:mb-1">
+                      <span className="mb-0.5 text-xl sm:text-2xl lg:text-3xl font-semibold leading-none tracking-tight text-[#0B140F] md:mb-1">
                         {animate ? (
                           <CountUp end={stat.value as number} suffix={stat.suffix} />
                         ) : (
@@ -167,7 +168,7 @@ export default function ServiceHero({ variant }: { variant: ServiceHeroKey }) {
                           </>
                         )}
                       </span>
-                      <span className="text-[9px] font-light tracking-tight text-[#0A4D26]/70 sm:text-[clamp(0.7rem,0.85vw,0.875rem)]">
+                      <span className="text-[10px] sm:text-xs font-normal tracking-tight text-[#4B5750]">
                         {stat.label}
                       </span>
                     </div>
@@ -183,9 +184,9 @@ export default function ServiceHero({ variant }: { variant: ServiceHeroKey }) {
       <div className="mt-20 w-full md:hidden px-[clamp(1rem,4vw,3.5rem)]">
         <Link
           href={ctaHref}
-          className="flex w-full items-center justify-center gap-2 rounded-full bg-[#36B936] px-[clamp(1.25rem,2vw,1.75rem)] py-[clamp(0.75rem,1.5vw,1rem)] text-[clamp(0.875rem,1.5vw,1rem)] font-medium text-[#0B140F] transition-transform hover:scale-[1.01] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0A4D26]"
+          className="flex w-full items-center justify-center gap-2 rounded-full bg-[#36B936] px-6 py-3.5 text-xs sm:text-sm font-medium text-[#0B140F] shadow-md transition-transform hover:scale-[1.01] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0B140F]"
         >
-          {ctaText}
+          <span>{ctaText}</span>
           <span aria-hidden="true">→</span>
         </Link>
       </div>

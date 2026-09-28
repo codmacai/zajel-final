@@ -30,10 +30,12 @@ type ContainerEntry = {
   image: string;
 };
 
+type IconType = ComponentType<{ size?: number; strokeWidth?: number; className?: string }>;
+
 type Category = {
   id: 'dry' | 'open-top' | 'flat-rack' | 'reefer' | 'tank';
   label: string;
-  icon: ComponentType<{ size?: number; strokeWidth?: number }>;
+  icon: IconType;
   entries: ContainerEntry[];
 };
 
@@ -146,7 +148,8 @@ const CATEGORIES: Category[] = [
         capacity: '—',
         tare: '4,200 kg',
         maxCargo: '40,800 kg',
-        description: 'Longer platform version of the Flat-Rack, for larger, heavier shipments that exceed standard container dimensions.',
+        description:
+          'Longer platform version of the Flat-Rack, for larger, heavier shipments that exceed standard container dimensions.',
         image: '/containers/flat-rack.png',
       },
     ],
@@ -176,7 +179,8 @@ const CATEGORIES: Category[] = [
         capacity: '60 CBM',
         tare: '3,850 kg',
         maxCargo: '26,630 kg',
-        description: "Same temperature-controlled function as the 20' Reefer, sized for larger volumes of perishable cargo.",
+        description:
+          "Same temperature-controlled function as the 20' Reefer, sized for larger volumes of perishable cargo.",
         image: '/containers/reefer.png',
       },
     ],
@@ -215,64 +219,66 @@ function EntryPanel({ category, entry }: { category: Category; entry: ContainerE
 
   return (
     <div
-      className="grid grid-cols-1 lg:grid-cols-[40px_1fr_1.1fr] rounded-[1.25rem] sm:rounded-[1.75rem] overflow-hidden border bg-white shadow-2xl"
+      className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] rounded-[1.25rem] sm:rounded-[1.75rem] overflow-hidden border bg-white"
       style={{ borderColor: BRAND.hairline, boxShadow: '0 30px 70px -25px rgba(0,0,0,0.45)' }}
     >
-      <div className="hidden lg:flex flex-col items-center gap-4 py-10 border-r" style={{ borderColor: BRAND.hairline }} />
-
-      {/* Editorial copy */}
-      <div className="p-6 sm:p-10 lg:p-12 flex flex-col justify-center">
-        <span className="lg:hidden inline-block text-[12px] font-medium mb-3" style={{ color: BRAND.accent }}>
+      {/* Copy */}
+      <div className="order-2 lg:order-1 p-5 sm:p-10 lg:p-12 flex flex-col justify-center">
+        <span className="lg:hidden inline-block text-[12px] font-medium mb-2 sm:mb-3" style={{ color: BRAND.accent }}>
           {category.label}
         </span>
 
-        <h3 className="text-neutral-900 text-[1.5rem] xs:text-[1.7rem] sm:text-[2.15rem] font-medium leading-[1.12] tracking-tight mb-3 sm:mb-4">
+        <h3 className="text-neutral-900 text-[1.4rem] sm:text-[2.15rem] font-medium leading-[1.12] tracking-tight mb-2.5 sm:mb-4">
           {entry.name}
         </h3>
 
-        <p className="text-neutral-600 text-[0.9rem] sm:text-[0.98rem] leading-relaxed mb-5 sm:mb-6 max-w-md">
+        <p className="text-neutral-600 text-[0.85rem] sm:text-[0.98rem] leading-relaxed mb-4 sm:mb-6 max-w-md">
           {entry.description}
         </p>
 
-        <ul className="flex flex-col gap-2.5 sm:gap-3 mb-6 sm:mb-7">
+        <ul className="flex flex-col gap-2 sm:gap-3 mb-5 sm:mb-7">
           {highlights.map((line) => (
-            <li key={line} className="flex items-start gap-3">
+            <li key={line} className="flex items-start gap-2.5 sm:gap-3">
               <span
-                className="mt-0.5 flex items-center justify-center w-5 h-5 rounded-full flex-shrink-0"
+                className="mt-0.5 flex items-center justify-center w-5 h-5 rounded-full shrink-0"
                 style={{ background: BRAND.ink }}
               >
                 <Check size={12} strokeWidth={3} color="#FFFFFF" />
               </span>
-              <span className="text-[0.88rem] sm:text-[0.95rem] text-neutral-700">{line}</span>
+              <span className="text-[0.82rem] sm:text-[0.95rem] text-neutral-700">{line}</span>
             </li>
           ))}
         </ul>
 
-        <div className="pl-5 border-l-2" style={{ borderColor: BRAND.accent }}>
-          <p className="text-neutral-700 text-[0.85rem] sm:text-[0.9rem] leading-relaxed">
+        <div className="pl-4 sm:pl-5 border-l-2" style={{ borderColor: BRAND.accent }}>
+          <p className="text-neutral-700 text-[0.8rem] sm:text-[0.9rem] leading-relaxed">
             Inside the box: <span className="font-medium text-neutral-900">{entry.dims}</span>, tare weight{' '}
             <span className="font-medium text-neutral-900">{entry.tare}</span>.
           </p>
         </div>
       </div>
 
-      {/* Photo frame */}
+      {/* Photo frame (on top on mobile) */}
       <div
-        className="relative min-h-[260px] xs:min-h-[300px] lg:min-h-[440px] m-3 sm:m-5 lg:my-6 lg:mr-6 rounded-[1rem] sm:rounded-[1.25rem] overflow-hidden flex items-center justify-center"
+        className="order-1 lg:order-2 relative min-h-[220px] sm:min-h-[320px] lg:min-h-[440px] m-3 sm:m-5 lg:my-6 lg:mr-6 lg:ml-0 rounded-[1rem] sm:rounded-[1.25rem] overflow-hidden flex items-center justify-center"
         style={{
           background: `linear-gradient(180deg, ${BRAND.deepA} 0%, ${BRAND.deepB} 35%, ${BRAND.deepC} 65%, ${BRAND.deepD} 100%)`,
         }}
       >
         {category.entries.length > 1 && (
-          <div className="absolute top-4 right-4 sm:top-6 sm:right-6 flex flex-wrap gap-2 justify-end max-w-[200px] z-20">
+          <div className="absolute top-3 right-3 sm:top-6 sm:right-6 flex flex-wrap gap-1.5 sm:gap-2 justify-end max-w-[180px] sm:max-w-[200px] z-20">
             {category.entries.map((e) => (
               <span
                 key={e.size}
-                className="text-[11px] font-medium px-2.5 py-1 rounded-full backdrop-blur-md"
+                className="text-[10px] sm:text-[11px] font-medium px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full backdrop-blur-md"
                 style={
                   e.size === entry.size
                     ? { background: '#FFFFFF', color: BRAND.deepB }
-                    : { background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.9)' }
+                    : {
+                        background: 'rgba(0,0,0,0.3)',
+                        border: '1px solid rgba(255,255,255,0.2)',
+                        color: 'rgba(255,255,255,0.9)',
+                      }
                 }
               >
                 {e.size}
@@ -303,9 +309,9 @@ function EntryPanel({ category, entry }: { category: Category; entry: ContainerE
         <button
           type="button"
           aria-label="View larger"
-          className="absolute bottom-4 right-4 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white flex items-center justify-center shadow-lg z-20 hover:scale-105 transition-transform"
+          className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white flex items-center justify-center shadow-lg z-20 hover:scale-105 transition-transform"
         >
-          <Maximize2 size={16} strokeWidth={2.2} color={BRAND.ink} />
+          <Maximize2 size={15} strokeWidth={2.2} color={BRAND.ink} />
         </button>
       </div>
     </div>
@@ -334,26 +340,26 @@ export default function ContainerGuide() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={smoothTransition}
-          className="text-center mb-[clamp(2rem,6vw,4rem)]"
+          className="text-center mb-[clamp(1.75rem,6vw,4rem)]"
         >
           <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="w-8 h-[2px]" style={{ backgroundColor: '#36B936' }} />
+            <span className="w-8 h-[2px] bg-[#36B936]" />
             <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
               Container Guide
             </span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white leading-[1.15] max-w-[720px] mx-auto">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white leading-[1.15] max-w-[720px] mx-auto text-balance">
             Containers used in sea freight
           </h2>
 
-          <p className="mt-4 sm:mt-5 text-white/75 font-light text-sm sm:text-lg leading-relaxed max-w-[520px] mx-auto">
+          <p className="mt-3 sm:mt-5 text-white/75 font-light text-sm sm:text-lg leading-relaxed max-w-[520px] mx-auto">
             Types, specification, purpose and feature.
           </p>
         </motion.div>
 
-        {/* Category tabs — horizontally scrollable on small screens so nothing wraps awkwardly */}
-        <div className="flex gap-2.5 mb-5 overflow-x-auto pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:justify-center sm:overflow-visible no-scrollbar">
+        {/* Category tabs: compact pills on mobile (scroll if they don't fit), roomier from sm up */}
+        <div className="flex gap-1.5 sm:gap-2.5 mb-3 sm:mb-5 overflow-x-auto pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:justify-center sm:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {CATEGORIES.map((cat) => {
             const Icon = cat.icon;
             const isActive = cat.id === activeCatId;
@@ -361,7 +367,7 @@ export default function ContainerGuide() {
               <button
                 key={cat.id}
                 onClick={() => setActiveCatId(cat.id)}
-                className="flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 shrink-0"
+                className="flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap transition-all duration-200 shrink-0"
                 style={
                   isActive
                     ? {
@@ -376,7 +382,7 @@ export default function ContainerGuide() {
                       }
                 }
               >
-                <Icon size={15} strokeWidth={2.2} />
+                <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" strokeWidth={2.2} />
                 {cat.label}
               </button>
             );
@@ -385,14 +391,14 @@ export default function ContainerGuide() {
 
         {/* Size sub-tabs */}
         {activeCategory.entries.length > 1 && (
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
+          <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-5 sm:mb-8">
             {activeCategory.entries.map((e) => {
               const isActive = e.size === activeSize;
               return (
                 <button
                   key={e.size}
                   onClick={() => setActiveSize(e.size)}
-                  className="px-4 py-1.5 rounded-full text-[13px] font-medium whitespace-nowrap transition-all duration-200"
+                  className="px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[12px] sm:text-[13px] font-medium whitespace-nowrap transition-all duration-200"
                   style={
                     isActive
                       ? { background: BRAND.ink, color: '#FFFFFF', boxShadow: '0 6px 16px -6px rgba(6,68,35,0.45)' }
@@ -405,7 +411,7 @@ export default function ContainerGuide() {
             })}
           </div>
         )}
-        {activeCategory.entries.length === 1 && <div className="mb-8" />}
+        {activeCategory.entries.length === 1 && <div className="mb-5 sm:mb-8" />}
 
         <AnimatePresence mode="wait">
           <motion.div

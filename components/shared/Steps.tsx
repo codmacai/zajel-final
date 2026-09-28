@@ -1,13 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import { memo, useRef, useMemo, useState, type ReactNode } from 'react';
+import { memo, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
   motion,
   useMotionValueEvent,
   useReducedMotion,
   useScroll,
+  useSpring,
   useTransform,
+  easeInOut,
   type MotionValue,
 } from 'framer-motion';
 
@@ -22,24 +24,26 @@ export interface ProcessStep {
 }
 
 interface ProcessStepsSectionProps {
-  /** Small uppercase label above the heading, e.g. "freight quote" */
+  /** Small label above the heading, e.g. "freight quote" */
   eyebrow: string;
   /** Heading node, e.g. <>how a freight<br />quote works</> */
   heading: ReactNode;
   /** Supporting paragraph under the heading */
   description: string;
-  /** Small line under the heading when there is only one step. Omit to hide. */
+  /** Small line under the heading when there is only one step */
   footnote?: string;
-  /** The steps, revealed one at a time as the section is scrolled through */
+  /** Steps, revealed one at a time while scrolling */
   steps: ProcessStep[];
 }
 
-// Scroll distance per step: reduced to 80vh per step on mobile to keep scrubbing faster & smoother
-const SVH_PER_STEP = 0.8;
+const SVH_PER_STEP = 140;
+const FADE = 0.15;
+
+const GREEN = '#36B936';
+const GREEN_DARK = '#0a4d26';
 
 // ---------------------------------------------------------------------------
-// Section: tall scroll track with pinned stage. 
-// Uses direct transform mapping to eliminate layout reflow / jerkiness on mobile.
+// Section
 // ---------------------------------------------------------------------------
 
 export default function ProcessStepsSection({
@@ -49,7 +53,7 @@ export default function ProcessStepsSection({
   footnote,
   steps,
 }: ProcessStepsSectionProps) {
-  const trackRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const reduceMotion = useReducedMotion() ?? false;
   const total = steps.length;
@@ -59,28 +63,32 @@ export default function ProcessStepsSection({
     offset: ['start start', 'end end'],
   });
 
-  useMotionValueEvent(scrollYProgress, 'change', (progress) => {
-    const next = Math.max(0, Math.min(total - 1, Math.floor(progress * total)));
-    setActiveIndex((current) => (current === next ? current : next));
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 35,
+    mass: 0.4,
+    restDelta: 0.0001,
   });
+
+  useMotionValueEvent(scrollYProgress, 'change', (p) => {
+    const next = Math.max(0, Math.min(total - 1, Math.floor(p * total)));
+    setActiveIndex((cur) => (cur === next ? cur : next));
+  });
+
+  const trackHeight = `${Math.max(total - 1, 0) * SVH_PER_STEP + 100}svh`;
 
   return (
     <section
       ref={trackRef}
-      className="relative w-full"
-      style={{ height: `${Math.max(total, 1) * SVH_PER_STEP * 100}vh` }}
+      className="relative w-full bg-white font-sans"
+      style={{ height: trackHeight }}
     >
       <div
-        className="sticky top-0 flex h-[100vh] w-full items-center overflow-hidden px-4 sm:px-6 md:px-12 lg:px-20"
-        style={{
-          fontFamily: "'manrope', system-ui, -apple-system, sans-serif",
-          background: 'linear-gradient(180deg, #0a3d22 0%, #073018 55%, #052611 100%)',
-        }}
+        className="sticky top-0 flex h-[100svh] w-full items-center overflow-hidden bg-white px-5 sm:px-8 md:px-12 lg:px-20"
+        style={{ contain: 'layout paint' }}
       >
-        <BackgroundLayer />
-
-        <div className="relative mx-auto w-full max-w-[1320px]">
-          <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-[clamp(2.5rem,6vw,5rem)]">
+        <div className="mx-auto w-full max-w-[1280px]">
+          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-[clamp(2.5rem,6vw,5rem)]">
             <Header
               eyebrow={eyebrow}
               heading={heading}
@@ -88,18 +96,17 @@ export default function ProcessStepsSection({
               footnote={footnote}
               activeIndex={activeIndex}
               total={total}
-              scrollYProgress={scrollYProgress}
             />
 
-            {/* Stage: fixed-ratio box; every card is absolutely stacked inside it */}
-            <div className="relative aspect-[4/3] max-h-[380px] w-full sm:aspect-[16/9] lg:aspect-[21/10] sm:max-h-[420px]">
+            {/* Stage: fixed ratio, cards stacked inside */}
+            <div className="relative isolate aspect-[4/3] max-h-[380px] w-full sm:aspect-[16/9] sm:max-h-[420px] lg:aspect-[21/10]">
               {steps.map((step, i) => (
                 <StepCard
                   key={step.number}
                   step={step}
                   index={i}
                   total={total}
-                  progress={scrollYProgress}
+                  progress={smoothProgress}
                   active={i === activeIndex}
                   reduceMotion={reduceMotion}
                 />
@@ -113,30 +120,7 @@ export default function ProcessStepsSection({
 }
 
 // ---------------------------------------------------------------------------
-// Static background layer
-// ---------------------------------------------------------------------------
-
-const BackgroundLayer = memo(function BackgroundLayer() {
-  return (
-    <div
-      aria-hidden="true"
-      className="pointer-events-none absolute inset-0"
-      style={{
-        backgroundImage: [
-          'radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(0,0,0,0.35) 100%)',
-          'radial-gradient(circle at 92% 0%, rgba(54,185,54,0.18) 0%, transparent 38%)',
-          'radial-gradient(circle at 0% 100%, rgba(10,77,38,0.35) 0%, transparent 34%)',
-          'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px)',
-          'linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
-        ].join(','),
-        backgroundSize: 'auto, auto, auto, 64px 64px, 64px 64px',
-      }}
-    />
-  );
-});
-
-// ---------------------------------------------------------------------------
-// Left column
+// Left column (Matched with Zajel style: side bars, uppercase, medium heading)
 // ---------------------------------------------------------------------------
 
 interface HeaderProps {
@@ -146,7 +130,6 @@ interface HeaderProps {
   footnote?: string;
   activeIndex: number;
   total: number;
-  scrollYProgress: MotionValue<number>;
 }
 
 function Header({
@@ -156,75 +139,44 @@ function Header({
   footnote,
   activeIndex,
   total,
-  scrollYProgress,
 }: HeaderProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="flex flex-col items-center text-center lg:items-start lg:text-left"
-    >
-      <span className="mb-2.5 inline-flex items-center gap-2.5 text-[11px] font-medium uppercase tracking-[0.24em] text-[#36B936] sm:mb-4 sm:text-[12px] lowercase">
-        <span className="h-px w-5 bg-[#36B936]" />
-        {eyebrow}
-      </span>
+    <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+      {/* Eyebrow with side lines matching WhyChooseZajel style */}
+      <div className="flex items-center justify-center lg:justify-start gap-3 mb-4">
+        <span className="w-6 h-[2px] bg-[#36B936]" />
+        <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
+          {eyebrow}
+        </span>
+        <span className="w-6 h-[2px] bg-[#36B936]" />
+      </div>
 
-      <h2 className="max-w-[560px] text-[clamp(1.5rem,4vw,3rem)] font-medium leading-[1.12] tracking-tight text-white lowercase">
+      <h2 className="max-w-[560px] text-2xl sm:text-3xl md:text-4xl text-[#0A4D26] font-medium tracking-tight mb-4">
         {heading}
       </h2>
 
-      <p className="mt-2.5 max-w-[420px] text-[clamp(0.85rem,1.8vw,1.1rem)] font-medium leading-relaxed tracking-wide text-[#8fae9c] sm:mt-4 lowercase">
+      <p className="max-w-[440px] text-[#2d6a4f] font-light text-sm sm:text-base leading-relaxed">
         {description}
       </p>
 
       {total > 1 ? (
-        <div className="mt-5 flex w-full max-w-[280px] flex-col items-center gap-2.5 sm:mt-8 lg:items-start">
-          <div className="flex w-full items-center gap-1.5">
-            {Array.from({ length: total }).map((_, i) => (
-              <ProgressSegment key={i} index={i} total={total} scrollYProgress={scrollYProgress} />
-            ))}
-          </div>
-          <span className="text-xs font-medium tabular-nums tracking-wide text-[#8fae9c]/60 sm:text-[13px]">
-            {String(activeIndex + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
-          </span>
-        </div>
+        <span className="mt-6 text-[13px] font-medium tracking-wide tabular-nums text-[#2d6a4f]/70 sm:mt-8">
+          {String(activeIndex + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+        </span>
       ) : (
         footnote && (
-          <div className="mt-6 hidden items-center gap-3 text-[13px] font-medium tracking-wide text-[#8fae9c]/60 lg:flex lowercase">
-            <span className="h-px w-8 bg-[#8fae9c]/30" />
+          <div className="mt-6 hidden items-center gap-3 text-[13px] font-normal text-[#2d6a4f]/70 lg:flex">
+            <span className="h-px w-8 bg-[#2d6a4f]/40" />
             {footnote}
           </div>
         )
       )}
-    </motion.div>
-  );
-}
-
-function ProgressSegment({
-  index,
-  total,
-  scrollYProgress,
-}: {
-  index: number;
-  total: number;
-  scrollYProgress: MotionValue<number>;
-}) {
-  const fill = useTransform(scrollYProgress, (v) => Math.min(Math.max(v * total - index, 0), 1));
-
-  return (
-    <span className="relative h-[3px] flex-1 overflow-hidden rounded-full bg-white/10">
-      <motion.span
-        className="absolute inset-0 origin-left rounded-full bg-[#36B936]"
-        style={{ scaleX: fill }}
-      />
-    </span>
+    </div>
   );
 }
 
 // ---------------------------------------------------------------------------
-// Step card with robust cross-fade keyframes optimized for mobile devices
+// Step card
 // ---------------------------------------------------------------------------
 
 interface StepCardProps {
@@ -244,55 +196,70 @@ const StepCard = memo(function StepCard({
   active,
   reduceMotion,
 }: StepCardProps) {
-  // Compute optimized keyframes to avoid layout shifts and guarantee buttery smooth performance
-  const input = useMemo(() => {
-    if (total === 1) return [0, 1];
-    const start = index / total;
-    const end = (index + 1) / total;
-    const buffer = 0.15 / total;
+  const frames = useMemo(() => {
+    if (total === 1) return { x: [0, 1], o: [1, 1], y: [0, 0], s: [1, 1] };
 
-    if (index === 0) {
-      return [0, Math.max(0, end - buffer), end];
+    const range = 1 / total;
+    const f = range * FADE;
+    const start = index * range;
+    const end = (index + 1) * range;
+    const isFirst = index === 0;
+    const isLast = index === total - 1;
+
+    const x: number[] = [];
+    const o: number[] = [];
+    const y: number[] = [];
+    const s: number[] = [];
+
+    if (isFirst) {
+      x.push(0);
+      o.push(1);
+      y.push(0);
+      s.push(1);
+    } else {
+      x.push(start + f, start + 2 * f);
+      o.push(0, 1);
+      y.push(24, 0);
+      s.push(0.97, 1);
     }
-    if (index === total - 1) {
-      return [Math.min(1, start - buffer), start, 1];
+
+    if (isLast) {
+      x.push(1);
+      o.push(1);
+      y.push(0);
+      s.push(1);
+    } else {
+      x.push(end - 2 * f, end - f);
+      o.push(1, 0);
+      y.push(0, -24);
+      s.push(1, 0.97);
     }
-    return [Math.min(1, start - buffer), start, Math.max(0, end - buffer), end];
+
+    return { x, o, y, s };
   }, [index, total]);
 
-  const opacity = useTransform(
-    progress,
-    input,
-    total === 1
-      ? [1, 1]
-      : index === 0
-      ? [1, 1, 0]
-      : index === total - 1
-      ? [0, 1, 1]
-      : [0, 1, 1, 0]
-  );
+  const opts = { ease: easeInOut };
+  const opacity = useTransform(progress, frames.x, frames.o, opts);
+  const yRaw = useTransform(progress, frames.x, frames.y, opts);
+  const scaleRaw = useTransform(progress, frames.x, frames.s, opts);
 
-  const y = useTransform(
-    progress,
-    input,
-    reduceMotion
-      ? [0, 0, 0, 0]
-      : total === 1
-      ? [0, 0]
-      : index === 0
-      ? [0, 0, 16]
-      : index === total - 1
-      ? [-16, 0, 0]
-      : [-16, 0, 0, 16]
-  );
+  const visibility = useTransform(opacity, (v) => (v < 0.01 ? 'hidden' : 'visible'));
+
+  const motionStyle = reduceMotion
+    ? { opacity, visibility }
+    : { opacity, visibility, y: yRaw, scale: scaleRaw };
 
   return (
     <motion.div
       aria-hidden={!active}
-      style={{ opacity, y, pointerEvents: active ? 'auto' : 'none' }}
-      className="absolute inset-0 overflow-hidden rounded-2xl border border-white/10
-                 bg-gradient-to-br from-[#36B936] to-[#0a4d26]
-                 shadow-[0_16px_40px_-16px_rgba(0,0,0,0.5)] will-change-[transform,opacity] sm:rounded-[28px]"
+      style={{
+        ...motionStyle,
+        pointerEvents: active ? 'auto' : 'none',
+        backfaceVisibility: 'hidden',
+        WebkitBackfaceVisibility: 'hidden',
+        transformOrigin: '50% 50%',
+      }}
+      className="absolute inset-0 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#36B936] to-[#0a4d26] shadow-[0_16px_36px_-16px_rgba(10,77,38,0.45)] will-change-[transform,opacity] sm:rounded-[2rem]"
     >
       <div
         className="pointer-events-none absolute inset-0"
@@ -301,21 +268,21 @@ const StepCard = memo(function StepCard({
 
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute -top-[4%] right-[3%] select-none text-[clamp(4.5rem,13vw,9rem)] font-medium leading-none tabular-nums text-white/10"
+        className="pointer-events-none absolute -top-[4%] right-[3%] select-none text-[clamp(4.5rem,13vw,9rem)] font-light leading-none tabular-nums text-white/10"
       >
         {step.number}
       </span>
 
       <div className="relative flex h-full flex-col justify-end gap-2 p-[clamp(1.25rem,4vw,2.5rem)] sm:gap-3">
-        <span className="inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.2em] text-white/60 sm:text-[11px] lowercase">
-          step {step.number} <span className="text-white/30">/ {String(total).padStart(2, '0')}</span>
+        <span className="inline-flex items-center gap-2 text-[12px] font-medium tracking-wider uppercase text-white/70 sm:text-[13px]">
+          step {step.number} <span className="text-white/30 font-light">/ {String(total).padStart(2, '0')}</span>
         </span>
 
-        <h3 className="max-w-[90%] text-[clamp(1.15rem,2.8vw,2.1rem)] font-medium tracking-tight text-white sm:max-w-[85%] lowercase">
+        <h3 className="max-w-[90%] text-[clamp(1.25rem,2.8vw,2.05rem)] font-medium leading-snug tracking-tight text-white sm:max-w-[85%]">
           {step.title}
         </h3>
 
-        <p className="line-clamp-3 max-w-[95%] text-[clamp(0.8rem,1.7vw,1.05rem)] font-medium leading-relaxed tracking-wide text-white/80 sm:line-clamp-none sm:max-w-[85%] lowercase">
+        <p className="line-clamp-3 max-w-[95%] text-[clamp(0.85rem,1.7vw,1.02rem)] font-light leading-[1.6] text-white/85 sm:line-clamp-none sm:max-w-[85%]">
           {step.description}
         </p>
       </div>

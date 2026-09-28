@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import type { SolutionCard } from "@/data/warehousing-solutions";
+import type { SolutionCard } from "./types";
 
 const cx = (...classes: Array<string | false | undefined>) => classes.filter(Boolean).join(" ");
 const ANIMATE_BASE = "transition-all duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)]";
@@ -11,6 +11,7 @@ const fade = (isVisible: boolean) => (isVisible ? "opacity-100 translate-y-0" : 
 interface SolutionCardTileProps extends SolutionCard {
   isVisible: boolean;
   delayOffset: number;
+  sizes?: string;
 }
 
 export default function SolutionCardTile({
@@ -18,10 +19,11 @@ export default function SolutionCardTile({
   image,
   title,
   description,
-  buttonLabel,
-  buttonUrl,
+  buttonLabel = "Learn More",
+  buttonUrl = "/contact",
   isVisible,
   delayOffset,
+  sizes = "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw",
 }: SolutionCardTileProps) {
   return (
     <div
@@ -32,22 +34,13 @@ export default function SolutionCardTile({
       )}
       style={{ transitionDelay: `${150 + delayOffset}ms` }}
     >
-      {/* Photo — Properly sized across mobile, foldables, and desktops */}
       <div className="relative shrink-0 h-36 sm:h-40 lg:h-44 w-full">
-        <Image
-          src={image}
-          alt={title}
-          fill
-          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-          loading="lazy"
-          className="object-cover"
-        />
+        <Image src={image} alt={title} fill sizes={sizes} loading="lazy" className="object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
 
-        {/* Overlapping Icon Badge */}
         <div
           className={cx(
-            "absolute -bottom-6 left-5 sm:left-6 lg:left-7 w-12 h-12 sm:w-14 sm:h-14 bg-white border border-gray-100 rounded-full flex items-center justify-center shadow-md",
+            "absolute -bottom-6 left-5 sm:left-6 lg:left-7 w-12 h-12 sm:w-14 sm:h-14 bg-white border border-gray-100 rounded-full flex items-center justify-center shadow-md text-[#36B936]",
             ANIMATE_BASE,
             isVisible ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-45 scale-50"
           )}
@@ -57,7 +50,6 @@ export default function SolutionCardTile({
         </div>
       </div>
 
-      {/* Content Container */}
       <div className="flex flex-col flex-1 p-5 pt-10 sm:p-6 sm:pt-11 lg:p-8 lg:pt-11">
         <h3
           className={cx(
@@ -72,7 +64,7 @@ export default function SolutionCardTile({
 
         <p
           className={cx(
-            "text-[#0D2A22]/70 font-normal leading-relaxed mt-2.5 flex-1 text-[13px] sm:text-[14px] lg:text-[14px] whitespace-pre-line",
+            "text-[#0D2A22]/70 font-normal leading-relaxed mt-2.5 flex-1 text-[13px] sm:text-[14px] whitespace-pre-line",
             ANIMATE_BASE,
             fade(isVisible)
           )}
@@ -81,10 +73,13 @@ export default function SolutionCardTile({
           {description}
         </p>
 
-        <div className={cx("mt-5 sm:mt-6", ANIMATE_BASE, fade(isVisible))} style={{ transitionDelay: `${600 + delayOffset}ms` }}>
+        <div
+          className={cx("mt-5 sm:mt-6", ANIMATE_BASE, fade(isVisible))}
+          style={{ transitionDelay: `${600 + delayOffset}ms` }}
+        >
           <Link
             href={buttonUrl}
-            className="bg-[#36B936] hover:bg-[#31a631] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 text-[#0B140F] rounded-full inline-flex items-center gap-2 px-4.5 py-2.5 sm:px-5 sm:py-3 text-xs sm:text-[13px] shadow-sm font-medium tracking-wide"
+            className="bg-[#36B936] hover:bg-[#31a631] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 text-[#0B140F] rounded-full inline-flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 text-xs sm:text-[13px] shadow-sm font-medium tracking-wide"
           >
             <span>{buttonLabel}</span>
             <span aria-hidden="true">→</span>

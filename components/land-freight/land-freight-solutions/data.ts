@@ -9,7 +9,7 @@ export const LAND_FREIGHT_CARDS: LandFreightCard[] = [
   {
     id: 'ftl',
     Icon: TruckIcon,
-    image: '/landfreight/land-freight-solutions/ftl.png',
+    image: '/land-freight/ChatGPT Image Sep 9, 2026, 11_48_16 AM.png',
     title: 'Full Truckload (FTL)',
     description: 'A dedicated truck for your cargo alone — suited to large or high-volume shipments.',
     buttonLabel: 'Learn More',
@@ -18,7 +18,7 @@ export const LAND_FREIGHT_CARDS: LandFreightCard[] = [
   {
     id: 'ltl',
     Icon: BoxesIcon,
-    image: '/landfreight/land-freight-solutions/ltl.png',
+    image: '/land-freight/ChatGPT Image Sep 9, 2026, 11_54_05 AM.png',
     title: 'Less than Truckload (LTL)',
     description: "Shared truck space for smaller shipments — cost-effective when you don't need a full truck.",
     buttonLabel: 'Learn More',
