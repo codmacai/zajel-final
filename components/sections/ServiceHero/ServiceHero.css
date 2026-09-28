@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&display=swap');
+
+.hero-font {
+  font-family: 'Manrope', sans-serif;
+}
+
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroScaleIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes heroDockRise {
+  from { opacity: 0; transform: translateY(calc(50% + 28px)); }
+  to   { opacity: 1; transform: translateY(50%); }
+}
+
+.anim-title-d    { animation: heroRise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.15s; }
+.anim-subtitle-d { animation: heroRise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.25s; }
+.anim-btn-d      { animation: heroRise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.35s; }
+.anim-banner-d   { animation: heroScaleIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.05s; }
+.anim-dock-d     { animation: heroDockRise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.45s; transform: translateY(50%); }
+
+.dock-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(252,253,252,0.94) 100%);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.7);
+  position: relative;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-title-d, .anim-subtitle-d, .anim-btn-d, .anim-banner-d {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .anim-dock-d {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: translateY(50%) !important;
+  }
+}
