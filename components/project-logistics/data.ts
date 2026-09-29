@@ -5,7 +5,7 @@ export const HERO: HeroContent = {
   title: 'Oversized & Project Cargo Logistics UAE: Planned, Permitted, Delivered',
   description:
     "Reactors, blades, transformers, cranes — cargo that won't fit standard freight. Zajel's project team engineers the route, clears the permits, and moves it, corridor by corridor.",
-  image: '',
+  image: '/Homepage/projects/magnific_create-an-ultrarealistic-_jU2tnyyLD0 (1).jpg',
   stats: [
     { value: '186+', label: 'project moves delivered' },
     { value: '46', label: 'countries worked in' },
