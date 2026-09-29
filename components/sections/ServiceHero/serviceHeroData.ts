@@ -76,7 +76,7 @@ export const serviceHeroData: Record<"customs" | "warehouse" | "industry" | "net
     stats: [
       { type: "numeric", value: 195, suffix: "+", label: "Countries Covered" },
       { type: "numeric", value: 500, suffix: "+", label: "Destinations Worldwide" },
-      { type: "numeric", value: 45, suffix: "M+", label: "Shipments Delivered" },
+      { type: "numeric", value: 60, suffix: "M+", label: "Shipments Delivered" },
       { type: "numeric", value: 4, label: "ISO Certifications" },
     ],
   },
