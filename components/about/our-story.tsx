@@ -1,7 +1,6 @@
 'use client';
 
 import type { FC } from 'react';
-import Image from 'next/image';
 import { motion, type Variants } from 'framer-motion';
 
 // ---------------------------------------------------------------------------
@@ -21,9 +20,6 @@ const defaultContent = {
     'We were founded in Dubai in 2008, starting with a specific and demanding mandate: delivering Emirates IDs and passports on behalf of UAE government entities. That work required precision, security, and consistency from day one, standards that still shape how we operate today.',
   paragraphGrowth:
     "Since then, we've grown from a single government logistics service into a full logistics company in the UAE, supporting individuals, businesses, and government entities alike:",
-  // Swap for your own photo, e.g. '/about/our-story.jpg' (files live in /public)
-  imageSrc: '/about/gallery/magnific_remove-texgt_Cqw0eUHEEy.png',
-  imageAlt: 'Zajel fleet and warehouse operations',
   solutions: [
     {
       title: 'Individual Solutions',
@@ -64,20 +60,12 @@ const OurStory: FC = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={containerVariants}
-        className="mx-auto w-full max-w-[1300px]"
+        className="mx-auto w-full max-w-[1100px]"
       >
-        {/*
-          Two-column editorial grid (desktop):
-            row 1: eyebrow (left)  |  big statement (right)
-            row 2: image (left)    |  small supporting text (right)
-          Stacks in reading order on mobile: eyebrow, statement, text, image.
-        */}
-        <div className="grid grid-cols-1 gap-x-12 gap-y-6 lg:grid-cols-12 lg:gap-x-16 lg:gap-y-24">
+        {/* Left-aligned editorial text flow */}
+        <div className="flex flex-col items-start space-y-6 sm:space-y-8">
           {/* Eyebrow */}
-          <motion.div
-            variants={itemVariants}
-            className="lg:col-span-5 lg:col-start-1 lg:row-start-1 lg:pt-3"
-          >
+          <motion.div variants={itemVariants} className="pt-3">
             <div className="flex items-center gap-2.5">
               <span aria-hidden="true" className="h-[7px] w-[7px] shrink-0" style={{ backgroundColor: LIME }} />
               <span
@@ -92,32 +80,16 @@ const OurStory: FC = () => {
           {/* Big statement */}
           <motion.p
             variants={itemVariants}
-            className="text-[1.5rem] font-normal leading-[1.22] tracking-[-0.02em] [text-wrap:pretty] sm:text-[1.875rem] md:text-4xl lg:col-span-7 lg:col-start-6 lg:row-start-1 lg:text-[2.25rem] xl:text-[2.6rem]"
+            className="max-w-[42ch] text-[1.5rem] font-normal leading-[1.22] tracking-[-0.02em] [text-wrap:pretty] sm:text-[1.875rem] md:text-4xl lg:text-[2.25rem] xl:text-[2.6rem]"
             style={{ color: FOREST }}
           >
             {data.paragraphFounding}
           </motion.p>
 
-          {/* Image (bottom-left on desktop, last on mobile) */}
-          <motion.div
-            variants={itemVariants}
-            className="order-last mt-4 lg:order-none lg:col-span-5 lg:col-start-1 lg:row-start-2 lg:mt-0 lg:self-end"
-          >
-            <div className="relative aspect-[4/3] w-full max-w-[420px] overflow-hidden rounded-xl border border-[#0A4D26]/10 bg-[#F4F7F4] sm:rounded-2xl">
-              <Image
-                src={data.imageSrc}
-                alt={data.imageAlt}
-                fill
-                sizes="(min-width: 640px) 420px, 100vw"
-                className="object-cover object-center"
-              />
-            </div>
-          </motion.div>
-
-          {/* Small supporting text (bottom-right on desktop) */}
+          {/* Supporting text */}
           <motion.p
             variants={itemVariants}
-            className="max-w-[54ch] text-[11px] font-medium uppercase leading-[1.8] tracking-[0.06em] sm:text-xs lg:col-span-7 lg:col-start-6 lg:row-start-2 lg:self-end"
+            className="max-w-[65ch] text-[11px] font-medium uppercase leading-[1.8] tracking-[0.06em] sm:text-xs"
             style={{ color: `${FOREST}B3` }}
           >
             {data.paragraphGrowth}

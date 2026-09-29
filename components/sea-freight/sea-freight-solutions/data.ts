@@ -83,7 +83,7 @@ export const SEA_FREIGHT_CARDS: FreightCard[] = [
   {
     id: 'temperature-controlled',
     Icon: ReeferIcon,
-    image: '/seafreight/reefer.png',
+    image: '/sea-freight/solutions/ChatGPT Image Sep 29, 2026, 12_46_55 PM.png',
     title: 'Reefer Containers',
     description: 'Temperature-controlled containers for perishables and sensitive cargo.',
     buttonLabel: 'Request a Quote',
