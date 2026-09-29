@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { dockItems } from "@/data/dockItems";
+import { TRACK_ROUTES } from "@/components/tracking/data";
 import DockItem from "./DockItem"; // desktop dock item
 import MobileDock from "./MobileDock"; // mobile notch dock (separate file)
 import styles from "./Hero.module.css";
@@ -13,14 +14,14 @@ const HeroSection: React.FC = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
+  // A tracking number goes straight to the results page (/trackresults?q=...).
+  // An empty box just opens the tracking search page (/track).
   const handleTrackSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const input = e.currentTarget.querySelector("input");
-    if (input && input.value.trim()) {
-      router.push(`/track?awb=${encodeURIComponent(input.value.trim())}`);
-    } else {
-      router.push("/track");
-    }
+    const value = String(new FormData(e.currentTarget).get("awb") ?? "").trim();
+    router.push(
+      value ? `${TRACK_ROUTES.results}?q=${encodeURIComponent(value)}` : TRACK_ROUTES.search
+    );
   };
 
   const defaultActiveIndex = dockItems.findIndex((item) => item.primary);
@@ -46,9 +47,7 @@ const HeroSection: React.FC = () => {
               onReset={resetItem}
             />
             {i < dockItems.length - 1 && (
-              <span
-                className={`${styles.dockDivider} w-px self-center flex-shrink-0 my-3`}
-              />
+              <span className={`${styles.dockDivider} w-px self-center flex-shrink-0 my-3`} />
             )}
           </React.Fragment>
         );
@@ -64,9 +63,6 @@ const HeroSection: React.FC = () => {
       >
         {/* Single centered column: every block shares the same width and center line */}
         <div className="mx-auto flex w-full max-w-[400px] flex-col items-center text-center">
-          {/* Eyebrow */}
-          
-
           {/* Title */}
           <h1 className="mt-3 text-balance text-[clamp(1.625rem,7vw,2rem)] font-medium leading-[1.15] tracking-tight text-[#0A4D26]">
             {t("hero.title.line1", "Intelligent Movement,")}
@@ -82,13 +78,16 @@ const HeroSection: React.FC = () => {
             )}
           </p>
 
-          {/* Track form (medium size, same width as the image) */}
+          {/* Track form */}
           <form
             onSubmit={handleTrackSubmit}
             className="mt-5 flex h-12 w-full items-center rounded-full border border-[#0A4D26]/15 bg-white p-1 shadow-sm"
           >
             <input
               type="text"
+              name="awb"
+              aria-label={t("hero.search.placeholder", "Enter AWB number to track")}
+              autoComplete="off"
               placeholder={t("hero.search.placeholder", "Enter AWB number to track")}
               className={`${styles.n2Style} h-full min-w-0 flex-1 bg-transparent px-4 text-left text-sm text-[#0A4D26] outline-none placeholder:text-[#9CA3AF]`}
             />
@@ -157,6 +156,9 @@ const HeroSection: React.FC = () => {
                   </span>
                   <input
                     type="text"
+                    name="awb"
+                    aria-label={t("hero.search.placeholder", "Enter your AWB number to track")}
+                    autoComplete="off"
                     placeholder={t("hero.search.placeholder", "Enter your AWB number to track")}
                     className={`${styles.n2Style} min-w-0 flex-1 bg-transparent px-4 text-[clamp(0.8rem,0.85vw,0.875rem)] outline-none placeholder:text-[#9CA3AF]`}
                   />

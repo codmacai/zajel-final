@@ -37,7 +37,7 @@ export const dockItems: DockItemConfig[] = [
     primary: true,
   },
   {
-    href: "/businesssolutions",
+    href: "/business-solutions",
     icon: Briefcase,
     labelKey: "hero.actions.business.label",
     labelDefault: "Business Solutions",

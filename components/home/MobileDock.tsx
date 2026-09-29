@@ -16,8 +16,13 @@ const SHORT_LABELS: Record<string, string> = {
   "/quotation": "Rates",
   "/track": "Track",
   "/send-shipment": "Send",
-  "/businesssolutions": "Business",
+  "/business-solutions": "Business",
   "/find-us": "Find Us",
+};
+
+// Extra pages that should keep a dock item highlighted, keyed by the item's href.
+const RELATED_PATHS: Record<string, string[]> = {
+  "/track": ["/trackresults", "/shipment-timeline"],
 };
 
 export default function MobileDock() {
@@ -35,11 +40,16 @@ export default function MobileDock() {
   const labelFor = (item: DockItemConfig) =>
     t(item.labelKey.replace(/\.label$/, ".short"), SHORT_LABELS[item.href] ?? item.labelDefault);
 
-  const isCurrent = (href: string) => pathname === href || pathname?.startsWith(`${href}/`);
+  // An item is "current" on its own href or any related page listed in RELATED_PATHS
+  // (e.g. Track stays highlighted on /trackresults and /shipment-timeline).
+  const isCurrent = (item: DockItemConfig) =>
+    [item.href, ...(RELATED_PATHS[item.href] ?? [])].some(
+      (p) => pathname === p || pathname?.startsWith(`${p}/`)
+    );
 
   const SideItem = ({ item }: { item: DockItemConfig }) => {
     const Icon = item.icon;
-    const active = isCurrent(item.href);
+    const active = isCurrent(item);
     return (
       <Link
         href={item.href}
@@ -118,7 +128,7 @@ export default function MobileDock() {
         {/* Centre action: centred on the bar's top edge */}
         <Link
           href={center.href}
-          aria-current={isCurrent(center.href) ? "page" : undefined}
+          aria-current={isCurrent(center) ? "page" : undefined}
           aria-label={labelFor(center)}
           className="group absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 outline-none"
         >
