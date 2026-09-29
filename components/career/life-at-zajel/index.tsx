@@ -5,10 +5,10 @@ import { Reveal, Stagger, StaggerItem } from '../shared/motion';
 // Below the fold -> Next lazy-loads these by default. `sizes` tells the browser
 // the rendered width at each breakpoint so phones never download desktop images.
 const PHOTOS = {
-  exhibition: { src: '/career/life-exhibition.png', alt: 'Zajel Exhibition' },
-  team: { src: '/career/life-team.png', alt: 'Team' },
-  award: { src: '/career/life-award.png', alt: 'Employee Award' },
-  operations: { src: '/career/life-operations.png', alt: 'Operations' },
+  exhibition: { src: '/career/image copy 8.png', alt: 'Zajel Exhibition' },
+  team: { src: '/career/image copy 9.png', alt: 'Team' },
+  award: { src: '/career/image copy 10.png', alt: 'Employee Award' },
+  operations: { src: '/career/image copy 11.png', alt: 'Operations' },
 } as const;
 
 interface PhotoProps {
