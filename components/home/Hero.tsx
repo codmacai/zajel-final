@@ -65,13 +65,7 @@ const HeroSection: React.FC = () => {
         {/* Single centered column: every block shares the same width and center line */}
         <div className="mx-auto flex w-full max-w-[400px] flex-col items-center text-center">
           {/* Eyebrow */}
-          <div className="flex items-center justify-center gap-2">
-            <span className="h-[2px] w-6 bg-[#36B936]" />
-            <span className="text-xs font-medium uppercase tracking-wider text-[#36B936]">
-              {t("hero.eyebrow", "Zajel Express")}
-            </span>
-            <span className="h-[2px] w-6 bg-[#36B936]" />
-          </div>
+          
 
           {/* Title */}
           <h1 className="mt-3 text-balance text-[clamp(1.625rem,7vw,2rem)] font-medium leading-[1.15] tracking-tight text-[#0A4D26]">
