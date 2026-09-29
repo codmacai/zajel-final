@@ -1,6 +1,7 @@
 'use client';
 
 import type { FC } from 'react';
+import Image from 'next/image';
 import { motion, type Variants } from 'framer-motion';
 
 // ---------------------------------------------------------------------------
@@ -20,6 +21,9 @@ const defaultContent = {
     'We were founded in Dubai in 2008, starting with a specific and demanding mandate: delivering Emirates IDs and passports on behalf of UAE government entities. That work required precision, security, and consistency from day one, standards that still shape how we operate today.',
   paragraphGrowth:
     "Since then, we've grown from a single government logistics service into a full logistics company in the UAE, supporting individuals, businesses, and government entities alike:",
+  // Swap for your own photo, e.g. '/about/our-story.jpg' (files live in /public)
+  imageSrc: '/about/gallery/magnific_remove-texgt_Cqw0eUHEEy.png',
+  imageAlt: 'Zajel fleet and warehouse operations',
   solutions: [
     {
       title: 'Individual Solutions',
@@ -40,12 +44,12 @@ const defaultContent = {
 // ---------------------------------------------------------------------------
 // Animation variants
 // ---------------------------------------------------------------------------
-const staggerContainerVariants: Variants = {
+const containerVariants: Variants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.12 } },
 };
 
-const fadeUpItemVariants: Variants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE } },
 };
@@ -54,79 +58,104 @@ const OurStory: FC = () => {
   const data = defaultContent;
 
   return (
-    <section className="w-full relative overflow-hidden py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-12 bg-white font-['Manrope',sans-serif]">
-      {/* Background ambient glows */}
-      <div
-        className="absolute left-[-5%] top-[-5%] w-[45%] h-[65%] pointer-events-none opacity-50 blur-[120px]"
-        style={{ background: 'radial-gradient(circle, rgba(10,77,38,0.05) 0%, rgba(10,77,38,0) 70%)' }}
-      />
-
-      <div className="max-w-[1200px] mx-auto relative z-10">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={staggerContainerVariants}
-          className="flex flex-col"
-        >
-          {/* Top section: eyebrow + statement paragraphs */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-16 sm:mb-20 lg:mb-24 items-start">
-            {/* Eyebrow label */}
-            <motion.div variants={fadeUpItemVariants} className="lg:col-span-3 pt-1">
-              <div className="flex items-center gap-3">
-                <span className="h-[2px] w-6 sm:w-8" style={{ backgroundColor: LIME }} />
-                <span className="text-xs sm:text-sm font-medium tracking-widest uppercase" style={{ color: LIME }}>
-                  {data.eyebrow}
-                </span>
-              </div>
-            </motion.div>
-
-            {/* Story paragraphs */}
-            <div className="lg:col-span-9 flex flex-col gap-6 sm:gap-8">
-              <motion.p
-                variants={fadeUpItemVariants}
-                className="font-medium tracking-tight leading-[1.15] text-2xl sm:text-3xl md:text-5xl"
+    <section className="w-full overflow-hidden bg-white px-4 py-14 font-['Manrope',sans-serif] sm:px-6 sm:py-20 lg:px-12 lg:py-28">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+        variants={containerVariants}
+        className="mx-auto w-full max-w-[1300px]"
+      >
+        {/*
+          Two-column editorial grid (desktop):
+            row 1: eyebrow (left)  |  big statement (right)
+            row 2: image (left)    |  small supporting text (right)
+          Stacks in reading order on mobile: eyebrow, statement, text, image.
+        */}
+        <div className="grid grid-cols-1 gap-x-12 gap-y-6 lg:grid-cols-12 lg:gap-x-16 lg:gap-y-24">
+          {/* Eyebrow */}
+          <motion.div
+            variants={itemVariants}
+            className="lg:col-span-5 lg:col-start-1 lg:row-start-1 lg:pt-3"
+          >
+            <div className="flex items-center gap-2.5">
+              <span aria-hidden="true" className="h-[7px] w-[7px] shrink-0" style={{ backgroundColor: LIME }} />
+              <span
+                className="text-[11px] font-medium uppercase leading-none tracking-[0.1em] sm:text-xs"
                 style={{ color: FOREST }}
               >
-                {data.paragraphFounding}
-              </motion.p>
-
-              <motion.p
-                variants={fadeUpItemVariants}
-                className="font-light text-base sm:text-lg leading-relaxed max-w-3xl"
-                style={{ color: `${FOREST}B3` }}
-              >
-                {data.paragraphGrowth}
-              </motion.p>
+                {data.eyebrow}
+              </span>
             </div>
-          </div>
-
-          {/* Minimal Solutions grid */}
-          <motion.div
-            variants={fadeUpItemVariants}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 pt-10 sm:pt-14 border-t border-[#0A4D26]/15"
-          >
-            {data.solutions.map((item, idx) => (
-              <div
-                key={idx}
-                className="flex flex-col pl-4 sm:pl-5 border-l border-[#0A4D26]/20 transition-colors duration-300 hover:border-[#0A4D26]"
-              >
-                <span className="text-[13px] font-light tracking-wide mb-3" style={{ color: `${FOREST}80` }}>
-                  ({idx + 1})
-                </span>
-
-                <h3 className="text-base sm:text-lg font-medium tracking-tight mb-2" style={{ color: FOREST }}>
-                  {item.title}
-                </h3>
-                
-                <p className="font-light text-xs sm:text-sm leading-relaxed mt-auto" style={{ color: `${FOREST}B3` }}>
-                  {item.description}
-                </p>
-              </div>
-            ))}
           </motion.div>
-        </motion.div>
-      </div>
+
+          {/* Big statement */}
+          <motion.p
+            variants={itemVariants}
+            className="text-[1.5rem] font-normal leading-[1.22] tracking-[-0.02em] [text-wrap:pretty] sm:text-[1.875rem] md:text-4xl lg:col-span-7 lg:col-start-6 lg:row-start-1 lg:text-[2.25rem] xl:text-[2.6rem]"
+            style={{ color: FOREST }}
+          >
+            {data.paragraphFounding}
+          </motion.p>
+
+          {/* Image (bottom-left on desktop, last on mobile) */}
+          <motion.div
+            variants={itemVariants}
+            className="order-last mt-4 lg:order-none lg:col-span-5 lg:col-start-1 lg:row-start-2 lg:mt-0 lg:self-end"
+          >
+            <div className="relative aspect-[4/3] w-full max-w-[420px] overflow-hidden rounded-xl border border-[#0A4D26]/10 bg-[#F4F7F4] sm:rounded-2xl">
+              <Image
+                src={data.imageSrc}
+                alt={data.imageAlt}
+                fill
+                sizes="(min-width: 640px) 420px, 100vw"
+                className="object-cover object-center"
+              />
+            </div>
+          </motion.div>
+
+          {/* Small supporting text (bottom-right on desktop) */}
+          <motion.p
+            variants={itemVariants}
+            className="max-w-[54ch] text-[11px] font-medium uppercase leading-[1.8] tracking-[0.06em] sm:text-xs lg:col-span-7 lg:col-start-6 lg:row-start-2 lg:self-end"
+            style={{ color: `${FOREST}B3` }}
+          >
+            {data.paragraphGrowth}
+          </motion.p>
+        </div>
+
+        {/* Solutions */}
+        <motion.ul
+          variants={itemVariants}
+          className="mt-14 grid grid-cols-1 gap-8 border-t border-[#0A4D26]/15 pt-8 sm:mt-16 sm:gap-10 sm:pt-10 md:grid-cols-3 md:gap-8 lg:mt-20 lg:gap-12"
+        >
+          {data.solutions.map((item, idx) => (
+            <li
+              key={item.title}
+              className="flex flex-col border-l border-[#0A4D26]/20 pl-4 transition-colors duration-300 hover:border-[#0A4D26] sm:pl-5"
+            >
+              <span
+                aria-hidden="true"
+                className="mb-3 text-[11px] font-medium leading-none tracking-wide"
+                style={{ color: `${FOREST}80` }}
+              >
+                ({idx + 1})
+              </span>
+
+              <h3
+                className="mb-2 text-base font-medium leading-snug tracking-tight sm:text-lg"
+                style={{ color: FOREST }}
+              >
+                {item.title}
+              </h3>
+
+              <p className="text-[13px] font-light leading-relaxed sm:text-sm" style={{ color: `${FOREST}B3` }}>
+                {item.description}
+              </p>
+            </li>
+          ))}
+        </motion.ul>
+      </motion.div>
     </section>
   );
 };

@@ -60,44 +60,56 @@ const HeroSection: React.FC = () => {
     <>
       {/* MOBILE LAYOUT (< md) */}
       <section
-        className={`md:hidden w-full bg-[#FAFCFA] ${styles.heroFont} px-4 pb-32 ${styles.mobileHero}`}
+        className={`md:hidden flex min-h-svh w-full flex-col justify-center bg-[#FAFCFA] ${styles.heroFont} px-5 pb-28 ${styles.mobileHero}`}
       >
-        <div className="mx-auto flex w-full max-w-[480px] flex-col items-center text-center">
-          <div className="w-full">
-            <div className="mb-3 flex items-center justify-center gap-2">
-              <span className="h-[2px] w-6 bg-[#36B936]" />
-              <span className="text-[11px] font-medium uppercase tracking-wider text-[#36B936]">
-                {t("hero.eyebrow", "Zajel Express")}
-              </span>
-            </div>
-
-            <h1 className="text-2xl font-medium leading-[1.18] tracking-tight text-[#0A4D26] sm:text-3xl">
-              {t("hero.title.line1", "Intelligent Movement,")}
-              <br />
-              {t("hero.title.line2", "Nationwide and Beyond")}
-            </h1>
-
-            <form
-              onSubmit={handleTrackSubmit}
-              className="mt-5 flex w-full items-center rounded-full border border-[#0A4D26]/15 bg-white p-1 shadow-sm"
-            >
-              <input
-                type="text"
-                placeholder={t("hero.search.placeholder", "Enter AWB number to track")}
-                className={`${styles.n2Style} min-w-0 flex-1 bg-transparent px-4 text-xs text-[#0A4D26] outline-none placeholder:text-[#9CA3AF]`}
-              />
-              <button
-                type="submit"
-                className="flex-shrink-0 rounded-full bg-[#36B936] px-5 py-2.5 text-xs font-medium text-white transition-colors active:bg-[#2ea22e]"
-              >
-                {t("hero.search.button", "Track")}
-              </button>
-            </form>
+        {/* Single centered column: every block shares the same width and center line */}
+        <div className="mx-auto flex w-full max-w-[400px] flex-col items-center text-center">
+          {/* Eyebrow */}
+          <div className="flex items-center justify-center gap-2">
+            <span className="h-[2px] w-6 bg-[#36B936]" />
+            <span className="text-xs font-medium uppercase tracking-wider text-[#36B936]">
+              {t("hero.eyebrow", "Zajel Express")}
+            </span>
+            <span className="h-[2px] w-6 bg-[#36B936]" />
           </div>
 
-          <div className="relative mt-6 h-[clamp(220px,36svh,340px)] w-full overflow-hidden rounded-[1.5rem] border border-[#0A3D2D]/20 shadow-md">
+          {/* Title */}
+          <h1 className="mt-3 text-balance text-[clamp(1.625rem,7vw,2rem)] font-medium leading-[1.15] tracking-tight text-[#0A4D26]">
+            {t("hero.title.line1", "Intelligent Movement,")}
+            <br />
+            {t("hero.title.line2", "Nationwide and Beyond")}
+          </h1>
+
+          {/* Description */}
+          <p className="mt-3 max-w-[34ch] text-balance text-sm font-light leading-relaxed text-[#0A4D26]/70">
+            {t(
+              "hero.subtitle",
+              "From a single shipment to a full supply chain, Zajel moves what matters, across the UAE and to 200+ countries beyond it"
+            )}
+          </p>
+
+          {/* Track form (medium size, same width as the image) */}
+          <form
+            onSubmit={handleTrackSubmit}
+            className="mt-5 flex h-12 w-full items-center rounded-full border border-[#0A4D26]/15 bg-white p-1 shadow-sm"
+          >
+            <input
+              type="text"
+              placeholder={t("hero.search.placeholder", "Enter AWB number to track")}
+              className={`${styles.n2Style} h-full min-w-0 flex-1 bg-transparent px-4 text-left text-sm text-[#0A4D26] outline-none placeholder:text-[#9CA3AF]`}
+            />
+            <button
+              type="submit"
+              className="h-full flex-shrink-0 rounded-full bg-[#36B936] px-5 text-sm font-medium text-white transition-colors active:bg-[#2ea22e]"
+            >
+              {t("hero.search.button", "Track")}
+            </button>
+          </form>
+
+          {/* Image */}
+          <div className="relative mt-6 aspect-[4/3] max-h-[34svh] w-full overflow-hidden rounded-[1.5rem] border border-[#0A3D2D]/20 shadow-md">
             <Image
-              src="/warehouse/magnific_aeroplane-should-be-white_ksi8V3F16B.png"
+              src="/Homepage/WhatsApp Image 2026-08-27 at 14.31.53.jpeg"
               alt="Cargo ship and airplane"
               fill
               priority
@@ -121,7 +133,7 @@ const HeroSection: React.FC = () => {
             className={`${styles.animBannerD} relative h-[clamp(440px,40vw,620px)] w-full overflow-hidden rounded-[clamp(20px,2vw,32px)] bg-gray-800 shadow-sm`}
           >
             <Image
-              src="/hero-banner.jpg"
+              src="/Homepage/WhatsApp Image 2026-08-27 at 14.31.53.jpeg"
               alt="Cargo ship and airplane"
               fill
               priority

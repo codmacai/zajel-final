@@ -4,45 +4,47 @@ import { motion } from 'framer-motion';
 import { HEADING, BUSINESS_CARDS } from './data';
 import BusinessGetsCard from './business-gets-card';
 
-const SMOOTH_TRANSITION = {
-  type: "spring" as const,
-  damping: 25,
-  stiffness: 120,
-};
+const LIGHT_GREEN = '#36B936';
 
-const LIGHT_GREEN = "#36B936";
+const fade = (delay = 0) => ({
+  initial: { opacity: 0, y: 10 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.5, ease: 'easeOut' as const, delay },
+});
 
 const BusinessGetsSection = () => {
   return (
-    <section className="w-full py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-10 bg-white overflow-hidden font-sans">
-      <div className="max-w-[1200px] mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ ...SMOOTH_TRANSITION, duration: 0.8 }}
-          className="text-center mb-12 sm:mb-16"
-        >
-          <div className="mb-3 sm:mb-4 flex items-center justify-center gap-3">
-            <span className="h-[2px] w-6 sm:w-8" style={{ backgroundColor: LIGHT_GREEN }} />
-            <span className="text-xs sm:text-sm font-medium tracking-wider uppercase" style={{ color: LIGHT_GREEN }}>
+    <section className="relative w-full overflow-hidden bg-white py-12 font-sans sm:py-20 lg:py-28 xl:py-32">
+      <div className="relative z-10 mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-10">
+        {/* Header */}
+        <div className="mx-auto mb-10 max-w-[680px] text-center sm:mb-14 lg:mb-16">
+          <motion.div {...fade()} className="mb-3 flex items-center justify-center gap-3 sm:mb-4">
+            <span className="h-[2px] w-5 sm:w-6" style={{ backgroundColor: LIGHT_GREEN }} />
+            <span
+              className="text-[0.7rem] font-medium uppercase tracking-wider sm:text-sm"
+              style={{ color: LIGHT_GREEN }}
+            >
               Core Benefits
             </span>
-            <span className="h-[2px] w-6 sm:w-8" style={{ backgroundColor: LIGHT_GREEN }} />
-          </div>
+            <span className="h-[2px] w-5 sm:w-6" style={{ backgroundColor: LIGHT_GREEN }} />
+          </motion.div>
 
-          <h2 className="text-2xl sm:text-3xl md:text-4xl text-[#0A4D26] font-medium tracking-tight leading-[1.15] whitespace-pre-line px-2 max-w-[800px] mx-auto">
+          <motion.h2
+            {...fade(0.1)}
+            className="whitespace-pre-line text-[1.5rem] font-medium leading-tight tracking-tight text-[#0A4D26] sm:text-3xl md:text-4xl"
+          >
             {HEADING}
-          </h2>
-        </motion.div>
+          </motion.h2>
+        </div>
 
-        {/* Structured Tile Grid matching the FeatureCard design style */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full bg-gray-200/80 gap-[1px] rounded-2xl sm:rounded-[2rem] border border-gray-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.02)] overflow-hidden items-stretch"
+        {/*
+          Card grid — 2 columns on phones and tablets, 3 across on large screens.
+          `gap-px` over a tinted background draws the divider lines.
+        */}
+        <motion.div
+          {...fade(0.3)}
+          className="grid w-full grid-cols-2 items-stretch gap-px overflow-hidden rounded-2xl border border-gray-200/80 bg-gray-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.02)] sm:rounded-[2rem] lg:grid-cols-3"
         >
           {BUSINESS_CARDS.map((card, i) => (
             <BusinessGetsCard key={card.title} {...card} index={i} />

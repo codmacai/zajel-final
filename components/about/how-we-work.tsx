@@ -33,7 +33,14 @@ const fadeUpVariants: Variants = {
 // Clean minimalist icons
 // ---------------------------------------------------------------------------
 const IconBase: FC<{ children: ReactNode }> = ({ children }) => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="opacity-60 group-hover:opacity-100 transition-opacity duration-300">
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    aria-hidden="true"
+    className="shrink-0 opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+  >
     {children}
   </svg>
 );
@@ -60,33 +67,31 @@ const HowWeWork: FC = () => {
   const data = defaultContent;
 
   return (
-    <section
-      className="w-full overflow-hidden relative select-none py-16 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-12 bg-[#042B18] font-sans"
-    >
+    <section className="relative w-full select-none overflow-hidden bg-[#042B18] px-4 py-14 font-['Manrope',sans-serif] sm:px-6 sm:py-20 lg:px-12 lg:py-28">
       {/* Soft radial ambient glow */}
-      <div className="absolute -top-32 -left-32 w-[600px] h-[600px] bg-[#36B936]/[0.03] blur-[160px] pointer-events-none rounded-full" />
+      <div className="pointer-events-none absolute -left-32 -top-32 h-[600px] w-[600px] rounded-full bg-[#36B936]/[0.03] blur-[160px]" />
 
       <motion.div
-        className="max-w-[1280px] mx-auto relative z-10"
+        className="relative z-10 mx-auto max-w-[1280px]"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: '-80px' }}
         variants={staggerContainerVariants}
       >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-20 items-stretch">
-          {/* Left: heading + philosophy */}
-          <div className="lg:col-span-7 flex flex-col justify-between">
+        <div className="grid grid-cols-1 items-stretch gap-10 sm:gap-12 lg:grid-cols-12 lg:gap-20">
+          {/* Left: eyebrow + philosophy + certification lead-in */}
+          <div className="flex flex-col justify-between lg:col-span-7">
             <div>
-              <motion.div variants={fadeUpVariants} className="inline-flex items-center gap-2.5 mb-4 sm:mb-5">
-                <span className="w-2 h-2 rounded-full bg-[#36B936]" />
-                <span className="text-[#36B936] text-xs sm:text-sm font-medium tracking-wider uppercase">
-                  {data.heading}
-                </span>
-              </motion.div>
+              <motion.span
+                variants={fadeUpVariants}
+                className="mb-4 block text-[11px] font-medium uppercase tracking-wider text-[#36B936] sm:mb-5 sm:text-xs md:text-sm"
+              >
+                {data.heading}
+              </motion.span>
 
               <motion.p
                 variants={fadeUpVariants}
-                className="text-white text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight leading-[1.15]"
+                className="text-[1.5rem] font-medium leading-[1.2] tracking-[-0.02em] text-white [text-wrap:pretty] sm:text-[1.875rem] md:text-3xl lg:text-[2.25rem]"
               >
                 {data.philosophy}
               </motion.p>
@@ -94,32 +99,32 @@ const HowWeWork: FC = () => {
 
             <motion.p
               variants={fadeUpVariants}
-              className="text-white/40 text-xs sm:text-sm font-medium tracking-wider uppercase mt-8 lg:mt-12"
+              className="mt-8 text-[11px] font-medium uppercase tracking-wider text-white/55 sm:text-xs lg:mt-12"
             >
               {data.certIntro}
             </motion.p>
           </div>
 
-          {/* Right: minimal, clean accreditation list */}
-          <div className="lg:col-span-5 flex flex-col justify-between space-y-3 sm:space-y-4">
+          {/* Right: accreditation list, distributed to match the left column height */}
+          <div className="flex flex-col justify-between gap-3 sm:gap-4 lg:col-span-5">
             {data.certifications.map((cert, idx) => {
               const Mark = certMarks[idx];
               return (
                 <motion.div
                   key={cert.code}
                   variants={fadeUpVariants}
-                  className="group px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 flex items-center justify-between"
+                  className="group flex items-center justify-between gap-4 rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-4 transition-colors duration-300 hover:border-white/[0.18] sm:px-5 sm:py-[1.125rem]"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex min-w-0 items-center gap-3">
                     <IconBase>
                       <Mark />
                     </IconBase>
-                    <span className="text-white/80 text-[0.8rem] sm:text-[0.85rem] font-light tracking-wide group-hover:text-white transition-colors">
+                    <span className="text-[0.875rem] font-light leading-snug tracking-tight text-white/85 transition-colors group-hover:text-white sm:text-[0.9375rem]">
                       {cert.name}
                     </span>
                   </div>
 
-                  <span className="text-[#8FE38F]/80 text-[0.7rem] sm:text-[0.75rem] font-mono tracking-widest uppercase">
+                  <span className="shrink-0 whitespace-nowrap text-[0.75rem] font-medium uppercase tracking-wider text-[#8FE38F] sm:text-[0.8125rem]">
                     {cert.code}
                   </span>
                 </motion.div>

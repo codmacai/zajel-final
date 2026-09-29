@@ -15,7 +15,7 @@ export const SECURE_MAIL_HERO: HeroContent = {
   primaryHref: "/contact",
   secondaryLabel: "Track Shipment",
   secondaryHref: "/track",
-  image: "/services/secure-mail/hero.png",
+  image: "/securesol/mail-desktop-image.png",
   imageAlt: "Sealed confidential envelope ready for secure delivery",
 };
 

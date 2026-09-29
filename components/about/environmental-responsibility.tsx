@@ -28,14 +28,15 @@ const EnvironmentalResponsibility: FC = () => {
 
   return (
     <section
-      className="relative w-full min-h-[560px] sm:min-h-[640px] lg:min-h-[720px] flex items-center justify-center py-16 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-12 overflow-hidden select-none font-sans"
+      className="relative flex min-h-[560px] w-full select-none items-center justify-center overflow-hidden px-4 py-14 font-['Manrope',sans-serif] sm:min-h-[640px] sm:px-6 sm:py-20 lg:min-h-[720px] lg:px-12 lg:py-28"
       aria-labelledby="environmental-heading"
     >
-      {/* Full-width background image */}
+      {/* Full-width background image (decorative) */}
       <div className="absolute inset-0 z-0">
         <Image
           src={data.backgroundImage}
-          alt="Sustainability and environmental commitment background"
+          alt=""
+          aria-hidden="true"
           fill
           sizes="100vw"
           className="object-cover object-center"
@@ -45,42 +46,35 @@ const EnvironmentalResponsibility: FC = () => {
       </div>
 
       {/* Overlay content container */}
-      <div className="relative z-10 max-w-[1100px] w-full mx-auto">
+      <div className="relative z-10 mx-auto w-full max-w-[1100px]">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
           variants={fadeUpVariants}
-          className="bg-[#042B18]/75 backdrop-blur-xl border border-white/15 rounded-2xl sm:rounded-[2.5rem] p-6 sm:p-12 lg:p-16 text-white shadow-2xl max-w-[880px]"
+          className="max-w-[880px] rounded-2xl border border-white/15 bg-[#042B18]/75 p-6 text-white shadow-2xl backdrop-blur-xl sm:rounded-[2rem] sm:p-10 lg:p-14"
         >
-          {/* Top header + ISO badge */}
-          <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4 mb-5 sm:mb-6">
-            <div className="inline-flex items-center gap-2.5">
-              <span className="w-2 h-2 rounded-full bg-[#36B936]" />
-              <span className="text-[#8FE38F] text-xs sm:text-sm font-medium tracking-wider uppercase">
-                {data.eyebrow}
-              </span>
-            </div>
+          {/* Eyebrow + ISO badge */}
+          <div className="mb-5 flex flex-wrap items-center justify-between gap-3 sm:mb-6 sm:gap-4">
+            <span className="text-[11px] font-medium uppercase tracking-wider text-[#36B936] sm:text-xs md:text-sm">
+              {data.eyebrow}
+            </span>
 
-            {/* ISO 14001 inline badge */}
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 backdrop-blur-md px-3.5 py-1.5 rounded-full">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#36B936]" />
-              <span className="text-white text-[0.65rem] sm:text-[0.7rem] font-medium tracking-wider uppercase">
-                {data.badge}
-              </span>
-            </div>
+            <span className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[11px] font-medium uppercase leading-none tracking-wider text-white backdrop-blur-md">
+              {data.badge}
+            </span>
           </div>
 
           {/* Main heading */}
           <h2
             id="environmental-heading"
-            className="text-2xl sm:text-3xl md:text-4xl text-white font-medium tracking-tight leading-[1.15] mb-6 sm:mb-8"
+            className="mb-5 text-balance text-[1.5rem] font-medium leading-[1.15] tracking-tight text-white sm:mb-7 sm:text-3xl md:text-4xl lg:text-[2.5rem]"
           >
             {data.heading}
           </h2>
 
           {/* Paragraphs */}
-          <div className="space-y-5 sm:space-y-6 text-white/80 text-sm sm:text-base font-light leading-relaxed">
+          <div className="flex max-w-[68ch] flex-col gap-4 text-[0.9375rem] font-light leading-relaxed text-white/85 sm:gap-5 sm:text-base lg:text-[1.0625rem]">
             <p>{data.paragraph1}</p>
             <p>{data.paragraph2}</p>
           </div>

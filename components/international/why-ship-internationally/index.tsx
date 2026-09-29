@@ -7,6 +7,7 @@ const LIGHT_GREEN = '#36B936';
 
 // ---------------------------------------------------------------------------
 // Minimal Line Icons (strokeWidth reduced to 1.25)
+// Icon size scales with the card: smaller on phones, larger on desktop.
 // ---------------------------------------------------------------------------
 const svgProps = {
   xmlns: 'http://www.w3.org/2000/svg',
@@ -16,7 +17,7 @@ const svgProps = {
   strokeWidth: 1.25,
   strokeLinecap: 'round' as const,
   strokeLinejoin: 'round' as const,
-  className: 'w-7 h-7 sm:w-8 sm:h-8 mb-4',
+  className: 'h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9',
   'aria-hidden': true,
 };
 
@@ -77,22 +78,22 @@ interface FeatureCardTileProps {
 }
 
 const FeatureCardTile = ({ Icon, title, description }: FeatureCardTileProps) => (
-  <div className="group relative flex flex-col justify-between p-7 sm:p-8 min-h-[260px] sm:min-h-[300px] bg-[#F9FAFB] hover:bg-[#36B936] transition-colors duration-300 cursor-pointer">
-    <div className="flex flex-col h-full justify-between z-10">
+  <div className="group relative flex h-full min-h-[190px] cursor-pointer flex-col bg-[#F9FAFB] p-4 transition-colors duration-300 hover:bg-[#36B936] active:bg-[#36B936] min-[400px]:min-h-[210px] min-[400px]:p-5 sm:min-h-[250px] sm:p-7 lg:min-h-[300px] lg:p-8">
+    <div className="flex h-full flex-col justify-between gap-4">
       <div>
-        {/* Minimal Icon in #36B936 green by default */}
-        <div className="mb-4 text-[#36B936] group-hover:text-white transition-colors duration-300">
+        {/* Icon: green by default, white on hover */}
+        <div className="mb-3 text-[#36B936] transition-colors duration-300 group-hover:text-white group-active:text-white sm:mb-4">
           <Icon />
         </div>
 
         {/* Title */}
-        <h3 className="text-lg sm:text-[1.25rem] font-medium leading-snug tracking-tight mb-3 text-[#0A4D26] group-hover:text-white transition-colors duration-300">
+        <h3 className="text-[0.95rem] font-medium leading-snug tracking-tight text-[#0A4D26] transition-colors duration-300 group-hover:text-white group-active:text-white min-[400px]:text-base sm:text-lg lg:text-[1.25rem]">
           {title}
         </h3>
       </div>
 
       {/* Description */}
-      <p className="text-xs sm:text-sm font-light leading-relaxed text-[#2D6A4F] group-hover:text-white/90 transition-colors duration-300">
+      <p className="text-[0.7rem] font-light leading-relaxed text-[#2D6A4F] transition-colors duration-300 group-hover:text-white/90 group-active:text-white/90 min-[400px]:text-xs sm:text-sm">
         {description}
       </p>
     </div>
@@ -110,37 +111,44 @@ const fade = (delay = 0) => ({
 // Section Component
 // ---------------------------------------------------------------------------
 const WhyShipInternationally = () => (
-  <section className="w-full relative overflow-hidden py-16 sm:py-24 lg:py-32 bg-white font-sans">
-    <div className="max-w-[1200px] mx-auto relative z-10 px-4 sm:px-6 lg:px-10">
+  <section className="relative w-full overflow-hidden bg-white py-12 font-sans sm:py-20 lg:py-28 xl:py-32">
+    <div className="relative z-10 mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-10">
       {/* Header */}
-      <div className="max-w-[680px] mx-auto text-center mb-12 sm:mb-16">
-        <motion.div {...fade()} className="flex items-center justify-center gap-3 mb-4">
-          <span className="w-6 h-[2px]" style={{ backgroundColor: LIGHT_GREEN }} />
-          <span className="text-xs sm:text-sm font-medium tracking-wider uppercase" style={{ color: LIGHT_GREEN }}>
+      <div className="mx-auto mb-10 max-w-[680px] text-center sm:mb-14 lg:mb-16">
+        <motion.div {...fade()} className="mb-3 flex items-center justify-center gap-3 sm:mb-4">
+          <span className="h-[2px] w-5 sm:w-6" style={{ backgroundColor: LIGHT_GREEN }} />
+          <span
+            className="text-[0.7rem] font-medium uppercase tracking-wider sm:text-sm"
+            style={{ color: LIGHT_GREEN }}
+          >
             {EYEBROW}
           </span>
-          <span className="w-6 h-[2px]" style={{ backgroundColor: LIGHT_GREEN }} />
+          <span className="h-[2px] w-5 sm:w-6" style={{ backgroundColor: LIGHT_GREEN }} />
         </motion.div>
 
         <motion.h2
           {...fade(0.1)}
-          className="text-2xl sm:text-3xl md:text-4xl text-[#0A4D26] font-medium tracking-tight mb-4"
+          className="mb-3 text-[1.5rem] font-medium leading-tight tracking-tight text-[#0A4D26] sm:mb-4 sm:text-3xl md:text-4xl"
         >
           {HEADING}
         </motion.h2>
 
         <motion.p
           {...fade(0.2)}
-          className="text-[#2D6A4F] font-light text-sm leading-relaxed max-w-[520px] mx-auto"
+          className="mx-auto max-w-[520px] text-[0.8rem] font-light leading-relaxed text-[#2D6A4F] sm:text-sm"
         >
           {DESCRIPTION}
         </motion.p>
       </div>
 
-      {/* 4-Card Unified Grid Container */}
+      {/*
+        Card grid — 2 x 2 on phones and tablets, 4 across on large screens.
+        `gap-px` over a tinted background draws the divider lines, so borders
+        stay correct in every layout without divide-x / divide-y juggling.
+      */}
       <motion.div
         {...fade(0.3)}
-        className="grid grid-cols-1 md:grid-cols-4 w-full bg-[#F9FAFB] rounded-[2rem] border border-gray-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.02)] overflow-hidden divide-y md:divide-y-0 md:divide-x divide-gray-200/80"
+        className="grid w-full grid-cols-2 gap-px overflow-hidden rounded-2xl border border-gray-200/80 bg-gray-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.02)] sm:rounded-[2rem] lg:grid-cols-4"
       >
         {CARDS.map((card) => (
           <FeatureCardTile

@@ -30,10 +30,10 @@ const coverageStops = [
 
 export default function RoadFreightCoverage() {
   return (
-    <section className="w-full py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-slate-50/50 font-sans">
+    <section className="w-full py-12 sm:py-16 lg:py-14 px-4 sm:px-6 lg:px-8 bg-slate-50/50 font-sans">
       {/* Rectangular Banner Container */}
-      <div className="max-w-[1320px] mx-auto relative rounded-3xl overflow-hidden shadow-2xl border border-[#36B936]/20 bg-[#132219]">
-        
+      <div className="max-w-[1320px] mx-auto relative rounded-3xl lg:rounded-[1.5rem] overflow-hidden shadow-2xl lg:shadow-xl border border-[#36B936]/20 bg-[#132219]">
+
         {/* Mobile Background Image (Visible only on mobile/tablet, hidden on desktop) */}
         <div className="absolute inset-0 z-0 lg:hidden">
           <Image
@@ -49,33 +49,33 @@ export default function RoadFreightCoverage() {
 
         {/* Layout Grid: Full background on mobile, Side-by-side on desktop */}
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 w-full items-stretch">
-          
+
           {/* Content Column */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, ease: ANIMATION_EASE }}
-            className="flex flex-col justify-center py-12 sm:py-16 px-6 sm:px-12 lg:px-14 z-10 bg-transparent lg:bg-[#132219]"
+            className="flex flex-col justify-center py-12 sm:py-16 lg:py-14 px-6 sm:px-12 lg:px-14 z-10 bg-transparent lg:bg-[#132219]"
           >
-            <h2 className="text-2xl sm:text-4xl md:text-5xl text-white font-medium leading-[1.12] tracking-tight mb-4">
+            <h2 className="text-2xl sm:text-4xl lg:text-[2rem] text-white font-medium leading-[1.12] tracking-tight mb-4 lg:mb-4">
               Land Freight <br className="hidden sm:block" />
               <span className="text-white sm:text-[#36B936]">Coverage</span>
             </h2>
 
-            <p className="text-white/70 font-light text-sm sm:text-base leading-relaxed mb-8 max-w-[480px]">
+            <p className="text-white/70 font-light text-sm sm:text-base lg:text-sm leading-relaxed mb-8 lg:mb-7 max-w-[480px] lg:max-w-[420px]">
               Complete the information and documentation needed for a successful import and export of your products and materials.
             </p>
 
             <div className="flex flex-col">
               {coverageStops.map((stop, index) => (
                 <div key={stop.label}>
-                  <div className="flex items-center justify-between py-4 sm:py-4.5 pr-2">
+                  <div className="flex items-center justify-between py-3.5 sm:py-4 lg:py-4 pr-2">
                     <div>
-                      <h3 className="text-white font-medium text-base sm:text-lg mb-0.5">{stop.label}</h3>
-                      <p className="text-white/60 font-light text-xs sm:text-sm">{stop.blurb}</p>
+                      <h3 className="text-white font-medium text-base sm:text-lg lg:text-base mb-0.5">{stop.label}</h3>
+                      <p className="text-white/60 font-light text-xs sm:text-sm lg:text-[0.8125rem]">{stop.blurb}</p>
                     </div>
-                    <div className="relative w-8 h-8 sm:w-9 sm:h-9 flex-shrink-0 ml-4">
+                    <div className="relative w-8 h-8 sm:w-9 sm:h-9 lg:w-8 lg:h-8 flex-shrink-0 ml-4">
                       <Image
                         src={stop.iconSrc}
                         alt={stop.label}
@@ -98,7 +98,7 @@ export default function RoadFreightCoverage() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, ease: ANIMATION_EASE, delay: 0.1 }}
-            className="hidden lg:block relative w-full h-full min-h-[450px] bg-[#132219]"
+            className="hidden lg:block relative w-full h-full min-h-[460px] bg-[#132219]"
           >
             <Image
               src="/roadcustoms/magnific_photorealistic-premium-lo_xSZbr02jfW.jpg"

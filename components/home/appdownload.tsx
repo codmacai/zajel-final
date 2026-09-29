@@ -82,7 +82,7 @@ const CompactSaaSBanner: React.FC<CompactSaaSBannerProps> = ({
 
       {/* Main Banner Card: overflow-visible on desktop allows top overflow */}
       <div
-        className="compact-banner relative my-16 w-full max-w-[1140px] overflow-hidden rounded-[28px] shadow-[0_20px_60px_-15px_rgba(54,185,54,0.55)] sm:overflow-visible"
+        className="compact-banner relative my-16 w-full max-w-[1140px] lg:max-w-[1240px] xl:max-w-[1320px] overflow-hidden rounded-[28px] shadow-[0_20px_60px_-15px_rgba(54,185,54,0.55)] sm:overflow-visible"
         style={{ background: BANNER_BG }}
       >
         {/* Desktop pattern: outlined diamonds behind the phone */}

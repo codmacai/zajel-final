@@ -41,7 +41,7 @@
     display: block;
     margin-bottom: 8px;
   }
-
+  
   .wcz-heading {
     font-size: clamp(24px, 3.5vw, 40px);
     font-weight: 500;
@@ -51,7 +51,7 @@
     margin: 0 0 12px;
     white-space: pre-line;
   }
-
+  
   .wcz-header-desc {
     font-size: clamp(14px, 1.8vw, 16px);
     font-weight: 400;
@@ -80,7 +80,7 @@
         "government government government newcard newcard newcard newcard newcard newcard destinations destinations destinations";
       min-height: 580px;
     }
-
+  
     /* ══ Area Assignments — DESKTOP ONLY ══ */
     .wcz-card-tracking    { grid-area: tracking; }
     .wcz-card-reach       { grid-area: reach; }
@@ -188,11 +188,11 @@
   .wcz-live-text { font-size: 11px; font-weight: 500; color: #ffffff; text-transform: uppercase; letter-spacing: 0.05em; }
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
   
-  .wcz-tracking-inner { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 24px; 
-    flex: 1; 
+  .wcz-tracking-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex: 1;
     justify-content: space-between;
     position: relative;
     z-index: 1;
@@ -336,10 +336,11 @@
     font-weight: 500;
     color: rgba(255, 255, 255, 0.85);
   }
+  /* Illustration: a little wider, fully opaque, and a softer fade so more of it shows */
   .wcz-ship-illustration {
-    position: absolute; right: 0; bottom: 0; top: 0; width: 42%; max-width: 320px; z-index: 1; opacity: 0.95; pointer-events: none;
-    mask-image: linear-gradient(to left, black 60%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to left, black 60%, transparent 100%);
+    position: absolute; right: 0; bottom: 0; top: 0; width: 46%; max-width: 340px; z-index: 1; opacity: 1; pointer-events: none;
+    mask-image: linear-gradient(to left, black 78%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to left, black 78%, transparent 100%);
   }
   .wcz-ship-illustration img { width: 100%; height: 100%; object-fit: cover; object-position: center right; display: block; }
   
@@ -347,6 +348,8 @@
   .wcz-card-destinations {
     background: #ffffff; border: 1px solid #F3F4F6; position: relative; justify-content: center;
   }
+  /* No green top line on this card */
+  .wcz-card-destinations::before { display: none; }
   .wcz-card-destinations .wcz-dest-content { position: relative; z-index: 2; }
   
   /* "New" card — green-tint card */
@@ -365,7 +368,7 @@
   .wcz-card-new .wcz-dest-value,
   .wcz-card-new .wcz-dest-label { position: relative; z-index: 1; }
   .wcz-card-new::before { display: none; }
-
+  
   /* Shared stat card styling */
   .wcz-dest-icon-badge {
     width: 40px; height: 40px; border-radius: 10px;
@@ -373,6 +376,30 @@
     display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
   }
   .wcz-dest-icon-badge svg { width: 20px; height: 20px; }
+  
+  /* Premium variant (Countries Served): gradient tile, glossy highlight, soft glow */
+  .wcz-card-new .wcz-dest-icon-badge--premium {
+    width: 44px; height: 44px; border-radius: 13px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: linear-gradient(145deg, #5BD35B 0%, #36B936 45%, #1E8A2E 100%);
+    color: #ffffff;
+    box-shadow:
+      0 10px 20px -8px rgba(54, 185, 54, 0.65),
+      0 2px 4px rgba(6, 68, 35, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.45),
+      inset 0 -6px 10px rgba(6, 68, 35, 0.18);
+    overflow: hidden;
+  }
+  .wcz-card-new .wcz-dest-icon-badge--premium::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0) 100%);
+    pointer-events: none;
+  }
+  .wcz-card-new .wcz-dest-icon-badge--premium svg {
+    position: relative; z-index: 1; width: 24px; height: 24px;
+    filter: drop-shadow(0 1px 1px rgba(6, 68, 35, 0.35));
+  }
+  
   .wcz-dest-value {
     font-size: clamp(28px, 3.2vw, 36px);
     font-weight: 500;
@@ -393,7 +420,7 @@
     flex: 1; margin-top: 16px; background: rgba(54, 185, 54, 0.05);
     border: 1px dashed rgba(54, 185, 54, 0.3); border-radius: 12px; min-height: 100px;
   }
-
+  
   /* Phone mock-up animation */
   .wcz-phone-img {
     transform: translateY(50px); opacity: 0;
@@ -406,17 +433,17 @@
     .wcz-card.is-visible { opacity: 1; }
     .wcz-phone-img { transition: none !important; transform: none !important; opacity: 1 !important; }
   }
-
+  
   /* ══════════════════════════════════════════════════════════
      RESPONSIVE — Tablet & Mobile Sizing & Scaling Corrections
      ══════════════════════════════════════════════════════════ */
-
+  
   @media (max-width: 1023px) {
     .wcz-section {
       min-height: 0;
       padding: clamp(32px, 6vw, 64px) clamp(16px, 5vw, 32px);
     }
-
+  
     .wcz-grid {
       grid-template-columns: repeat(2, 1fr);
       gap: 14px;
@@ -424,89 +451,202 @@
       grid-template-rows: none;
       grid-auto-flow: row;
     }
-
+  
     .wcz-card {
       grid-area: auto;
       height: auto;
       padding: 20px;
     }
-
+  
     /* Mobile order & column placement */
     .wcz-card-tracking    { order: 1; grid-column: 1 / -1; min-height: 380px; }
     .wcz-card-government  { order: 2; grid-column: 1 / 2; min-height: 220px; }
     .wcz-card-experience  { order: 3; grid-column: 2 / 3; min-height: 220px; }
-    .wcz-card-reach       { order: 4; grid-column: 1 / -1; }
+    .wcz-card-reach       { order: 4; grid-column: 1 / -1; min-height: 360px; }
     .wcz-card-shipments   { order: 5; grid-column: 1 / -1; min-height: 180px; }
     .wcz-card-new         { order: 6; grid-column: 1 / 2; min-height: 130px; }
     .wcz-card-destinations{ order: 7; grid-column: 2 / 3; min-height: 130px; }
-
+  
     .wcz-exp-content-box { max-width: 100%; }
     .wcz-exp-main-title { font-size: clamp(28px, 7.5vw, 36px); font-weight: 500; }
     .wcz-exp-subheading { font-size: clamp(15px, 3.8vw, 17px); font-weight: 500; margin-bottom: 10px; }
     .wcz-exp-description { font-size: 13px; font-weight: 400; }
     .wcz-gov-image { width: clamp(70px, 24vw, 110px); }
-
-    .wcz-reach-map { min-height: 130px; margin: 0 -20px 12px -20px; width: calc(100% + 40px); }
+  
+    /* Taller map so the image is actually visible */
+    .wcz-reach-map { min-height: 230px; margin: 0 -20px 12px -20px; width: calc(100% + 40px); }
     .wcz-reach-map-overlay { display: none; }
-
-    .wcz-ship-illustration { width: 38%; }
+  
+    .wcz-ship-illustration { width: 44%; }
     .wcz-tracking-phone { max-height: 300px; }
   }
-
+  
+  /* ══════════════════════════════════════════════════════════
+     TABLET (768px – 1023px): balanced 6-column bento layout.
+     Cards size to their content (min-heights only), so nothing is
+     stretched. Reach and Government span two rows to balance
+     the stacks next to them.
+     ══════════════════════════════════════════════════════════ */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .wcz-section { padding: 56px clamp(24px, 4vw, 40px); }
+  
+    .wcz-grid {
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: none;
+      grid-auto-rows: auto;
+      grid-template-areas:
+        "t t t t t t"
+        "r r r e e e"
+        "r r r s s s"
+        "g g g n n n"
+        "g g g d d d";
+      gap: 16px;
+      align-items: stretch;
+    }
+  
+    .wcz-card-tracking,
+    .wcz-card-reach,
+    .wcz-card-experience,
+    .wcz-card-shipments,
+    .wcz-card-government,
+    .wcz-card-new,
+    .wcz-card-destinations { order: 0; grid-column: auto; }
+  
+    .wcz-card-tracking     { grid-area: t; }
+    .wcz-card-reach        { grid-area: r; }
+    .wcz-card-experience   { grid-area: e; }
+    .wcz-card-shipments    { grid-area: s; }
+    .wcz-card-government   { grid-area: g; }
+    .wcz-card-new          { grid-area: n; }
+    .wcz-card-destinations { grid-area: d; }
+  
+    .wcz-card { padding: 22px; border-radius: 1.5rem; height: 100%; }
+    .wcz-card-title { font-size: 18px; }
+    .wcz-card-desc { font-size: 14px; max-width: 34ch; }
+  
+    /* Tracking: text on the left, phone on the right */
+    .wcz-card-tracking { min-height: clamp(280px, 38vw, 330px); }
+    .wcz-card-tracking .wcz-card-desc { max-width: 34ch; }
+    .wcz-tracking-inner { flex-direction: row; align-items: center; justify-content: space-between; gap: 28px; }
+    .wcz-tracking-text { flex: 0 0 42%; }
+    .wcz-tracking-phone { flex: 1 1 auto; width: auto; align-self: stretch; min-height: 220px; max-height: 300px; }
+  
+    /* Reach: spans two rows; the map takes all the leftover height */
+    .wcz-card-reach { min-height: 0; }
+    .wcz-reach-map { flex: 1; min-height: 190px; margin: 0 -22px 14px -22px; width: calc(100% + 44px); }
+    .wcz-reach-icon-badge { width: 38px; height: 38px; margin-bottom: 10px; }
+  
+    /* Experience (17+) */
+    .wcz-card-experience { min-height: clamp(200px, 26vw, 240px); }
+    .wcz-exp-content-box { max-width: 100%; }
+    .wcz-exp-main-title { font-size: clamp(34px, 5vw, 42px); }
+    .wcz-exp-subheading { font-size: clamp(16px, 2.3vw, 19px); margin-bottom: 10px; }
+    .wcz-exp-description { font-size: 13.5px; }
+  
+    /* Shipments (60M+) */
+    .wcz-card-shipments { min-height: clamp(180px, 23vw, 210px); }
+    .wcz-ship-icon-badge { margin-bottom: 12px; }
+    .wcz-ship-value { font-size: clamp(30px, 4.4vw, 38px); }
+    .wcz-ship-label { font-size: 14px; }
+    .wcz-ship-illustration { width: 42%; max-width: 300px; }
+  
+    /* Government: spans two rows, image pinned to the bottom */
+    .wcz-card-government { min-height: 0; }
+    .wcz-gov-image { width: clamp(110px, 17vw, 140px); }
+  
+    /* Countries Served + Worldwide Destinations */
+    .wcz-card-new,
+    .wcz-card-destinations { min-height: clamp(140px, 18vw, 165px); }
+    .wcz-dest-icon-badge { width: 38px; height: 38px; margin-bottom: 12px; }
+    .wcz-card-new .wcz-dest-icon-badge--premium { width: 42px; height: 42px; border-radius: 12px; margin-bottom: 12px; }
+    .wcz-card-new .wcz-dest-icon-badge--premium svg { width: 22px; height: 22px; }
+    .wcz-dest-value { font-size: clamp(26px, 3.8vw, 32px); }
+    .wcz-dest-label { font-size: 13.5px; }
+  }
+  
+  /* ══════════════════════════════════════════════════════════
+     SMALL LAPTOP / TABLET LANDSCAPE (1024px – 1199px):
+     same desktop grid, slightly tighter type so nothing crowds
+     ══════════════════════════════════════════════════════════ */
+  @media (min-width: 1024px) and (max-width: 1199px) {
+    .wcz-grid { min-height: 620px; gap: 14px; }
+    .wcz-card { padding: 20px; }
+    .wcz-card-title { font-size: 18px; }
+    .wcz-card-desc { font-size: 13.5px; }
+    .wcz-exp-main-title { font-size: 40px; }
+    .wcz-exp-subheading { font-size: 18px; margin-bottom: 12px; }
+    .wcz-exp-description { font-size: 13.5px; }
+    .wcz-ship-value { font-size: 36px; }
+    .wcz-ship-illustration { width: 44%; }
+    .wcz-reach-map { margin: 0 -20px 14px -20px; width: calc(100% + 40px); }
+    .wcz-dest-value { font-size: 30px; }
+  }
+  
+  /* ══════════════════════════════════════════════════════════
+     LARGE SCREENS (1440px+): a little more breathing room
+     ══════════════════════════════════════════════════════════ */
+  @media (min-width: 1440px) {
+    .wcz-grid { min-height: 660px; gap: 18px; }
+  }
+  
   @media (max-width: 767px) {
     .wcz-section { padding: 32px 16px; overflow-x: hidden; }
     .wcz-container { max-width: 100%; }
-
+  
     .wcz-header { margin-bottom: 24px; }
     .wcz-heading { font-size: 26px; }
     .wcz-header-desc { font-size: 14px; max-width: 40ch; }
-
+  
     .wcz-grid { gap: 12px; }
-
+  
     .wcz-card { padding: 16px; border-radius: 1.1rem; }
     .wcz-card-title { font-size: 16px; font-weight: 500; }
     .wcz-card-desc { font-size: 13px; font-weight: 400; max-width: 100%; }
-
+  
     .wcz-card-tracking { min-height: 340px; }
     .wcz-tracking-inner { gap: 16px; }
     .wcz-tracking-phone { max-height: 220px; min-height: 170px; }
-
+  
     .wcz-card-government,
     .wcz-card-experience { min-height: 200px; padding: 16px; }
     .wcz-exp-main-title { font-size: clamp(24px, 8.5vw, 30px); font-weight: 500; }
     .wcz-exp-subheading { font-size: clamp(13px, 4.2vw, 15px); font-weight: 500; }
     .wcz-exp-description { font-size: 12px; font-weight: 400; line-height: 1.4; }
     .wcz-gov-image { width: clamp(60px, 26vw, 90px); }
-
-    .wcz-reach-map { min-height: 110px; margin: 0 -16px 10px -16px; width: calc(100% + 32px); }
+  
+    .wcz-card-reach { min-height: 330px; }
+    .wcz-reach-map { min-height: 200px; margin: 0 -16px 10px -16px; width: calc(100% + 32px); }
     .wcz-reach-icon-badge { width: 32px; height: 32px; margin-bottom: 8px; }
-
-    .wcz-card-shipments { min-height: 160px; padding: 16px; }
-    .wcz-ship-illustration { width: 32%; opacity: 0.7; }
+  
+    .wcz-card-shipments { min-height: 170px; padding: 16px; }
+    .wcz-ship-illustration { width: 42%; opacity: 0.95; }
     .wcz-ship-value { font-size: clamp(24px, 7.5vw, 28px); font-weight: 500; }
-
+  
     .wcz-card-destinations,
     .wcz-card-new { min-height: 110px; padding: 16px; }
     .wcz-dest-value { font-size: clamp(22px, 6.5vw, 26px); font-weight: 500; }
     .wcz-dest-label { font-size: 12.5px; font-weight: 500; }
     .wcz-dest-icon-badge { width: 32px; height: 32px; margin-bottom: 8px; }
+    .wcz-card-new .wcz-dest-icon-badge--premium { width: 38px; height: 38px; border-radius: 11px; margin-bottom: 10px; }
+    .wcz-card-new .wcz-dest-icon-badge--premium svg { width: 20px; height: 20px; }
   }
-
+  
   @media (max-width: 400px) {
     .wcz-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
     .wcz-card { padding: 12px; }
-
+  
     .wcz-card-tracking { min-height: 300px; }
     .wcz-tracking-phone { max-height: 180px; min-height: 140px; }
-
+  
     .wcz-card-government,
     .wcz-card-experience { min-height: 180px; padding: 12px; }
     .wcz-exp-main-title { font-size: clamp(20px, 8.5vw, 26px); font-weight: 500; }
-
-    .wcz-reach-map { min-height: 90px; }
-    .wcz-card-shipments { min-height: 150px; }
-    .wcz-ship-illustration { width: 28%; }
-
+  
+    .wcz-card-reach { min-height: 300px; }
+    .wcz-reach-map { min-height: 180px; }
+    .wcz-card-shipments { min-height: 160px; }
+    .wcz-ship-illustration { width: 40%; }
+  
     .wcz-card-destinations,
     .wcz-card-new { min-height: 100px; padding: 12px; }
     .wcz-dest-value { font-size: 20px; font-weight: 500; }

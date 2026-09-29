@@ -1,174 +1,224 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
-import { useTranslation } from 'react-i18next';
+// Move the <Logo /> component out of Navbar.tsx into components/Logo.tsx
+// (export default Logo) and import it in both Navbar and Footer.
+import Logo from '@/components/Logo';
 
-// ==========================================
-// SVG COMPONENTS & GRAPHICS
-// ==========================================
-const Logo = () => (
-  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-    <div className="flex items-center gap-3 flex-shrink-0">
-      <svg width="150" height="35" viewBox="434 388 1052 304" xmlns="http://www.w3.org/2000/svg">
-        <g>
-          <path fill="#36B936" d="M1086.07,456.18c-17.92,0-26.17,9.76-31.62,16.22l-15.02,17.58l11.41,9.24l12.1-13.92
-      c7.18-9.18,14.97-13.83,23.14-13.83c8.35,0,12.16,5.27,13.58,8.01c-13.56,3.24-27.85,14.35-27.85,36.04
-      c0,28.6-7.64,46.97-25.49,61.07c1.13-3.48,2.1-6.95,2.88-10.34c5.95-26.04,0.41-46.49-16.03-59.14
-      c-30.93-23.81-106.81-80.6-121.71-91.75l-9.85-7.36l-2.59,11.53c-0.38,1.7-3.67,17.26-3.24,37.5c0.59,28.09,8.29,51.46,22.27,67.59
-      c15.08,17.4,37.18,26.69,65.7,27.65c-17.95,19.88-49.92,55.24-57.82,63.98l-14.04,15.53l18.25-0.78
-      c14.03-0.9,38.51-4.62,58.42-10.09c5.67-8.96,12.82-19.88,12.82-19.88l-0.73,0.26c-16.35,5.8-39.21,10.9-52.01,12.64
-      c18.54-20.51,53.75-59.47,58.38-64.63l12.76-14.21l-19.04,1.48c-32.33,2.53-56.26-4.84-71.1-21.93
-      c-20.29-23.36-19.77-59.64-17.53-79.69c20.03,14.99,84.16,63.05,111.73,84.28c14.58,11.23,13.61,30.4,10.23,44.51
-      c-3.76,15.7-11.13,28.61-11.2,28.74l-12.22,21.18l22.51-10.66c28.42-15.6,53.92-34.02,53.92-87.49c0-15.09,10.99-21.85,21.87-21.85
-      h7.65v-7.65C1116.6,467.59,1100.76,456.18,1086.07,456.18"/>
-          <polygon fill="#132818" points="454.16,631.84 454.16,614.24 515.31,550.03 454.96,550.03 454.96,532.8 538.53,532.8 538.53,550.1 
-      538.4,550.14 478.19,614.52 540.54,614.52 540.54,631.84  "/>
-          <path fill="#132818" d="M760.01,632.86c-4.35,0-8.7-0.47-12.94-1.4c-14.15-3.1-25.88-11.5-33.03-23.64
-      c-7.23-12.28-8.88-26.78-4.67-40.83c5.36-17.87,19.52-30.94,36.97-34.1c2.78-0.5,5.59-0.76,8.35-0.76
-      c13.7,0,26.01,6.03,34.67,16.98c8.91,11.29,12.64,25.78,10.51,40.87l-72.07,0.06l0.06,0.42c1.32,9.3,7.89,17.28,17.56,21.36
-      c4.82,2.03,10.01,3.06,15.45,3.06h0c10.77,0,22.72-4.17,33.72-11.75l-0.14,19.5C784.18,629.21,772.22,632.86,760.01,632.86z
-       M754.8,549.95c-3.79,0-7.6,0.77-11.32,2.27c-8.32,3.38-14.35,11.67-16.12,22.17l-0.07,0.43l53.98,0.03l-0.06-0.42
-      c-0.96-7.14-4.1-13.32-9.34-18.36C766.97,552.06,761.07,549.95,754.8,549.95z"/>
-          <path fill="#132818" d="M1454.71,493.72c-1.35,0-2.68,0.25-3.95,0.73c-2.78,1.05-4.98,3.13-6.2,5.84c-1.22,2.71-1.3,5.74-0.25,8.52
-      c1.63,4.29,5.81,7.18,10.41,7.18l0,0c1.35,0,2.68-0.25,3.96-0.73c5.73-2.18,8.63-8.62,6.44-14.36
-      C1463.49,496.61,1459.3,493.72,1454.71,493.72z"/>
-          <path fill="#132818" d="M680.31,493.6c-1.35,0-2.68,0.25-3.95,0.73c-2.78,1.06-4.98,3.13-6.2,5.85c-1.22,2.71-1.31,5.73-0.25,8.51
-      c1.63,4.29,5.81,7.18,10.41,7.18l0,0c1.35,0,2.68-0.25,3.95-0.73c2.78-1.05,4.98-3.13,6.2-5.84c1.22-2.71,1.31-5.74,0.25-8.52
-      C689.09,496.49,684.91,493.6,680.31,493.6z"/>
-          <path fill="#132818" d="M633.12,671.98v-16.31l7.84,0.01c5.95,0,11.84-1.42,17.04-4.09c8.01-4.12,12.98-11.84,12.98-20.13v-54.34
-      l-0.08-27.11V532.8l17.74,0.04l-0.15,96.73c-0.02,16.76-9.77,31.29-25.45,37.93c-7.03,2.98-14.52,4.49-22.27,4.49l-0.38,0H633.12z"
-      />
-          <rect x="1408.23" y="493.72" fill="#132818" width="18.1" height="138.06"/>
-          <rect x="818.88" y="493.72" fill="#132818" width="18.09" height="138.06"/>
-          <circle fill="#132818" cx="1306.45" cy="659.24" r="11.13"/>
-          <path fill="#132818" d="M600.23,633.51c-28,0-50.78-22.78-50.78-50.78c0-28,22.78-50.78,50.78-50.78c27.87,0,50.65,22.68,50.77,50.56
-      l0.01,0.37v49.04h-17.53v-10.85l-0.61,0.51C623.72,629.27,612.12,633.51,600.23,633.51z M600.23,549.74
-      c-18.18,0-32.98,14.79-32.98,32.98c0,18.19,14.8,32.98,32.98,32.98s32.98-14.79,32.98-32.98
-      C633.21,564.54,618.41,549.74,600.23,549.74z"/>
-          <path fill="#132818" d="M1407.75,671.32v-16.31l7.82,0.01c5.96,0,11.86-1.42,17.06-4.1c8-4.12,12.98-11.84,12.98-20.13v-54.34
-      l-0.08-27.11v-16.52l17.74,0.04l-0.14,96.04c-0.03,16.75-9.78,31.28-25.45,37.93c-7.03,2.98-14.52,4.49-22.27,4.49l-0.38,0H1407.75
-      z"/>
-          <path fill="#132818" d="M1172.07,670.37c-28.48,0-51.65-23.17-51.65-51.65c0-11.29,3.65-22.05,10.56-31.13l14.11,10.71
-      c-4.49,5.92-6.86,12.97-6.86,20.42c0,18.66,15.18,33.84,33.84,33.84c18.66,0,33.84-15.18,33.84-33.84v-125h17.81v120.25h145.07
-      l-0.6-0.63c-2.4-2.5-4.59-6.59-6.5-12.16c-1.93-5.63-3.75-13.01-5.41-21.93c-1.16-7.11-2.73-12.91-4.68-17.22
-      c-1.96-4.36-4.55-7.5-7.7-9.34c-3.15-1.84-7.19-2.77-12-2.77c-4.4,0-8.89,0.65-13.37,1.93c-4.36,1.25-8.99,3.19-13.76,5.78
-      l-7.07-16.07c5.42-3.37,11.15-5.81,17.05-7.24c6.02-1.47,12.51-2.21,19.28-2.21c3.82,0,7.39,0.3,10.58,0.91
-      c3.19,0.6,6.09,1.5,8.63,2.69c5.84,2.77,10.54,7.06,13.98,12.76c3.44,5.71,6.03,14.01,7.7,24.67c1.16,7.51,2.46,14,3.88,19.29
-      c1.42,5.31,2.99,9.81,4.67,13.38c1.69,3.59,3.61,6.37,5.7,8.28l-0.12,17.7h-167.06l-0.07,0.27
-      C1215.87,654.62,1195.37,670.37,1172.07,670.37z"/>
-        </g>
+/* -------------------------------------------------------------------------- */
+/*  Content — names and routes taken from the navbar                          */
+/* -------------------------------------------------------------------------- */
+
+type FooterLink = { label: string; href: string };
+type FooterColumn = { title: string; links: FooterLink[] };
+
+const COLUMNS: FooterColumn[] = [
+  {
+    title: 'Solutions',
+    links: [
+      { label: 'On Demand Express', href: '/domestic-courier' },
+      { label: 'International Shipping', href: '/international-courier' },
+      { label: 'Ecommerce', href: '/ecommerce' },
+      { label: 'Air Freight', href: '/air-freight' },
+      { label: 'Land Freight', href: '/land-freight' },
+      { label: 'Sea Freight', href: '/sea-freight' },
+      { label: 'Customs Clearance', href: '/customs-clearance' },
+      { label: 'Warehousing', href: '/warehouse' },
+    ],
+  },
+  {
+    title: 'Secure Solutions',
+    links: [
+      { label: 'Gov & Institutional', href: '/secure-gov' },
+      { label: 'Secure ID', href: '/secure-id' },
+      { label: 'Secure Docs', href: '/secure-docs' },
+      { label: 'Secure Mail', href: '/secure-mail' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { label: 'About Zajel', href: '/about' },
+      { label: 'Industries We Serve', href: '/industry' },
+      { label: 'Our Network', href: '/network' },
+      { label: 'Projects', href: '/projects' },
+      { label: 'Careers', href: '/careers' },
+      { label: 'Contact Us', href: '/contact' },
+    ],
+  },
+  {
+    title: 'Resources',
+    links: [
+      { label: 'Get a Quote', href: '/quotation' },
+      { label: 'Shipment Tracking', href: '/track' },
+      { label: 'Help Center', href: '/support' },
+      { label: 'FAQ', href: '/faq' },
+      { label: 'Blog', href: '/blog' },
+    ],
+  },
+];
+
+// Not in the navbar, so routes are unchanged from the old footer.
+const LEGAL_LINKS: FooterLink[] = [
+  { label: 'Claims', href: '/claims' },
+  { label: 'Service Alerts', href: '/alerts' },
+  { label: 'PDPL', href: '/pdpl' },
+  { label: 'Terms & Conditions', href: '/terms' },
+  { label: 'Privacy Policy', href: '/policy' },
+  { label: 'Accessibility', href: '/ally' },
+];
+
+/* -------------------------------------------------------------------------- */
+/*  Social icons — solid brand glyphs on a 24×24 grid                         */
+/* -------------------------------------------------------------------------- */
+
+const iconProps = {
+  width: 18,
+  height: 18,
+  viewBox: '0 0 24 24',
+  fill: 'currentColor',
+  'aria-hidden': true,
+  focusable: false,
+} as const;
+
+// Replace the "#" hrefs with your real profile URLs.
+const SOCIALS: { label: string; href: string; icon: React.ReactNode }[] = [
+  {
+    label: 'Instagram',
+    href: '#',
+    icon: (
+      <svg {...iconProps}>
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
       </svg>
-    </div>
-  </div>
-);
+    ),
+  },
+  {
+    label: 'LinkedIn',
+    href: '#',
+    icon: (
+      <svg {...iconProps}>
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'X',
+    href: '#',
+    icon: (
+      <svg {...iconProps}>
+        <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'YouTube',
+    href: '#',
+    icon: (
+      <svg {...iconProps}>
+        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+      </svg>
+    ),
+  },
+];
 
-// ==========================================
-// MAIN FOOTER COMPONENT (Next.js Version)
-// ==========================================
-const Footer: React.FC = () => {
-  const { t, i18n } = useTranslation();
-  const isRtl = i18n.language === 'ar';
+/* -------------------------------------------------------------------------- */
+/*  Shared classes                                                            */
+/* -------------------------------------------------------------------------- */
 
+const focusRing =
+  'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white';
+
+const linkClass = `text-body-inverse block w-fit rounded py-0.5 transition-colors hover:text-white ${focusRing}`;
+
+/* -------------------------------------------------------------------------- */
+/*  Footer                                                                    */
+/* -------------------------------------------------------------------------- */
+
+export default function Footer() {
   return (
     <footer
-      dir={isRtl ? 'rtl' : 'ltr'}
-      className="w-full text-white font-sans relative overflow-hidden"
+      className="relative w-full overflow-hidden font-sans text-white"
       style={{
-        background: 'linear-gradient(135deg, #6CC24A 0%, #2FA84F 45%, #0E7A3D 75%, #045A2C 100%)'
+        background: 'linear-gradient(135deg, #4ccb4c 0%, #36b936 50%, #2a952a 100%)',
       }}
     >
-      <div className="max-w-[1440px] w-full mx-auto relative z-10 px-6 sm:px-10 lg:px-12 xl:px-16 pt-12 pb-10 lg:pt-16 lg:pb-12">
-        <div className="flex flex-col lg:flex-row lg:justify-between gap-10 lg:gap-8">
-
-          {/* Brand Info */}
-          <div className="flex flex-col w-full lg:w-[28%] shrink-0">
-            <div className="mb-4 footer-logo">
+      <div className="relative z-10 mx-auto w-full max-w-[1440px] px-6 pb-8 pt-12 sm:px-10 lg:px-12 lg:pb-10 lg:pt-16 xl:px-16">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(240px,1fr)_3fr] lg:gap-16">
+          {/* Brand */}
+          <div className="flex flex-col items-start">
+            <Link
+              href="/"
+              aria-label="Zajel home"
+              className={`footer-logo mb-5 w-fit rounded focus-visible:outline-offset-4 [&_svg_*]:fill-white ${focusRing}`}
+            >
               <Logo />
-            </div>
+            </Link>
 
-            <p className="text-body-inverse mb-5 max-w-[260px]">
-              {t('footer.description')}
+            <p className="text-body-inverse mb-6 max-w-[300px] leading-relaxed">
+              Fast, reliable courier and logistics services across the UAE and to 195 countries worldwide.
             </p>
 
-            {/* Socials */}
-            <div className="flex items-center gap-4 mb-6">
-              <a href="#" className="text-white hover:text-white/70 transition-colors">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-              </a>
-              <a href="#" className="text-white hover:text-white/70 transition-colors">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle><path d="M8 9h4v2a4 4 0 0 1 4-2c3 0 4 2 4 5v7h-4v-6c0-1.5-.5-3-2-3s-2 1.5-2 3v6H8z"></path></svg>
-              </a>
-              <a href="#" className="text-white hover:text-white/70 transition-colors">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4l11.73 16h5L9 4z" /><path d="M4 20l6.76-6.76" /><path d="M20 4l-6.76 6.76" /></svg>
-              </a>
-              <a href="#" className="text-white hover:text-white/70 transition-colors">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
-              </a>
-            </div>
-
-            <p className="text-body-inverse-muted">
-              {t('footer.copyright')}
-            </p>
+            <ul className="flex items-center gap-2.5">
+              {SOCIALS.map(({ label, href, icon }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className={`flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white ring-1 ring-inset ring-white/25 transition-all duration-200 hover:bg-white hover:text-[#2a952a] hover:ring-white ${focusRing}`}
+                  >
+                    {icon}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Links Grid — Filtered against provided navigation configuration */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-y-8 gap-x-6 md:gap-x-8 lg:gap-x-10 w-full lg:w-auto">
+          {/* Link columns */}
+          <nav
+            aria-label="Footer"
+            className="grid grid-cols-2 gap-x-6 gap-y-10 border-t border-white/20 pt-10 md:grid-cols-4 lg:border-t-0 lg:pt-0"
+          >
+            {COLUMNS.map((col) => (
+              <div key={col.title} className="flex min-w-0 flex-col">
+                {/* Highlighted heading: bold title + short accent bar */}
+                <h4 className="text-h4-inverse mb-5 font-semibold">
+                  {col.title}
+                  <span aria-hidden="true" className="mt-2 block h-0.5 w-8 rounded-full bg-white" />
+                </h4>
 
-            {/* Quick Links Column */}
-            <div className="flex flex-col gap-2.5">
-              <h4 className="text-h4-inverse mb-1">{t('footer.quickLinks.title')}</h4>
-              <Link href="/" className="text-body-inverse hover:text-white transition-colors">{t('footer.quickLinks.home')}</Link>
-              <Link href="/track" className="text-body-inverse hover:text-white transition-colors">{t('footer.quickLinks.track')}</Link>
-              <Link href="/ecommerce" className="text-body-inverse hover:text-white transition-colors">{t('footer.quickLinks.ecommerce')}</Link>
-              <Link href="/international-courier" className="text-body-inverse hover:text-white transition-colors">{t('footer.quickLinks.international')}</Link>
-              <Link href="/air-freight" className="text-body-inverse hover:text-white transition-colors">{t('footer.quickLinks.airFreight')}</Link>
-              <Link href="/support" className="text-body-inverse hover:text-white transition-colors">{t('footer.quickLinks.support')}</Link>
-              <Link href="/about" className="text-body-inverse hover:text-white transition-colors">{t('footer.quickLinks.about')}</Link>
-              <Link href="/careers" className="text-body-inverse hover:text-white transition-colors">{t('footer.quickLinks.careers')}</Link>
-              <Link href="/blog" className="text-body-inverse hover:text-white transition-colors">{t('footer.quickLinks.blog')}</Link>
-            </div>
+                <ul className="flex flex-col gap-2.5">
+                  {col.links.map((link) => (
+                    <li key={link.href + link.label}>
+                      <Link href={link.href} className={linkClass}>
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </nav>
+        </div>
 
-            {/* Services Column */}
-            <div className="flex flex-col gap-2.5">
-              <h4 className="text-h4-inverse mb-1">{t('footer.services.title')}</h4>
-              <Link href="/domestic-courier" className="text-body-inverse hover:text-white transition-colors">{t('footer.services.sameDay')}</Link>
-              <Link href="/international-courier" className="text-body-inverse hover:text-white transition-colors">{t('footer.services.international')}</Link>
-              <Link href="/ecommerce" className="text-body-inverse hover:text-white transition-colors">{t('footer.services.ecommerce')}</Link>
-              <Link href="/air-freight" className="text-body-inverse hover:text-white transition-colors">{t('footer.services.airFreight')}</Link>
-              <Link href="/land-freight" className="text-body-inverse hover:text-white transition-colors">{t('footer.services.landFreight')}</Link>
-              <Link href="/sea-freight" className="text-body-inverse hover:text-white transition-colors">{t('footer.services.seaFreight')}</Link>
-              <Link href="/customs-clearance" className="text-body-inverse hover:text-white transition-colors">{t('footer.services.customs')}</Link>
-              <Link href="/warehouse" className="text-body-inverse hover:text-white transition-colors">{t('footer.services.warehousing')}</Link>
-            </div>
+        {/* Bottom bar */}
+        <div className="mt-10 flex flex-col gap-2 border-t border-white/15 pt-4 text-xs text-white/70 lg:mt-12 lg:flex-row lg:items-center lg:justify-between">
+          <p>© {new Date().getFullYear()} ZAJEL Courier Services</p>
 
-            {/* Solutions Column */}
-            <div className="flex flex-col gap-2.5">
-              <h4 className="text-h4-inverse mb-1">Solutions</h4>
-              <Link href="/individual-solutions" className="text-body-inverse hover:text-white transition-colors">Individual Business</Link>
-              <Link href="/business-solutions" className="text-body-inverse hover:text-white transition-colors">Business Solutions</Link>
-              <Link href="/secure-solutions" className="text-body-inverse hover:text-white transition-colors">Secure Solutions</Link>
-              <Link href="/secure-gov" className="text-body-inverse hover:text-white transition-colors">Gov & Institutional</Link>
-              <Link href="/secure-id" className="text-body-inverse hover:text-white transition-colors">Secure ID</Link>
-              <Link href="/secure-docs" className="text-body-inverse hover:text-white transition-colors">Secure Docs</Link>
-            </div>
-
-            {/* Help & Legal Column */}
-            <div className="flex flex-col gap-2.5">
-              <h4 className="text-h4-inverse mb-1">{t('footer.helpLegal.title')}</h4>
-              <Link href="/support" className="text-body-inverse hover:text-white transition-colors">{t('footer.helpLegal.helpCenter')}</Link>
-              <Link href="/faq" className="text-body-inverse hover:text-white transition-colors">FAQ</Link>
-              <Link href="/contact" className="text-body-inverse hover:text-white transition-colors">Contact Us</Link>
-              <Link href="/industry" className="text-body-inverse hover:text-white transition-colors">Industries We Serve</Link>
-              <Link href="/network" className="text-body-inverse hover:text-white transition-colors">Our Network</Link>
-              <Link href="/projects" className="text-body-inverse hover:text-white transition-colors">Projects</Link>
-            </div>
-
-          </div>
+          <ul className="flex flex-wrap gap-x-4 gap-y-1">
+            {LEGAL_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className={`rounded transition-colors hover:text-white ${focusRing}`}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

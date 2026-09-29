@@ -15,7 +15,7 @@ export const SECURE_DOCS_HERO: HeroContent = {
   primaryHref: "/contact",
   secondaryLabel: "Track Shipment",
   secondaryHref: "/track",
-  image: "/services/secure-docs/hero.png",
+  image: "/securesol/ChatGPT Image May 12, 2026, 02_14_43 PM.png",
   imageAlt: "Sealed legal documents prepared for secure courier delivery",
 };
 

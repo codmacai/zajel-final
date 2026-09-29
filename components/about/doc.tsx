@@ -7,7 +7,7 @@ import { motion, type Variants } from "framer-motion";
 // Next.js font optimisation: self-hosted, no layout shift
 const manrope = Manrope({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["300", "400", "500", "600"],
   display: "swap",
 });
 
@@ -16,20 +16,52 @@ const manrope = Manrope({
 // Put your PDFs in /public/documents/ and the paths below resolve as-is.
 // ---------------------------------------------------------------------------
 const content = {
-  eyebrow: "Company Documents",
+  eyebrow: "Our Documents",
+  heading: "Company Documents",
+  description:
+    "Download our company profile and IMS policy to learn more about our services, standards, and capabilities.",
   documents: [
     {
       title: "Company Profile",
       description: "An overview of our services, network, and capabilities.",
       fileUrl: "/documents/company-profile.pdf",
+      theme: "light" as const,
     },
     {
       title: "IMS Policy",
       description:
         "Our Integrated Management System policy, covering quality, environmental, and health & safety standards.",
       fileUrl: "/documents/ims-policy.pdf",
+      theme: "dark" as const,
     },
   ],
+};
+
+// ---------------------------------------------------------------------------
+// Card shape
+// Drawn in a fixed 618 x 532 box so the corner radii and the slanted folder
+// tab keep their proportions at every size (the card holds this aspect ratio).
+// ---------------------------------------------------------------------------
+const CARD_PATH =
+  "M40 37 H250 Q267 37 284.7 27.6 L319.3 9.4 Q337 0 355 0 H582 A36 36 0 0 1 618 36 V492 A40 40 0 0 1 578 532 H40 A40 40 0 0 1 0 492 V77 A40 40 0 0 1 40 37 Z";
+
+const themes = {
+  light: {
+    bg: "#FFFFFF",
+    title: "text-[#36B936]",
+    desc: "text-[#2A8F2A]",
+    foot: "text-[#36B936]/80",
+    arrow: "text-[#36B936]",
+    shadow: "drop-shadow-[0_12px_28px_rgba(30,90,30,0.22)]",
+  },
+  dark: {
+    bg: "#064423",
+    title: "text-white",
+    desc: "text-white/80",
+    foot: "text-white/60",
+    arrow: "text-white",
+    shadow: "drop-shadow-[0_14px_28px_rgba(6,68,35,0.35)]",
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -52,27 +84,14 @@ const fadeUp: Variants = {
 // ---------------------------------------------------------------------------
 // Icons
 // ---------------------------------------------------------------------------
-const DocumentIcon: FC = () => (
-  <svg className="h-[18px] w-[18px] sm:h-5 sm:w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+const ArrowUpRightIcon: FC = () => (
+  <svg className="h-full w-full" viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path
-      d="M7 2.5h7l4 4V21a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1Z"
-      stroke="#36B936"
-      strokeWidth="1.4"
-      strokeLinejoin="round"
-    />
-    <path d="M14 2.5V7h4" stroke="#36B936" strokeWidth="1.4" strokeLinejoin="round" />
-    <path d="M9 12.5h6M9 16h4" stroke="#36B936" strokeWidth="1.4" strokeLinecap="round" />
-  </svg>
-);
-
-const DownloadIcon: FC = () => (
-  <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path
-      d="M12 3v12m0 0-4-4m4 4 4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"
+      d="M4.5 19.5 19.5 4.5M8 4.5h11.5V16"
       stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      strokeWidth="2.4"
+      strokeLinecap="square"
+      strokeLinejoin="miter"
     />
   </svg>
 );
@@ -83,84 +102,97 @@ const DownloadIcon: FC = () => (
 const CompanyDocuments: FC = () => {
   return (
     <section
-      className={`${manrope.className} w-full overflow-hidden bg-[#FAFBF8] px-5 py-14 sm:px-8 sm:py-20 md:py-24 lg:px-20`}
+      className={`${manrope.className} w-full overflow-hidden bg-white px-4 py-16 sm:px-8 sm:py-28 md:py-32 lg:px-20 lg:py-40`}
       aria-labelledby="company-documents-heading"
     >
-      <h2 id="company-documents-heading" className="sr-only">
-        {content.eyebrow}
-      </h2>
-
       <div className="mx-auto max-w-[1280px]">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={staggerContainer}
-          className="flex flex-col"
+          className="flex flex-col items-center"
         >
-          {/* Eyebrow */}
-          <motion.div variants={fadeUp} className="mb-6 inline-flex items-center gap-2.5 sm:mb-8">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#36B936] sm:h-2 sm:w-2" />
-            <span className="text-[11px] font-medium uppercase tracking-wider text-[#064423]/70 sm:text-xs">
+          {/* Header */}
+          <div className="mx-auto mb-10 flex max-w-[800px] flex-col items-center text-center sm:mb-12 lg:mb-16">
+            <motion.span
+              variants={fadeUp}
+              className="mb-3 block text-[11px] font-medium uppercase tracking-wider text-[#36B936] sm:mb-4 sm:text-xs md:text-sm"
+            >
               {content.eyebrow}
-            </span>
-          </motion.div>
+            </motion.span>
 
-          {/* Cards */}
-          <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:gap-8">
-            {content.documents.map((doc) => (
-              <motion.div
-                key={doc.title}
-                variants={fadeUp}
-                className="group relative flex min-h-[240px] flex-col justify-between overflow-hidden rounded-3xl border border-[#064423]/10 p-6 shadow-lg transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl sm:min-h-[280px] sm:rounded-[2rem] sm:p-8 lg:min-h-[300px] lg:p-10"
-                style={{
-                  background: "linear-gradient(135deg, #064423 0%, #042B18 50%, #02180D 100%)",
-                }}
-              >
-                {/* Dot texture */}
-                <div
-                  className="pointer-events-none absolute inset-0 opacity-15 mix-blend-overlay"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.4) 1px, transparent 1px)",
-                    backgroundSize: "8px 8px",
-                  }}
-                />
+            <motion.h2
+              id="company-documents-heading"
+              variants={fadeUp}
+              className="mb-4 text-balance text-[1.5rem] font-medium leading-[1.15] tracking-tight text-[#064423] sm:text-3xl md:text-4xl lg:text-[2.5rem]"
+            >
+              {content.heading}
+            </motion.h2>
 
-                {/* Glow accent */}
-                <div className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-[#36B936]/15 blur-3xl transition-all duration-700 group-hover:bg-[#36B936]/25 sm:h-72 sm:w-72" />
+            <motion.p
+              variants={fadeUp}
+              className="max-w-[62ch] text-[0.9375rem] font-light leading-relaxed text-[#064423]/70 sm:text-base lg:text-[1.0625rem]"
+            >
+              {content.description}
+            </motion.p>
+          </div>
 
-                {/* Top: icon, title, description */}
-                <div className="relative z-10">
-                  <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/10 backdrop-blur-md sm:mb-7 sm:h-11 sm:w-11 sm:rounded-2xl">
-                    <DocumentIcon />
-                  </div>
-
-                  <h3 className="mb-2 text-lg font-medium leading-snug tracking-tight text-white sm:text-xl lg:text-2xl">
-                    {doc.title}
-                  </h3>
-
-                  <p className="max-w-[360px] text-[13px] font-normal leading-relaxed text-white/65 sm:text-sm">
-                    {doc.description}
-                  </p>
-                </div>
-
-                {/* Bottom: download */}
-                <div className="relative z-10 pt-6 sm:pt-8">
+          {/* Cards: narrow, near-square folder shape */}
+          <div className="mx-auto grid w-full max-w-[820px] grid-cols-1 justify-items-center gap-4 sm:gap-8 md:grid-cols-2">
+            {content.documents.map((doc) => {
+              const t = themes[doc.theme];
+              return (
+                <motion.article
+                  key={doc.title}
+                  variants={fadeUp}
+                  className={`group w-full max-w-[380px] ${t.shadow} transition-transform duration-500 hover:-translate-y-1`}
+                >
                   <a
                     href={doc.fileUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     download
                     aria-label={`Download ${doc.title} PDF`}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-xs font-semibold tracking-wide text-white backdrop-blur-md transition-all duration-300 hover:bg-[#36B936] hover:text-[#042B18] active:scale-95 sm:text-[13px]"
+                    className="relative block aspect-[618/532] w-full rounded-[2rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#36B936]"
                   >
-                    Download PDF
-                    <DownloadIcon />
+                    {/* Folder shape */}
+                    <svg
+                      className="absolute inset-0 h-full w-full"
+                      viewBox="0 0 618 532"
+                      fill={t.bg}
+                      aria-hidden="true"
+                    >
+                      <path d={CARD_PATH} />
+                    </svg>
+
+                    {/* Arrow */}
+                    <span
+                      className={`absolute right-[10%] top-[14%] aspect-square w-[7.5%] ${t.arrow} transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5`}
+                    >
+                      <ArrowUpRightIcon />
+                    </span>
+
+                    {/* Content */}
+                    <div className="absolute inset-0 flex flex-col px-[12%] pb-[7%] pt-[19%]">
+                      <h3
+                        className={`mb-2.5 max-w-[14ch] text-[1.25rem] font-semibold leading-[1.25] tracking-tight sm:mb-3 sm:text-[1.375rem] ${t.title}`}
+                      >
+                        {doc.title}
+                      </h3>
+
+                      <p className={`max-w-[34ch] text-[13px] font-normal leading-relaxed ${t.desc}`}>
+                        {doc.description}
+                      </p>
+
+                      <span className={`mt-auto pt-3 text-[11px] font-medium sm:text-xs ${t.foot}`}>
+                        PDF · Ready to download
+                      </span>
+                    </div>
                   </a>
-                </div>
-              </motion.div>
-            ))}
+                </motion.article>
+              );
+            })}
           </div>
         </motion.div>
       </div>

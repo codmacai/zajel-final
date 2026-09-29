@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useSharedRevealObserver, useReveal } from "@/lib/useReveal";
-import { useCountUp } from "@/lib/useCountUp";
 import { whyChooseUsContent as content } from "@/data/whyChooseUs";
 import "./WhyChooseUs.css";
 
@@ -11,9 +10,6 @@ const cx = (...classes: Array<string | false | undefined>) => classes.filter(Boo
 export default function WhyChooseUs() {
   const { register } = useSharedRevealObserver();
   const { ref: sectionRef, isVisible } = useReveal<HTMLElement>(register);
-
-  const years = useCountUp(content.experience.statValue, isVisible, 2000);
-  const shipments = useCountUp(content.shipments.statValue, isVisible, 2000);
 
   return (
     <section ref={sectionRef} className="wcz-section">
@@ -47,7 +43,7 @@ export default function WhyChooseUs() {
 
               <div className="wcz-tracking-phone" aria-hidden="true">
                 <Image
-                  src="/track.png"
+                  src="/Homepage/whychooseus/track.png"
                   alt=""
                   fill
                   sizes="(max-width: 767px) 90vw, 400px"
@@ -61,14 +57,14 @@ export default function WhyChooseUs() {
           <div className={`wcz-card wcz-card-reach wcz-delay-1 ${isVisible ? "is-visible" : ""}`}>
             <div className="wcz-reach-map">
               <Image
-                src="/reach-map-base.png"
+                src="/Homepage/whychooseus/ChatGPT Image Aug 4, 2026, 01_04_26 PM (1).png"
                 alt="International shipping network map"
                 fill
                 sizes="(max-width: 1023px) 100vw, 40vw"
                 className="wcz-reach-map-base"
               />
               <Image
-                src="/reach-map-overlay.png"
+                src="/Homepage/whychooseus/ChatGPT Image Aug 4, 2026, 11_27_44 AM (1).png"
                 alt=""
                 fill
                 sizes="(max-width: 1023px) 100vw, 40vw"
@@ -94,8 +90,8 @@ export default function WhyChooseUs() {
           <div className={`wcz-card wcz-card-experience wcz-delay-2 ${isVisible ? "is-visible" : ""}`}>
             <div className="wcz-exp-content-box">
               <div className="wcz-exp-main-title">
-                {years}
-                <span>{content.experience.statSuffix}</span>
+                17
+                <span>+</span>
               </div>
               <div className="wcz-exp-subheading">{content.experience.title}</div>
               <p className="wcz-exp-description">{content.experience.description}</p>
@@ -123,13 +119,13 @@ export default function WhyChooseUs() {
             </div>
             <div className="wcz-ship-content">
               <div className="wcz-ship-value">
-                {shipments}
-                <span>{content.shipments.statSuffix}</span>
+                60M
+                <span>+</span>
               </div>
               <div className="wcz-ship-label">{content.shipments.title}</div>
             </div>
             <div className="wcz-ship-illustration" aria-hidden="true">
-              <Image src="/ship-illustration.png" alt="" fill sizes="320px" />
+              <Image src="/Homepage/whychooseus/magnific_photo-a-person-wearing-gr_nVaG47XYQD.png" alt="" fill sizes="320px" />
             </div>
           </div>
 
@@ -168,20 +164,27 @@ export default function WhyChooseUs() {
 
           {/* Countries Served Card */}
           <div className={`wcz-card wcz-card-new wcz-delay-6 ${isVisible ? "is-visible" : ""}`}>
-            <div className="wcz-dest-icon-badge" aria-hidden="true">
+            {/* Premium badge: gradient tile + verified-seal check */}
+            <div className="wcz-dest-icon-badge wcz-dest-icon-badge--premium" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
-                  d="M9 12L11 14L15 10"
+                  d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"
                   stroke="currentColor"
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-                <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
+                <path
+                  d="m9 12 2 2 4-4"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </div>
             <div className="wcz-dest-value">
-              200
+              195
               <span>+</span>
             </div>
             <div className="wcz-dest-label">Countries Served</div>

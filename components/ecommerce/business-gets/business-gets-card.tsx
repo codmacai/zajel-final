@@ -1,48 +1,45 @@
-'use client';
-
-import { motion } from 'framer-motion';
 import type { BusinessCard } from './types';
 
-const SMOOTH_TRANSITION = {
-  type: "spring" as const,
-  damping: 25,
-  stiffness: 120,
-};
-
 interface BusinessGetsCardProps extends BusinessCard {
-  index: number;
+  /** Passed by the section; not needed for styling anymore */
+  index?: number;
 }
 
-const BusinessGetsCard = ({ Icon, title, description, index }: BusinessGetsCardProps) => {
-  const delay = index * 0.08;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ ...SMOOTH_TRANSITION, duration: 0.7, delay }}
-      className="group relative flex flex-col justify-between p-7 sm:p-8 md:p-10 min-h-[260px] sm:min-h-[300px] bg-[#F9FAFB] hover:bg-[#36B936] transition-colors duration-300 cursor-pointer"
-    >
-      <div className="flex flex-col h-full justify-between z-10">
-        <div>
-          {/* Icon wrapper uses currentColor so that when stroke="#36B936" is used in the SVG, 
-              it automatically inherits text color and transitions from dark green (#0A4D26) to pure white (#ffffff) on hover */}
-          <div className="mb-6 text-[#0A4D26] group-hover:text-white transition-all duration-300 transform group-hover:-translate-y-1 group-hover:translate-x-1 [&_svg]:w-7 [&_svg]:h-7 sm:[&_svg]:w-8 sm:[&_svg]:h-8 [&_svg_*]:stroke-[currentColor]">
-            <Icon />
-          </div>
-
-          <h3 className="text-lg sm:text-[1.25rem] font-normal leading-snug tracking-tight mb-3 text-[#0A4D26] group-hover:text-white transition-colors duration-300">
-            {title}
-          </h3>
+const BusinessGetsCard = ({ Icon, title, description }: BusinessGetsCardProps) => (
+  <div
+    className="
+      group relative flex h-full min-h-[190px] cursor-pointer flex-col
+      bg-[#F9FAFB] p-4 transition-colors duration-300
+      hover:bg-[#36B936] active:bg-[#36B936]
+      min-[400px]:min-h-[210px] min-[400px]:p-5
+      sm:min-h-[250px] sm:p-7
+      lg:min-h-[300px] lg:p-8
+      odd:last:col-span-2 lg:odd:last:col-span-1
+    "
+  >
+    <div className="flex h-full flex-col justify-between gap-4">
+      <div>
+        {/* Icon: brand green by default, white on hover. Uses currentColor from icons.tsx. */}
+        <div
+          className="
+            mb-3 text-[#36B936] transition-colors duration-300
+            group-hover:text-white group-active:text-white sm:mb-4
+            [&_svg]:h-6 [&_svg]:w-6 sm:[&_svg]:h-8 sm:[&_svg]:w-8 lg:[&_svg]:h-9 lg:[&_svg]:w-9
+          "
+        >
+          <Icon />
         </div>
 
-        <p className="text-xs sm:text-sm font-light leading-relaxed text-[#2D6A4F] group-hover:text-white/90 transition-colors duration-300">
-          {description}
-        </p>
+        <h3 className="text-[0.95rem] font-medium leading-snug tracking-tight text-[#0A4D26] transition-colors duration-300 group-hover:text-white group-active:text-white min-[400px]:text-base sm:text-lg lg:text-[1.25rem]">
+          {title}
+        </h3>
       </div>
-    </motion.div>
-  );
-};
+
+      <p className="text-[0.7rem] font-light leading-relaxed text-[#2D6A4F] transition-colors duration-300 group-hover:text-white/90 group-active:text-white/90 min-[400px]:text-xs sm:text-sm">
+        {description}
+      </p>
+    </div>
+  </div>
+);
 
 export default BusinessGetsCard;

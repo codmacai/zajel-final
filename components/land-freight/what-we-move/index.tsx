@@ -17,25 +17,25 @@ const CARGO_ITEMS: CargoItem[] = [
     id: 'general',
     label: 'General Cargo',
     description: 'Commercial goods and parcels',
-    image: '/what-we-move/land/general-cargo.png',
+    image: '/land-freight/whatwemove/ChatGPT Image Sep 9, 2026, 11_58_49 AM.png',
   },
   {
     id: 'oversized',
     label: 'Oversized & Project Cargo',
     description: 'Large-format and heavy-lift shipments',
-    image: '/what-we-move/land/oversized-project-cargo.png',
+    image: '/land-freight/whatwemove/ChatGPT Image Sep 9, 2026, 10_54_33 AM.png',
   },
   {
     id: 'oil-gas',
     label: 'Oil & Gas Equipment',
     description: 'Industrial and energy-sector machinery',
-    image: '/what-we-move/land/oil-gas-equipment.png',
+    image: '/land-freight/whatwemove/ChatGPT Image Sep 9, 2026, 11_04_33 AM.png',
   },
   {
     id: 'hazmat',
     label: 'Hazardous Materials',
     description: 'Handled to full compliance standards',
-    image: '/what-we-move/land/hazardous-materials.png',
+    image: '/land-freight/whatwemove/ChatGPT Image Sep 9, 2026, 11_09_50 AM.png',
   },
 ];
 

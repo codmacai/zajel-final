@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 
@@ -56,12 +56,22 @@ const FacilityGallery: FC = () => {
   const data = defaultContent;
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
 
+  // Close the lightbox with Escape
+  useEffect(() => {
+    if (!selectedPhoto) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedPhoto(null);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [selectedPhoto]);
+
   return (
     <section
-      className="w-full bg-[#FAFBF8] py-16 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-12 overflow-hidden select-none font-sans"
+      className="w-full select-none overflow-hidden bg-[#FAFBF8] px-4 py-14 font-['Manrope',sans-serif] sm:px-6 sm:py-20 lg:px-12 lg:py-28"
       aria-labelledby="facilities-heading"
     >
-      <div className="max-w-[1280px] mx-auto">
+      <div className="mx-auto max-w-[1280px]">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -70,57 +80,56 @@ const FacilityGallery: FC = () => {
           className="flex flex-col"
         >
           {/* Header */}
-          <div className="flex flex-col items-center text-center max-w-[800px] mx-auto mb-10 sm:mb-12 lg:mb-16">
-            <motion.div variants={fadeUpVariants} className="inline-flex items-center gap-2.5 mb-4">
-              <span className="w-2 h-2 rounded-full bg-[#36B936]" />
-              <span className="text-[#064423]/70 text-xs sm:text-sm font-medium tracking-wider uppercase">
-                {data.eyebrow}
-              </span>
-            </motion.div>
+          <div className="mx-auto mb-10 flex max-w-[800px] flex-col items-center text-center sm:mb-12 lg:mb-16">
+            <motion.span
+              variants={fadeUpVariants}
+              className="mb-3 block text-[11px] font-medium uppercase tracking-wider text-[#36B936] sm:mb-4 sm:text-xs md:text-sm"
+            >
+              {data.eyebrow}
+            </motion.span>
 
             <motion.h2
               id="facilities-heading"
               variants={fadeUpVariants}
-              className="text-2xl sm:text-3xl md:text-4xl text-[#064423] font-medium tracking-tight leading-[1.15] mb-4"
+              className="mb-4 text-balance text-[1.5rem] font-medium leading-[1.15] tracking-tight text-[#064423] sm:text-3xl md:text-4xl lg:text-[2.5rem]"
             >
               {data.heading}
             </motion.h2>
 
             <motion.p
               variants={fadeUpVariants}
-              className="text-[#064423]/70 text-sm sm:text-base font-light leading-relaxed"
+              className="max-w-[62ch] text-[0.9375rem] font-light leading-relaxed text-[#064423]/70 sm:text-base lg:text-[1.0625rem]"
             >
               {data.description}
             </motion.p>
           </div>
 
           {/* Photo grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
             {data.photos.map((item) => (
               <motion.button
                 key={item.id}
                 type="button"
                 variants={fadeUpVariants}
                 onClick={() => setSelectedPhoto(item)}
-                className="group relative h-[240px] xs:h-[280px] sm:h-[320px] lg:h-[380px] rounded-2xl overflow-hidden bg-stone-200 cursor-pointer shadow-sm border border-[#064423]/10 hover:shadow-xl transition-all duration-500 text-left"
+                aria-label={`View ${item.title}`}
+                className="group relative aspect-[4/3] cursor-pointer overflow-hidden rounded-2xl border border-[#064423]/10 bg-stone-200 text-left shadow-sm transition-all duration-500 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#36B936] lg:aspect-[4/5]"
               >
                 <Image
                   src={item.image}
-                  alt={item.title}
+                  alt=""
                   fill
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
 
-                {/* Subtle gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+                {/* Gradient overlay for label legibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-90" />
 
                 {/* Bottom label */}
-                <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 flex flex-col justify-end text-white">
-                  <span className="text-[0.9rem] sm:text-[0.95rem] font-medium tracking-wide mb-0.5">{item.title}</span>
-                  <span className="text-white/75 text-[0.7rem] sm:text-[0.75rem] font-light leading-relaxed">
-                    {item.caption}
-                  </span>
+                <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end p-4 text-white sm:p-5">
+                  <span className="mb-1 text-base font-medium leading-snug tracking-tight">{item.title}</span>
+                  <span className="text-[0.8125rem] font-light leading-snug text-white/80">{item.caption}</span>
                 </div>
               </motion.button>
             ))}
@@ -136,34 +145,42 @@ const FacilityGallery: FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedPhoto(null)}
-            className="fixed inset-0 z-50 bg-[#042B18]/80 backdrop-blur-md flex items-center justify-center p-4"
+            role="dialog"
+            aria-modal="true"
+            aria-label={selectedPhoto.title}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#042B18]/80 p-4 backdrop-blur-md"
           >
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-[850px] w-full bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl"
+              className="relative w-full max-w-[850px] overflow-hidden rounded-2xl bg-white shadow-2xl sm:rounded-3xl"
             >
               <button
+                type="button"
                 onClick={() => setSelectedPhoto(null)}
-                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-black/40 text-white flex items-center justify-center hover:bg-black/70 transition-colors"
-                aria-label="Close modal"
+                className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/40 text-white transition-colors hover:bg-black/70"
+                aria-label="Close"
               >
-                ✕
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+                  <path d="M6 6l12 12M18 6L6 18" />
+                </svg>
               </button>
-              <div className="relative w-full aspect-[4/3] sm:aspect-[16/10]">
+
+              <div className="relative aspect-[4/3] w-full sm:aspect-[16/10]">
                 <Image
                   src={selectedPhoto.image}
                   alt={selectedPhoto.title}
                   fill
-                  sizes="850px"
+                  sizes="(min-width: 850px) 850px, 100vw"
                   className="object-cover"
                 />
               </div>
-              <div className="p-5 sm:p-6 bg-white">
-                <h3 className="text-[#064423] text-[1rem] sm:text-[1.1rem] font-medium">{selectedPhoto.title}</h3>
-                <p className="text-[#064423]/70 text-[0.8rem] sm:text-[0.85rem] font-light mt-1">
+
+              <div className="bg-white p-5 sm:p-6">
+                <h3 className="text-lg font-medium tracking-tight text-[#064423] sm:text-xl">{selectedPhoto.title}</h3>
+                <p className="mt-1 text-sm font-light leading-relaxed text-[#064423]/70 sm:text-[0.9375rem]">
                   {selectedPhoto.caption}
                 </p>
               </div>

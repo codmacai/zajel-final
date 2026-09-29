@@ -15,7 +15,7 @@ export const SECURE_ID_HERO: HeroContent = {
   primaryHref: "/track",
   secondaryLabel: "Contact Support",
   secondaryHref: "/contact",
-  image: "/services/secure-id/hero.png",
+  image: "/securesol/ChatGPT Image May 12, 2026, 02_20_41 PM.png",
   imageAlt: "Courier verifying a recipient before handing over an identity document",
 };
 

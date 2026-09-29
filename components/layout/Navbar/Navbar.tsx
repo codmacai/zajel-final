@@ -11,13 +11,20 @@ import MobileMenu from "./MobileMenu";
 import { aboutItems, resourcesItems } from "@/data/navigation";
 import "./Navbar.css";
 
+// Ignore tiny scroll movements so the bar doesn't flicker.
+const SCROLL_DELTA = 6;
+// Never hide the navbar while the page is near the top.
+const HIDE_AFTER = 80;
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const navOuterRef = useRef<HTMLElement | null>(null);
+  const lastY = useRef(0);
 
   const openMenu = (key: string) => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -28,8 +35,28 @@ export default function Navbar() {
     closeTimer.current = setTimeout(() => setActiveMenu(null), 100);
   };
 
+  // Scroll behaviour: scroll down → hide, scroll up → show, top of page → always show.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
+    lastY.current = window.scrollY;
+
+    const onScroll = () => {
+      const y = Math.max(window.scrollY, 0);
+      setScrolled(y > 10);
+
+      if (y <= HIDE_AFTER) {
+        setHidden(false);
+        lastY.current = y;
+        return;
+      }
+
+      const diff = y - lastY.current;
+      if (Math.abs(diff) < SCROLL_DELTA) return;
+
+      setHidden(diff > 0);
+      lastY.current = y;
+    };
+
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -61,9 +88,12 @@ export default function Navbar() {
 
   const navLinks = [{ label: "Track", path: "/track" }];
 
+  // Keep the bar visible whenever a menu is open.
+  const isHidden = hidden && !activeMenu && !mobileOpen;
+
   return (
     <>
-      <nav ref={navOuterRef} className={`nav-outer ${scrolled ? "nav-outer-scrolled" : ""}`}>
+      <nav ref={navOuterRef} className={`nav-outer ${isHidden ? "nav-outer-hidden" : ""}`}>
         <div className={`nav-shell ${scrolled || activeMenu ? "nav-snapped" : "nav-top-glass"}`}>
           <div className="nav-inner">
             <div className="logo-mark" style={{ flexShrink: 0, display: "flex" }}>
@@ -134,9 +164,10 @@ export default function Navbar() {
             <div className="mobile-only" style={{ display: "none" }}>
               <button
                 onClick={() => setMobileOpen(true)}
+                aria-label="Open menu"
                 style={{ background: "none", border: "none", cursor: "pointer", color: "#0A4D26", padding: 8 }}
               >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
               </button>

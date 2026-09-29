@@ -97,36 +97,36 @@ const GlobalAlliances: FC = () => {
 
   return (
     <section
-      className="w-full bg-[#FAFBF8] py-16 sm:py-20 lg:py-28 overflow-hidden select-none font-sans"
+      className="w-full select-none overflow-hidden bg-[#FAFBF8] py-14 font-['Manrope',sans-serif] sm:py-20 lg:py-28"
       aria-labelledby="global-alliances-heading"
     >
       {/* Header */}
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-12">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-12">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
           variants={staggerContainerVariants}
-          className="flex flex-col items-center text-center max-w-[800px] mx-auto mb-10 sm:mb-12 lg:mb-16"
+          className="mx-auto mb-10 flex max-w-[800px] flex-col items-center text-center sm:mb-12 lg:mb-16"
         >
-          <motion.div variants={fadeUpVariants} className="inline-flex items-center gap-2.5 mb-4">
-            <span className="w-2 h-2 rounded-full bg-[#36B936]" />
-            <span className="text-[#064423]/70 text-xs sm:text-sm font-medium tracking-wider uppercase">
-              {data.eyebrow}
-            </span>
-          </motion.div>
+          <motion.span
+            variants={fadeUpVariants}
+            className="mb-3 block text-[11px] font-medium uppercase tracking-wider text-[#064423]/70 sm:mb-4 sm:text-xs md:text-sm"
+          >
+            {data.eyebrow}
+          </motion.span>
 
           <motion.h2
             id="global-alliances-heading"
             variants={fadeUpVariants}
-            className="text-2xl sm:text-3xl md:text-4xl text-[#064423] font-medium tracking-tight leading-[1.15] mb-4"
+            className="mb-4 text-balance text-[1.5rem] font-medium leading-[1.15] tracking-tight text-[#064423] sm:text-3xl md:text-4xl lg:text-[2.5rem]"
           >
             {data.heading}
           </motion.h2>
 
           <motion.p
             variants={fadeUpVariants}
-            className="text-[#064423]/70 text-sm sm:text-base font-light leading-relaxed"
+            className="max-w-[62ch] text-[0.9375rem] font-light leading-relaxed text-[#064423]/70 sm:text-base lg:text-[1.0625rem]"
           >
             {data.intro}
           </motion.p>
@@ -139,39 +139,39 @@ const GlobalAlliances: FC = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-12 mb-12 sm:mb-16 lg:mb-20 flex justify-center items-center"
+        className="mx-auto mb-12 flex max-w-[1280px] items-center justify-center px-4 sm:mb-16 sm:px-6 lg:mb-20 lg:px-12"
       >
-        <div className="relative h-14 sm:h-16 lg:h-20 w-full max-w-[900px]">
+        <div className="relative h-14 w-full max-w-[900px] sm:h-16 lg:h-20">
           <Image
             src={data.logoStripImage}
             alt="Professional alliances logo strip"
             fill
             sizes="(min-width: 1024px) 900px, 100vw"
-            className="object-contain opacity-90 hover:opacity-100 transition-opacity duration-300"
+            className="object-contain opacity-90 transition-opacity duration-300 hover:opacity-100"
           />
         </div>
       </motion.div>
 
       {/* Membership cards grid */}
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-12">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-12">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
           variants={staggerContainerVariants}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8"
+          className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8"
         >
           {data.alliances.map((item) => (
             <motion.div
               key={item.title}
               variants={fadeUpVariants}
-              className="group relative bg-white border border-[#064423]/10 rounded-2xl p-5 sm:p-7 flex flex-col justify-between shadow-sm hover:shadow-md hover:border-[#36B936]/40 transition-all duration-300"
+              className="group relative flex flex-col justify-between rounded-2xl border border-[#064423]/10 bg-white p-5 shadow-sm transition-all duration-300 hover:border-[#36B936]/40 hover:shadow-md sm:p-7"
             >
               <div>
-                <div className="flex items-center justify-between gap-3 mb-3 sm:mb-4">
+                <div className="mb-4 flex items-center justify-between gap-3 sm:mb-5">
                   {/* Logo replaces the text title. Hidden heading keeps it accessible. */}
                   <h3 className="sr-only">{item.title}</h3>
-                  <div className="relative h-9 sm:h-10 lg:h-12 w-32 sm:w-36 lg:w-40">
+                  <div className="relative h-9 w-32 sm:h-10 sm:w-36 lg:h-12 lg:w-40">
                     <Image
                       src={item.logo}
                       alt={`${item.title} logo`}
@@ -180,21 +180,23 @@ const GlobalAlliances: FC = () => {
                       className="object-contain object-left"
                     />
                   </div>
-                  <span className="text-[0.65rem] sm:text-[0.7rem] font-medium text-[#064423]/60 bg-[#064423]/5 px-2.5 py-1 rounded-full whitespace-nowrap shrink-0">
+                  <span className="shrink-0 whitespace-nowrap rounded-full bg-[#064423]/5 px-2.5 py-1 text-[11px] font-medium leading-none text-[#064423]/65">
                     {item.badge}
                   </span>
                 </div>
 
-                <p className="text-[#064423]/65 text-[0.75rem] sm:text-[0.8rem] lg:text-[0.85rem] font-light leading-relaxed">
+                <p className="text-[0.875rem] font-light leading-relaxed text-[#064423]/70 sm:text-[0.9375rem]">
                   {item.description}
                 </p>
               </div>
 
-              <div className="mt-5 sm:mt-6 pt-4 border-t border-[#064423]/[0.06] flex items-center justify-between text-[#36B936]">
-                <span className="text-[0.7rem] font-medium tracking-wide uppercase group-hover:translate-x-1 transition-transform duration-300">
+              <div className="mt-5 flex items-center justify-between border-t border-[#064423]/[0.08] pt-4 text-[#36B936] sm:mt-6">
+                <span className="text-[11px] font-medium uppercase tracking-wider transition-transform duration-300 group-hover:translate-x-1">
                   Verified Alliance
                 </span>
-                <span className="text-sm">→</span>
+                <span aria-hidden="true" className="text-sm leading-none">
+                  →
+                </span>
               </div>
             </motion.div>
           ))}

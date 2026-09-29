@@ -14,13 +14,13 @@ export const whyChooseUsContent = {
       imageAlt: "Government courier badge",
     },
     experience: {
-      statValue: 15,
+      statValue: 17,
       statSuffix: "+",
       title: "Years of Experience",
       description: "Over a decade moving shipments across the UAE and beyond.",
     },
     shipments: {
-      statValue: 45,
+      statValue: 60,
       statSuffix: "M+",
       title: "Shipments Delivered",
     },

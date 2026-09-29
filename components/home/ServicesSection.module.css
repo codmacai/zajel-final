@@ -4,66 +4,26 @@
   --color-brand-muted: #6B7280;
 }
 
+/* ---------- Section shell (spacing, background, sizes come from Tailwind in the TSX) ---------- */
 .servicesSection {
-  padding: clamp(48px, 8vw, 112px) clamp(16px, 4vw, 48px);
-  background: #FAFAF8;
-}
-
-.servicesContainer {
-  max-width: 1280px;
-  margin: 0 auto;
-}
-
-.servicesHeader {
-  max-width: 640px;
-  margin: 0 auto clamp(32px, 6vw, 72px);
-  text-align: center;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-
-.servicesHeader.isVisible {
-  opacity: 1;
-  transform: translateY(0);
+  position: relative;
 }
 
 .servicesHeading {
-  font-size: 24px;
-  font-weight: 500;
   color: var(--color-brand-dark);
-  line-height: 1.2;
   letter-spacing: -0.01em;
   margin: 0 0 12px;
 }
 
-@media (min-width: 768px) {
-  .servicesHeading { font-size: 42px; }
-}
-
 .servicesHeaderDesc {
-  font-size: 15px;
-  font-weight: 400;
-  color: var(--color-brand-muted);
-  line-height: 1.6;
   margin: 0;
 }
 
-@media (min-width: 768px) {
-  .servicesHeaderDesc { font-size: 16px; }
-}
-
 .servicesGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(16px, 3vw, 32px);
+  width: 100%;
 }
 
-@media (min-width: 900px) {
-  .servicesGrid { grid-template-columns: repeat(3, 1fr); }
-}
-
+/* ---------- Card ---------- */
 .serviceCard {
   position: relative;
   display: flex;
@@ -80,6 +40,7 @@
   z-index: 1;
   contain: layout style paint;
   will-change: transform, opacity;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .serviceCardShadowLayer {
@@ -99,33 +60,39 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
 }
 
-.serviceCard:hover,
-.serviceCard:focus-within {
-  border-color: #36B936;
-  transform: translateY(-6px);
-}
-
-.serviceCard:hover .serviceCardShadowLayer,
-.serviceCard:focus-within .serviceCardShadowLayer {
-  opacity: 1;
-}
-
-.serviceCard:focus-within {
-  outline: 2px solid var(--color-brand);
-  outline-offset: 3px;
-}
-
+/* ---------- Image strip ---------- */
+/* Mobile: tall 16:10 image that scales with card width */
 .serviceCardStrip {
   position: relative;
-  height: 130px;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  max-height: 300px;
   overflow: hidden;
   background: #EEF2EF;
   z-index: 1;
   transform: translateZ(0);
 }
 
+@media (min-width: 640px) {
+  .serviceCardStrip {
+    aspect-ratio: 2 / 1;
+    max-height: 260px;
+  }
+}
+
 @media (min-width: 768px) {
-  .serviceCardStrip { height: 152px; }
+  .serviceCardStrip {
+    aspect-ratio: 16 / 10;
+    max-height: 220px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .serviceCardStrip {
+    aspect-ratio: auto;
+    height: 160px;
+    max-height: none;
+  }
 }
 
 .serviceCardStripImg {
@@ -134,22 +101,18 @@
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.serviceCard:hover .serviceCardStripImg,
-.serviceCard:focus-within .serviceCardStripImg {
-  transform: scale(1.06);
-}
-
 .serviceCardStripTint {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(6, 68, 35, 0.12) 0%, rgba(6, 68, 35, 0.02) 45%, #ffffff 100%);
+  background: linear-gradient(180deg, rgba(6, 68, 35, 0.08) 0%, rgba(6, 68, 35, 0) 55%, #ffffff 100%);
   pointer-events: none;
   z-index: 1;
 }
 
+/* ---------- Icon badge ---------- */
 .serviceCardIconWrap {
-  width: 56px;
-  height: 56px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background: #36B936;
   display: flex;
@@ -157,8 +120,8 @@
   justify-content: center;
   color: #ffffff;
   position: relative;
-  margin-top: -28px;
-  margin-left: 24px;
+  margin-top: -30px;
+  margin-left: 20px;
   box-shadow: 0 8px 20px rgba(6, 68, 35, 0.12), 0 0 0 5px rgba(255, 255, 255, 1);
   z-index: 2;
 }
@@ -174,17 +137,18 @@
 }
 
 .serviceCardIconSvg {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
 }
 
 @media (min-width: 768px) {
   .serviceCardIconSvg { width: 30px; height: 30px; }
 }
 
+/* ---------- Body ---------- */
 .serviceCardBody {
   position: relative;
-  padding: 20px 24px 24px;
+  padding: 18px 20px 24px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -246,6 +210,7 @@
   color: var(--color-brand-dark);
   font-size: 12px;
   font-weight: 300;
+  -webkit-tap-highlight-color: transparent;
   transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -265,6 +230,7 @@
   .serviceSubLinkIcon { width: 13px; height: 13px; }
 }
 
+/* ---------- Card CTA ---------- */
 .serviceCardCta {
   display: inline-flex;
   align-items: center;
@@ -277,6 +243,7 @@
   text-decoration: none;
   margin-top: auto;
   align-self: flex-start;
+  -webkit-tap-highlight-color: transparent;
   transition: color 0.3s ease;
 }
 
@@ -301,11 +268,6 @@
   .serviceCardCtaCircle { width: 34px; height: 34px; }
 }
 
-.serviceCard:hover .serviceCardCtaCircle,
-.serviceCard:focus-within .serviceCardCtaCircle {
-  transform: rotate(45deg);
-}
-
 .serviceCardCtaIcon {
   width: 13px;
   height: 13px;
@@ -315,21 +277,69 @@
   .serviceCardCtaIcon { width: 15px; height: 15px; }
 }
 
-.serviceSubLink:hover {
-  background: #ECECE6;
-  border-color: #D5D5CD;
-}
-.serviceSubLink:hover .serviceSubLinkIcon {
-  opacity: 1;
-  transform: translate(2px, -2px);
+/* ========================================================= */
+/* HOVER EFFECTS: only on devices with a real mouse/trackpad  */
+/* Touch devices (phones, tablets) get none of these.         */
+/* ========================================================= */
+@media (hover: hover) and (pointer: fine) {
+  .serviceCard:hover {
+    border-color: #36B936;
+    transform: translateY(-6px);
+  }
+
+  .serviceCard:hover .serviceCardShadowLayer {
+    opacity: 1;
+  }
+
+  .serviceCard:hover .serviceCardStripImg {
+    transform: scale(1.06);
+  }
+
+  .serviceCard:hover .serviceCardCtaCircle {
+    transform: rotate(45deg);
+  }
+
+  .serviceSubLink:hover {
+    background: #ECECE6;
+    border-color: #D5D5CD;
+  }
+
+  .serviceSubLink:hover .serviceSubLinkIcon {
+    opacity: 1;
+    transform: translate(2px, -2px);
+  }
 }
 
-@media (hover: none) {
-  .serviceCard:hover .serviceCardStripImg { transform: none; }
+/* ========================================================= */
+/* KEYBOARD FOCUS: only when focus comes from the keyboard    */
+/* (a tap on mobile does not trigger :focus-visible)          */
+/* ========================================================= */
+.serviceCard:has(:focus-visible) {
+  border-color: var(--color-brand);
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .serviceCard:has(:focus-visible) {
+    transform: translateY(-6px);
+  }
+
+  .serviceCard:has(:focus-visible) .serviceCardShadowLayer {
+    opacity: 1;
+  }
+
+  .serviceCard:has(:focus-visible) .serviceCardStripImg {
+    transform: scale(1.06);
+  }
+
+  .serviceCard:has(:focus-visible) .serviceCardCtaCircle {
+    transform: rotate(45deg);
+  }
+}
+
+/* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .servicesHeader,
   .serviceCard,
   .serviceCardShadowLayer,
   .serviceCardCtaCircle,

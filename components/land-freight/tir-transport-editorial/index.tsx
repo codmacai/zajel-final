@@ -1,11 +1,35 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, ChevronDown, DollarSign, Globe, Layers, ShieldCheck, Zap } from 'lucide-react';
+import { motion, type MotionProps } from 'framer-motion';
+import { ChevronDown, DollarSign, Globe, Layers, ShieldCheck, Zap } from 'lucide-react';
+
+/*
+  Palette (same as the rest of the site, used consistently):
+    • Accent   #36B936  – eyebrows, icons, active states, primary button
+    • Deep     #064423  – headings, dark hero card, borders/muted text at low opacity
+    • Surface  #FAFBF8 (section) / white (cards)
+
+  Breakpoints used:
+    mobile  < 640px      (base)
+    sm      ≥ 640px      large phones / small tablets
+    md      ≥ 768px      tablets
+    lg      ≥ 1024px     laptops / desktop (two-column layouts start here)
+    xl      ≥ 1280px     desktop
+    2xl     ≥ 1536px     large desktop
+    1920px+              extra-large / ultrawide
+*/
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
+
+const reveal = (delay = 0): MotionProps => ({
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.15 },
+  transition: { duration: 0.7, ease: EASE, delay },
+});
 
 type TirItem = {
   id: string;
@@ -52,84 +76,81 @@ const TIR_BENEFITS: TirItem[] = [
   },
 ];
 
+const HERO_CHIPS = ['Administered by the IRU', '77+ countries', 'Sealed vehicles'];
+
+/* Primary button: same recipe as the site's main CTA (min-h keeps a comfortable touch target) */
+const PRIMARY_BTN =
+  'inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[#36B936] px-[clamp(1.25rem,2vw,1.75rem)] py-[clamp(0.55rem,1vw,0.85rem)] text-xs font-medium text-[#0B140F] shadow-md transition-transform hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#064423] sm:w-auto sm:text-sm cursor-pointer';
+
 function TirAccordionRow({
   item,
-  index,
   isOpen,
   onToggle,
 }: {
   item: TirItem;
-  index: number;
   isOpen: boolean;
   onToggle: () => void;
 }) {
   const Icon = item.icon;
-  const active = isOpen;
+  const triggerId = `tir-trigger-${item.id}`;
+  const panelId = `tir-panel-${item.id}`;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.7, ease: 'easeOut', delay: index * 0.08 }}
-      className="group relative flex w-full flex-col border-b border-[#1b4332]/10 overflow-hidden bg-white first:rounded-t-[1.5rem] last:rounded-b-[1.5rem]"
-    >
-      <div
+    <div className={`relative transition-colors duration-300 ${isOpen ? 'bg-[#36B936]/[0.05]' : 'hover:bg-[#064423]/[0.02]'}`}>
+      {/* Active indicator */}
+      <span
         aria-hidden
-        className={`absolute inset-0 bg-[#36B936] transition-opacity duration-300 ease-out pointer-events-none ${
-          isOpen ? 'opacity-100' : 'opacity-0 sm:group-hover:opacity-100'
+        className={`pointer-events-none absolute left-0 top-0 h-full w-[3px] origin-top bg-[#36B936] transition-transform duration-300 ${
+          isOpen ? 'scale-y-100' : 'scale-y-0'
         }`}
       />
 
       <button
         type="button"
+        id={triggerId}
+        aria-expanded={isOpen}
+        aria-controls={panelId}
         onClick={onToggle}
-        className="relative grid w-full grid-cols-1 sm:grid-cols-12 items-center gap-3 px-5 py-4 sm:px-7 sm:py-5 md:px-8 text-left cursor-pointer"
+        className="flex w-full cursor-pointer items-center gap-3 px-4 py-4 text-left focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#36B936] min-[400px]:gap-4 min-[400px]:px-5 sm:px-6 sm:py-5 2xl:px-8 2xl:py-6"
       >
-        <div className="flex items-center gap-3 sm:col-span-1">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#36B936] text-white sm:h-9 sm:w-9">
-            <Icon className="h-4 w-4" strokeWidth={1.5} />
-          </div>
-          <span
-            className={`pointer-events-none select-none font-mono text-[11px] font-light transition-colors duration-300 sm:hidden ${
-              active ? 'text-white/70' : 'text-[#1b4332]/30'
-            }`}
-          >
-            {item.id}
-          </span>
-        </div>
-
-        <h4
-          className={`text-base font-medium tracking-tight transition-colors duration-300 sm:col-span-10 sm:text-lg ${
-            active ? 'text-white' : 'text-[#1b4332]/90 sm:group-hover:text-white'
+        <span
+          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-colors duration-300 2xl:h-10 2xl:w-10 ${
+            isOpen ? 'bg-[#36B936] text-white' : 'bg-[#36B936]/10 text-[#36B936]'
           }`}
         >
-          {item.title}
-        </h4>
+          <Icon className="h-[18px] w-[18px] 2xl:h-5 2xl:w-5" strokeWidth={1.6} />
+        </span>
 
-        <div className="flex justify-end sm:col-span-1">
-          <div
-            className={`flex h-7 w-7 items-center justify-center rounded-full transition-colors duration-300 ${
-              active ? 'bg-white/25 text-white' : 'text-[#1b4332]/40 sm:group-hover:text-white'
-            }`}
-          >
-            <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} strokeWidth={1.75} />
-          </div>
-        </div>
+        <span className="min-w-0 flex-1 text-[0.9375rem] font-medium leading-snug tracking-tight text-[#064423] sm:text-base 2xl:text-lg">
+          {item.title}
+        </span>
+
+        <span className="hidden text-xs font-medium tabular-nums text-[#064423]/30 sm:block">{item.id}</span>
+
+        <ChevronDown
+          className={`h-4 w-4 shrink-0 transition-transform duration-300 ${
+            isOpen ? 'rotate-180 text-[#36B936]' : 'text-[#064423]/40'
+          }`}
+          strokeWidth={1.75}
+        />
       </button>
 
       <div
-        className={`relative grid transition-all duration-300 ease-in-out px-5 sm:px-7 md:px-8 ${
+        id={panelId}
+        role="region"
+        aria-labelledby={triggerId}
+        className={`grid px-4 transition-all duration-300 ease-in-out min-[400px]:px-5 sm:px-6 2xl:px-8 ${
           isOpen ? 'grid-rows-[1fr] pb-5 opacity-100' : 'grid-rows-[0fr] pb-0 opacity-0'
         }`}
       >
         <div className="overflow-hidden">
-          <div className="pt-1 pb-1 sm:pl-[48px] lg:pl-[52px] max-w-3xl text-left">
-            <p className="text-sm leading-relaxed text-white/90 font-light">{item.description}</p>
-          </div>
+          {/* Left padding lines the text up with the title (icon 36px + gap) */}
+          <p className="max-w-2xl pr-2 text-sm font-light leading-relaxed text-[#064423]/70 pl-12 min-[400px]:pl-[52px] 2xl:pl-14 2xl:text-base">
+            {item.description}
+          </p>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -137,6 +158,8 @@ interface TirTransportEditorialProps {
   heroImageSrc?: string;
   heroImageAlt?: string;
   onRequestQuote?: () => void;
+  /** If set, the quote button renders as a link to this URL (onRequestQuote still fires on click). */
+  quoteHref?: string;
   onLearnMoreCustoms?: () => void;
   customsHref?: string;
 }
@@ -145,158 +168,169 @@ const TirTransportEditorial = ({
   heroImageSrc = '/landfreight/tir-transport.png',
   heroImageAlt = 'International Logistics and TIR Transport',
   onRequestQuote,
+  quoteHref,
   onLearnMoreCustoms,
   customsHref = '/customs-clearance',
 }: TirTransportEditorialProps) => {
   const [openId, setOpenId] = useState<string | null>('01');
 
-  const toggleItem = (id: string) => {
-    setOpenId((prev) => (prev === id ? null : id));
-  };
+  const toggleItem = (id: string) => setOpenId((prev) => (prev === id ? null : id));
+
+  const quoteLabel = (
+    <>
+      <span>Request a Land Freight Quote</span>
+      <span aria-hidden="true">→</span>
+    </>
+  );
 
   return (
-    <section className="w-full relative overflow-hidden py-[clamp(5rem,10vw,10rem)] bg-[#F8F9F8] text-[#1b4332] font-sans">
-      <div
-        className="absolute left-1/2 top-0 -translate-x-1/2 w-[80%] h-[40%] pointer-events-none opacity-30 blur-[140px]"
-        style={{ background: 'radial-gradient(circle, rgba(54,185,54,0.15) 0%, rgba(255,255,255,0) 70%)' }}
-      />
-
-      <div className="max-w-[1240px] mx-auto px-[clamp(1.25rem,5vw,2.75rem)] relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: EASE }}
-          className="mb-[clamp(3rem,6vw,5rem)] max-w-[760px] text-left"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="w-8 h-[2px]" style={{ backgroundColor: '#36B936' }} />
-            <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
+    <section className="relative w-full overflow-hidden bg-[#FAFBF8] py-[clamp(3.5rem,9vw,8rem)] font-['Manrope',sans-serif] text-[#064423]">
+      <div className="relative mx-auto flex max-w-[1240px] flex-col gap-[clamp(2.5rem,6vw,5rem)] px-[clamp(1rem,5vw,2.75rem)] 2xl:max-w-[1400px] min-[1920px]:max-w-[1560px]">
+        {/* Header */}
+        <motion.div {...reveal()} className="max-w-[760px] text-left 2xl:max-w-[880px]">
+          <div className="mb-3 flex items-center gap-3 sm:mb-4">
+            <span className="h-px w-8 bg-[#36B936]" aria-hidden />
+            <span className="text-[11px] font-medium uppercase tracking-wider text-[#36B936] sm:text-xs md:text-sm">
               Global Customs Transit
             </span>
           </div>
-          <h2 className="text-[#1b4332] font-medium leading-[1.1] text-2xl sm:text-3xl md:text-4xl tracking-tight">
+          <h2 className="text-balance text-[1.625rem] font-medium leading-[1.15] tracking-tight text-[#064423] min-[400px]:text-[1.75rem] sm:text-3xl md:text-4xl lg:text-[2.5rem] 2xl:text-[3rem]">
             TIR: Simplified International Road Transport
           </h2>
-          <p className="mt-4 text-[#2d6a4f] font-light text-sm sm:text-base leading-[1.65]">
-            Zajel utilizes the TIR (Transports Internationaux Routiers) system for international road freight shipments, enabling faster border crossings and simplified customs procedures across multiple countries in a single journey.
+          <p className="mt-3 max-w-[62ch] text-[0.9375rem] font-light leading-relaxed text-[#064423]/70 sm:mt-4 sm:text-base 2xl:max-w-[70ch] 2xl:text-lg">
+            Zajel utilizes the TIR (Transports Internationaux Routiers) system for international road freight shipments,
+            enabling faster border crossings and simplified customs procedures across multiple countries in a single
+            journey.
           </p>
         </motion.div>
 
+        {/* What is TIR: deep green card over the photo */}
         <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
-          className="relative rounded-[2rem] overflow-hidden border border-[#36B936]/20 shadow-[0_20px_50px_-15px_rgba(54,185,54,0.25)] bg-[#36B936] mb-12"
+          {...reveal(0.05)}
+          className="relative overflow-hidden rounded-[1.5rem] bg-[#064423] shadow-[0_24px_60px_-24px_rgba(6,68,35,0.45)] sm:rounded-[2rem]"
         >
-          <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0" aria-hidden>
             <Image
               src={heroImageSrc}
               alt={heroImageAlt}
               fill
-              sizes="(min-width: 1024px) 1240px, 100vw"
-              className="object-cover object-center opacity-65 scale-105"
+              sizes="(min-width: 1920px) 1560px, (min-width: 1536px) 1400px, (min-width: 1024px) 1240px, 100vw"
+              className="object-cover object-center opacity-40"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#36B936]/95 via-[#36B936]/80 to-[#36B936]/40" />
+            {/* Top-to-bottom on small screens (text spans full width); left-to-right from md up */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#064423]/95 to-[#064423]/80 md:bg-gradient-to-r md:from-[#064423] md:via-[#064423]/90 md:to-[#064423]/40" />
           </div>
 
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 p-[clamp(2rem,4vw,3.5rem)] items-center gap-8 text-left">
-            <div className="lg:col-span-12 text-white">
-              <span className="text-xs font-normal tracking-wider uppercase text-white block mb-2.5">
+          <div className="relative p-[clamp(1.5rem,4vw,3.5rem)] text-left text-white 2xl:p-16">
+            <div className="max-w-3xl 2xl:max-w-4xl">
+              <span className="mb-2.5 block text-[11px] font-medium uppercase tracking-wider text-[#36B936] sm:mb-3 sm:text-xs">
                 Core Foundation
               </span>
-              <h3 className="text-xl sm:text-2xl font-medium tracking-tight mb-3 text-white">
+              <h3 className="mb-3 text-[1.375rem] font-medium tracking-tight text-white sm:mb-4 sm:text-[1.75rem] 2xl:text-[2rem]">
                 What is TIR?
               </h3>
-              <p className="text-white/85 font-light text-sm sm:text-base leading-[1.65]">
-                The TIR Convention is an international customs transit system administered by the International Road Transport Union (IRU). It allows goods to move across international borders in sealed vehicles or containers with minimal customs intervention at each crossing point. Instead of inspecting and processing cargo at every border, customs authorities accept the{' '}
-                <strong className="text-white font-medium underline decoration-white decoration-1 underline-offset-4">
+              <p className="text-[0.875rem] font-light leading-[1.7] text-white/75 sm:text-base 2xl:text-[1.0625rem]">
+                The TIR Convention is an international customs transit system administered by the International Road
+                Transport Union (IRU). It allows goods to move across international borders in sealed vehicles or
+                containers with minimal customs intervention at each crossing point. Instead of inspecting and
+                processing cargo at every border, customs authorities accept the{' '}
+                <strong className="font-medium text-white underline decoration-[#36B936] decoration-2 underline-offset-4">
                   TIR Carnet
                 </strong>{' '}
                 as a guarantee, significantly reducing clearance times.
               </p>
+
+              <ul className="mt-5 flex flex-wrap gap-2 sm:mt-6">
+                {HERO_CHIPS.map((chip) => (
+                  <li
+                    key={chip}
+                    className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[11px] font-medium text-white/85 backdrop-blur-sm sm:px-3.5 sm:text-xs"
+                  >
+                    {chip}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
-          className="mb-5 flex flex-col sm:flex-row sm:items-end justify-between gap-4 text-left"
-        >
-          <div>
-            <span className="text-xs font-normal tracking-wider uppercase text-[#2d6a4f] block mb-1">
+        {/* Advantages: stacked on mobile/tablet, side-by-side from lg */}
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-12 lg:gap-10 xl:gap-14">
+          <motion.div
+            {...reveal()}
+            className="min-w-0 text-left lg:sticky lg:top-28 lg:col-span-5 lg:self-start xl:col-span-4"
+          >
+            <span className="mb-2.5 block text-[11px] font-medium uppercase tracking-wider text-[#36B936] sm:mb-3 sm:text-xs md:text-sm">
               Advantages
             </span>
-            <h3 className="text-lg sm:text-xl font-medium text-[#1b4332] tracking-tight">
-              How TIR benefits your shipment:
+            <h3 className="text-balance text-[1.375rem] font-medium leading-[1.2] tracking-tight text-[#064423] sm:text-[1.75rem] 2xl:text-[2rem]">
+              How TIR benefits your shipment
             </h3>
-          </div>
-        </motion.div>
+            <p className="mt-2 text-sm font-light text-[#064423]/60 sm:mt-3">{TIR_BENEFITS.length} key advantages</p>
+          </motion.div>
 
-        <div className="flex flex-col rounded-[1.5rem] border border-[#1b4332]/10 bg-white shadow-[0_10px_30px_rgba(0,0,0,0.03)] mb-12 overflow-hidden">
-          {TIR_BENEFITS.map((item, index) => (
-            <TirAccordionRow key={item.title} item={item} index={index} isOpen={openId === item.id} onToggle={() => toggleItem(item.id)} />
-          ))}
+          <motion.div
+            {...reveal(0.1)}
+            className="min-w-0 overflow-hidden rounded-[1.25rem] border border-[#064423]/10 bg-white shadow-[0_1px_2px_rgba(6,68,35,0.04),0_16px_40px_-20px_rgba(6,68,35,0.12)] sm:rounded-[1.5rem] lg:col-span-7 xl:col-span-8"
+          >
+            <div className="divide-y divide-[#064423]/10">
+              {TIR_BENEFITS.map((item) => (
+                <TirAccordionRow
+                  key={item.id}
+                  item={item}
+                  isOpen={openId === item.id}
+                  onToggle={() => toggleItem(item.id)}
+                />
+              ))}
+            </div>
+          </motion.div>
         </div>
 
+        {/* Operational scope + CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: EASE, delay: 0.3 }}
-          className="rounded-[2rem] border border-[#1b4332]/15 bg-gradient-to-br from-[#1b4332] to-[#0d2219] text-white p-[clamp(2rem,3.5vw,3rem)] shadow-[0_15px_40px_-12px_rgba(27,67,50,0.25)] text-left"
+          {...reveal()}
+          className="rounded-[1.5rem] border border-[#064423]/10 bg-white p-[clamp(1.25rem,3.5vw,2.75rem)] text-left shadow-[0_1px_2px_rgba(6,68,35,0.04),0_16px_40px_-20px_rgba(6,68,35,0.12)] sm:rounded-[2rem] 2xl:p-14"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center justify-between">
-            <div className="lg:col-span-7">
-              <span className="text-xs font-normal tracking-wider uppercase text-[#36B936] block mb-2">
+          <div className="grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-12">
+            <div className="min-w-0 lg:col-span-8">
+              <span className="mb-2 block text-[11px] font-medium uppercase tracking-wider text-[#36B936] sm:text-xs">
                 Operational Scope
               </span>
-              <h4 className="text-lg sm:text-xl font-medium tracking-tight mb-2.5 text-white">
-                When Zajel uses TIR:
+              <h4 className="mb-2 text-lg font-medium tracking-tight text-[#064423] sm:mb-2.5 sm:text-2xl 2xl:text-[1.75rem]">
+                When Zajel uses TIR
               </h4>
-              <p className="text-white/80 font-light text-sm leading-[1.65]">
-                TIR is applied on international land freight routes that cross two or more borders, particularly on corridors from the UAE through Saudi Arabia, Jordan, and Turkey into European destinations. Our team determines the optimal customs transit method for each shipment based on the route and cargo type.
+              <p className="max-w-[68ch] text-sm font-light leading-[1.7] text-[#064423]/70 sm:text-[0.9375rem] 2xl:max-w-[76ch] 2xl:text-base">
+                TIR is applied on international land freight routes that cross two or more borders, particularly on
+                corridors from the UAE through Saudi Arabia, Jordan, and Turkey into European destinations. Our team
+                determines the optimal customs transit method for each shipment based on the route and cargo type.
               </p>
             </div>
 
-            <div className="lg:col-span-5 flex flex-col sm:flex-row items-center justify-end gap-4 lg:border-l lg:border-white/10 lg:pl-8">
-              <button
-                type="button"
-                onClick={onRequestQuote}
-                className="w-full sm:w-auto group inline-flex items-center justify-center gap-2.5 bg-white text-[#1b4332] font-medium rounded-full pl-6 pr-2 py-3.5 text-sm tracking-tight transition-all duration-200 hover:bg-neutral-100 shadow-sm cursor-pointer"
+            <div className="flex flex-col items-stretch gap-4 sm:items-start lg:col-span-4 lg:items-end">
+              {quoteHref ? (
+                <Link href={quoteHref} onClick={onRequestQuote} className={PRIMARY_BTN}>
+                  {quoteLabel}
+                </Link>
+              ) : (
+                <button type="button" onClick={onRequestQuote} className={PRIMARY_BTN}>
+                  {quoteLabel}
+                </button>
+              )}
+
+              <a
+                href={customsHref}
+                onClick={(e) => {
+                  if (onLearnMoreCustoms) {
+                    e.preventDefault();
+                    onLearnMoreCustoms();
+                  }
+                }}
+                className="text-center text-sm font-medium tracking-tight text-[#064423]/80 underline decoration-[#36B936]/60 underline-offset-4 transition-colors duration-200 hover:text-[#36B936] sm:text-left lg:text-right"
               >
-                <span>Request a Land Freight Quote</span>
-                <span className="w-8 h-8 rounded-full bg-[#1b4332] text-[#36B936] flex items-center justify-center transition-transform duration-300 ease-out group-hover:translate-x-0.5">
-                  <ArrowRight className="w-3.5 h-3.5" strokeWidth={1.75} />
-                </span>
-              </button>
+                Learn more about our customs clearance services
+              </a>
             </div>
           </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: EASE, delay: 0.35 }}
-          className="mt-8 text-center"
-        >
-          <a
-            href={customsHref}
-            onClick={(e) => {
-              if (onLearnMoreCustoms) {
-                e.preventDefault();
-                onLearnMoreCustoms();
-              }
-            }}
-            className="text-[#1b4332] font-medium text-sm tracking-tight underline underline-offset-4 decoration-[#36B936] transition-colors duration-200 hover:text-[#36B936]"
-          >
-            Learn More About Our Customs Clearance Services
-          </a>
         </motion.div>
       </div>
     </section>
