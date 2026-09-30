@@ -17,7 +17,7 @@ const LandFreightBanner = ({
   imageAlt,
   heading = 'Cross-border trucking and rail, delivered on schedule',
   description = "From full truckload (FTL) and less-than-truckload (LTL) services to heavy haulage and intermodal rail, our extensive land network connects regional hubs seamlessly, backed by real-time tracking and dedicated dispatch support.",
-  projectLabel = 'Rotterdam to Warsaw Freight Corridor',
+  projectLabel = 'Oil & Gas Equipment',
   ctaLabel = 'Explore Land Freight',
   ctaHref = '/land-freight',
 }: LandFreightBannerProps) => {

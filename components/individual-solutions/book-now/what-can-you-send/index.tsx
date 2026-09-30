@@ -9,14 +9,13 @@ const EASE = [0.2, 0.8, 0.2, 1] as const;
 interface SizeLimitRow {
   shipmentType: string;
   maxWeight: string;
-  maxDimensions: string;
 }
 
 const SIZE_LIMIT_ROWS: SizeLimitRow[] = [
-  { shipmentType: 'Documents', maxWeight: 'Up to 2 kg', maxDimensions: 'A4 envelope or equivalent' },
-  { shipmentType: 'Small Parcels', maxWeight: 'Up to 30 kg', maxDimensions: '120 cm longest side' },
-  { shipmentType: 'Large Packages', maxWeight: 'Up to 70 kg', maxDimensions: '150 cm longest side' },
-  { shipmentType: 'Heavy or Oversized', maxWeight: 'Above 70 kg', maxDimensions: 'Contact us for a quote' },
+  { shipmentType: 'Documents', maxWeight: 'Up to 4 kg' },
+  { shipmentType: 'Small Parcels', maxWeight: 'Up to 30 kg' },
+  { shipmentType: 'Large Packages', maxWeight: 'Up to 70 kg' },
+  { shipmentType: 'Heavy or Oversized', maxWeight: 'Above 70 kg' },
 ];
 
 const PACKING_TIPS = [
@@ -88,16 +87,13 @@ export default function WhatCanYouSend({
           </div>
 
           <table className="w-full border-collapse text-left">
-            <thead>
+          <thead>
               <tr className="border-b border-white/10 bg-white/[0.04]">
-                <th className="w-[32%] px-4 py-3.5 sm:px-6 sm:py-5 md:px-8 md:py-6 text-[10px] sm:text-[11px] md:text-[12px] font-medium uppercase tracking-[0.14em] text-[#36B936]">
+                <th className="w-1/2 px-4 py-3.5 sm:px-6 sm:py-5 md:px-8 md:py-6 text-[10px] sm:text-[11px] md:text-[12px] font-medium uppercase tracking-[0.14em] text-[#36B936]">
                   Shipment Type
                 </th>
-                <th className="w-[30%] border-x border-white/[0.06] px-4 py-3.5 sm:px-6 sm:py-5 md:px-8 md:py-6 text-[10px] sm:text-[11px] md:text-[12px] font-medium uppercase tracking-[0.14em] text-white/90">
+                <th className="w-1/2 border-l border-white/[0.06] px-4 py-3.5 sm:px-6 sm:py-5 md:px-8 md:py-6 text-[10px] sm:text-[11px] md:text-[12px] font-medium uppercase tracking-[0.14em] text-white/90">
                   Max Weight
-                </th>
-                <th className="w-[38%] px-4 py-3.5 sm:px-6 sm:py-5 md:px-8 md:py-6 text-[10px] sm:text-[11px] md:text-[12px] font-medium uppercase tracking-[0.14em] text-white/70">
-                  Max Dimensions
                 </th>
               </tr>
             </thead>
@@ -107,11 +103,8 @@ export default function WhatCanYouSend({
                   <td className="px-4 py-3.5 sm:px-6 sm:py-5 md:px-8 md:py-6 align-middle text-xs sm:text-sm font-medium text-white/95">
                     {row.shipmentType}
                   </td>
-                  <td className="border-x border-white/[0.06] px-4 py-3.5 sm:px-6 sm:py-5 md:px-8 md:py-6 align-middle text-xs sm:text-sm font-light text-white/90">
+                  <td className="border-l border-white/[0.06] px-4 py-3.5 sm:px-6 sm:py-5 md:px-8 md:py-6 align-middle text-xs sm:text-sm font-light text-white/90">
                     {row.maxWeight}
-                  </td>
-                  <td className="px-4 py-3.5 sm:px-6 sm:py-5 md:px-8 md:py-6 align-middle text-xs sm:text-sm font-light text-white/80">
-                    {row.maxDimensions}
                   </td>
                 </tr>
               ))}

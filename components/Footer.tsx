@@ -48,7 +48,7 @@ const COLUMNS: FooterColumn[] = [
   {
     title: 'Resources',
     links: [
-      { label: 'Get a Quote', href: '/quotation' },
+      { label: 'Download the App', href: '/app-download' },
       { label: 'Shipment Tracking', href: '/track' },
       { label: 'Help Center', href: '/support' },
       { label: 'FAQ', href: '/faq' },

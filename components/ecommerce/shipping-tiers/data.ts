@@ -5,7 +5,8 @@ export const HEADING_LINE_1 = 'Built to Match';
 export const HEADING_LINE_2 = 'Your Volume';
 export const INTRO =
   "Whether you're shipping your first orders or running fulfillment at scale, there's a tier that fits how your business actually operates.";
-export const FOOTNOTE = 'No setup fees on any tier — upgrade or downgrade as your volume changes';
+export const FOOTNOTE =
+  'No setup fees on any tier. Start on the app and move to a business account as your volume grows.';
 
 export const TIERS: ShippingTier[] = [
   {
@@ -14,16 +15,17 @@ export const TIERS: ShippingTier[] = [
     label: 'Emerging Sellers',
     volume: 'Shipping 1 to 50 orders per day',
     description:
-      'You are building your brand and every delivery matters. Zajel gives you the same logistics infrastructure that larger brands use, without the overhead. No minimum volumes. No long-term contracts. Start with pay per shipment pricing and scale when you are ready.',
+      'You are building your brand and every delivery matters. Download the Zajel app and book on-demand pickups whenever you need them, with no minimum volumes, no contracts and no account setup. Pay per shipment and scale when you are ready.',
     featuresNote: null,
     features: [
-      'Portal access with order tracking',
-      'COD collection and weekly reconciliation',
+      'On-demand pickups booked from the app',
+      'Pay per shipment, no contracts',
+      'Live tracking for you and your customer',
       'Same-day and next-day delivery across all emirates',
-      'Shopify or WooCommerce integration',
+      'COD collection',
     ],
-    buttonLabel: 'Get Started',
-    buttonUrl: '/get-started',
+    buttonLabel: 'Download the App',
+    buttonUrl: '/download-app',
     recommended: false,
   },
   {
@@ -33,11 +35,14 @@ export const TIERS: ShippingTier[] = [
     volume: 'Shipping 50 to 500 orders per day',
     description:
       'Your order volume is climbing and you need logistics that keeps pace without adding complexity. Zajel assigns a dedicated account manager to your business, builds a custom rate card around your shipping patterns, and handles fulfillment so you can focus on selling.',
-    featuresNote: 'Everything in Emerging Sellers, plus:',
+    featuresNote: 'What you get:',
     features: [
+      'Business portal with order tracking',
+      'Shopify or WooCommerce integration',
       'Dedicated account manager',
       'Custom volume-based rate card',
       'Priority pickup scheduling',
+      'COD collection and weekly reconciliation',
       'Returns processing',
       'Monthly performance reports',
     ],
@@ -60,8 +65,8 @@ export const TIERS: ShippingTier[] = [
       'Daily COD reconciliation and settlement',
       'Custom SLA agreements',
     ],
-    buttonLabel: 'Request a Custom Proposal',
-    buttonUrl: '/custom-proposal',
+    buttonLabel: 'Talk to Sales',
+    buttonUrl: '/contact-sales',
     recommended: false,
   },
 ];

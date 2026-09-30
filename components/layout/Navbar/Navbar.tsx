@@ -152,8 +152,8 @@ export default function Navbar() {
               className="desktop-nav"
               style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "clamp(12px, 1.5vw, 20px)", flexShrink: 0 }}
             >
-              <Link href="/quotation" className="btn-quote" onClick={() => setActiveMenu(null)}>
-                Get a Quote
+              <Link href="/app-download" className="btn-quote" onClick={() => setActiveMenu(null)}>
+                Download the app
               </Link>
               <LanguageSwitcher />
               <Link href="/login" className="btn-login" onClick={() => setActiveMenu(null)}>

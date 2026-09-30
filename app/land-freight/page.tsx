@@ -35,7 +35,7 @@ export default function LandFreightPage() {
 
       <WhatWeMove />
       <LandFreightBanner
-      imageSrc="/sea-freight/magnific_breakbulk-shipment-uae-to_XmkRhJ7Bfo.jpg"
+      imageSrc="/Homepage/projects/oil-gas-process-equipment.jpg"
       imageAlt="Container ship at port"
     />
       
