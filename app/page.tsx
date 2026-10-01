@@ -27,7 +27,10 @@ export default function Home() {
       <ZajelNowBanner/>
       
       <LatestNews/>
-      <CompactSaaSBanner/>
+      <CompactSaaSBanner
+        phoneImageSrc="/domestic/app/step-2.webp"
+        desktopImageSrc="/domestic/app/step-2.webp"
+      />
       <CertificationsGrid/>
       <FeaturedProjects/>
     </main>
