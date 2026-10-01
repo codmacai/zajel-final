@@ -18,7 +18,7 @@ const defaultContent: InternationalHeroContent = {
   title: "International Shipping UAE: Doorstep Delivery to 200+ Countries",
   description:
     "Documents or packages, delivered in 3–4 days. Customs handled end to end, with tracking and a delivery arrangement that fits your shipment.",
-  image_url: "/international/ChatGPT Image May 12, 2026 at 02_03_10 AM.png",
+  image_url: "/international/ChatGPT Image May 12, 2026 at 02_03_10 AM.webp",
 };
 
 interface InternationalHeroProps {
@@ -46,7 +46,7 @@ const InternationalHero: FC<InternationalHeroProps> = ({
           <div className="relative min-h-[140px] flex-1 overflow-hidden rounded-[1.25rem] bg-[#0B140F] shadow-lg sm:rounded-[1.5rem] md:absolute md:inset-0 md:min-h-0 md:rounded-none md:shadow-none">
             <Image
               src={image_url}
-              alt=""
+              alt="International courier shipment ready for delivery abroad"
               fill
               priority
               sizes="(max-width: 1600px) 100vw, 1600px"

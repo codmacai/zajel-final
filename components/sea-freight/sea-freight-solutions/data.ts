@@ -19,7 +19,7 @@ export const SEA_FREIGHT_CARDS: FreightCard[] = [
   {
     id: 'fcl',
     Icon: ContainerIcon,
-    image: '/sea-freight/solutions/ChatGPT Image Sep 9, 2026, 03_57_24 AM.png',
+    image: '/sea-freight/solutions/ChatGPT Image Sep 9, 2026, 03_57_24 AM.webp',
     title: 'Full Container Load (FCL)',
     description: 'A dedicated container for your cargo alone, suited to large or high-volume shipments.',
     buttonLabel: 'Request a Quote',
@@ -28,7 +28,7 @@ export const SEA_FREIGHT_CARDS: FreightCard[] = [
   {
     id: 'lcl',
     Icon: SharedContainerIcon,
-    image: '/sea-freight/solutions/ChatGPT Image Sep 9, 2026, 03_59_45 AM.png',
+    image: '/sea-freight/solutions/ChatGPT Image Sep 9, 2026, 03_59_45 AM.webp',
     title: 'Less than Container Load (LCL)',
     description:
       "Shared container space for smaller shipments, cost-effective when you don't need a full container.",
@@ -38,7 +38,7 @@ export const SEA_FREIGHT_CARDS: FreightCard[] = [
   {
     id: 'special-equipment',
     Icon: SpecialEquipmentIcon,
-    image: '/sea-freight/solutions/ChatGPT Image Sep 9, 2026, 04_03_14 AM.png',
+    image: '/sea-freight/solutions/ChatGPT Image Sep 9, 2026, 04_03_14 AM.webp',
     title: 'Special Equipment',
     description: 'Flat racks, open tops, and other specialized container equipment for non-standard cargo.',
     buttonLabel: 'Request a Quote',
@@ -47,7 +47,7 @@ export const SEA_FREIGHT_CARDS: FreightCard[] = [
   {
     id: 'roro',
     Icon: RoRoIcon,
-    image: '/sea-freight/solutions/ChatGPT Image Sep 9, 2026, 04_04_23 AM.png',
+    image: '/sea-freight/solutions/ChatGPT Image Sep 9, 2026, 04_04_23 AM.webp',
     title: 'RoRo (Roll-on Roll-off)',
     description: 'For vehicles and wheeled equipment driven directly onto and off the vessel.',
     buttonLabel: 'Request a Quote',
@@ -56,7 +56,7 @@ export const SEA_FREIGHT_CARDS: FreightCard[] = [
   {
     id: 'breakbulk',
     Icon: BreakbulkIcon,
-    image: '/sea-freight/solutions/ChatGPT Image Sep 9, 2026, 04_05_14 AM.png',
+    image: '/sea-freight/solutions/ChatGPT Image Sep 9, 2026, 04_05_14 AM.webp',
     title: 'Breakbulk',
     description: 'For cargo too large or irregular for standard containers, loaded individually.',
     buttonLabel: 'Request a Quote',
@@ -74,7 +74,7 @@ export const SEA_FREIGHT_CARDS: FreightCard[] = [
   {
     id: 'dg',
     Icon: DangerousGoodsIcon,
-    image: '/sea-freight/solutions/ChatGPT Image Sep 9, 2026, 04_07_38 AM.png',
+    image: '/sea-freight/solutions/ChatGPT Image Sep 9, 2026, 04_07_38 AM.webp',
     title: 'DG Shipping',
     description: 'Certified handling for hazardous and regulated cargo, to full compliance standards.',
     buttonLabel: 'Request a Quote',
@@ -83,7 +83,7 @@ export const SEA_FREIGHT_CARDS: FreightCard[] = [
   {
     id: 'temperature-controlled',
     Icon: ReeferIcon,
-    image: '/sea-freight/solutions/ChatGPT Image Sep 29, 2026, 12_46_55 PM.png',
+    image: '/sea-freight/solutions/ChatGPT Image Sep 29, 2026, 12_46_55 PM.webp',
     title: 'Reefer Containers',
     description: 'Temperature-controlled containers for perishables and sensitive cargo.',
     buttonLabel: 'Request a Quote',

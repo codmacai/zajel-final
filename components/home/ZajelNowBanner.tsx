@@ -111,8 +111,8 @@ export default function EmxBanner() {
               style={{ top: "0.5rem" }}
             >
               <img
-                src="/ChatGPT Image Sep 16, 2026, 10_20_26 AM.png"
-                alt=""
+                src="/ChatGPT Image Sep 16, 2026, 10_20_26 AM.webp"
+                alt="Zajel Now on-demand delivery in the city"
                 className="absolute inset-0 h-full w-full object-cover object-[66%_bottom] sm:object-[63%_bottom] md:object-center"
               />
               <div
@@ -143,8 +143,9 @@ export default function EmxBanner() {
             {/* LAYER 3: Overlay Cutout */}
             <div className="emx-cutout-wrap absolute inset-x-0 bottom-0 z-20 top-2 md:-top-64 overflow-visible">
               <img
-                src="/magnific_make-the-img1-realistic-h_5jNGRUBKxe (1).png"
+                src="/magnific_make-the-img1-realistic-h_5jNGRUBKxe (1).webp"
                 alt=""
+                aria-hidden="true"
                 className="emx-cutout absolute inset-0 h-full w-full object-cover object-[66%_bottom] sm:object-[63%_bottom] md:object-center"
               />
             </div>

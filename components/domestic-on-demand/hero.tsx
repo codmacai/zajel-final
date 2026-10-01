@@ -17,7 +17,7 @@ const defaultContent: DomesticHeroContent = {
   title: "Same Day Delivery Across the UAE",
   description:
     "Schedule your pickup, by day or by time — arriving within 1 hour, delivered within 2. Same-city or city-to-city, straight to the door.",
-  image_url: "/domestic/ChatGPT Image Sep 9, 2026, 09_23_27 AM.png",
+  image_url: "/domestic/ChatGPT Image Sep 9, 2026, 09_23_27 AM.webp",
 };
 
 interface DomesticHeroProps {
@@ -45,7 +45,7 @@ const DomesticHero: FC<DomesticHeroProps> = ({
           <div className="relative min-h-[140px] flex-1 overflow-hidden rounded-[1.25rem] bg-[#0B140F] shadow-lg sm:rounded-[1.5rem] md:absolute md:inset-0 md:min-h-0 md:rounded-none md:shadow-none">
             <Image
               src={image_url}
-              alt=""
+              alt="Zajel courier delivering a parcel to a customer in the UAE"
               fill
               priority
               sizes="(max-width: 1600px) 100vw, 1600px"

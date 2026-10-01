@@ -1,10 +1,13 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import { SecureIdHero, SecureIdProtocol, SecureIdVerificationDetails } from '@/components/services/secure-id';
 
-export const metadata: Metadata = {
-  title: "Secure ID Delivery",
-  description: "Passports, ID cards and licences delivered with recipient verification at the door.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Secure ID Delivery in the UAE",
+  description:
+    "Passports, Emirates ID cards and licences delivered across the UAE with recipient verification at the door.",
+  path: '/secure-id',
+});
 
 export default function SecureIdPage() {
   return (

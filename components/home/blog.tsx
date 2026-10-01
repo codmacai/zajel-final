@@ -61,7 +61,7 @@ export default function LatestNews() {
   const { ref: sectionRef, isVisible } = useReveal<HTMLElement>(register);
 
   return (
-    <section ref={sectionRef} className={`ln-section ${isVisible ? "is-visible" : ""}`}>
+    <section id="news" ref={sectionRef} className={`ln-section ${isVisible ? "is-visible" : ""}`}>
       {/* Masthead */}
       <div className="ln-header">
         <span className="ln-eyebrow">Newsroom</span>

@@ -20,14 +20,14 @@ export const FREIGHT_SERVICES: FreightCardData[] = [
     title: "Sea & Ocean Freight",
     description:
       "Cost-effective FCL and LCL container shipping through Jebel Ali Port. Seamless maritime logistics connecting key trade lanes globally.",
-    imageSrc: "/freight/magnific_photorealistic-premium-se_Xmk06pJBfo.jpg",
+    imageSrc: "/freight/magnific_photorealistic-premium-se_Xmk06pJBfo.webp",
     imageAlt: "Dubai Ocean Cargo Shipping Container",
   },
   {
     title: "Land & Road Transport",
     description:
       "Cross-border FTL and LTL trucking across Saudi Arabia, Oman, and the GCC. Fast customs clearance and scheduled daily road freight delivery.",
-    imageSrc: "/freight/magnific_give-me-land-freight-imag_P3Dgyjc42C.jpg",
+    imageSrc: "/freight/magnific_give-me-land-freight-imag_P3Dgyjc42C.webp",
     imageAlt: "GCC Cross Border Road Logistics Truck",
   },
 ];

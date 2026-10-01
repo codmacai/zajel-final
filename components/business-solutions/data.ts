@@ -8,7 +8,7 @@ export const heroData = {
     "Whether you're fulfilling online orders or moving freight across borders, Zajel supports the operation — not just the shipment.",
   buttonLabel: 'Get a Quote',
   buttonUrl: '/quote',
-  heroImage: '/Homepage/7be9399d-bd5b-44e2-97ed-97d5efce871c.png',
+  heroImage: '/Homepage/7be9399d-bd5b-44e2-97ed-97d5efce871c.webp',
 };
 
 export interface ServiceCard {

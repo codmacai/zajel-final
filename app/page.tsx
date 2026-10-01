@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import CompactSaaSBanner from "@/components/home/appdownload";
 import LatestNews from "@/components/home/blog";
 import CertificationsGrid from "@/components/home/CertificationsGrid";
@@ -7,6 +9,13 @@ import HowItWorks from "@/components/home/HowItWorks";
 import ServicesSection from "@/components/home/ServicesSection";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import ZajelNowBanner from "@/components/home/ZajelNowBanner";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Courier, Freight & Logistics in the UAE",
+  description:
+    "Same-day courier, international shipping, air, sea and land freight, customs clearance and warehousing across the UAE and to 195 countries. Book, track and ship with Zajel.",
+  path: '/',
+});
 
 export default function Home() {
   return (

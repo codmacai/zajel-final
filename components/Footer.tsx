@@ -48,11 +48,11 @@ const COLUMNS: FooterColumn[] = [
   {
     title: 'Resources',
     links: [
-      { label: 'Download the App', href: '/app-download' },
+      { label: 'Download the App', href: '/#download-app' },
       { label: 'Shipment Tracking', href: '/track' },
       { label: 'Help Center', href: '/support' },
       { label: 'FAQ', href: '/faq' },
-      { label: 'Blog', href: '/blog' },
+      { label: 'Blog', href: '/#news' },
     ],
   },
 ];

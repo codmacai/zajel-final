@@ -18,7 +18,7 @@ export const STRATEGIC_LOCATIONS_CARDS: LocationCard[] = [
   {
     id: "jebel-ali",
     icon: Anchor,
-    image: "/warehouse/location/magnific_photorealistic-highend-lo_Dou1jIjpcl.jpg",
+    image: "/warehouse/location/magnific_photorealistic-highend-lo_Dou1jIjpcl.webp",
     title: "Proximity to Jebel Ali Port",
     body: "The largest container port in the Middle East. Cargo can move to our facilities quickly, minimizing dwell time between port clearance and storage.",
     tag: "Minimal dwell time",
@@ -26,7 +26,7 @@ export const STRATEGIC_LOCATIONS_CARDS: LocationCard[] = [
   {
     id: "airports",
     icon: Plane,
-    image: "/warehouse/location/magnific_photorealistic-profession_1l9GWJ7r4r.jpg",
+    image: "/warehouse/location/magnific_photorealistic-profession_1l9GWJ7r4r.webp",
     title: "Airport Access",
     body: "Close connectivity to DXB and DWC means air freight reaches our facilities the same day it clears customs, supporting time-sensitive replenishment.",
     tag: "Same-day replenishment",
@@ -34,7 +34,7 @@ export const STRATEGIC_LOCATIONS_CARDS: LocationCard[] = [
   {
     id: "gcc",
     icon: Truck,
-    image: "/warehouse/location/magnific_photorealistic-aerial-cor_yicX8pTPW9.jpg",
+    image: "/warehouse/location/magnific_photorealistic-aerial-cor_yicX8pTPW9.webp",
     title: "GCC Distribution Reach",
     body: "From our UAE base, goods can be dispatched by road across Saudi Arabia, Oman, Bahrain, Kuwait, and Qatar — a regional hub, not just domestic storage.",
     tag: "5-country road reach",
@@ -42,7 +42,7 @@ export const STRATEGIC_LOCATIONS_CARDS: LocationCard[] = [
   {
     id: "freezone",
     icon: Landmark,
-    image: "/warehouse/location/magnific_photorealistic-premium-lo_rgNzWnNxtc (1).jpg",
+    image: "/warehouse/location/magnific_photorealistic-premium-lo_rgNzWnNxtc (1).webp",
     title: "Free Zone Advantages",
     body: "Goods stored in UAE free zones benefit from customs duty exemption while in zone, reducing duty costs for re-export and regional distribution.",
     tag: "Duty exemption in-zone",

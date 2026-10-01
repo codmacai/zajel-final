@@ -22,7 +22,7 @@ export const PROJECTS: Project[] = [
     title: 'Vehicle export',
     place: 'Dubai, UAE',
     caption: 'A vehicle prepared and exported by air, with secure handling door to door.',
-    image: '/Homepage/Screenshot 2026-09-28 at 12.29.54 PM.png',
+    image: '/Homepage/Screenshot 2026-09-28 at 12.29.54 PM.webp',
     alt: 'Vehicle loaded on a flatbed at an air cargo terminal',
   },
   {

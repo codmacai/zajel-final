@@ -25,7 +25,7 @@ const VESSELS: Vessel[] = [
     purpose: 'Transports standard ISO containers (20ft/40ft)',
     feature: 'Fast loading and unloading at container terminals with gantry cranes',
     icon: Box,
-    image: '/sea-freight/oceancargo/ChatGPT Image Sep 9, 2026, 03_49_23 AM.png',
+    image: '/sea-freight/oceancargo/ChatGPT Image Sep 9, 2026, 03_49_23 AM.webp',
   },
   {
     type: 'general',
@@ -33,7 +33,7 @@ const VESSELS: Vessel[] = [
     purpose: 'Transports loose, non-containerized, non-bulk cargo — oversized loads, machines, equipment',
     feature: 'Flexible space for different cargo types, using its own cranes to load and unload',
     icon: Package,
-    image: '/sea-freight/oceancargo/ChatGPT Image Sep 2, 2026, 03_00_54 AM.png',
+    image: '/sea-freight/oceancargo/ChatGPT Image Sep 2, 2026, 03_00_54 AM.webp',
   },
   {
     type: 'roro',
@@ -41,7 +41,7 @@ const VESSELS: Vessel[] = [
     purpose: 'Transports wheeled cargo like cars, trucks and trailers',
     feature: 'Cargo is driven on and off via built-in ramps — no crane needed',
     icon: Truck,
-    image: '/sea-freight/oceancargo/ChatGPT Image Sep 2, 2026, 02_56_24 AM.png',
+    image: '/sea-freight/oceancargo/ChatGPT Image Sep 2, 2026, 02_56_24 AM.webp',
   },
   {
     type: 'bulk',
@@ -49,7 +49,7 @@ const VESSELS: Vessel[] = [
     purpose: 'Carries unpackaged bulk cargo like coal, grain and iron ore',
     feature: 'Large cargo holds, sometimes with onboard cranes for self-loading',
     icon: Layers,
-    image: '/sea-freight/oceancargo/ChatGPT Image Sep 2, 2026, 03_00_33 AM.png',
+    image: '/sea-freight/oceancargo/ChatGPT Image Sep 2, 2026, 03_00_33 AM.webp',
   },
   {
     type: 'gas',
@@ -57,7 +57,7 @@ const VESSELS: Vessel[] = [
     purpose: 'Transports liquefied gases like LNG and LPG',
     feature: 'Highly specialized tanks with temperature and pressure control systems',
     icon: Flame,
-    image: '/sea-freight/oceancargo/ChatGPT Image Sep 2, 2026, 03_00_43 AM.png',
+    image: '/sea-freight/oceancargo/ChatGPT Image Sep 2, 2026, 03_00_43 AM.webp',
   },
   {
     type: 'livestock',
@@ -65,7 +65,7 @@ const VESSELS: Vessel[] = [
     purpose: 'Transports live animals, such as cattle and sheep, over sea routes',
     feature: 'Modified decks with ventilation, feeding and waste systems for animal welfare',
     icon: Wind,
-    image: '/sea-freight/oceancargo/ChatGPT Image Sep 2, 2026, 03_01_05 AM.png',
+    image: '/sea-freight/oceancargo/ChatGPT Image Sep 2, 2026, 03_01_05 AM.webp',
   },
 ];
 

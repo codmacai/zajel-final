@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import {
   LandFreightSolutions,
   WhenToChooseLandFreight,
@@ -16,11 +17,12 @@ import IndustriesWeServe from '@/components/land-freight/industry';
 import HowFreightQuoteWorks from '@/components/land-freight/HowItworks';
 import LandFreightHero from '@/components/land-freight/hero';
 
-export const metadata: Metadata = {
-  title: 'Land Freight Services | Zajel',
+export const metadata: Metadata = pageMetadata({
+  title: "Land Freight Services",
   description:
-    'Full truckload and less-than-truckload road freight across the UAE, GCC, and cross-border routes to Jordan, Turkey, and Europe — with TIR customs transit, cold chain, and dedicated fleet coverage.',
-};
+    "Full truckload and less-than-truckload road freight across the UAE, GCC, and cross-border routes to Jordan, Turkey, and Europe — with TIR customs transit, cold chain, and dedicated fleet coverage.",
+  path: '/land-freight',
+});
 
 export default function LandFreightPage() {
   return (

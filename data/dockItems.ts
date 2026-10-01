@@ -45,7 +45,7 @@ export const dockItems: DockItemConfig[] = [
     sublabelDefault: "E-commerce & freight",
   },
   {
-    href: "/find-us",
+    href: "/network",
     icon: MapPin,
     labelKey: "hero.actions.findus.label",
     labelDefault: "Find Us",

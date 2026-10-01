@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import WhenToChooseSeaFreight from "@/components/sea-freight/when-to-choose-sea-freight";
 import SeaWhatWeMove from "@/components/sea-freight/sea-what-we-move";
 import OceanCargoVessels from "@/components/sea-freight/ocean-cargo-vessels";
@@ -15,6 +17,13 @@ import SeaFreightHero from "@/components/sea-freight/hero";
 import ContactSection from "@/components/shared/contact";
 import { seaFreightContent } from "@/data/contact-content";
 
+export const metadata: Metadata = pageMetadata({
+  title: "Sea Freight Shipping in the UAE",
+  description:
+    "FCL and LCL sea freight from UAE ports to destinations worldwide, with clear pricing, container guidance, bonded storage, marine insurance and customs clearance.",
+  path: '/sea-freight',
+});
+
 export default function SeaFreightPage() {
   return (
     <main>
@@ -25,7 +34,7 @@ export default function SeaFreightPage() {
 
       <SeaWhatWeMove />
       <SeaFreightBanner
-        imageSrc="/sea-freight/magnific_breakbulk-shipment-uae-to_XmkRhJ7Bfo.jpg"
+        imageSrc="/sea-freight/magnific_breakbulk-shipment-uae-to_XmkRhJ7Bfo.webp"
         imageAlt="Container ship at port"
       />
 

@@ -1,17 +1,13 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import SecureSolutions from '@/components/Secure-solutions/secure-solutions';
 
-export const metadata: Metadata = {
-  title: 'Secure Solutions | Zajel',
+export const metadata: Metadata = pageMetadata({
+  title: "Secure Solutions",
   description:
-    'Dedicated, highly secure courier services relied upon by leading UAE government entities and institutions.',
-  openGraph: {
-    title: 'Secure Solutions | Zajel',
-    description:
-      'Dedicated, highly secure courier services relied upon by leading UAE government entities and institutions.',
-    images: ['/images/secure-hero.png'],
-  },
-};
+    "Dedicated, highly secure courier services relied upon by leading UAE government entities and institutions.",
+  path: '/secure-solutions',
+});
 
 export default function Page() {
   return <SecureSolutions />;

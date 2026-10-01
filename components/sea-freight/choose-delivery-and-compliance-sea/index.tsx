@@ -1,7 +1,7 @@
 // components/SeaFreight/ChooseDeliveryAndComplianceSea/ChooseDeliveryAndComplianceSea.tsx
 import DynamicDelivery from "@/components/DynamicDelivery/DeliveryDelivery";
 
-const BASE_IMAGE_SRC = "/choose/ChatGPT Image Sep 28, 2026, 03_27_16 PM.png";
+const BASE_IMAGE_SRC = "/choose/ChatGPT Image Sep 28, 2026, 03_27_16 PM.webp";
 const CUTOUT_IMAGE_SRC = "/choose/ChatGPT Image Sep 28, 2026, 03_27_25 PM (2).png";
 
 const OTHER_ARRANGEMENTS_LINE =

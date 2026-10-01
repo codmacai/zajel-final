@@ -65,7 +65,7 @@ export default function WhyChooseUs() {
               />
               <Image
                 src="/Homepage/whychooseus/ChatGPT Image Aug 4, 2026, 11_27_44 AM (1).png"
-                alt=""
+                alt="Map of Zajel delivery coverage across the UAE"
                 fill
                 sizes="(max-width: 1023px) 100vw, 40vw"
                 className="wcz-reach-map-overlay"
@@ -125,7 +125,7 @@ export default function WhyChooseUs() {
               <div className="wcz-ship-label">{content.shipments.title}</div>
             </div>
             <div className="wcz-ship-illustration" aria-hidden="true">
-              <Image src="/Homepage/whychooseus/magnific_photo-a-person-wearing-gr_nVaG47XYQD.png" alt="" fill sizes="320px" />
+              <Image src="/Homepage/whychooseus/magnific_photo-a-person-wearing-gr_nVaG47XYQD.webp" alt="" fill sizes="320px" />
             </div>
           </div>
 

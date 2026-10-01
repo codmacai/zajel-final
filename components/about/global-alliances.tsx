@@ -14,7 +14,7 @@ const defaultContent = {
   heading: 'Our Alliances & Accreditations',
   intro:
     'Connecting Zajel to global networks, trade facilitation benefits, and internationally recognized standards across air, sea, and land logistics.',
-  logoStripImage: '/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR.png', // update to match your asset
+  logoStripImage: '/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR.webp', // update to match your asset
   alliances: [
     {
       title: 'WCA Inter Global',

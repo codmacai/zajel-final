@@ -74,7 +74,7 @@ export interface Route {
   // "When to Choose Air Freight" — transit guide banner + cross-sell
   // ---------------------------------------------------------------------------
   
-  export const TRANSIT_GUIDE_IMAGE_SRC = "/airfreight/solutions/ChatGPT Image Sep 8, 2026, 01_21_41 AM.png";
+  export const TRANSIT_GUIDE_IMAGE_SRC = "/airfreight/solutions/ChatGPT Image Sep 8, 2026, 01_21_41 AM.webp";
   
   export interface BodyPart {
     text: string;
