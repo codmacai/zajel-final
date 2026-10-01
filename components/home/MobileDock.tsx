@@ -17,7 +17,7 @@ const SHORT_LABELS: Record<string, string> = {
   "/track": "Track",
   "/send-shipment": "Send",
   "/business-solutions": "Business",
-  "/find-us": "Find Us",
+  "/network": "Find Us",
 };
 
 // Extra pages that should keep a dock item highlighted, keyed by the item's href.

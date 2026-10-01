@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import {
   BookNow,
   IndividualHero,
@@ -10,11 +11,12 @@ import WhatCanYouSend from '@/components/individual-solutions/book-now/what-can-
 import DomesticVsInternational from '@/components/individual-solutions/book-now/domestic-vs-international';
 import CTABanner from '@/components/shared/CTABanner';
 
-export const metadata: Metadata = {
-  title: 'Individual Solutions | Zajel',
+export const metadata: Metadata = pageMetadata({
+  title: "Individual Solutions",
   description:
     "Whatever you're sending, wherever it's going — same day across the UAE, or international to 200+ countries.",
-};
+  path: '/individual-solutions',
+});
 
 export default function IndividualSolutionsPage() {
   return (
@@ -25,7 +27,7 @@ export default function IndividualSolutionsPage() {
       <DomesticVsInternational />
       <WhatCanYouSend/>
       <CTABanner
-                            image="/ChatGPT Image Apr 23, 2026 at 11_02_53 AM.png"
+                            image="/ChatGPT Image Apr 23, 2026 at 11_02_53 AM.webp"
 
                     imageAlt="Courier delivering a package doorstep to doorstep in the UAE"
                     title="Same day or international"

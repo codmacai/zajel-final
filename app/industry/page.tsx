@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from '@/lib/seo';
 import ServiceHero from "@/components/sections/ServiceHero/ServiceHero";
 import IndustryExpertise from "@/components/industry-expertise/industry-expertise";
 import IndustryFaq from "@/components/industry-expertise/faq";
 import ContactBand from "@/components/dynamic-contact";
 
-export const metadata: Metadata = {
-  title: "Industry Logistics Solutions in the UAE | Zajel",
+export const metadata: Metadata = pageMetadata({
+  title: "Industry Logistics Solutions in the UAE",
   description:
     "Industry logistics solutions across the UAE shaped by your sector — from cold chain pharma to oversized oil and gas cargo, backed by 45M+ shipments and 4 ISO certifications.",
-};
+  path: '/industry',
+});
 
 export default function IndustryPage() {
   return (

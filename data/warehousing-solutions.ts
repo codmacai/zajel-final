@@ -18,7 +18,7 @@ export const WAREHOUSING_SOLUTIONS_CARDS: SolutionCard[] = [
   {
     id: "storage",
     Icon: Boxes,
-    image: "/warehouse/solutions/magnific_photorealistic-premium-b2_jUiYpDPLD0.jpg",
+    image: "/warehouse/solutions/magnific_photorealistic-premium-b2_jUiYpDPLD0.webp",
     title: "Short Term and\nLong Term Storage",
     description:
       "Flexible storage that adapts to your operational cycle — from cargo awaiting customs clearance to standing inventory held for ongoing regional distribution. Every item is tracked in real time within secure, monitored facilities.",
@@ -38,7 +38,7 @@ export const WAREHOUSING_SOLUTIONS_CARDS: SolutionCard[] = [
   {
     id: "coldchain",
     Icon: Snowflake,
-    image: "/warehouse/solutions/magnific_photorealistic-premium-co_0eabL4iTfW.jpg",
+    image: "/warehouse/solutions/magnific_photorealistic-premium-co_0eabL4iTfW.webp",
     title: "Temperature Controlled\nand Cold Chain Storage",
     description:
       "Built for goods that must stay within a set thermal range. Perishables, medical supplies, and other sensitive products keep their integrity from arrival to dispatch, with temperature logs kept for compliance.",
@@ -48,7 +48,7 @@ export const WAREHOUSING_SOLUTIONS_CARDS: SolutionCard[] = [
   {
     id: "dangerous-goods",
     Icon: ShieldAlert,
-    image: "/warehouse/solutions/magnific_photorealistic-premium-in_9ZV8CSSNYZ.jpg",
+    image: "/warehouse/solutions/magnific_photorealistic-premium-in_9ZV8CSSNYZ.webp",
     title: "Dangerous Goods and\nSpecialized Storage",
     description:
       "Hazardous materials, chemicals, and other regulated goods handled with the infrastructure, permits, and trained personnel needed for full compliance, including open yard space for industrial and project cargo.",

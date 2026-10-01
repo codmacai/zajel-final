@@ -18,7 +18,7 @@ const defaultContent: EcommerceHeroContent = {
   title: "E-commerce Logistics Solutions: Delivery Built for Online Sellers",
   description:
     "Cash on Delivery collection, a dedicated account manager, and nationwide delivery: everything an online seller needs from a logistics partner, in one place.",
-  image_url: "/ecommerce/ChatGPT Image Sep 9, 2026, 09_52_13 AM.png",
+  image_url: "/ecommerce/ChatGPT Image Sep 9, 2026, 09_52_13 AM.webp",
 };
 
 interface EcommerceHeroProps {
@@ -46,7 +46,7 @@ const EcommerceHero: FC<EcommerceHeroProps> = ({
           <div className="relative min-h-[140px] flex-1 overflow-hidden rounded-[1.25rem] bg-[#0B140F] shadow-lg sm:rounded-[1.5rem] md:absolute md:inset-0 md:min-h-0 md:rounded-none md:shadow-none">
             <Image
               src={image_url}
-              alt=""
+              alt="E-commerce parcels packed and ready for delivery"
               fill
               priority
               sizes="(max-width: 1600px) 100vw, 1600px"

@@ -15,7 +15,7 @@ const BRAND = {
 } as const;
 
 export default function LogisticsNetworkSection({
-  imageSrc = "/network/ChatGPT Image Sep 28, 2026, 02_26_23 PM.png",
+  imageSrc = "/network/ChatGPT Image Sep 28, 2026, 02_26_23 PM.webp",
   imageAlt = "Jebel Ali Port and Dubai Air Cargo Infrastructure",
 }: LogisticsNetworkSectionProps) {
   return (

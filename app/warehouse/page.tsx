@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from '@/lib/seo';
 import ServiceHero from "@/components/sections/ServiceHero/ServiceHero";
 import SupplyChainWarehousingSection from "@/components/warehouse/supply-chain-warehousing-section";
 import InventoryManagement from "@/components/warehouse/inventory-management";
@@ -9,11 +10,12 @@ import { Warehouse_FAQS } from "@/data/warehouse-faq";
 import WarehouseFaqSection from "@/components/warehouse/faq";
 import ContactBand from "@/components/dynamic-contact";
 
-export const metadata: Metadata = {
-  title: "Warehousing Services in Dubai | Zajel",
+export const metadata: Metadata = pageMetadata({
+  title: "Warehousing Services in Dubai",
   description:
     "Secure Dubai warehousing and distribution services with real-time inventory management, connected directly to Zajel's air, sea, and land freight network.",
-};
+  path: '/warehouse',
+});
 
 export default function WarehousePage() {
   return (

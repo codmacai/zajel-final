@@ -47,21 +47,21 @@ const TRUCK_TYPES: TruckType[] = [
       'Real-time temperature monitoring',
       'Cold chain compliance documentation',
     ],
-    imageUrl: '/land-freight/vehicle/ChatGPT Image Sep 29, 2026, 03_29_33 AM.png',
+    imageUrl: '/land-freight/vehicle/ChatGPT Image Sep 29, 2026, 03_29_33 AM.webp',
   },
   {
     id: 'curtain-side',
     title: 'Curtain-side Trailers',
     description:
       'Side-loading trailers that allow quick loading and unloading from the side without specialized dock equipment. Suitable for oversized pallets, building materials, and shipments that require crane or forklift loading from the side.',
-    imageUrl: '/land-freight/vehicle/ChatGPT Image Sep 29, 2026, 03_37_54 AM.png',
+    imageUrl: '/land-freight/vehicle/ChatGPT Image Sep 29, 2026, 03_37_54 AM.webp',
   },
   {
     id: 'low-loader',
     title: 'Low Loader Trailers',
     description:
       'Heavy-duty trailers designed for transporting heavy machinery, industrial equipment, and project cargo that exceeds standard height and weight limits. Used for construction equipment, generators, and large industrial components.',
-    imageUrl: '/land-freight/vehicle/ChatGPT Image Sep 29, 2026, 03_33_34 AM.png',
+    imageUrl: '/land-freight/vehicle/ChatGPT Image Sep 29, 2026, 03_33_34 AM.webp',
   },
 ];
 

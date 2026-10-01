@@ -19,7 +19,7 @@ const defaultContent: AirFreightHeroContent = {
     "From standard cargo to specialized project shipments, Zajel moves it by air, with customs handled and the right delivery arrangement for your business.",
   button: "Get my rate",
   ctaLink: "/contact",
-  image_url: "/international/ChatGPT Image May 12, 2026 at 02_03_10 AM.png",
+  image_url: "/international/ChatGPT Image May 12, 2026 at 02_03_10 AM.webp",
 };
 
 const icon = (
@@ -44,6 +44,7 @@ const AirFreightHero: FC<Props> = ({ content = defaultContent, isRtl }) => (
       description: content.description,
       primaryCta: { label: content.button, url: content.ctaLink },
       image_url: content.image_url,
+      imageAlt: "Cargo being loaded onto an air freight aircraft",
     }}
   />
 );

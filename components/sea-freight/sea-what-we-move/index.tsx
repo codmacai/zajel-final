@@ -17,25 +17,25 @@ const CARGO_ITEMS: CargoItem[] = [
     id: 'general',
     label: 'General Cargo',
     description: 'Commercial goods and parcels',
-    image: '/sea-freight/whatwemove/ChatGPT Image Sep 2, 2026, 09_45_34 AM.png',
+    image: '/sea-freight/whatwemove/ChatGPT Image Sep 2, 2026, 09_45_34 AM.webp',
   },
   {
     id: 'oversized',
     label: 'Oversized & Project Cargo',
     description: 'Large-format and heavy-lift shipments',
-    image: '/sea-freight/whatwemove/ChatGPT Image Sep 2, 2026, 09_58_47 AM.png',
+    image: '/sea-freight/whatwemove/ChatGPT Image Sep 2, 2026, 09_58_47 AM.webp',
   },
   {
     id: 'oil-gas',
     label: 'Oil & Gas Equipment',
     description: 'Industrial and energy-sector machinery',
-    image: '/sea-freight/whatwemove/ChatGPT Image Sep 2, 2026, 09_58_54 AM.png',
+    image: '/sea-freight/whatwemove/ChatGPT Image Sep 2, 2026, 09_58_54 AM.webp',
   },
   {
     id: 'hazmat',
     label: 'Hazardous Materials',
     description: 'Handled to full compliance standards',
-    image: '/sea-freight/whatwemove/ChatGPT Image Sep 2, 2026, 09_59_13 AM.png',
+    image: '/sea-freight/whatwemove/ChatGPT Image Sep 2, 2026, 09_59_13 AM.webp',
   },
 ];
 

@@ -74,7 +74,7 @@ const CompactSaaSBanner: React.FC<CompactSaaSBannerProps> = ({
   onPlayStoreClick,
 }) => {
   return (
-    <div className="flex min-h-screen w-full items-center justify-center bg-white p-4 sm:p-6 md:p-8">
+    <div id="download-app" className="flex min-h-screen w-full items-center justify-center bg-white p-4 sm:p-6 md:p-8">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap');
         .compact-banner { font-family: 'Manrope', ui-sans-serif, system-ui, -apple-system, sans-serif; font-weight: 500; }
@@ -94,14 +94,14 @@ const CompactSaaSBanner: React.FC<CompactSaaSBannerProps> = ({
         <div className="relative z-10 flex flex-col sm:min-h-[400px] sm:flex-row sm:items-center">
           {/* Left column: copy and CTA */}
           <div className="relative z-20 w-full px-6 pb-6 pt-12 text-center sm:w-[58%] sm:py-14 sm:pl-16 sm:pr-4 sm:text-left md:pl-20">
-            <h1
+            <h2
               className="mx-auto max-w-[560px] font-semibold leading-[1.15] tracking-tight text-white [text-shadow:0_2px_12px_rgba(10,77,38,0.35)] sm:mx-0"
               style={{ fontSize: "clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem)" }}
             >
               {headlineLine1}
               <br />
               {headlineLine2}
-            </h1>
+            </h2>
 
             <p
               className="mx-auto mt-4 max-w-[380px] font-medium leading-relaxed text-white [text-shadow:0_1px_8px_rgba(10,77,38,0.3)] sm:mx-0"
