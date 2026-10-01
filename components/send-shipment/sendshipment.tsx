@@ -1,366 +1,329 @@
 'use client';
 
-import { useEffect, useState, type FormEvent, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 import {
+  ArrowLeft,
+  ArrowRight,
   Check,
-  ChevronLeft,
   ChevronRight,
-  FileText,
+  Clock,
+  Lock,
+  LogIn,
+  MapPin,
   Package,
   Plane,
+  ShieldCheck,
   Truck,
-  User,
-  UserCheck,
+  UserRound,
   type LucideIcon,
 } from 'lucide-react';
+import {
+  AUTH_CONTENT,
+  DESTINATION_OPTIONS,
+  INITIAL_FORM,
+  NEXT_LABELS,
+  PAGE_CONTENT,
+  PARCEL_OPTIONS,
+  SEND_ROUTES,
+  STEPS,
+  TRUST_POINTS,
+  UAE,
+  type ChoiceOption,
+  type DestinationType,
+  type DetailsForm,
+  type ReceiverForm,
+  type ShipmentForm,
+  type ShipperForm,
+  type WeightUnit,
+} from './data';
 
 /* -------------------------------------------------------------------------- */
-/*  Data — copy, options, routes and form types                               */
-/* -------------------------------------------------------------------------- */
-
-const SEND_ROUTES = {
-  login: '/login',
-  payment: '/payment', // TODO: point at your real payment step
-  prohibitedItems: '#', // TODO: link to your prohibited-items page
-} as const;
-
-const UAE = 'United Arab Emirates';
-
-const AUTH_CONTENT = {
-  title: 'Send a shipment.',
-  subtitle:
-    'Sign in for faster checkout and saved addresses, or continue as a guest to send a shipment immediately.',
-  login: {
-    title: 'Login to Account',
-    description: 'Access saved addresses, view discounted rates, and easily manage your tracking history.',
-    cta: 'Sign in',
-  },
-  guest: {
-    title: 'Continue as Guest',
-    description: 'No account required. The fastest and simplest way to send a one-off shipment right now.',
-    cta: 'Continue',
-  },
-  footnote: 'Takes about two minutes.',
-} as const;
-
-const STEPS = [
-  { id: 'destination', label: 'Destination', title: 'Where is it going?', subtitle: 'Choose how far your shipment is travelling.' },
-  { id: 'shipper', label: 'Shipper', title: 'Who is sending it?', subtitle: 'Enter the pickup and sender details.' },
-  { id: 'receiver', label: 'Receiver', title: 'Who is it for?', subtitle: 'Enter the delivery destination details.' },
-  { id: 'parcel', label: 'Parcel', title: 'What are you sending?', subtitle: 'Tell us a little about your shipment.' },
-] as const;
-
-interface ChoiceOption<T extends string> {
-  value: T;
-  title: string;
-  description: string;
-  Icon: LucideIcon;
-}
-
-type DestinationType = 'domestic' | 'international';
-type ParcelType = 'document' | 'parcel';
-type WeightUnit = 'kg' | 'lb';
-
-const DESTINATION_OPTIONS: ChoiceOption<DestinationType>[] = [
-  { value: 'domestic', title: 'Domestic', description: 'Deliveries within the United Arab Emirates.', Icon: Truck },
-  { value: 'international', title: 'International', description: 'Shipping to over 200 countries worldwide.', Icon: Plane },
-];
-
-const PARCEL_OPTIONS: ChoiceOption<ParcelType>[] = [
-  { value: 'document', title: 'Document(s)', description: 'Letters, contracts and papers.', Icon: FileText },
-  { value: 'parcel', title: 'Parcel', description: 'Boxes, goods and packages.', Icon: Package },
-];
-
-interface ShipperForm {
-  fullName: string;
-  email: string;
-  phone: string;
-  country: string;
-  address: string;
-  city: string;
-  unit: string;
-}
-
-interface ReceiverForm {
-  name: string;
-  email: string;
-  phone: string;
-  country: string;
-  address: string;
-  city: string;
-  postal: string;
-}
-
-interface DetailsForm {
-  content: string;
-  weight: string;
-  weightUnit: WeightUnit;
-  pieces: string;
-  type: ParcelType | null;
-}
-
-interface ShipmentForm {
-  destination: DestinationType | null;
-  shipper: ShipperForm;
-  receiver: ReceiverForm;
-  details: DetailsForm;
-}
-
-const INITIAL_FORM: ShipmentForm = {
-  destination: null,
-  shipper: { fullName: '', email: '', phone: '', country: UAE, address: '', city: '', unit: '' },
-  receiver: { name: '', email: '', phone: '', country: '', address: '', city: '', postal: '' },
-  details: { content: '', weight: '', weightUnit: 'kg', pieces: '1', type: null },
-};
-
-/* -------------------------------------------------------------------------- */
-/*  Validation                                                                */
+/*  Palette (matches the Track page)                                          */
+/*  ink #064423 · brand green #36B936 · border #E5EBE7 · soft bg #F0F4F2      */
 /* -------------------------------------------------------------------------- */
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const filled = (...values: string[]) => values.every((v) => v.trim().length > 0);
+const primaryButton =
+  'inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#36B936] px-7 text-[14px] font-medium text-white ' +
+  'outline-none transition-all duration-300 hover:bg-[#2EA32E] active:scale-[0.99] ' +
+  'focus-visible:ring-2 focus-visible:ring-[#064423] focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-70';
+
+const card = 'rounded-[1.25rem] border border-[#E5EBE7] bg-white shadow-[0_8px_30px_rgba(6,68,35,0.04)] sm:rounded-[1.75rem]';
+
+const inputBase =
+  'h-12 w-full rounded-[12px] border bg-white px-4 text-[14px] text-[#064423] outline-none transition-all ' +
+  'placeholder:text-gray-400 focus:border-[#36B936] focus:ring-1 focus:ring-[#36B936] sm:rounded-[14px] ' +
+  '[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none';
+
+/* -------------------------------------------------------------------------- */
+/*  Validation — one message per field, shown after the first Continue click  */
+/* -------------------------------------------------------------------------- */
+
+type Errors = Record<string, string>;
+
+const blank = (v: string) => v.trim().length === 0;
 const emailOk = (v: string) => /^\S+@\S+\.\S+$/.test(v.trim());
 
-function isStepValid(step: number, f: ShipmentForm): boolean {
-  switch (step) {
-    case 1:
-      return f.destination !== null;
-    case 2: {
-      const s = f.shipper;
-      return filled(s.fullName, s.phone, s.country, s.address, s.city) && emailOk(s.email);
-    }
-    case 3: {
-      const r = f.receiver;
-      return filled(r.name, r.phone, r.country, r.address, r.city) && (r.email.trim() === '' || emailOk(r.email));
-    }
-    case 4: {
-      const d = f.details;
-      return filled(d.content) && Number(d.weight) > 0 && Number(d.pieces) >= 1 && d.type !== null;
-    }
-    default:
-      return true;
+function stepErrors(step: number, f: ShipmentForm): Errors {
+  const e: Errors = {};
+  const need = (id: string, v: string, msg: string) => {
+    if (blank(v)) e[id] = msg;
+  };
+
+  if (step === 1 && !f.destination) e.destination = 'Choose where your shipment is going.';
+
+  if (step === 2) {
+    const s = f.shipper;
+    need('s-name', s.fullName, 'Enter your full name.');
+    if (!emailOk(s.email)) e['s-email'] = 'Enter a valid email address.';
+    need('s-phone', s.phone, 'Enter a phone number.');
+    need('s-address', s.address, 'Enter the pickup address.');
+    need('s-city', s.city, 'Enter the city.');
+    need('s-country', s.country, 'Enter the country.');
   }
+
+  if (step === 3) {
+    const r = f.receiver;
+    need('r-name', r.name, "Enter the receiver's name.");
+    need('r-phone', r.phone, "Enter the receiver's phone number.");
+    if (!blank(r.email) && !emailOk(r.email)) e['r-email'] = 'Enter a valid email address.';
+    need('r-address', r.address, 'Enter the delivery address.');
+    need('r-city', r.city, 'Enter the city.');
+    need('r-country', r.country, 'Enter the destination country.');
+  }
+
+  if (step === 4) {
+    const d = f.details;
+    if (!d.type) e.type = 'Choose documents or parcel.';
+    need('d-content', d.content, 'Describe what is inside.');
+    if (!(Number(d.weight) > 0)) e['d-weight'] = 'Enter the weight.';
+    if (!(Number(d.pieces) >= 1)) e['d-pieces'] = 'Enter at least 1 piece.';
+  }
+
+  return e;
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Shared styling                                                            */
-/*  Palette: brand green #36B936 · dark green #06301A / #0A4D26 · white       */
+/*  Form building blocks                                                      */
 /* -------------------------------------------------------------------------- */
-
-const primaryButton =
-  'inline-flex h-12 items-center justify-center gap-1.5 rounded-full bg-[#36B936] px-8 text-[15px] font-semibold text-[#06301A] ' +
-  'transition duration-200 hover:bg-[#3ccb3c] active:scale-[0.98] ' +
-  'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06301A] ' +
-  'disabled:cursor-not-allowed disabled:bg-[#0A4D26]/[0.08] disabled:text-[#0A4D26]/35 disabled:active:scale-100';
-
-const fieldBase =
-  'peer h-14 w-full rounded-2xl bg-[#0A4D26]/[0.05] px-4 pb-1.5 pt-5 text-base text-[#06301A] outline-none ' +
-  'ring-2 ring-transparent transition duration-200 focus:bg-white focus:ring-[#36B936]';
-
-/* -------------------------------------------------------------------------- */
-/*  Fields (floating labels)                                                  */
-/* -------------------------------------------------------------------------- */
-
-function FloatingLabel({ htmlFor, text, optional, lifted }: { htmlFor: string; text: string; optional?: boolean; lifted: boolean }) {
-  return (
-    <label
-      htmlFor={htmlFor}
-      className={`pointer-events-none absolute left-4 max-w-[calc(100%-2rem)] truncate text-[#0A4D26]/55 transition-all duration-200 peer-focus:top-2.5 peer-focus:translate-y-0 peer-focus:text-[11px] peer-focus:text-[#2E9E2E] ${
-        lifted ? 'top-2.5 text-[11px]' : 'top-1/2 -translate-y-1/2 text-[15px]'
-      }`}
-    >
-      {text}
-      {optional && <span className="ml-1 opacity-70">· optional</span>}
-    </label>
-  );
-}
 
 interface FieldProps {
   id: string;
   label: string;
   value: string;
-  onChange: (value: string) => void;
-  type?: string;
+  onChange?: (value: string) => void;
+  error?: string;
   optional?: boolean;
+  readOnly?: boolean;
+  type?: string;
+  placeholder?: string;
   inputMode?: 'text' | 'tel' | 'email' | 'numeric' | 'decimal';
   autoComplete?: string;
   min?: number;
   step?: number | string;
+  className?: string;
 }
 
-function Field({ id, label, value, onChange, type = 'text', optional, inputMode, autoComplete, min, step }: FieldProps) {
+function Field({ id, label, value, onChange, error, optional, readOnly, className = '', ...input }: FieldProps) {
   return (
-    <div className="relative min-w-0">
+    <div className={`flex min-w-0 flex-col ${className}`}>
+      <label htmlFor={id} className="mx-1 mb-2 flex items-center justify-between text-[12px] text-[#064423] sm:text-[13px]">
+        <span>{label}</span>
+        {optional && <span className="text-[11px] text-[#064423]/45 sm:text-[12px]">Optional</span>}
+        {readOnly && <Lock className="h-3.5 w-3.5 text-[#064423]/40" aria-hidden="true" />}
+      </label>
       <input
         id={id}
-        type={type}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder=" "
-        inputMode={inputMode}
-        autoComplete={autoComplete}
-        min={min}
-        step={step}
-        className={fieldBase}
+        onChange={(e) => onChange?.(e.target.value)}
+        readOnly={readOnly}
+        aria-invalid={!!error}
+        aria-describedby={error ? `${id}-error` : undefined}
+        className={`${inputBase} ${
+          error ? 'border-red-400' : 'border-gray-200'
+        } ${readOnly ? 'cursor-default bg-[#F0F4F2] text-[#064423]/70 focus:border-gray-200 focus:ring-0' : ''}`}
+        {...input}
       />
-      <FloatingLabel htmlFor={id} text={label} optional={optional} lifted={value !== ''} />
+      {error && (
+        <p id={`${id}-error`} className="mx-1 mt-1.5 text-[12px] text-red-600">
+          {error}
+        </p>
+      )}
     </div>
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/*  Choice cards                                                              */
-/* -------------------------------------------------------------------------- */
-
-interface ChoiceCardProps<T extends string> {
-  option: ChoiceOption<T>;
-  selected: boolean;
-  onSelect: (value: T) => void;
+function GroupTitle({ children }: { children: string }) {
+  return <p className="col-span-full -mb-1 text-[11px] font-medium uppercase tracking-wider text-[#064423]/45">{children}</p>;
 }
 
-function ChoiceCard<T extends string>({ option, selected, onSelect }: ChoiceCardProps<T>) {
-  const { Icon, title, description, value } = option;
-  return (
-    <button
-      type="button"
-      role="radio"
-      aria-checked={selected}
-      onClick={() => onSelect(value)}
-      className={`group relative flex flex-col items-start rounded-3xl p-6 text-left transition-all duration-300 sm:p-7 ${
-        selected
-          ? 'bg-white shadow-[0_18px_40px_-18px_rgba(6,48,26,0.35)] ring-2 ring-[#36B936]'
-          : 'bg-white ring-1 ring-[#0A4D26]/10 hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-22px_rgba(6,48,26,0.3)] hover:ring-[#36B936]/50'
-      }`}
-    >
-      <span
-        className={`absolute right-5 top-5 flex h-6 w-6 items-center justify-center rounded-full bg-[#36B936] text-[#06301A] transition-all duration-300 ${
-          selected ? 'scale-100 opacity-100' : 'scale-50 opacity-0'
-        }`}
-        aria-hidden="true"
-      >
-        <Check className="h-3.5 w-3.5" strokeWidth={3} />
-      </span>
-      <span
-        className={`mb-6 flex h-14 w-14 items-center justify-center rounded-2xl transition-colors duration-300 ${
-          selected ? 'bg-[#06301A] text-[#36B936]' : 'bg-[#0A4D26]/[0.06] text-[#0A4D26] group-hover:bg-[#06301A] group-hover:text-[#36B936]'
-        }`}
-      >
-        <Icon className="h-7 w-7" strokeWidth={1.4} />
-      </span>
-      <span className="text-lg font-semibold tracking-tight text-[#06301A]">{title}</span>
-      <span className="mt-1 text-sm leading-relaxed text-[#0A4D26]/65">{description}</span>
-    </button>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-/*  Step chrome                                                               */
-/* -------------------------------------------------------------------------- */
-
-function Progress({ current }: { current: number }) {
-  return (
-    <div className="mb-10 sm:mb-12">
-      <div className="mb-3 flex items-center justify-between text-[13px]">
-        <span className="font-semibold text-[#06301A]">{STEPS[current - 1].label}</span>
-        <span className="text-[#0A4D26]/50">
-          Step {current} of {STEPS.length}
-        </span>
-      </div>
-      <div
-        className="flex gap-1.5"
-        role="progressbar"
-        aria-valuemin={1}
-        aria-valuemax={STEPS.length}
-        aria-valuenow={current}
-        aria-label="Shipment progress"
-      >
-        {STEPS.map((s, i) => (
-          <span key={s.id} className="h-1 flex-1 overflow-hidden rounded-full bg-[#0A4D26]/10">
-            <span
-              className="block h-full rounded-full bg-[#36B936] transition-all duration-500"
-              style={{ width: current > i ? '100%' : '0%' }}
-            />
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function StepActions({
-  onBack,
-  nextLabel,
-  disabled,
-  loading,
+function ChoiceGroup<T extends string>({
+  label,
+  options,
+  value,
+  onSelect,
+  error,
 }: {
-  onBack: () => void;
-  nextLabel: string;
-  disabled: boolean;
-  loading?: boolean;
+  label: string;
+  options: ChoiceOption<T>[];
+  value: T | null;
+  onSelect: (value: T) => void;
+  error?: string;
 }) {
   return (
-    <div className="mt-12 flex items-center justify-between gap-4">
-      <button
-        type="button"
-        onClick={onBack}
-        className="inline-flex items-center gap-1 rounded-full py-2 pr-3 text-[15px] font-medium text-[#0A4D26]/70 transition-colors hover:text-[#06301A]"
-      >
-        <ChevronLeft className="h-5 w-5" aria-hidden="true" />
-        Back
-      </button>
-      <button type="submit" disabled={disabled || loading} className={primaryButton}>
-        {loading ? 'Please wait…' : nextLabel}
-        {!loading && <ChevronRight className="-mr-1 h-5 w-5" aria-hidden="true" />}
-      </button>
+    <div>
+      <div role="radiogroup" aria-label={label} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        {options.map(({ value: v, title, description, Icon }) => {
+          const selected = value === v;
+          return (
+            <button
+              key={v}
+              type="button"
+              role="radio"
+              aria-checked={selected}
+              onClick={() => onSelect(v)}
+              className={`flex items-center gap-4 rounded-[14px] border p-4 text-left outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#36B936] sm:p-5 ${
+                selected
+                  ? 'border-[#36B936] bg-[#36B936]/[0.06] ring-1 ring-[#36B936]'
+                  : `bg-white hover:border-[#36B936]/60 ${error ? 'border-red-400' : 'border-gray-200'}`
+              }`}
+            >
+              <span
+                className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-colors ${
+                  selected ? 'bg-[#36B936] text-white' : 'bg-[#F0F4F2] text-[#064423]'
+                }`}
+              >
+                <Icon className="h-5 w-5" strokeWidth={1.6} aria-hidden="true" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-[15px] font-medium text-[#064423]">{title}</span>
+                <span className="mt-0.5 block text-[12px] leading-snug text-[#064423]/60 sm:text-[13px]">{description}</span>
+              </span>
+              <span
+                aria-hidden="true"
+                className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors ${
+                  selected ? 'border-[#36B936] bg-[#36B936] text-white' : 'border-gray-300'
+                }`}
+              >
+                {selected && <Check className="h-3 w-3" strokeWidth={3} />}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+      {error && <p className="mx-1 mt-2 text-[12px] text-red-600">{error}</p>}
     </div>
   );
 }
 
-const place = (city: string, country: string) => [city.trim(), country.trim()].filter(Boolean).join(', ') || '—';
+/* -------------------------------------------------------------------------- */
+/*  Stepper — completed steps are clickable so customers can jump back        */
+/* -------------------------------------------------------------------------- */
+
+function Stepper({ current, onJump }: { current: number; onJump: (step: number) => void }) {
+  return (
+    <nav aria-label="Booking steps" className="mb-6 sm:mb-8">
+      <ol className="flex items-start">
+        {STEPS.map((s, i) => {
+          const n = i + 1;
+          const done = n < current;
+          const active = n === current;
+          return (
+            <li key={s.id} className="relative flex flex-1 flex-col items-center">
+              {i > 0 && (
+                <span
+                  aria-hidden="true"
+                  className={`absolute right-1/2 top-4 h-[2px] w-full -translate-y-1/2 ${n <= current ? 'bg-[#36B936]' : 'bg-[#E5EBE7]'}`}
+                />
+              )}
+              <button
+                type="button"
+                disabled={!done}
+                onClick={() => onJump(n)}
+                aria-current={active ? 'step' : undefined}
+                aria-label={`${s.label}${done ? ' (completed, go back)' : ''}`}
+                className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-full text-[13px] font-medium outline-none transition-all focus-visible:ring-2 focus-visible:ring-[#36B936] focus-visible:ring-offset-2 ${
+                  done
+                    ? 'cursor-pointer bg-[#36B936] text-white hover:bg-[#2EA32E]'
+                    : active
+                      ? 'bg-[#064423] text-white ring-4 ring-[#36B936]/20'
+                      : 'cursor-default border border-[#E5EBE7] bg-white text-[#064423]/40'
+                }`}
+              >
+                {done ? <Check className="h-4 w-4" strokeWidth={3} /> : n}
+              </button>
+              <span
+                className={`mt-2 text-[11px] sm:text-[13px] ${
+                  active ? 'font-medium text-[#064423]' : done ? 'text-[#064423]/70' : 'text-[#064423]/40'
+                }`}
+              >
+                {s.label}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Summary — the route visual updates as the customer types                  */
+/* -------------------------------------------------------------------------- */
+
+function RouteStop({ label, primary, secondary }: { label: string; primary: string; secondary: string }) {
+  return (
+    <div className="flex items-start gap-3">
+      <span className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 border-[#36B936] bg-white">
+        <span className="h-1.5 w-1.5 rounded-full bg-[#36B936]" />
+      </span>
+      <div className="min-w-0">
+        <p className="text-[11px] uppercase tracking-wider text-[#064423]/45">{label}</p>
+        <p className="truncate text-[14px] font-medium text-[#064423]">{primary || '—'}</p>
+        {secondary && <p className="truncate text-[12px] text-[#064423]/55">{secondary}</p>}
+      </div>
+    </div>
+  );
+}
 
 function Summary({ form }: { form: ShipmentForm }) {
   const { destination, shipper, receiver, details } = form;
-  const rows: { label: string; value: string }[] = [
-    { label: 'Service', value: destination ? (destination === 'domestic' ? 'Domestic' : 'International') : '—' },
-    { label: 'From', value: place(shipper.city, shipper.country) },
-    { label: 'To', value: place(receiver.city, receiver.country) },
-    {
-      label: 'Package',
-      value:
-        [
-          details.weight ? `${details.weight} ${details.weightUnit}` : '',
-          details.pieces ? `${details.pieces} pc` : '',
-          details.type ? (details.type === 'document' ? 'Document' : 'Parcel') : '',
-        ]
-          .filter(Boolean)
-          .join(' · ') || '—',
-    },
-  ];
+  const ModeIcon = destination === 'international' ? Plane : Truck;
+  const pkg =
+    [
+      details.type ? (details.type === 'document' ? 'Documents' : 'Parcel') : '',
+      details.weight ? `${details.weight} ${details.weightUnit}` : '',
+      details.pieces ? `${details.pieces} ${details.pieces === '1' ? 'piece' : 'pieces'}` : '',
+    ]
+      .filter(Boolean)
+      .join(' · ') || '—';
 
   return (
-    <aside className="hidden lg:block">
-      <div className="sticky top-28 overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#0A4D26] to-[#06301A] p-7 text-white shadow-[0_30px_60px_-30px_rgba(6,48,26,0.7)]">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[#36B936]/30 blur-3xl"
-        />
-        <div className="relative">
-          <div className="mb-6 flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-[#36B936]" />
-            <h3 className="text-sm font-semibold tracking-tight">Your shipment</h3>
-          </div>
-          <dl className="flex flex-col">
-            {rows.map((r) => (
-              <div key={r.label} className="border-t border-white/10 py-4 first:border-0 first:pt-0 last:pb-0">
-                <dt className="mb-1 text-[11px] font-medium uppercase tracking-wider text-white/45">{r.label}</dt>
-                <dd className="break-words text-[15px] font-medium text-white">{r.value}</dd>
-              </div>
-            ))}
-          </dl>
+    <aside className={`${card} h-fit p-5 sm:p-6 lg:sticky lg:top-28`} aria-label="Shipment summary">
+      <p className="mb-5 text-[13px] font-medium text-[#064423]">Shipment summary</p>
+
+      <div className="relative">
+        <RouteStop label="Pickup" primary={shipper.city} secondary={shipper.country} />
+        <div className="my-1 ml-[7px] flex items-center gap-3 border-l-2 border-dashed border-[#36B936]/40 py-3 pl-5">
+          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#F0F4F2] text-[#064423]">
+            <ModeIcon className="h-3.5 w-3.5" aria-hidden="true" />
+          </span>
+          <span className="text-[12px] text-[#064423]/60">
+            {destination ? (destination === 'domestic' ? 'Domestic delivery' : 'International delivery') : 'Choose a route'}
+          </span>
+        </div>
+        <RouteStop label="Delivery" primary={receiver.city} secondary={receiver.country} />
+      </div>
+
+      <div className="mt-5 flex items-start gap-3 border-t border-[#E5EBE7] pt-5">
+        <Package className="mt-0.5 h-4 w-4 shrink-0 text-[#36B936]" aria-hidden="true" />
+        <div className="min-w-0">
+          <p className="text-[11px] uppercase tracking-wider text-[#064423]/45">Package</p>
+          <p className="text-[14px] font-medium text-[#064423]">{pkg}</p>
         </div>
       </div>
     </aside>
@@ -368,53 +331,64 @@ function Summary({ form }: { form: ShipmentForm }) {
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Auth step                                                                 */
+/*  Start screen                                                              */
 /* -------------------------------------------------------------------------- */
 
-function AuthCard({
-  icon: Icon,
-  title,
-  description,
-  cta,
-  dark,
-}: {
-  icon: LucideIcon;
-  title: string;
-  description: string;
-  cta: string;
-  dark?: boolean;
-}): ReactNode {
+function StartOption({ Icon, title, description, primary }: { Icon: LucideIcon; title: string; description: string; primary?: boolean }) {
   return (
-    <div
-      className={`group relative flex h-full min-h-[300px] flex-col overflow-hidden rounded-[2rem] p-8 text-left transition-all duration-300 hover:-translate-y-1 sm:p-10 ${
-        dark
-          ? 'bg-gradient-to-br from-[#0A4D26] to-[#06301A] text-white shadow-[0_30px_60px_-30px_rgba(6,48,26,0.7)]'
-          : 'bg-white text-[#06301A] ring-1 ring-[#0A4D26]/10 hover:shadow-[0_30px_60px_-30px_rgba(6,48,26,0.35)] hover:ring-[#36B936]/50'
-      }`}
-    >
-      {dark && (
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-12 -top-12 h-48 w-48 rounded-full bg-[#36B936]/30 blur-3xl"
-        />
-      )}
+    <span className="flex items-center gap-4">
       <span
-        className={`relative mb-8 flex h-14 w-14 items-center justify-center rounded-2xl ${
-          dark ? 'bg-[#36B936] text-[#06301A]' : 'bg-[#0A4D26]/[0.06] text-[#0A4D26] transition-colors duration-300 group-hover:bg-[#06301A] group-hover:text-[#36B936]'
+        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${
+          primary ? 'bg-[#36B936] text-white' : 'bg-[#F0F4F2] text-[#064423]'
         }`}
       >
-        <Icon className="h-7 w-7" strokeWidth={1.4} />
+        <Icon className="h-5 w-5" strokeWidth={1.6} aria-hidden="true" />
       </span>
-      <h3 className="relative mb-2 text-2xl font-semibold tracking-tight">{title}</h3>
-      <p className={`relative mb-8 text-[15px] leading-relaxed ${dark ? 'text-white/70' : 'text-[#0A4D26]/65'}`}>{description}</p>
-      <span
-        className={`relative mt-auto inline-flex items-center gap-0.5 text-[15px] font-semibold ${
-          dark ? 'text-[#36B936]' : 'text-[#0A4D26]'
-        }`}
-      >
-        {cta}
-        <ChevronRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+      <span className="min-w-0 flex-1 text-left">
+        <span className="block text-[15px] font-medium text-[#064423]">{title}</span>
+        <span className="mt-0.5 block text-[12px] leading-snug text-[#064423]/60 sm:text-[13px]">{description}</span>
       </span>
+      <ChevronRight
+        className="h-5 w-5 shrink-0 text-[#064423]/40 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-[#36B936]"
+        aria-hidden="true"
+      />
+    </span>
+  );
+}
+
+const startRow =
+  'group block w-full rounded-[14px] border p-4 outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#36B936] sm:p-5';
+
+function StartScreen({ onGuest }: { onGuest: () => void }) {
+  return (
+    <div className="mx-auto w-full max-w-[560px]">
+      <div className={`${card} p-4 sm:p-6 md:p-8`}>
+        <p className="mx-1 mb-4 text-[13px] text-[#064423] sm:mb-5 sm:text-[14px]">{AUTH_CONTENT.heading}</p>
+        <div className="flex flex-col gap-3">
+          <button type="button" onClick={onGuest} className={`${startRow} border-[#36B936] bg-[#36B936]/[0.06] hover:bg-[#36B936]/[0.1]`}>
+            <StartOption Icon={UserRound} title={AUTH_CONTENT.guest.title} description={AUTH_CONTENT.guest.description} primary />
+          </button>
+          <Link href={`${SEND_ROUTES.login}?next=/send-shipment`} className={`${startRow} border-gray-200 bg-white hover:border-[#36B936]/60`}>
+            <StartOption Icon={LogIn} title={AUTH_CONTENT.login.title} description={AUTH_CONTENT.login.description} />
+          </Link>
+        </div>
+        <p className="mt-5 flex items-center justify-center gap-1.5 text-[11px] text-[#9CA3AF] sm:text-[12px]">
+          <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+          {AUTH_CONTENT.footnote}
+        </p>
+      </div>
+
+      <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+        {TRUST_POINTS.map((t, i) => {
+          const Icon = [MapPin, Truck, ShieldCheck][i];
+          return (
+            <li key={t} className="flex items-center gap-1.5 text-[12px] text-[#064423]/60 sm:text-[13px]">
+              <Icon className="h-4 w-4 text-[#36B936]" aria-hidden="true" />
+              {t}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }
@@ -427,19 +401,24 @@ export default function SendShipment() {
   const router = useRouter();
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<ShipmentForm>(INITIAL_FORM);
+  const [showErrors, setShowErrors] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const total = STEPS.length;
-  const valid = isStepValid(step, form);
+  const errors = showErrors ? stepErrors(step, form) : {};
+  const domestic = form.destination === 'domestic';
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [step]);
 
-  const goNext = () => setStep((s) => Math.min(s + 1, total));
-  const goBack = () => setStep((s) => Math.max(s - 1, 0));
+  const goTo = (n: number) => {
+    setShowErrors(false);
+    setStep(Math.max(0, Math.min(n, total)));
+  };
 
-  // Field updaters: all state lives in one place, so going Back never loses input.
+  // Field updaters: all state lives in one place, so going back never loses input.
   const setShipper = (key: keyof ShipperForm) => (value: string) =>
     setForm((f) => ({ ...f, shipper: { ...f.shipper, [key]: value } }));
   const setReceiver = (key: keyof ReceiverForm) => (value: string) =>
@@ -460,9 +439,17 @@ export default function SendShipment() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!valid || submitting) return;
+    if (submitting) return;
+
+    const found = stepErrors(step, form);
+    if (Object.keys(found).length > 0) {
+      setShowErrors(true);
+      // Move focus to the first field that needs attention.
+      requestAnimationFrame(() => formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus());
+      return;
+    }
     if (step < total) {
-      goNext();
+      goTo(step + 1);
       return;
     }
     // Final step: hand the collected data to your payment step / API.
@@ -475,223 +462,196 @@ export default function SendShipment() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="relative min-h-screen overflow-hidden bg-white font-sans antialiased">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-48 left-1/2 h-[520px] w-[1000px] max-w-full -translate-x-1/2 rounded-full bg-[#36B936]/[0.09] blur-[130px]"
-        />
+      <section className="min-h-screen w-full bg-white px-4 pb-20 pt-32 font-sans antialiased sm:px-6 md:pb-24 md:pt-40 lg:px-8">
+        <div className="mx-auto mb-8 max-w-[560px] px-2 text-center sm:mb-10">
+          <h1 className="mb-3 text-2xl font-medium tracking-tight text-[#064423] sm:mb-4 sm:text-3xl md:text-4xl">{PAGE_CONTENT.title}</h1>
+          {step === 0 && <p className="text-xs leading-relaxed text-[#064423]/60 sm:text-sm">{PAGE_CONTENT.subtitle}</p>}
+        </div>
 
-        <div className="relative mx-auto w-full max-w-[1080px] px-5 pb-24 pt-28 sm:px-8 sm:pt-36">
-          {step === 0 ? (
-            /* ---------------------------- Auth choice ---------------------------- */
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: EASE }}
-              className="mx-auto flex w-full max-w-[900px] flex-col items-center"
-            >
-              <div className="mb-12 text-center sm:mb-16">
-                <h1 className="mb-5 text-[2.75rem] font-semibold leading-[1.02] tracking-[-0.03em] text-[#06301A] sm:text-6xl md:text-[4.25rem]">
-                  {AUTH_CONTENT.title}
-                </h1>
-                <p className="mx-auto max-w-[540px] text-base leading-relaxed text-[#0A4D26]/65 sm:text-lg">
-                  {AUTH_CONTENT.subtitle}
-                </p>
-              </div>
+        {step === 0 ? (
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: EASE }}>
+            <StartScreen onGuest={() => goTo(1)} />
+          </motion.div>
+        ) : (
+          <div className="mx-auto w-full max-w-[1040px]">
+            <div className="mx-auto max-w-[640px] lg:ml-0">
+              <Stepper current={step} onJump={goTo} />
+            </div>
 
-              <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-2 md:gap-6">
-                <Link
-                  href={`${SEND_ROUTES.login}?next=/send-shipment`}
-                  className="block rounded-[2rem] outline-none focus-visible:ring-2 focus-visible:ring-[#36B936] focus-visible:ring-offset-4"
-                >
-                  <AuthCard
-                    icon={UserCheck}
-                    title={AUTH_CONTENT.login.title}
-                    description={AUTH_CONTENT.login.description}
-                    cta={AUTH_CONTENT.login.cta}
-                    dark
-                  />
-                </Link>
-
-                <button
-                  type="button"
-                  onClick={goNext}
-                  className="block rounded-[2rem] text-left outline-none focus-visible:ring-2 focus-visible:ring-[#36B936] focus-visible:ring-offset-4"
-                >
-                  <AuthCard
-                    icon={User}
-                    title={AUTH_CONTENT.guest.title}
-                    description={AUTH_CONTENT.guest.description}
-                    cta={AUTH_CONTENT.guest.cta}
-                  />
-                </button>
-              </div>
-
-              <p className="mt-10 text-sm text-[#0A4D26]/45">{AUTH_CONTENT.footnote}</p>
-            </motion.div>
-          ) : (
-            /* ------------------------------ Steps ------------------------------ */
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-16">
-              <div className="min-w-0 max-w-[680px]">
-                <Progress current={step} />
-
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,640px)_minmax(0,1fr)] lg:gap-8">
+              <div className={`${card} min-w-0 p-4 sm:p-6 md:p-8`}>
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.form
+                    ref={formRef}
                     key={step}
                     onSubmit={handleSubmit}
                     noValidate
-                    initial={{ opacity: 0, y: 14 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.4, ease: EASE }}
+                    initial={{ opacity: 0, x: 12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -12 }}
+                    transition={{ duration: 0.3, ease: EASE }}
                   >
-                    <div className="mb-10">
-                      <h1 className="mb-3 text-[2rem] font-semibold leading-[1.08] tracking-[-0.03em] text-[#06301A] sm:text-5xl">
-                        {current?.title}
-                      </h1>
-                      <p className="text-base text-[#0A4D26]/65 sm:text-lg">{current?.subtitle}</p>
+                    <div className="mb-6 sm:mb-8">
+                      <h2 className="text-xl font-medium tracking-tight text-[#064423] sm:text-2xl">{current?.title}</h2>
+                      <p className="mt-1 text-[13px] text-[#064423]/60 sm:text-[14px]">{current?.subtitle}</p>
                     </div>
 
-                    {/* Step 1: Destination */}
                     {step === 1 && (
-                      <div role="radiogroup" aria-label="Destination" className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
-                        {DESTINATION_OPTIONS.map((opt) => (
-                          <ChoiceCard
-                            key={opt.value}
-                            option={opt}
-                            selected={form.destination === opt.value}
-                            onSelect={chooseDestination}
-                          />
-                        ))}
-                      </div>
+                      <ChoiceGroup
+                        label="Destination"
+                        options={DESTINATION_OPTIONS}
+                        value={form.destination}
+                        onSelect={chooseDestination}
+                        error={errors.destination}
+                      />
                     )}
 
-                    {/* Step 2: Shipper */}
                     {step === 2 && (
-                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                        <Field id="s-name" label="Full name" autoComplete="name"
-                          value={form.shipper.fullName} onChange={setShipper('fullName')} />
-                        <Field id="s-email" label="Email address" type="email" inputMode="email" autoComplete="email"
-                          value={form.shipper.email} onChange={setShipper('email')} />
-                        <Field id="s-phone" label="Phone number" type="tel" inputMode="tel" autoComplete="tel"
-                          value={form.shipper.phone} onChange={setShipper('phone')} />
-                        <Field id="s-country" label="Country" autoComplete="country-name"
-                          value={form.shipper.country} onChange={setShipper('country')} />
-                        <div className="md:col-span-2">
-                          <Field id="s-address" label="Street address" autoComplete="street-address"
-                            value={form.shipper.address} onChange={setShipper('address')} />
-                        </div>
-                        <Field id="s-city" label="City" autoComplete="address-level2"
-                          value={form.shipper.city} onChange={setShipper('city')} />
-                        <Field id="s-unit" label="Apt, suite or unit" optional
+                      <div className="grid grid-cols-1 gap-x-4 gap-y-5 md:grid-cols-2">
+                        <GroupTitle>Contact</GroupTitle>
+                        <Field id="s-name" label="Full name" autoComplete="name" className="md:col-span-2"
+                          value={form.shipper.fullName} onChange={setShipper('fullName')} error={errors['s-name']} />
+                        <Field id="s-email" label="Email" type="email" inputMode="email" autoComplete="email" placeholder="name@example.com"
+                          value={form.shipper.email} onChange={setShipper('email')} error={errors['s-email']} />
+                        <Field id="s-phone" label="Phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="+971 5X XXX XXXX"
+                          value={form.shipper.phone} onChange={setShipper('phone')} error={errors['s-phone']} />
+
+                        <GroupTitle>Pickup address</GroupTitle>
+                        <Field id="s-address" label="Street address" autoComplete="street-address" className="md:col-span-2"
+                          placeholder="Building, street, area"
+                          value={form.shipper.address} onChange={setShipper('address')} error={errors['s-address']} />
+                        <Field id="s-unit" label="Apartment, office or floor" optional
                           value={form.shipper.unit} onChange={setShipper('unit')} />
+                        <Field id="s-city" label="City" autoComplete="address-level2" placeholder="e.g. Dubai"
+                          value={form.shipper.city} onChange={setShipper('city')} error={errors['s-city']} />
+                        <Field id="s-country" label="Country" autoComplete="country-name" className="md:col-span-2"
+                          value={form.shipper.country} onChange={setShipper('country')} error={errors['s-country']} />
                       </div>
                     )}
 
-                    {/* Step 3: Receiver */}
                     {step === 3 && (
-                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                        <Field id="r-name" label="Receiver's name"
-                          value={form.receiver.name} onChange={setReceiver('name')} />
-                        <Field id="r-email" label="Receiver's email" type="email" inputMode="email" optional
-                          value={form.receiver.email} onChange={setReceiver('email')} />
-                        <Field id="r-phone" label="Receiver's phone" type="tel" inputMode="tel"
-                          value={form.receiver.phone} onChange={setReceiver('phone')} />
-                        <Field id="r-country" label="Destination country"
-                          value={form.receiver.country} onChange={setReceiver('country')} />
-                        <div className="md:col-span-2">
-                          <Field id="r-address" label="Delivery address"
-                            value={form.receiver.address} onChange={setReceiver('address')} />
-                        </div>
+                      <div className="grid grid-cols-1 gap-x-4 gap-y-5 md:grid-cols-2">
+                        <GroupTitle>Contact</GroupTitle>
+                        <Field id="r-name" label="Receiver's full name" className="md:col-span-2"
+                          value={form.receiver.name} onChange={setReceiver('name')} error={errors['r-name']} />
+                        <Field id="r-phone" label="Phone" type="tel" inputMode="tel"
+                          placeholder={domestic ? '+971 5X XXX XXXX' : 'Include country code'}
+                          value={form.receiver.phone} onChange={setReceiver('phone')} error={errors['r-phone']} />
+                        <Field id="r-email" label="Email" type="email" inputMode="email" optional placeholder="For delivery updates"
+                          value={form.receiver.email} onChange={setReceiver('email')} error={errors['r-email']} />
+
+                        <GroupTitle>Delivery address</GroupTitle>
+                        <Field id="r-address" label="Street address" className="md:col-span-2" placeholder="Building, street, area"
+                          value={form.receiver.address} onChange={setReceiver('address')} error={errors['r-address']} />
                         <Field id="r-city" label="City"
-                          value={form.receiver.city} onChange={setReceiver('city')} />
-                        <Field id="r-postal" label="Postal or zip code" optional
+                          value={form.receiver.city} onChange={setReceiver('city')} error={errors['r-city']} />
+                        <Field id="r-postal" label="Postal or ZIP code" optional
                           value={form.receiver.postal} onChange={setReceiver('postal')} />
+                        <Field id="r-country" label="Country" className="md:col-span-2" readOnly={domestic}
+                          value={form.receiver.country} onChange={setReceiver('country')} error={errors['r-country']} />
                       </div>
                     )}
 
-                    {/* Step 4: Shipment details */}
                     {step === 4 && (
-                      <div className="flex flex-col gap-10">
-                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                          <div className="md:col-span-2">
-                            <Field id="d-content" label="What's inside?"
-                              value={form.details.content} onChange={setDetails('content')} />
-                          </div>
+                      <div className="flex flex-col gap-6">
+                        <ChoiceGroup
+                          label="Shipment type"
+                          options={PARCEL_OPTIONS}
+                          value={form.details.type}
+                          onSelect={setDetails('type')}
+                          error={errors.type}
+                        />
 
-                          {/* Weight with unit selector */}
-                          <div className="relative min-w-0">
-                            <input
-                              id="d-weight"
-                              type="number"
-                              inputMode="decimal"
-                              min={0}
-                              step={0.1}
-                              placeholder=" "
-                              value={form.details.weight}
-                              onChange={(e) => setDetails('weight')(e.target.value)}
-                              className={`${fieldBase} pr-24`}
-                            />
-                            <FloatingLabel htmlFor="d-weight" text="Gross weight" lifted={form.details.weight !== ''} />
-                            <select
-                              aria-label="Weight unit"
-                              value={form.details.weightUnit}
-                              onChange={(e) => setDetails('weightUnit')(e.target.value as WeightUnit)}
-                              className="absolute right-2.5 top-1/2 -translate-y-1/2 cursor-pointer rounded-xl bg-white px-3 py-2 text-sm font-semibold text-[#06301A] outline-none ring-1 ring-[#0A4D26]/10 focus:ring-2 focus:ring-[#36B936]"
-                            >
-                              <option value="kg">Kg</option>
-                              <option value="lb">Lb</option>
-                            </select>
+                        <div className="grid grid-cols-1 gap-x-4 gap-y-5 md:grid-cols-2">
+                          <Field id="d-content" label="What's inside?" className="md:col-span-2" placeholder="e.g. Contracts, clothing, electronics"
+                            value={form.details.content} onChange={setDetails('content')} error={errors['d-content']} />
+
+                          {/* Weight with unit toggle */}
+                          <div className="flex min-w-0 flex-col">
+                            <label htmlFor="d-weight" className="mx-1 mb-2 text-[12px] text-[#064423] sm:text-[13px]">
+                              Weight
+                            </label>
+                            <div className="relative">
+                              <input
+                                id="d-weight"
+                                type="number"
+                                inputMode="decimal"
+                                min={0}
+                                step={0.1}
+                                placeholder="0.0"
+                                value={form.details.weight}
+                                onChange={(e) => setDetails('weight')(e.target.value)}
+                                aria-invalid={!!errors['d-weight']}
+                                className={`${inputBase} pr-28 ${errors['d-weight'] ? 'border-red-400' : 'border-gray-200'}`}
+                              />
+                              <div role="radiogroup" aria-label="Weight unit" className="absolute right-1.5 top-1/2 flex -translate-y-1/2 rounded-full bg-[#F0F4F2] p-1">
+                                {(['kg', 'lb'] as WeightUnit[]).map((u) => (
+                                  <button
+                                    key={u}
+                                    type="button"
+                                    role="radio"
+                                    aria-checked={form.details.weightUnit === u}
+                                    onClick={() => setDetails('weightUnit')(u)}
+                                    className={`rounded-full px-3 py-1 text-[12px] font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[#36B936] ${
+                                      form.details.weightUnit === u ? 'bg-white text-[#064423] shadow-sm' : 'text-[#064423]/50'
+                                    }`}
+                                  >
+                                    {u}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                            {errors['d-weight'] && <p className="mx-1 mt-1.5 text-[12px] text-red-600">{errors['d-weight']}</p>}
                           </div>
 
                           <Field id="d-pieces" label="Number of pieces" type="number" inputMode="numeric" min={1} step={1}
-                            value={form.details.pieces} onChange={setDetails('pieces')} />
+                            value={form.details.pieces} onChange={setDetails('pieces')} error={errors['d-pieces']} />
                         </div>
 
-                        <div>
-                          <p className="mb-4 text-[13px] font-semibold text-[#06301A]">Shipment type</p>
-                          <div role="radiogroup" aria-label="Shipment type" className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
-                            {PARCEL_OPTIONS.map((opt) => (
-                              <ChoiceCard
-                                key={opt.value}
-                                option={opt}
-                                selected={form.details.type === opt.value}
-                                onSelect={setDetails('type')}
-                              />
-                            ))}
-                          </div>
-                        </div>
-
-                        <p className="rounded-2xl bg-[#0A4D26]/[0.05] p-5 text-sm leading-relaxed text-[#0A4D26]/70">
+                        <p className="rounded-[14px] bg-[#F0F4F2] p-4 text-[12px] leading-relaxed text-[#064423]/70 sm:text-[13px]">
                           Please check the list of{' '}
                           <Link
                             href={SEND_ROUTES.prohibitedItems}
-                            className="font-medium text-[#06301A] underline decoration-[#36B936] decoration-2 underline-offset-4"
+                            className="font-medium text-[#064423] underline decoration-[#36B936] decoration-2 underline-offset-4"
                           >
                             prohibited items
                           </Link>
-                          . Price may change in case of any weight difference upon final inspection.
+                          . The price may change if the weight differs at final inspection.
                         </p>
                       </div>
                     )}
 
-                    <StepActions
-                      onBack={goBack}
-                      disabled={!valid}
-                      loading={submitting}
-                      nextLabel={
-                        step === 1 ? 'Continue' : step === 2 ? 'Next: Receiver' : step === 3 ? 'Next: Shipment' : 'Continue to Payment'
-                      }
-                    />
+                    <div className="mt-8 flex items-center justify-between gap-4 border-t border-[#E5EBE7] pt-6 sm:mt-10">
+                      <button
+                        type="button"
+                        onClick={() => goTo(step - 1)}
+                        className="inline-flex items-center gap-1.5 rounded-full px-2 py-2 text-[14px] text-[#064423]/70 outline-none transition-colors hover:text-[#064423] focus-visible:ring-2 focus-visible:ring-[#36B936]"
+                      >
+                        <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+                        Back
+                      </button>
+                      <button type="submit" disabled={submitting} className={primaryButton}>
+                        {submitting ? 'Please wait…' : NEXT_LABELS[step - 1]}
+                        {!submitting && <ArrowRight className="h-4 w-4" aria-hidden="true" />}
+                      </button>
+                    </div>
                   </motion.form>
                 </AnimatePresence>
               </div>
 
-              <Summary form={form} />
+              <div className="flex flex-col gap-4">
+                <Summary form={form} />
+                <p className="px-2 text-center text-[12px] text-[#064423]/55 lg:text-left">
+                  {PAGE_CONTENT.helpText}{' '}
+                  <Link href={SEND_ROUTES.help} className="font-medium text-[#064423] underline decoration-[#36B936] underline-offset-4">
+                    {PAGE_CONTENT.helpCta}
+                  </Link>
+                </p>
+              </div>
             </div>
-          )}
-        </div>
-      </div>
+          </div>
+        )}
+      </section>
     </MotionConfig>
   );
 }
