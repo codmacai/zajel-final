@@ -102,8 +102,8 @@ const HeroSection: React.FC = () => {
           {/* Image */}
           <div className="relative mt-6 aspect-[4/3] max-h-[34svh] w-full overflow-hidden rounded-[1.5rem] border border-[#0A3D2D]/20 shadow-md">
             <Image
-              src="/Homepage/WhatsApp Image 2026-08-27 at 14.31.53.jpeg"
-              alt="Cargo ship and airplane"
+              src="/Homepage/hero-zajel-boxes.webp"
+              alt="Green Zajel parcels on a warehouse floor"
               fill
               priority
               sizes="100vw"
@@ -126,8 +126,8 @@ const HeroSection: React.FC = () => {
             className={`${styles.animBannerD} relative h-[clamp(440px,40vw,620px)] w-full overflow-hidden rounded-[clamp(20px,2vw,32px)] bg-gray-800 shadow-sm`}
           >
             <Image
-              src="/Homepage/WhatsApp Image 2026-08-27 at 14.31.53.jpeg"
-              alt="Cargo ship and airplane"
+              src="/Homepage/hero-zajel-boxes.webp"
+              alt="Green Zajel parcels on a warehouse floor"
               fill
               priority
               sizes="100vw"
