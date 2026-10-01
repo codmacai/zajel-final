@@ -31,21 +31,21 @@ const APP_STEPS: AppStep[] = [
     title: 'Add Pickup & Drop-off',
     description: 'Enter the pickup and delivery locations anywhere across the UAE.',
     image: '/domestic/app/step-2.webp',
-    imageAlt: 'Zajel app home screen with pickup and drop-off location fields',
+    imageAlt: 'Zajel app home screen with From and To fields for the sender and receiver',
   },
   {
     number: '03',
     title: 'Add Shipment Details',
-    description: 'Choose documents or parcel, tell us what is inside and set the weight and box size.',
+    description: 'Pick a motorbike or van for your parcel size, tell us what you are sending and choose delivery now or next day.',
     image: '/domestic/app/step-3.webp',
-    imageAlt: 'Shipment details screen in the Zajel app with weight and box size',
+    imageAlt: 'Book Shipment screen in the Zajel app with motorbike or van, item details and delivery options',
   },
   {
     number: '04',
     title: 'Pay Your Way',
-    description: 'Pay by cash on delivery, Careem Pay or Tabby, then track your courier live.',
+    description: 'Review your order summary with VAT included, then check out with cash on delivery, Careem Pay or Tabby.',
     image: '/domestic/app/step-4.webp',
-    imageAlt: 'Payment screen in the Zajel app showing cash on delivery, Careem Pay and Tabby',
+    imageAlt: 'Order summary screen in the Zajel app showing the total with VAT and a Checkout button',
   },
 ];
 

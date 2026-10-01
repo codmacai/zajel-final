@@ -16,6 +16,8 @@ import SeaFreightFAQS from "@/components/sea-freight/faq";
 import SeaFreightHero from "@/components/sea-freight/hero";
 import ContactSection from "@/components/shared/contact";
 import { seaFreightContent } from "@/data/contact-content";
+import { SeaFreight_FAQS } from "@/data/sea-freight-faq";
+import FaqJsonLd from "@/lib/faq-json-ld";
 
 export const metadata: Metadata = pageMetadata({
   title: "Sea Freight Shipping in the UAE",
@@ -47,6 +49,7 @@ export default function SeaFreightPage() {
       <ContactSection content={seaFreightContent} />
 
       <SeaFreightFAQS/>
+      <FaqJsonLd items={SeaFreight_FAQS} />
     </main>
   );
 }

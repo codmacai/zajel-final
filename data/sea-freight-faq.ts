@@ -1,39 +1,36 @@
+import type { FaqQuestion } from "@/components/shared/faq-section";
 
-
-  import type { FaqQuestion } from "@/components/shared/faq-section";
-  
-  export const SeaFreight_FAQS: FaqQuestion[] = [
-    {
-        question: 'Can I integrate Zajel with Shopify?',
-        answer: 'Yes. Zajel offers direct Shopify integration using REST APIs. Orders sync automatically from your Shopify store to our fulfillment system, and shipment status updates push back to your Shopify order page in real time.',
-      },
-      {
-        question: 'Does Zajel integrate with WooCommerce?',
-        answer: 'Yes. Zajel provides a direct WooCommerce integration using REST APIs. Install the connection, and new orders route to our system automatically with status updates synced back to WooCommerce.',
-      },
-      {
-        question: 'What if I use a platform other than Shopify or WooCommerce?',
-        answer: 'Zajel provides REST API access so your development team can build a custom integration with any order management system, marketplace, or ERP. Our technical team supports onboarding and provides full API documentation.',
-      },
-      {
-        question: 'How does returns management work?',
-        answer: 'You log a return in the Zajel portal or it syncs through your integration. Our driver picks up the item from the customer, it is inspected at our facility against your return criteria, and approved items are restocked to your inventory. You receive a return report with item condition and updated stock counts.',
-      },
-      {
-        question: 'Can I use Zajel for COD in all emirates?',
-        answer: 'Yes. Zajel handles Cash on Delivery collection and reconciliation across all seven emirates. COD amounts are tracked in your dashboard and transferred on a regular settlement schedule.',
-      },
-      {
-        question: 'What happens if a customer refuses a COD delivery?',
-        answer: 'If a customer refuses a COD shipment, the item is returned to our facility. You are notified through the portal with the reason for refusal. The item is held for redelivery, return to your inventory, or disposed of based on your instructions.',
-      },
-      {
-        question: 'What reports do I get as a merchant?',
-        answer: 'Your merchant dashboard includes live order tracking, daily COD collection summaries, weekly and monthly delivery performance reports (success rates, transit times, return rates), and export options for CSV and PDF.',
-      },
-      {
-        question: 'Is there a minimum number of orders to use Zajel?',
-        answer: 'No. Zajel serves merchants from 1 order per day to thousands. There are no minimum volume requirements and no long-term contracts required to get started. Pricing scales with your volume.',
-      }
-  ];
-  
+export const SeaFreight_FAQS: FaqQuestion[] = [
+  {
+    question: "What's the difference between FCL and LCL?",
+    answer: "FCL (Full Container Load) reserves an entire container for your cargo alone, suited to large shipments. LCL (Less than Container Load) shares container space with other shipments, which reduces cost for smaller loads.",
+  },
+  {
+    question: "Does Zajel handle RoRo, breakbulk, or bulk cargo?",
+    answer: "Yes. Beyond standard container shipping, Zajel offers RoRo for vehicles and wheeled equipment, breakbulk for oversized or irregular cargo, and bulk shipping for unpackaged goods.",
+  },
+  {
+    question: "Does Zajel ship dangerous goods or temperature-sensitive cargo by sea?",
+    answer: "Yes. DG (Dangerous Goods) shipments are handled to full compliance standards, and temperature-controlled reefer containers are available for perishable or temperature-sensitive cargo.",
+  },
+  {
+    question: "How long does sea freight take from the UAE?",
+    answer: "Transit time depends on the destination and route — sea freight generally takes longer than air freight, which is why it's best suited to shipments with flexible timelines.",
+  },
+  {
+    question: "What kind of cargo is sea freight best suited to?",
+    answer: "Sea freight is well suited to heavy machinery, vehicles, bulk raw materials, and oversized or project cargo — cargo types where sea's capacity and cost efficiency outperform air or land.",
+  },
+  {
+    question: "Does Zajel handle import, export, and cross-trade shipments?",
+    answer: "Yes. Zajel manages sea freight into the UAE, out of the UAE, and cross-trade shipments between other countries.",
+  },
+  {
+    question: "Does Zajel handle port clearance?",
+    answer: "Yes. Customs clearance and port compliance are managed as part of the service.",
+  },
+  {
+    question: "How do I get a sea freight quote?",
+    answer: "Submit an inquiry with your cargo details and route, and our team will follow up with a tailored quote.",
+  },
+];
