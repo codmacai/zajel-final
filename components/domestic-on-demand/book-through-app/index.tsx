@@ -17,32 +17,35 @@ interface AppStep {
   imageAlt: string;
 }
 
-// Drop the app screenshots into public/domestic/app/ and set `image`
-// on each step, e.g. image: '/domestic/app/step-1.png'
+// App screenshots live in public/domestic/app/. Step 1 still needs its screenshot:
+// add it as step-1.webp and set `image` below.
 const APP_STEPS: AppStep[] = [
   {
     number: '01',
     title: 'Open the Zajel App',
-    description: 'Download the app and sign in, then tap “Domestic Delivery” to start a new booking.',
+    description: 'Download the app and sign in, then tap “On-demand” to start a new booking.',
     imageAlt: 'Zajel app home screen',
   },
   {
     number: '02',
     title: 'Add Pickup & Drop-off',
-    description: 'Enter the pickup and delivery addresses anywhere across the UAE.',
-    imageAlt: 'Entering pickup and drop-off addresses in the Zajel app',
+    description: 'Enter the pickup and delivery locations anywhere across the UAE.',
+    image: '/domestic/app/step-2.webp',
+    imageAlt: 'Zajel app home screen with pickup and drop-off location fields',
   },
   {
     number: '03',
-    title: 'Pick Vehicle & Time',
-    description: 'Choose a motorbike or van and select the day and time slot that suits you.',
-    imageAlt: 'Choosing a vehicle and time slot in the Zajel app',
+    title: 'Add Shipment Details',
+    description: 'Choose documents or parcel, tell us what is inside and set the weight and box size.',
+    image: '/domestic/app/step-3.webp',
+    imageAlt: 'Shipment details screen in the Zajel app with weight and box size',
   },
   {
     number: '04',
-    title: 'Pay & Track Live',
-    description: 'Confirm and pay in the app, then follow your courier in real time until delivery.',
-    imageAlt: 'Live shipment tracking in the Zajel app',
+    title: 'Pay Your Way',
+    description: 'Pay by cash on delivery, Careem Pay or Tabby, then track your courier live.',
+    image: '/domestic/app/step-4.webp',
+    imageAlt: 'Payment screen in the Zajel app showing cash on delivery, Careem Pay and Tabby',
   },
 ];
 
@@ -97,7 +100,7 @@ const BookThroughApp: FC = () => {
               className="group flex flex-col rounded-2xl sm:rounded-3xl border border-[#0D2A22]/10 bg-white overflow-hidden shadow-[0_20px_50px_-25px_rgba(13,42,34,0.35)] transition-shadow duration-300 hover:shadow-[0_28px_60px_-25px_rgba(13,42,34,0.45)]"
             >
               {/* Mobile UI preview */}
-              <div className="relative aspect-[4/5] overflow-hidden bg-[radial-gradient(120%_120%_at_50%_0%,#E8F8E8_0%,#F4FBF4_55%,#FFFFFF_100%)]">
+              <div className="relative aspect-[4/5] overflow-hidden bg-[linear-gradient(160deg,#6FD46F_0%,#36B936_55%,#2A9E2A_100%)]">
                 {step.image ? (
                   <Image
                     src={step.image}
@@ -107,7 +110,7 @@ const BookThroughApp: FC = () => {
                     className="object-contain object-bottom pt-4 sm:pt-6 px-3 sm:px-6 transition-transform duration-500 ease-out group-hover:-translate-y-1"
                   />
                 ) : (
-                  <div className="absolute inset-x-[18%] top-5 sm:top-7 bottom-0 rounded-t-[1.25rem] sm:rounded-t-[1.75rem] border-[5px] sm:border-[6px] border-b-0 border-[#0D2A22] bg-white flex items-center justify-center">
+                  <div className="absolute inset-x-[18%] top-5 sm:top-7 bottom-0 rounded-t-[1.25rem] sm:rounded-t-[1.75rem] border-[5px] sm:border-[6px] border-b-0 border-[#0D2A22] bg-white/95 flex items-center justify-center">
                     <Smartphone className="w-6 h-6 sm:w-8 sm:h-8 text-[#36B936]/40" aria-hidden />
                   </div>
                 )}
