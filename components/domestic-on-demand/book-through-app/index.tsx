@@ -17,14 +17,14 @@ interface AppStep {
   imageAlt: string;
 }
 
-// App screenshots live in public/domestic/app/. Step 1 still needs its screenshot:
-// add it as step-1.webp and set `image` below.
+// App screenshots live in public/domestic/app/.
 const APP_STEPS: AppStep[] = [
   {
     number: '01',
-    title: 'Open the Zajel App',
-    description: 'Download the app and sign in, then tap “On-demand” to start a new booking.',
-    imageAlt: 'Zajel app home screen',
+    title: 'Download the Zajel App',
+    description: 'Get Zajel Logistics Services from the App Store, then sign in to start a new booking.',
+    image: '/domestic/app/step-1.webp',
+    imageAlt: 'Zajel Logistics Services app on the App Store',
   },
   {
     number: '02',
