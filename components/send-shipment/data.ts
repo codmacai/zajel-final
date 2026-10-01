@@ -10,6 +10,7 @@ export const SEND_ROUTES = {
   login: '/login',
   payment: '/payment', // TODO: point at your real payment step
   prohibitedItems: '#', // TODO: link to your prohibited-items page
+  help: '/contact',
 } as const;
 
 export const UAE = 'United Arab Emirates';
@@ -18,29 +19,36 @@ export const UAE = 'United Arab Emirates';
 /*  Copy                                                                      */
 /* -------------------------------------------------------------------------- */
 
+export const PAGE_CONTENT = {
+  title: 'Send a shipment',
+  subtitle: 'Book a pickup in about two minutes. We collect from your door and deliver across the UAE and worldwide.',
+  helpText: 'Need help with your booking?',
+  helpCta: 'Contact us',
+} as const;
+
 export const AUTH_CONTENT = {
-  title: 'Welcome to Zajel',
-  subtitle:
-    'Sign in for faster checkout and saved addresses, or continue as a guest to send a shipment immediately.',
-  login: {
-    title: 'Login to Account',
-    description: 'Access saved addresses, view discounted rates, and easily manage your tracking history.',
-    cta: 'Sign in',
-  },
+  heading: 'How would you like to continue?',
   guest: {
-    title: 'Continue as Guest',
-    description: 'No account required. The fastest and simplest way to send a one-off shipment right now.',
-    cta: 'Continue',
+    title: 'Continue as guest',
+    description: 'No account needed. Book a one-off shipment now.',
+  },
+  login: {
+    title: 'Sign in',
+    description: 'Use saved addresses, member rates and your tracking history.',
   },
   footnote: 'Takes about two minutes',
 } as const;
 
+export const TRUST_POINTS = ['Doorstep pickup', 'Live tracking', 'Secure payment'] as const;
+
 export const STEPS = [
-  { id: 'destination', label: 'Destination', title: 'Where is it going?', subtitle: 'Choose how far your shipment is travelling.' },
-  { id: 'shipper', label: 'Shipper', title: 'Shipper information', subtitle: 'Enter the pickup and sender details.' },
-  { id: 'receiver', label: 'Receiver', title: 'Receiver information', subtitle: 'Enter the delivery destination details.' },
-  { id: 'parcel', label: 'Parcel', title: 'Shipment details', subtitle: 'Tell us what you are sending.' },
+  { id: 'route', label: 'Route', title: 'Where is it going?', subtitle: 'Choose a domestic or international delivery.' },
+  { id: 'sender', label: 'Sender', title: 'Pickup details', subtitle: 'Where should our courier collect the shipment?' },
+  { id: 'receiver', label: 'Receiver', title: 'Delivery details', subtitle: 'Who should receive the shipment?' },
+  { id: 'package', label: 'Package', title: 'Package details', subtitle: 'Tell us what you are sending.' },
 ] as const;
+
+export const NEXT_LABELS = ['Continue', 'Next: Receiver', 'Next: Package', 'Continue to payment'] as const;
 
 export interface ChoiceOption<T extends string> {
   value: T;
@@ -54,13 +62,13 @@ export type ParcelType = 'document' | 'parcel';
 export type WeightUnit = 'kg' | 'lb';
 
 export const DESTINATION_OPTIONS: ChoiceOption<DestinationType>[] = [
-  { value: 'domestic', title: 'Domestic', description: 'Deliveries within the United Arab Emirates.', Icon: Truck },
-  { value: 'international', title: 'International', description: 'Shipping to over 200 countries worldwide.', Icon: Plane },
+  { value: 'domestic', title: 'Domestic', description: 'Within the UAE · same or next day', Icon: Truck },
+  { value: 'international', title: 'International', description: 'To 200+ countries worldwide', Icon: Plane },
 ];
 
 export const PARCEL_OPTIONS: ChoiceOption<ParcelType>[] = [
-  { value: 'document', title: 'Document(s)', description: 'Letters, contracts and papers.', Icon: FileText },
-  { value: 'parcel', title: 'Parcel', description: 'Boxes, goods and packages.', Icon: Package },
+  { value: 'document', title: 'Documents', description: 'Letters, contracts and papers', Icon: FileText },
+  { value: 'parcel', title: 'Parcel', description: 'Boxes, goods and packages', Icon: Package },
 ];
 
 /* -------------------------------------------------------------------------- */
