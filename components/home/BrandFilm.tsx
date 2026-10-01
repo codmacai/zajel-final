@@ -94,34 +94,9 @@ export default function BrandFilm() {
       ref={sectionRef}
       className="w-full overflow-hidden bg-white px-4 py-14 sm:px-6 sm:py-20 md:px-10 lg:px-20 lg:py-24"
       style={{ fontFamily: "'Manrope', sans-serif" }}
-      aria-labelledby="brand-film-heading"
+      aria-label={t("film.videoLabel", "Zajel brand film")}
     >
       <div className="mx-auto w-full max-w-[1200px]">
-        {/* Heading */}
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.8, ease: EASE }}
-          className="mx-auto mb-8 max-w-2xl text-center sm:mb-12"
-        >
-          <span className="mb-2 block text-xs font-medium uppercase tracking-widest text-[#36B936] sm:mb-3 sm:text-sm">
-            {t("film.eyebrow", "Zajel in Motion")}
-          </span>
-          <h2
-            id="brand-film-heading"
-            className="text-balance px-2 text-2xl font-medium leading-[1.2] tracking-tight text-[#0A4D26] sm:text-3xl md:text-4xl"
-          >
-            {t("film.heading", "Every city has its rhythm. We move with it.")}
-          </h2>
-          <p className="mx-auto mt-3 max-w-[46ch] text-balance px-2 text-[13px] font-light leading-relaxed text-[#0A4D26]/70 sm:mt-4 sm:text-sm md:text-base">
-            {t(
-              "film.subtitle",
-              "From a tap on your phone to a parcel at your door: sorted with precision, delivered with care, across the UAE and beyond."
-            )}
-          </p>
-        </motion.div>
-
         {/* The film */}
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 40, scale: 0.96 }}
