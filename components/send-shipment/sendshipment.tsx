@@ -176,7 +176,7 @@ function ChoiceGroup<T extends string>({
 }) {
   return (
     <div>
-      <div role="radiogroup" aria-label={label} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <div role="radiogroup" aria-label={label} className="grid grid-cols-2 gap-3">
         {options.map(({ value: v, title, description, Icon }) => {
           const selected = value === v;
           return (
@@ -186,30 +186,30 @@ function ChoiceGroup<T extends string>({
               role="radio"
               aria-checked={selected}
               onClick={() => onSelect(v)}
-              className={`flex items-center gap-4 rounded-[14px] border p-4 text-left outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#36B936] sm:p-5 ${
+              className={`group relative flex min-h-[132px] flex-col items-start justify-between rounded-[14px] border p-4 text-left outline-none transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-[#36B936] focus-visible:ring-offset-2 sm:min-h-[148px] sm:p-5 ${
                 selected
-                  ? 'border-[#36B936] bg-[#36B936]/[0.06] ring-1 ring-[#36B936]'
-                  : `bg-white hover:border-[#36B936]/60 ${error ? 'border-red-400' : 'border-gray-200'}`
+                  ? 'border-[#36B936] bg-[#36B936]/[0.04]'
+                  : `bg-white hover:border-[#064423]/25 ${error ? 'border-red-400' : 'border-[#E5EBE7]'}`
               }`}
             >
-              <span
-                className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-colors ${
-                  selected ? 'bg-[#36B936] text-white' : 'bg-[#F0F4F2] text-[#064423]'
+              <Icon
+                className={`h-6 w-6 transition-colors duration-200 ${
+                  selected ? 'text-[#36B936]' : 'text-[#064423]/50 group-hover:text-[#064423]'
                 }`}
-              >
-                <Icon className="h-5 w-5" strokeWidth={1.6} aria-hidden="true" />
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block text-[15px] font-medium text-[#064423]">{title}</span>
-                <span className="mt-0.5 block text-[12px] leading-snug text-[#064423]/60 sm:text-[13px]">{description}</span>
-              </span>
+                strokeWidth={1.25}
+                aria-hidden="true"
+              />
               <span
                 aria-hidden="true"
-                className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors ${
-                  selected ? 'border-[#36B936] bg-[#36B936] text-white' : 'border-gray-300'
+                className={`absolute right-4 top-4 flex h-[18px] w-[18px] items-center justify-center rounded-full transition-all duration-200 sm:right-5 sm:top-5 ${
+                  selected ? 'bg-[#36B936] text-white' : 'border border-[#064423]/20'
                 }`}
               >
-                {selected && <Check className="h-3 w-3" strokeWidth={3} />}
+                {selected && <Check className="h-2.5 w-2.5" strokeWidth={3.5} />}
+              </span>
+              <span className="mt-6 block">
+                <span className="block text-[14px] font-medium tracking-tight text-[#064423] sm:text-[15px]">{title}</span>
+                <span className="mt-1 block text-[12px] font-light leading-snug text-[#064423]/55 sm:text-[13px]">{description}</span>
               </span>
             </button>
           );
@@ -221,48 +221,51 @@ function ChoiceGroup<T extends string>({
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Stepper — completed steps are clickable so customers can jump back        */
+/*  Progress — thin segments; finished steps can be clicked to go back        */
 /* -------------------------------------------------------------------------- */
 
 function Stepper({ current, onJump }: { current: number; onJump: (step: number) => void }) {
   return (
     <nav aria-label="Booking steps" className="mb-6 sm:mb-8">
-      <ol className="flex items-start">
+      <p className="mb-3 text-[11px] font-medium uppercase tracking-wider text-[#36B936] sm:text-[12px]">
+        Step {current} of {STEPS.length}
+      </p>
+      <ol className="grid grid-cols-4 gap-1.5 sm:gap-2">
         {STEPS.map((s, i) => {
           const n = i + 1;
           const done = n < current;
           const active = n === current;
           return (
-            <li key={s.id} className="relative flex flex-1 flex-col items-center">
-              {i > 0 && (
-                <span
-                  aria-hidden="true"
-                  className={`absolute right-1/2 top-4 h-[2px] w-full -translate-y-1/2 ${n <= current ? 'bg-[#36B936]' : 'bg-[#E5EBE7]'}`}
-                />
-              )}
+            <li key={s.id}>
               <button
                 type="button"
                 disabled={!done}
                 onClick={() => onJump(n)}
                 aria-current={active ? 'step' : undefined}
                 aria-label={`${s.label}${done ? ' (completed, go back)' : ''}`}
-                className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-full text-[13px] font-medium outline-none transition-all focus-visible:ring-2 focus-visible:ring-[#36B936] focus-visible:ring-offset-2 ${
-                  done
-                    ? 'cursor-pointer bg-[#36B936] text-white hover:bg-[#2EA32E]'
-                    : active
-                      ? 'bg-[#064423] text-white ring-4 ring-[#36B936]/20'
-                      : 'cursor-default border border-[#E5EBE7] bg-white text-[#064423]/40'
+                className={`group block w-full rounded-sm text-left outline-none focus-visible:ring-2 focus-visible:ring-[#36B936] focus-visible:ring-offset-4 ${
+                  done ? 'cursor-pointer' : 'cursor-default'
                 }`}
               >
-                {done ? <Check className="h-4 w-4" strokeWidth={3} /> : n}
+                <span className="block h-[3px] overflow-hidden rounded-full bg-[#E5EBE7]">
+                  <span
+                    className={`block h-full rounded-full transition-all duration-500 ${
+                      done ? 'w-full bg-[#36B936] group-hover:bg-[#2EA32E]' : active ? 'w-1/2 bg-[#064423]' : 'w-0'
+                    }`}
+                  />
+                </span>
+                <span
+                  className={`mt-2.5 block truncate text-[11px] transition-colors sm:text-[13px] ${
+                    active
+                      ? 'font-medium text-[#064423]'
+                      : done
+                        ? 'text-[#064423]/60 group-hover:text-[#36B936]'
+                        : 'text-[#064423]/35'
+                  }`}
+                >
+                  {s.label}
+                </span>
               </button>
-              <span
-                className={`mt-2 text-[11px] sm:text-[13px] ${
-                  active ? 'font-medium text-[#064423]' : done ? 'text-[#064423]/70' : 'text-[#064423]/40'
-                }`}
-              >
-                {s.label}
-              </span>
             </li>
           );
         })}
