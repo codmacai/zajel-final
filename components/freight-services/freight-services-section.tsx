@@ -60,12 +60,12 @@ export default function FreightServicesSection() {
         {/* Header */}
         <div className="mb-10 sm:mb-12 text-center px-2">
           <span
-            className="mb-2 block text-[11px] font-medium uppercase tracking-widest"
+            className="mb-2 block text-xs sm:text-sm font-medium uppercase tracking-widest"
             style={{ color: BRAND.green }}
           >
             {FREIGHT_SERVICES_EYEBROW}
           </span>
-          <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-[#0D2A22] md:text-4xl">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-[#0D2A22]">
             {FREIGHT_SERVICES_HEADING}
           </h2>
         </div>

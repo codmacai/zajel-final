@@ -102,7 +102,7 @@ export default function ColdChainGridSection({
         >
           <div className="max-w-[700px]">
             <span
-              className="inline-flex items-center gap-2 rounded-full border border-[#36B936]/30 px-3 py-1 text-xs font-normal tracking-wider uppercase bg-white/5 backdrop-blur-xs mb-4"
+              className="inline-flex items-center gap-2 rounded-full border border-[#36B936]/30 px-3 py-1 text-xs sm:text-sm font-normal tracking-wider uppercase bg-white/5 backdrop-blur-xs mb-4"
               style={{ color: '#36B936' }}
             >
               <Snowflake className="w-3 h-3" style={{ color: '#36B936' }} />
@@ -111,7 +111,7 @@ export default function ColdChainGridSection({
             <h2 className="font-medium leading-[1.12] text-2xl sm:text-3xl md:text-4xl tracking-tight text-white">
               Temperature Controlled Land Freight
             </h2>
-            <p className="mt-4 text-white/70 font-light text-sm sm:text-base leading-[1.65]">
+            <p className="mt-4 text-white/70 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-[1.65]">
               For pharmaceutical, food and beverage, chemical, and other temperature-sensitive cargo, Zajel provides dedicated cold chain land freight services across the UAE and GCC.
             </p>
 

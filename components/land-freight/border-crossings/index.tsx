@@ -70,7 +70,7 @@ const BorderCrossings = ({
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-[#0A4D26] leading-[1.15] max-w-[720px] mx-auto">
             {heading}
           </h2>
-          <p className="mt-3 sm:mt-5 text-[#0A4D26]/75 font-light text-xs sm:text-base leading-relaxed max-w-[560px]">
+          <p className="mt-3 sm:mt-5 text-[#0A4D26]/75 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[560px]">
             {intro}
           </p>
         </motion.div>

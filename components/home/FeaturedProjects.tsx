@@ -24,13 +24,13 @@ const FeaturedProjects: FC = () => {
           transition={{ duration: 0.7, ease: EASE }}
           className="text-center max-w-[640px] mx-auto mb-12 sm:mb-16"
         >
-          <span className="text-[#36B936] text-[11px] sm:text-xs font-medium tracking-widest uppercase block mb-2 sm:mb-3">
+          <span className="text-[#36B936] text-xs sm:text-sm font-medium tracking-widest uppercase block mb-2 sm:mb-3">
             Selected Work
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium text-[#0A4D26] leading-[1.15] tracking-tight mb-3">
             Projects we&apos;ve moved
           </h2>
-          <p className="text-[#0A4D26]/70 text-xs sm:text-sm md:text-base font-light leading-relaxed">
+          <p className="text-[#0A4D26]/70 text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed">
             A running record of the loads we&apos;ve planned and carried through, across air, sea, and land.
           </p>
         </motion.div>

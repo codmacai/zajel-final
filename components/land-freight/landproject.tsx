@@ -74,7 +74,7 @@ const LandFreightBanner = ({
             {heading}
           </h2>
 
-          <p className="mx-auto max-w-[580px] text-xs sm:text-sm font-normal leading-relaxed text-[#2D6A4F]">
+          <p className="mx-auto max-w-[580px] text-[13px] sm:text-[13.5px] lg:text-[14px] font-normal leading-relaxed text-[#2D6A4F]">
             {description}
           </p>
         </div>

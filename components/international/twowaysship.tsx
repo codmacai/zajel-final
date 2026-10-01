@@ -194,7 +194,7 @@ const TwoWaysToShipAndJourney: FC = () => {
             transition={smoothTransition}
             className="flex items-center justify-center gap-2.5 sm:gap-4 mb-3 sm:mb-4"
           >
-            <span style={{ color: '#36B936' }} className="font-medium text-[10px] sm:text-xs md:text-sm tracking-widest uppercase">
+            <span style={{ color: '#36B936' }} className="font-medium text-xs sm:text-sm tracking-widest uppercase">
               {data.eyebrow}
             </span>
           </motion.div>
@@ -329,7 +329,7 @@ const TwoWaysToShipAndJourney: FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ ...smoothTransition, delay: 0.1 }}
-          className="text-[#E8F3E9]/80 font-normal text-xs sm:text-[13.5px] md:text-[14px] leading-relaxed max-w-[580px] mx-auto tracking-wide"
+          className="text-[#E8F3E9]/80 font-normal text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[580px] mx-auto tracking-wide"
         >
           {data.journey.text}
         </motion.p>

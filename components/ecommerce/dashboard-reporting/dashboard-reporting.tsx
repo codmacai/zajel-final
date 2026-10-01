@@ -50,7 +50,7 @@ const DashboardReporting: FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ ...smoothTransition, delay: 0.1 }}
-            className="text-white/70 font-light text-[13px] sm:text-[14px] leading-relaxed max-w-[540px] mx-auto px-2"
+            className="text-white/70 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[540px] mx-auto px-2"
           >
             {INTRO}
           </motion.p>

@@ -22,7 +22,7 @@ const ProjectLogisticsGrid: FC = () => {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium text-[#0A4D26] leading-[1.15] tracking-tight mb-3">
             Projects we&apos;ve moved
           </h2>
-          <p className="text-[#0A4D26]/60 text-sm sm:text-base font-light leading-relaxed">
+          <p className="text-[#0A4D26]/60 text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed">
             A running record of the loads we&apos;ve planned and carried through, across air, sea, and land.
           </p>
         </motion.div>

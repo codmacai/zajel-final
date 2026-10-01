@@ -40,7 +40,7 @@ const ComplianceCustomsExpertise = () => {
           {heading}
         </motion.h2>
 
-        <p className="max-w-[46rem] mx-auto text-[#2d6a4f] font-light leading-[1.7] text-sm sm:text-base tracking-tight">
+        <p className="max-w-[46rem] mx-auto text-[#2d6a4f] font-light leading-[1.7] text-[13px] sm:text-[13.5px] lg:text-[14px] tracking-tight">
           {bodySentences.map((sentence, i) => (
             <motion.span
               key={i}

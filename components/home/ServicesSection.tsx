@@ -24,11 +24,11 @@ export default function ServicesSection() {
       <div className="mx-auto w-full max-w-[1200px]">
         {/* Section Heading */}
         <div className={cx("text-center mb-3 sm:mb-5", ANIMATE_BASE, fadeIn(isVisible))}>
-          <span className="text-[#36B936] text-[11px] sm:text-xs font-medium tracking-widest uppercase block mb-2 sm:mb-3">
+          <span className="text-[#36B936] text-xs sm:text-sm font-medium tracking-widest uppercase block mb-2 sm:mb-3">
             {t("services.eyebrow", "Our Services")}
           </span>
           <h2
-            className={`${styles.servicesHeading} mx-auto max-w-[22ch] sm:max-w-[28ch] md:max-w-none text-balance text-[1.5rem] sm:text-3xl md:text-4xl lg:text-[2.5rem] font-medium text-[#0A4D26] tracking-tight whitespace-pre-line leading-[1.2] px-2`}
+            className={`${styles.servicesHeading} mx-auto max-w-[22ch] sm:max-w-[28ch] md:max-w-none text-balance text-2xl sm:text-3xl md:text-4xl font-medium text-[#0A4D26] tracking-tight whitespace-pre-line leading-[1.2] px-2`}
           >
             {t("services.heading", "Logistics services in the UAE, built around you")}
           </h2>

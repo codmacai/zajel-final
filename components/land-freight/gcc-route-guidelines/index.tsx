@@ -67,7 +67,7 @@ const GccRouteGuidelines = ({ onGetQuote, contactHref = '#contact' }: GccRouteGu
           <h2 className="text-white font-medium leading-[1.12] text-2xl sm:text-3xl md:text-4xl tracking-tight">
             GCC &amp; Middle East Route Details
           </h2>
-          <p className="mt-5 text-white/70 font-light text-sm sm:text-base leading-[1.65] max-w-[56ch] mx-auto">
+          <p className="mt-5 text-white/70 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-[1.65] max-w-[56ch] mx-auto">
             Zajel operates daily land freight departures from the UAE to all GCC countries and extended overland routes reaching Turkey, Jordan, and Europe. Below are estimated transit times for our most active road freight corridors.
           </p>
         </motion.div>

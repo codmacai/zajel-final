@@ -43,7 +43,7 @@
   }
   
   .wcz-heading {
-    font-size: clamp(24px, 3.5vw, 40px);
+    font-size: clamp(24px, 3.5vw, 36px);
     font-weight: 500;
     color: #064423;
     line-height: 1.2;
@@ -594,7 +594,7 @@
     .wcz-container { max-width: 100%; }
   
     .wcz-header { margin-bottom: 24px; }
-    .wcz-heading { font-size: 26px; }
+    .wcz-heading { font-size: 24px; }
     .wcz-header-desc { font-size: 14px; max-width: 40ch; }
   
     .wcz-grid { gap: 12px; }
@@ -651,3 +651,10 @@
     .wcz-card-new { min-height: 100px; padding: 12px; }
     .wcz-dest-value { font-size: 20px; font-weight: 500; }
   }
+
+/* Site-wide type scale: eyebrow 12 -> 14px, section description 13 -> 14px */
+.wcz-eyebrow { font-size: 12px; }
+@media (min-width: 640px) { .wcz-eyebrow { font-size: 14px; } }
+.wcz-header-desc { font-size: 13px; }
+@media (min-width: 640px) { .wcz-header-desc { font-size: 13.5px; } }
+@media (min-width: 1024px) { .wcz-header-desc { font-size: 14px; } }

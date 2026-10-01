@@ -38,7 +38,7 @@ export default function ValueAddedServices({ quoteHref = '/quote', contactHref =
           transition={{ duration: 0.8, ease: EASE }}
           className="mx-auto mb-10 max-w-[640px] text-center sm:mb-12 md:mb-16"
         >
-          <h2 className="text-2xl font-medium leading-tight tracking-tight text-[#0A4D26] sm:text-3xl md:text-4xl">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight text-[#0A4D26]">
             More Ways We Support Your Business
           </h2>
         </motion.div>

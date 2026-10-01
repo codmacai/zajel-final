@@ -141,7 +141,7 @@ export default function OceanCargoVessels() {
             Ocean cargo vessels
           </h2>
 
-          <p className="mt-4 sm:mt-5 text-[#2d6a4f] font-light text-sm sm:text-lg leading-relaxed max-w-[520px] mx-auto">
+          <p className="mt-4 sm:mt-5 text-[#2d6a4f] font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto">
             Types, purpose and key feature.
           </p>
         </motion.div>

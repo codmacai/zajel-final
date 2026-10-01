@@ -76,7 +76,7 @@ export default function WhyBusinessesChoose({ ctaHref }: WhyBusinessesChooseProp
             {whyChooseHeader.heading}
           </h2>
 
-          <p className="mx-auto mt-4 sm:mt-5 max-w-[520px] text-xs sm:text-sm font-light leading-relaxed text-[#2d6a4f]">
+          <p className="mx-auto mt-4 sm:mt-5 max-w-[520px] text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed text-[#2d6a4f]">
             {whyChooseHeader.description}
           </p>
         </motion.div>

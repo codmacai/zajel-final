@@ -40,7 +40,7 @@ export default function TechnologyVisibility({ quoteHref = '/quote' }: Technolog
           transition={{ duration: 0.7, ease: EASE }}
           className="mb-8 flex items-center gap-4 border-b border-[#0A4D26]/10 pb-4 sm:mb-10"
         >
-          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#0A4D26]/60">
+          <span className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-[#0A4D26]/60">
             {technologyContent.eyebrow}
           </span>
         </motion.div>
@@ -55,11 +55,11 @@ export default function TechnologyVisibility({ quoteHref = '/quote' }: Technolog
             transition={{ duration: 0.8, ease: EASE }}
             className="flex w-full min-w-0 max-w-[620px] flex-col"
           >
-            <h2 className="mb-3 text-2xl font-medium leading-tight tracking-tight text-[#0A4D26] sm:mb-4 sm:text-3xl md:text-4xl">
+            <h2 className="mb-3 text-2xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight text-[#0A4D26] sm:mb-4">
               {technologyContent.heading}
             </h2>
 
-            <p className="mb-6 text-sm font-normal leading-relaxed text-[#2d6a4f] sm:mb-8 md:text-base">
+            <p className="mb-6 text-[13px] sm:text-[13.5px] lg:text-[14px] font-normal leading-relaxed text-[#2d6a4f] sm:mb-8">
               {technologyContent.description}
             </p>
 

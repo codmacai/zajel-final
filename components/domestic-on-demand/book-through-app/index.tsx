@@ -79,7 +79,7 @@ const BookThroughApp: FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ ...smoothTransition, delay: 0.1 }}
-            className="text-[#0D2A22]/65 font-light text-[13px] sm:text-[14px] leading-relaxed max-w-[520px] mx-auto px-2"
+            className="text-[#0D2A22]/65 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto px-2"
           >
             Book a same-day or next-day delivery from your phone in four quick steps.
           </motion.p>

@@ -64,7 +64,7 @@ export default function DynamicSolutions({
           </h2>
 
           {subheading && (
-            <p className="mt-4 sm:mt-5 text-[#0D2A22]/75 font-normal text-sm sm:text-base lg:text-[1.05rem] leading-relaxed max-w-[560px] mx-auto text-balance">
+            <p className="mt-4 sm:mt-5 text-[#0D2A22]/75 font-normal text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[560px] mx-auto text-balance">
               {subheading}
             </p>
           )}

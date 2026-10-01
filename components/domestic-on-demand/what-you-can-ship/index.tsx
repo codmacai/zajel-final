@@ -87,7 +87,7 @@ const WhatYouCanShip: FC<WhatYouCanShipProps> = ({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ ...smoothTransition, delay: 0.1 }}
-            className="text-white/70 font-light text-[13px] sm:text-[14px] leading-relaxed max-w-[520px] mx-auto px-2"
+            className="text-white/70 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto px-2"
           >
             Choose the ideal vehicle class for your cargo. Review our approximate maximum weights, dimensions, and best-fit use cases below.
           </motion.p>

@@ -111,7 +111,7 @@ const GlobalAlliances: FC = () => {
         >
           <motion.span
             variants={fadeUpVariants}
-            className="mb-3 block text-[11px] font-medium uppercase tracking-wider text-[#064423]/70 sm:mb-4 sm:text-xs md:text-sm"
+            className="mb-3 block text-xs sm:text-sm font-medium uppercase tracking-wider text-[#064423]/70 sm:mb-4"
           >
             {data.eyebrow}
           </motion.span>
@@ -119,14 +119,14 @@ const GlobalAlliances: FC = () => {
           <motion.h2
             id="global-alliances-heading"
             variants={fadeUpVariants}
-            className="mb-4 text-balance text-[1.5rem] font-medium leading-[1.15] tracking-tight text-[#064423] sm:text-3xl md:text-4xl lg:text-[2.5rem]"
+            className="mb-4 text-balance text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.15] tracking-tight text-[#064423]"
           >
             {data.heading}
           </motion.h2>
 
           <motion.p
             variants={fadeUpVariants}
-            className="max-w-[62ch] text-[0.9375rem] font-light leading-relaxed text-[#064423]/70 sm:text-base lg:text-[1.0625rem]"
+            className="max-w-[62ch] text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed text-[#064423]/70"
           >
             {data.intro}
           </motion.p>

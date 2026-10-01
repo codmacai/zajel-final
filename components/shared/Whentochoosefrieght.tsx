@@ -72,10 +72,10 @@ export default function WhenToChooseFreight({
           {/* Content */}
           <div className="relative z-10 h-full flex flex-col justify-end p-4 xs:p-6 sm:p-8 lg:p-10">
             <div className="max-w-[42ch] sm:max-w-[52ch] lg:max-w-[62ch] flex flex-col gap-2 sm:gap-3.5">
-              <h2 className="text-white font-medium leading-[1.15] text-xl xs:text-2xl sm:text-3xl md:text-4xl tracking-tight">
+              <h2 className="text-white font-medium leading-[1.15] text-2xl sm:text-3xl md:text-4xl tracking-tight">
                 {title}
               </h2>
-              <p className="text-white/90 font-light leading-relaxed text-xs xs:text-[13px] sm:text-[14px] tracking-tight">
+              <p className="text-white/90 font-light leading-relaxed text-[13px] sm:text-[13.5px] lg:text-[14px] tracking-tight">
                 {body.map((part, i) =>
                   part.emphasis ? (
                     <em key={i} className="not-italic font-medium text-[#7BE07B]">

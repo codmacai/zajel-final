@@ -21,12 +21,12 @@ export default function LogisticsInfrastructureSection() {
       <div className="mx-auto max-w-[1320px] px-4 sm:px-6 md:px-12 lg:px-20">
         <div className={cx("mb-10 sm:mb-12 md:mb-16 text-center", ANIMATE_BASE, fadeIn(isVisible))}>
           <div className="mb-2 flex items-center justify-center gap-3">
-            <span className="text-[11px] font-medium uppercase tracking-[0.22em] sm:text-[12px]" style={{ color: LIME }}>
+            <span className="text-xs sm:text-sm font-medium uppercase tracking-[0.22em]" style={{ color: LIME }}>
               {LOGISTICS_INFRASTRUCTURE_EYEBROW}
             </span>
           </div>
 
-          <h2 className="mx-auto max-w-[720px] text-2xl sm:text-3xl font-medium leading-tight tracking-tight text-[#1b4332] md:text-4xl">
+          <h2 className="mx-auto max-w-[720px] text-2xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight text-[#1b4332]">
             {LOGISTICS_INFRASTRUCTURE_HEADING}
           </h2>
         </div>

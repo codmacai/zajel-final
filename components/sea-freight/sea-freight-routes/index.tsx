@@ -68,7 +68,7 @@ const SeaFreightRoutes = ({ onGetQuote, contactHref = '#contact' }: SeaFreightRo
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white leading-[1.15] max-w-[720px] mx-auto">
             Sea Freight Routes from the UAE
           </h2>
-          <p className="mt-4 sm:mt-5 text-white/75 font-light text-sm sm:text-lg leading-relaxed max-w-[560px]">
+          <p className="mt-4 sm:mt-5 text-white/75 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[560px]">
             Zajel operates sea freight services from Jebel Ali Port and Khalifa Port to major ports across
             Asia, Europe, Africa, and the Americas. Below are estimated transit times for our most active
             trade lanes.

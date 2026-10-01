@@ -11,10 +11,10 @@ const ProtocolCardsSection = ({ title, subtitle, cards }: ProtocolSectionContent
         
         {/* Section Header */}
         <motion.div {...fadeUp()} className="mb-10 sm:mb-14 lg:mb-16 text-start">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl text-[#0B140F] font-medium tracking-tight leading-[1.15] mb-3 sm:mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl text-[#0B140F] font-medium tracking-tight leading-[1.15] mb-3 sm:mb-4">
             {title}
           </h2>
-          <p className="text-[#4B5750] font-normal text-xs sm:text-sm md:text-base max-w-[640px] leading-relaxed">
+          <p className="text-[#4B5750] font-normal text-[13px] sm:text-[13.5px] lg:text-[14px] max-w-[640px] leading-relaxed">
             {subtitle}
           </p>
         </motion.div>

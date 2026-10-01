@@ -115,7 +115,7 @@ const WhyChooseZajel: FC = () => (
 
         <motion.p
           {...fade(0.2)}
-          className="text-[#2d6a4f] font-light text-sm leading-relaxed max-w-[520px] mx-auto"
+          className="text-[#2d6a4f] font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto"
         >
           {DESCRIPTION}
         </motion.p>

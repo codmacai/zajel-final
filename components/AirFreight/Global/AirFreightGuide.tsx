@@ -25,12 +25,12 @@ export default function AirFreightGuide() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={SMOOTH_TRANSITION}
-          className="mx-auto max-w-[720px] text-2xl xs:text-3xl font-medium leading-[1.15] tracking-tight text-[#0A4D26] md:text-4xl px-2"
+          className="mx-auto max-w-[720px] text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.15] tracking-tight text-[#0A4D26] px-2"
         >
           Speed, when the calendar won&apos;t wait.
         </motion.h2>
 
-        <p className="mx-auto max-w-[580px] text-xs xs:text-[13.5px] font-light leading-relaxed text-[#2D6A4F] sm:text-[14px] px-2">
+        <p className="mx-auto max-w-[580px] text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed text-[#2D6A4F] px-2">
           Our air network gets the cargo there in days, not weeks. We route
           time-critical parts, perishables, and high-value shipments through
           the fastest available lane, door to door.

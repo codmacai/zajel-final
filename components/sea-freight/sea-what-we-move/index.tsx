@@ -93,7 +93,7 @@ const SeaWhatWeMove = () => {
             What We Move
           </h2>
 
-          <p className="mt-4 sm:mt-5 text-[#2d6a4f] font-light text-sm sm:text-lg leading-relaxed max-w-[520px] mx-auto">
+          <p className="mt-4 sm:mt-5 text-[#2d6a4f] font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto">
             Comprehensive handling capabilities tailored to diverse commercial cargo requirements.
           </p>
         </motion.div>

@@ -153,7 +153,7 @@ function Header({
         {heading}
       </h2>
 
-      <p className="max-w-[440px] text-[#2d6a4f] font-light text-sm sm:text-base leading-relaxed">
+      <p className="max-w-[440px] text-[#2d6a4f] font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed">
         {description}
       </p>
 

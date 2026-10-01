@@ -75,7 +75,7 @@ export default function ContactBand({
             {/* Eyebrow Badge */}
             {badgeText && (
               <div className="mb-3 flex items-center justify-center gap-2.5">
-                <span className="text-xs font-medium uppercase tracking-wider text-[#36B936]">
+                <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">
                   {badgeText}
                 </span>
               </div>

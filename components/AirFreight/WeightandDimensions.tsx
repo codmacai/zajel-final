@@ -55,11 +55,11 @@ export default function WeightDimensionGuidelines({
             </span>
           </div>
 
-          <h2 className="mx-auto max-w-[720px] text-2xl xs:text-3xl font-medium leading-[1.15] tracking-tight text-white md:text-4xl px-2">
+          <h2 className="mx-auto max-w-[720px] text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.15] tracking-tight text-white px-2">
             Air Freight Weight &amp; Dimension Guidelines
           </h2>
 
-          <p className="mx-auto mt-3 xs:mt-4 sm:mt-5 max-w-[520px] text-xs xs:text-[13.5px] font-light leading-relaxed text-white/70 sm:text-[14px] px-2">
+          <p className="mx-auto mt-3 xs:mt-4 sm:mt-5 max-w-[520px] text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed text-white/70 px-2">
             Understanding air freight weight and size limits helps you plan shipments and choose
             the right service configuration through Zajel.
           </p>
