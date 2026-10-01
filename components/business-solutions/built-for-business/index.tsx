@@ -19,7 +19,6 @@ export default function BuiltForBusiness() {
           className="mx-auto mb-12 sm:mb-16 md:mb-20 max-w-[720px] text-center"
         >
           <div className="mb-4 flex items-center justify-center gap-3">
-            <span className="h-[2px] w-8 bg-[#36B936]" />
             <h2 className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">Enterprise Solutions</h2>
           </div>
 

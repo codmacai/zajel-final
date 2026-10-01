@@ -35,7 +35,6 @@ export default function BusinessHero({
           className="flex flex-col items-center"
         >
           <div className="mb-3 flex items-center justify-center gap-3 sm:mb-4">
-            <span className="h-[2px] w-6 bg-[#36B936] sm:w-8" />
             <span className="text-xs font-medium uppercase tracking-wider text-[#36B936] sm:text-sm">
               {heroData.eyebrow}
             </span>

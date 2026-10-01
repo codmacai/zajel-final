@@ -138,17 +138,16 @@ const OurFleetSection = () => {
           className="mx-auto mb-[clamp(2rem,4vw,3.5rem)] max-w-[720px] text-center"
         >
           <div className="mb-3 flex items-center justify-center gap-2.5 sm:gap-3">
-            <span className="h-[2px] w-8 bg-[#36B936]" />
-            <span className="text-[clamp(0.6875rem,0.75vw,0.8125rem)] font-medium uppercase tracking-wider text-[#36B936]">
+            <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">
               Our Fleet
             </span>
           </div>
 
-          <h2 className="text-balance text-xl sm:text-2xl md:text-3xl lg:text-[2.125rem] font-medium leading-[1.2] tracking-tight text-[#0A4D26]">
+          <h2 className="text-balance text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.2] tracking-tight text-[#0A4D26]">
             Available Truck Types
           </h2>
 
-          <p className="mx-auto mt-3.5 max-w-[660px] text-balance font-light leading-relaxed text-[#0A4D26]/80 text-xs sm:text-sm md:text-base">
+          <p className="mx-auto mt-3.5 max-w-[660px] text-balance font-light leading-relaxed text-[#0A4D26]/80 text-[13px] sm:text-[13.5px] lg:text-[14px]">
             Zajel operates a fleet of owned and partner vehicles covering the full range of land freight requirements, from small consignments within the UAE to heavy cargo moving across borders to Europe.
           </p>
         </motion.div>

@@ -32,12 +32,12 @@ export default function LogisticsNetworkSection({
           >
             <div className="lg:pr-6">
               {/* Eyebrow Label */}
-              <span className="inline-block text-xs font-medium tracking-wider uppercase text-white/80 mb-3">
+              <span className="inline-block text-xs sm:text-sm font-medium tracking-wider uppercase text-white/80 mb-3">
                 Global Logistics Hub
               </span>
 
               {/* Header */}
-              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium leading-tight tracking-tight text-white mb-4 sm:mb-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight text-white mb-4 sm:mb-6">
                 A Logistics Network Built from the UAE
               </h2>
 

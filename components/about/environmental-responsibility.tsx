@@ -60,7 +60,7 @@ const EnvironmentalResponsibility: FC = () => {
               {data.eyebrow}
             </span>
 
-            <span className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[11px] font-medium uppercase leading-none tracking-wider text-white backdrop-blur-md">
+            <span className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs sm:text-sm font-medium uppercase leading-none tracking-wider text-white backdrop-blur-md">
               {data.badge}
             </span>
           </div>
@@ -68,7 +68,7 @@ const EnvironmentalResponsibility: FC = () => {
           {/* Main heading */}
           <h2
             id="environmental-heading"
-            className="mb-5 text-balance text-[1.5rem] font-medium leading-[1.15] tracking-tight text-white sm:mb-7 sm:text-3xl md:text-4xl lg:text-[2.5rem]"
+            className="mb-5 text-balance text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.15] tracking-tight text-white sm:mb-7"
           >
             {data.heading}
           </h2>

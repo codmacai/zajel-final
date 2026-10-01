@@ -12,11 +12,11 @@ const FeatureListSection = ({ title, highlight, description, features }: Feature
           
           {/* Left Column: Heading and Description */}
           <motion.div {...fadeUp()} className="lg:col-span-5 text-start">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl text-[#0B140F] font-medium tracking-tight leading-[1.15] mb-4 sm:mb-6 whitespace-pre-line">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl text-[#0B140F] font-medium tracking-tight leading-[1.15] mb-4 sm:mb-6 whitespace-pre-line">
               {title}
               {highlight && <span className="text-[#36B936]"> {highlight}</span>}
             </h2>
-            <p className="text-[#4B5750] font-normal text-xs sm:text-sm md:text-base leading-relaxed max-w-[50ch]">
+            <p className="text-[#4B5750] font-normal text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[50ch]">
               {description}
             </p>
           </motion.div>

@@ -25,7 +25,6 @@ const ComplianceCustomsExpertise = () => {
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.1 }}
           className="flex items-center justify-center gap-3 mb-4 sm:mb-5"
         >
-          <span className="w-8 h-[2px]" style={{ backgroundColor: '#36B936' }} />
           <span style={{ color: '#36B936' }} className="font-medium text-xs sm:text-sm tracking-wider uppercase">
             {eyebrow}
           </span>
@@ -41,7 +40,7 @@ const ComplianceCustomsExpertise = () => {
           {heading}
         </motion.h2>
 
-        <p className="max-w-[46rem] mx-auto text-[#2d6a4f] font-light leading-[1.7] text-sm sm:text-base tracking-tight">
+        <p className="max-w-[46rem] mx-auto text-[#2d6a4f] font-light leading-[1.7] text-[13px] sm:text-[13.5px] lg:text-[14px] tracking-tight">
           {bodySentences.map((sentence, i) => (
             <motion.span
               key={i}

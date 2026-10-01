@@ -132,7 +132,6 @@ export default function OceanCargoVessels() {
           className="text-center mb-[clamp(2rem,6vw,4rem)]"
         >
           <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="w-8 h-[2px]" style={{ backgroundColor: '#36B936' }} />
             <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
               Fleet Guide
             </span>
@@ -142,7 +141,7 @@ export default function OceanCargoVessels() {
             Ocean cargo vessels
           </h2>
 
-          <p className="mt-4 sm:mt-5 text-[#2d6a4f] font-light text-sm sm:text-lg leading-relaxed max-w-[520px] mx-auto">
+          <p className="mt-4 sm:mt-5 text-[#2d6a4f] font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto">
             Types, purpose and key feature.
           </p>
         </motion.div>

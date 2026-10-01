@@ -68,7 +68,6 @@ const DomesticHero: FC<DomesticHeroProps> = ({
             <div className="w-full md:max-w-[clamp(420px,42vw,680px)]">
               {eyebrow && (
                 <div className="mb-[clamp(0.375rem,1.2vw,1rem)] flex items-center gap-3">
-                  <span className="h-[2px] w-[clamp(1.5rem,2.4vw,2.25rem)] shrink-0 bg-[#36B936]" />
                   <span className="text-[clamp(0.6875rem,0.75vw,0.875rem)] font-medium uppercase tracking-wider text-[#36B936]">
                     {eyebrow}
                   </span>

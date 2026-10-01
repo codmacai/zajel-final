@@ -29,7 +29,6 @@ export default function IndividualHero({
           className="flex flex-col items-center"
         >
           <div className="mb-4 flex items-center justify-center gap-3">
-            <span className="h-[2px] w-8 bg-[#36B936]" />
             <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">
               {heroData.eyebrow}
             </span>

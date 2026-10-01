@@ -29,11 +29,9 @@ const PlatformIntegrations: FC = () => {
             transition={smoothTransition}
             className="flex items-center justify-center gap-3 sm:gap-4 mb-4"
           >
-            <span className="w-6 sm:w-8 h-[2px]" style={{ backgroundColor: '#36B936' }} />
             <span style={{ color: '#36B936' }} className="font-medium text-xs sm:text-sm tracking-wider uppercase">
               {EYEBROW}
             </span>
-            <span className="w-6 sm:w-8 h-[2px]" style={{ backgroundColor: '#36B936' }} />
           </motion.div>
 
           <motion.h2
@@ -52,7 +50,7 @@ const PlatformIntegrations: FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ ...smoothTransition, delay: 0.1 }}
-            className="text-[#2d6a4f] font-light text-[13px] sm:text-[14px] leading-relaxed max-w-[520px] mx-auto px-2"
+            className="text-[#2d6a4f] font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto px-2"
           >
             {INTRO}
           </motion.p>

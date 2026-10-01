@@ -127,18 +127,16 @@ const CustomsDutyGuide = ({ onGetQuote, onContactSupport }: CustomsDutyGuideProp
           className="text-center mb-12 sm:mb-16 lg:mb-20"
         >
           <div className="mb-3 sm:mb-4 flex items-center justify-center gap-3">
-            <span className="h-[2px] w-6 sm:w-8" style={{ backgroundColor: LIME }} />
             <span className="text-xs sm:text-sm font-medium tracking-widest uppercase" style={{ color: LIME }}>
               {EYEBROW}
             </span>
-            <span className="h-[2px] w-6 sm:w-8" style={{ backgroundColor: LIME }} />
           </div>
 
-          <h2 className="text-[1.5rem] sm:text-[1.75rem] md:text-4xl lg:text-[2.5rem] text-[#0A4D26] font-medium tracking-tight leading-[1.2] max-w-[820px] mx-auto px-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl text-[#0A4D26] font-medium tracking-tight leading-[1.2] max-w-[820px] mx-auto px-2">
             {HEADING}
           </h2>
 
-          <p className="mt-5 text-[#2D6A4F] font-light text-[14px] sm:text-[16px] leading-relaxed max-w-[560px] mx-auto px-2">
+          <p className="mt-5 text-[#2D6A4F] font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[560px] mx-auto px-2">
             {INTRO}
           </p>
         </motion.div>

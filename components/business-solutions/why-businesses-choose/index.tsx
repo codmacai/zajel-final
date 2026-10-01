@@ -69,7 +69,6 @@ export default function WhyBusinessesChoose({ ctaHref }: WhyBusinessesChooseProp
           className="mb-10 sm:mb-12 md:mb-16 text-center"
         >
           <div className="mb-4 flex items-center justify-center gap-3">
-            <span className="h-[2px] w-8 bg-[#36B936]" />
             <h2 className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">{whyChooseHeader.eyebrow}</h2>
           </div>
 
@@ -77,7 +76,7 @@ export default function WhyBusinessesChoose({ ctaHref }: WhyBusinessesChooseProp
             {whyChooseHeader.heading}
           </h2>
 
-          <p className="mx-auto mt-4 sm:mt-5 max-w-[520px] text-xs sm:text-sm font-light leading-relaxed text-[#2d6a4f]">
+          <p className="mx-auto mt-4 sm:mt-5 max-w-[520px] text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed text-[#2d6a4f]">
             {whyChooseHeader.description}
           </p>
         </motion.div>

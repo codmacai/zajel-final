@@ -183,7 +183,7 @@ const OurJourney: FC = () => {
               >
                 <h2
                   id="our-journey-heading"
-                  className="mb-3 text-[1.75rem] font-medium leading-[1.15] tracking-tight text-white sm:mb-4 sm:text-3xl md:text-4xl lg:text-[2.5rem]"
+                  className="mb-3 text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.15] tracking-tight text-white sm:mb-4"
                 >
                   {sectionHeading}
                 </h2>

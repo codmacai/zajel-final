@@ -67,11 +67,9 @@ const WhatYouCanShip: FC<WhatYouCanShipProps> = ({
             transition={smoothTransition}
             className="flex items-center justify-center gap-3 sm:gap-4 mb-4"
           >
-            <span className="w-6 sm:w-8 h-[2px] bg-[#36B936]" />
             <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
               Cargo Specifications & Limits
             </span>
-            <span className="w-6 sm:w-8 h-[2px] bg-[#36B936]" />
           </motion.div>
 
           <motion.h2
@@ -89,7 +87,7 @@ const WhatYouCanShip: FC<WhatYouCanShipProps> = ({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ ...smoothTransition, delay: 0.1 }}
-            className="text-white/70 font-light text-[13px] sm:text-[14px] leading-relaxed max-w-[520px] mx-auto px-2"
+            className="text-white/70 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto px-2"
           >
             Choose the ideal vehicle class for your cargo. Review our approximate maximum weights, dimensions, and best-fit use cases below.
           </motion.p>

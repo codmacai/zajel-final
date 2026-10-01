@@ -103,8 +103,7 @@ const DeliverySpeedAndDoorstep: FC = () => {
       {/* Delivery Speed block */}
       <div className="max-w-[1280px] mx-auto relative z-10 pt-12 md:pt-28 px-4 sm:px-6 lg:px-20 text-center">
         <div className="flex items-center justify-center gap-2.5 mb-3">
-          <span className="w-6 md:w-8 h-[2px]" style={{ backgroundColor: '#36B936' }} />
-          <span style={{ color: '#36B936' }} className="font-medium text-[10px] sm:text-xs md:text-sm tracking-widest uppercase">
+          <span style={{ color: '#36B936' }} className="font-medium text-xs sm:text-sm tracking-widest uppercase">
             {data.eyebrow}
           </span>
         </div>
@@ -210,7 +209,7 @@ const DeliverySpeedAndDoorstep: FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: EASE, delay: 0.2 }}
-          className="text-white/70 font-light text-xs sm:text-[13.5px] md:text-[14px] leading-relaxed max-w-[520px] mx-auto tracking-wide"
+          className="text-white/70 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto tracking-wide"
         >
           {data.doorstep.text}
         </motion.p>

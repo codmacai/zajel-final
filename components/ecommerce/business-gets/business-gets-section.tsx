@@ -20,19 +20,17 @@ const BusinessGetsSection = () => {
         {/* Header */}
         <div className="mx-auto mb-10 max-w-[680px] text-center sm:mb-14 lg:mb-16">
           <motion.div {...fade()} className="mb-3 flex items-center justify-center gap-3 sm:mb-4">
-            <span className="h-[2px] w-5 sm:w-6" style={{ backgroundColor: LIGHT_GREEN }} />
             <span
-              className="text-[0.7rem] font-medium uppercase tracking-wider sm:text-sm"
+              className="text-xs sm:text-sm font-medium uppercase tracking-wider"
               style={{ color: LIGHT_GREEN }}
             >
               Core Benefits
             </span>
-            <span className="h-[2px] w-5 sm:w-6" style={{ backgroundColor: LIGHT_GREEN }} />
           </motion.div>
 
           <motion.h2
             {...fade(0.1)}
-            className="whitespace-pre-line text-[1.5rem] font-medium leading-tight tracking-tight text-[#0A4D26] sm:text-3xl md:text-4xl"
+            className="whitespace-pre-line text-2xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight text-[#0A4D26]"
           >
             {HEADING}
           </motion.h2>

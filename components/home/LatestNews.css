@@ -35,7 +35,7 @@
   }
   
   .ln-heading {
-    font-size: clamp(26px, 3.5vw, 40px);
+    font-size: clamp(24px, 3.5vw, 36px);
     font-weight: 500;
     color: #064423;
     line-height: 1.2;
@@ -208,3 +208,10 @@
       gap: 32px;
     }
   }
+
+/* Site-wide type scale: eyebrow 12 -> 14px, section description 13 -> 14px */
+.ln-eyebrow { font-size: 12px; }
+@media (min-width: 640px) { .ln-eyebrow { font-size: 14px; } }
+.ln-header-desc { font-size: 13px; }
+@media (min-width: 640px) { .ln-header-desc { font-size: 13.5px; } }
+@media (min-width: 1024px) { .ln-header-desc { font-size: 14px; } }

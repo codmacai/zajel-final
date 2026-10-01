@@ -165,16 +165,15 @@ function Header({ eyebrow, heading, description, footnote, activeIndex, total, s
       transition={{ duration: 0.8, ease: EASE }}
       className="flex flex-col items-center text-center"
     >
-      <span className="inline-flex items-center gap-2.5 text-[#36B936] font-medium text-[11px] sm:text-[12px] tracking-[0.24em] uppercase mb-[clamp(1rem,2.5vw,1.25rem)]">
-        <span className="w-5 h-px bg-[#36B936]" />
+      <span className="inline-flex items-center gap-2.5 text-[#36B936] font-medium text-xs sm:text-sm tracking-[0.24em] uppercase mb-[clamp(1rem,2.5vw,1.25rem)]">
         {eyebrow}
       </span>
 
-      <h2 className="text-white font-light leading-[1.12] text-[clamp(1.75rem,5vw,3rem)] tracking-tight max-w-[560px] mx-auto lg:mx-0">
+      <h2 className="text-white font-light leading-[1.12] text-2xl sm:text-3xl md:text-4xl tracking-tight max-w-[560px] mx-auto lg:mx-0">
         {heading}
       </h2>
 
-      <p className="text-[#8FAE9C] font-light text-[clamp(0.9rem,2.2vw,1.1rem)] leading-relaxed mt-[clamp(1.25rem,3vw,1.5rem)] max-w-[400px] mx-auto lg:mx-0 tracking-wide">
+      <p className="text-[#8FAE9C] font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed mt-[clamp(1.25rem,3vw,1.5rem)] max-w-[400px] mx-auto lg:mx-0 tracking-wide">
         {description}
       </p>
 

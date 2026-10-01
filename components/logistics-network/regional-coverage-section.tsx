@@ -160,7 +160,7 @@ export default function RegionalCoverageSection() {
     >
       <div className="mx-auto max-w-7xl">
         <div className={cx("mb-3 sm:mb-4 text-center sm:mb-6", ANIMATE_BASE, fadeIn(isVisible))}>
-          <h2 className="whitespace-pre-line text-2xl sm:text-3xl font-medium leading-tight tracking-tight text-[#0D2A22] md:text-4xl px-2">
+          <h2 className="whitespace-pre-line text-2xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight text-[#0D2A22] px-2">
             {REGIONAL_COVERAGE_HEADING}
           </h2>
         </div>

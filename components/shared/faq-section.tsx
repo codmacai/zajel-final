@@ -163,7 +163,6 @@ export default function FaqSection({
         >
           {eyebrow && (
             <div className="flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-              <span className="w-6 sm:w-8 h-[2px]" style={{ backgroundColor: mergedTheme.accent }} />
               <span style={{ color: mergedTheme.accent }} className="font-medium text-xs sm:text-sm tracking-wider uppercase">
                 {eyebrow}
               </span>

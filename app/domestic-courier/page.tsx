@@ -4,7 +4,7 @@ import {
   WhyChooseZajel,
   ChooseVehicle,
   WhatYouCanShip,
-  CityDeliveryTimes,
+  BookThroughApp,
   Coverage,
 } from '@/components/domestic-on-demand';
 import HowItWorks from '@/components/domestic-on-demand/HowItWorks';
@@ -29,7 +29,7 @@ export default function DomesticOnDemandPage() {
       <HowItWorks/>
       <ChooseVehicle />
       <WhatYouCanShip />
-      <CityDeliveryTimes />
+      <BookThroughApp />
       <DomesticFaqSection/>
       <CTABanner
         image="/ChatGPT Image Apr 23, 2026 at 11_02_53 AM.png"

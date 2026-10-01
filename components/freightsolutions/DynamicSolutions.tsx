@@ -53,7 +53,6 @@ export default function DynamicSolutions({
         <div className={cx("text-center mb-8 sm:mb-12 lg:mb-14", ANIMATE_BASE, fade(isVisible))}>
           {eyebrow && (
             <div className="flex items-center justify-center gap-3 sm:gap-4 mb-4">
-              <span className="w-6 sm:w-8 h-[2px] shrink-0 bg-[#36B936]" />
               <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
                 {eyebrow}
               </span>
@@ -65,7 +64,7 @@ export default function DynamicSolutions({
           </h2>
 
           {subheading && (
-            <p className="mt-4 sm:mt-5 text-[#0D2A22]/75 font-normal text-sm sm:text-base lg:text-[1.05rem] leading-relaxed max-w-[560px] mx-auto text-balance">
+            <p className="mt-4 sm:mt-5 text-[#0D2A22]/75 font-normal text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[560px] mx-auto text-balance">
               {subheading}
             </p>
           )}

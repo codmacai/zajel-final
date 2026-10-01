@@ -116,26 +116,24 @@ const WhyShipInternationally = () => (
       {/* Header */}
       <div className="mx-auto mb-10 max-w-[680px] text-center sm:mb-14 lg:mb-16">
         <motion.div {...fade()} className="mb-3 flex items-center justify-center gap-3 sm:mb-4">
-          <span className="h-[2px] w-5 sm:w-6" style={{ backgroundColor: LIGHT_GREEN }} />
           <span
-            className="text-[0.7rem] font-medium uppercase tracking-wider sm:text-sm"
+            className="text-xs sm:text-sm font-medium uppercase tracking-wider"
             style={{ color: LIGHT_GREEN }}
           >
             {EYEBROW}
           </span>
-          <span className="h-[2px] w-5 sm:w-6" style={{ backgroundColor: LIGHT_GREEN }} />
         </motion.div>
 
         <motion.h2
           {...fade(0.1)}
-          className="mb-3 text-[1.5rem] font-medium leading-tight tracking-tight text-[#0A4D26] sm:mb-4 sm:text-3xl md:text-4xl"
+          className="mb-3 text-2xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight text-[#0A4D26] sm:mb-4"
         >
           {HEADING}
         </motion.h2>
 
         <motion.p
           {...fade(0.2)}
-          className="mx-auto max-w-[520px] text-[0.8rem] font-light leading-relaxed text-[#2D6A4F] sm:text-sm"
+          className="mx-auto max-w-[520px] text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed text-[#2D6A4F]"
         >
           {DESCRIPTION}
         </motion.p>

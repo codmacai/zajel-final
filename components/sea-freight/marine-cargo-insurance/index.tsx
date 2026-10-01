@@ -244,7 +244,6 @@ const MarineCargoInsurance = ({ onRequestQuote, seaFreightQuoteHref = '#sea-frei
           className="mx-auto flex w-full max-w-[1320px] flex-col items-center text-center pb-8 sm:pb-14"
         >
           <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="w-8 h-[2px]" style={{ backgroundColor: '#36B936' }} />
             <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
               Cargo Protection
             </span>
@@ -252,7 +251,7 @@ const MarineCargoInsurance = ({ onRequestQuote, seaFreightQuoteHref = '#sea-frei
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-[#0A4D26] leading-[1.15] max-w-[720px] mx-auto">
             {HEADING}
           </h2>
-          <p className="mt-4 sm:mt-5 text-[#0A4D26]/75 font-light text-sm sm:text-lg leading-relaxed max-w-[560px]">
+          <p className="mt-4 sm:mt-5 text-[#0A4D26]/75 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[560px]">
             {INTRO}
           </p>
         </motion.div>

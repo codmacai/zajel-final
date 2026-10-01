@@ -342,17 +342,16 @@ export default function ContainerGuide() {
           className="text-center mb-[clamp(1.75rem,5vw,4rem)]"
         >
           <div className="flex items-center justify-center gap-2.5 sm:gap-3 mb-3 sm:mb-4">
-            <span className="w-6 sm:w-8 h-[2px]" style={{ backgroundColor: '#36B936' }} />
-            <span className="text-[#36B936] font-medium text-[11px] sm:text-xs md:text-sm tracking-wider uppercase">
+            <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
               Container Guide
             </span>
           </div>
 
-          <h2 className="text-balance text-[1.5rem] sm:text-3xl md:text-4xl lg:text-[2.5rem] font-medium tracking-tight text-white leading-[1.15] max-w-[720px] mx-auto px-2">
+          <h2 className="text-balance text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white leading-[1.15] max-w-[720px] mx-auto px-2">
             Containers used in sea freight
           </h2>
 
-          <p className="mt-3 sm:mt-4 text-white/75 font-light text-[13px] sm:text-base md:text-lg leading-relaxed max-w-[520px] mx-auto px-2">
+          <p className="mt-3 sm:mt-4 text-white/75 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto px-2">
             Types, specification, purpose and feature.
           </p>
         </motion.div>

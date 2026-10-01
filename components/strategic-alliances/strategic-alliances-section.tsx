@@ -82,15 +82,15 @@ export default function StrategicAlliancesSection() {
 
       <div className="relative z-10 mx-auto flex h-full w-full max-w-[1240px] flex-col justify-center px-4 sm:px-6 md:px-12 lg:px-20">
         <div className={cx("mx-auto mb-10 sm:mb-12 max-w-[850px] shrink-0 text-center lg:mb-16", ANIMATE_BASE, fadeIn(isVisible))}>
-          <span className="mb-2 block text-[11px] font-medium uppercase tracking-widest" style={{ color: LIME }}>
+          <span className="mb-2 block text-xs sm:text-sm font-medium uppercase tracking-widest" style={{ color: LIME }}>
             {STRATEGIC_ALLIANCES_EYEBROW}
           </span>
 
-          <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-white md:text-4xl leading-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white leading-tight">
             {STRATEGIC_ALLIANCES_HEADING}
           </h2>
 
-          <p className="mx-auto mt-3 max-w-[65ch] text-xs sm:text-sm lg:text-base font-normal leading-relaxed text-white/70">
+          <p className="mx-auto mt-3 max-w-[65ch] text-[13px] sm:text-[13.5px] lg:text-[14px] font-normal leading-relaxed text-white/70">
             {STRATEGIC_ALLIANCES_INTRO}
           </p>
         </div>

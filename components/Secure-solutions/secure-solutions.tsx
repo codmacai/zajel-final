@@ -46,7 +46,7 @@ const isRtl = false;
 /* -------------------------------------------------------------------------- */
 
 const T = {
-  h2: 'text-[clamp(1.625rem,1.2rem+1.9vw,2.75rem)]',
+  h2: 'text-2xl sm:text-3xl md:text-4xl',
   cardLead: 'text-[clamp(1.05rem,0.95rem+0.5vw,1.3rem)]',
   body: 'text-[clamp(0.875rem,0.84rem+0.2vw,1rem)]',
   small: 'text-[clamp(0.8125rem,0.79rem+0.12vw,0.9rem)]',

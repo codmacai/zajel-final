@@ -100,11 +100,9 @@ const WhyChooseZajel: FC = () => (
       {/* Header */}
       <div className="max-w-[680px] mx-auto text-center mb-10 sm:mb-16">
         <motion.div {...fade()} className="flex items-center justify-center gap-3 mb-4">
-          <span className="w-6 h-[2px] bg-[#36B936]" />
           <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
             {EYEBROW}
           </span>
-          <span className="w-6 h-[2px] bg-[#36B936]" />
         </motion.div>
 
         <motion.h2
@@ -117,7 +115,7 @@ const WhyChooseZajel: FC = () => (
 
         <motion.p
           {...fade(0.2)}
-          className="text-[#2d6a4f] font-light text-sm leading-relaxed max-w-[520px] mx-auto"
+          className="text-[#2d6a4f] font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto"
         >
           {DESCRIPTION}
         </motion.p>

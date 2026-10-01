@@ -58,12 +58,12 @@ export default function RoadFreightCoverage() {
             transition={{ duration: 0.8, ease: ANIMATION_EASE }}
             className="flex flex-col justify-center py-12 sm:py-16 lg:py-14 px-6 sm:px-12 lg:px-14 z-10 bg-transparent lg:bg-[#132219]"
           >
-            <h2 className="text-2xl sm:text-4xl lg:text-[2rem] text-white font-medium leading-[1.12] tracking-tight mb-4 lg:mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl text-white font-medium leading-[1.12] tracking-tight mb-4 lg:mb-4">
               Land Freight <br className="hidden sm:block" />
               <span className="text-white sm:text-[#36B936]">Coverage</span>
             </h2>
 
-            <p className="text-white/70 font-light text-sm sm:text-base lg:text-sm leading-relaxed mb-8 lg:mb-7 max-w-[480px] lg:max-w-[420px]">
+            <p className="text-white/70 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed mb-8 lg:mb-7 max-w-[480px] lg:max-w-[420px]">
               Complete the information and documentation needed for a successful import and export of your products and materials.
             </p>
 

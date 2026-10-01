@@ -33,7 +33,7 @@
   }
   
   .wciw-heading {
-    font-size: clamp(24px, 3.5vw, 40px);
+    font-size: clamp(24px, 3.5vw, 36px);
     font-weight: 500;
     color: #064423;
     line-height: 1.2;
@@ -98,3 +98,7 @@
   @media (prefers-reduced-motion: reduce) {
     .wciw-header, .wciw-step { transition: none !important; opacity: 1 !important; transform: none !important; }
   }
+
+/* Site-wide type scale: eyebrow 12 -> 14px */
+.wciw-eyebrow { font-size: 12px; }
+@media (min-width: 640px) { .wciw-eyebrow { font-size: 14px; } }

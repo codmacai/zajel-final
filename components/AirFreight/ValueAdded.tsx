@@ -26,18 +26,16 @@ export default function ValueAddedServices({
           className="mb-8 xs:mb-10 text-center sm:mb-[clamp(2rem,6vw,4rem)]"
         >
           <div className="mb-3 xs:mb-4 flex items-center justify-center gap-3 sm:gap-4">
-            <span className="h-[2px] w-6 xs:w-8" style={{ backgroundColor: LIGHT_GREEN }} />
             <span className="text-xs sm:text-sm font-medium tracking-wider uppercase" style={{ color: LIGHT_GREEN }}>
               Value Added Services
             </span>
-            <span className="h-[2px] w-6 xs:w-8" style={{ backgroundColor: LIGHT_GREEN }} />
           </div>
 
-          <h2 className="mx-auto max-w-[720px] text-2xl xs:text-3xl font-medium leading-[1.15] tracking-tight text-[#0A4D26] md:text-4xl px-2">
+          <h2 className="mx-auto max-w-[720px] text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.15] tracking-tight text-[#0A4D26] px-2">
             Air Freight Value Added Services
           </h2>
 
-          <p className="mx-auto mt-3 xs:mt-4 sm:mt-5 max-w-[520px] text-xs xs:text-[13.5px] font-light leading-relaxed text-[#2D6A4F] sm:text-[14px] px-2">
+          <p className="mx-auto mt-3 xs:mt-4 sm:mt-5 max-w-[520px] text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed text-[#2D6A4F] px-2">
             Beyond standard air cargo transport, Zajel provides a full range of supporting
             services to ensure your shipment is prepared, protected, and compliant from origin
             to destination.

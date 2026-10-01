@@ -189,15 +189,14 @@ const TirTransportEditorial = ({
         {/* Header */}
         <motion.div {...reveal()} className="max-w-[760px] text-left 2xl:max-w-[880px]">
           <div className="mb-3 flex items-center gap-3 sm:mb-4">
-            <span className="h-px w-8 bg-[#36B936]" aria-hidden />
-            <span className="text-[11px] font-medium uppercase tracking-wider text-[#36B936] sm:text-xs md:text-sm">
+            <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">
               Global Customs Transit
             </span>
           </div>
-          <h2 className="text-balance text-[1.625rem] font-medium leading-[1.15] tracking-tight text-[#064423] min-[400px]:text-[1.75rem] sm:text-3xl md:text-4xl lg:text-[2.5rem] 2xl:text-[3rem]">
+          <h2 className="text-balance text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.15] tracking-tight text-[#064423]">
             TIR: Simplified International Road Transport
           </h2>
-          <p className="mt-3 max-w-[62ch] text-[0.9375rem] font-light leading-relaxed text-[#064423]/70 sm:mt-4 sm:text-base 2xl:max-w-[70ch] 2xl:text-lg">
+          <p className="mt-3 max-w-[62ch] text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed text-[#064423]/70 sm:mt-4 2xl:max-w-[70ch]">
             Zajel utilizes the TIR (Transports Internationaux Routiers) system for international road freight shipments,
             enabling faster border crossings and simplified customs procedures across multiple countries in a single
             journey.

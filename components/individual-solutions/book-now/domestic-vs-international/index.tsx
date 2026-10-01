@@ -54,7 +54,6 @@ export default function DomesticVsInternational({
           className="mx-auto flex w-full max-w-[1320px] flex-col items-center pb-10 text-center sm:pb-14"
         >
           <div className="mb-4 flex items-center justify-center gap-3">
-            <span className="h-[2px] w-8 bg-[#36B936]" />
             <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">
               Service Comparison
             </span>
@@ -62,7 +61,7 @@ export default function DomesticVsInternational({
           <h2 className="mx-auto max-w-[720px] text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.15] tracking-tight text-[#0A4D26]">
             Which Service Do You Need?
           </h2>
-          <p className="mt-4 sm:mt-5 max-w-[560px] text-xs sm:text-sm md:text-base font-light leading-relaxed text-[#0A4D26]/75">
+          <p className="mt-4 sm:mt-5 max-w-[560px] text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed text-[#0A4D26]/75">
             Compare our domestic on-demand solutions with global international shipping to find the
             ideal match for your shipment requirements.
           </p>

@@ -83,17 +83,16 @@ export default function DynamicDelivery({
               className="mb-10 text-center sm:mb-14 lg:mb-16"
             >
               <div className="mb-4 flex items-center justify-center gap-3">
-                <span className="h-[2px] w-8 bg-[#36B936]" />
-                <span className="text-xs font-medium uppercase tracking-wider text-[#36B936] sm:text-sm">
+                <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">
                   {eyebrow}
                 </span>
               </div>
 
-              <h2 className="mx-auto max-w-[720px] px-2 text-balance text-2xl font-medium leading-[1.15] tracking-tight text-[#1b4332] sm:text-3xl md:text-4xl">
+              <h2 className="mx-auto max-w-[720px] px-2 text-balance text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.15] tracking-tight text-[#1b4332]">
                 {heading}
               </h2>
 
-              <p className="mx-auto mt-4 max-w-[520px] px-2 text-balance text-sm font-light leading-relaxed text-[#2d6a4f] sm:mt-5 sm:text-base lg:text-[1.1rem]">
+              <p className="mx-auto mt-4 max-w-[520px] px-2 text-balance text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed text-[#2d6a4f] sm:mt-5">
                 {description}
               </p>
             </motion.div>
@@ -201,8 +200,7 @@ export default function DynamicDelivery({
               transition={{ duration: 0.7, ease: EASE }}
               className="mb-4 flex items-center justify-center gap-3 sm:mb-6"
             >
-              <span className="h-[2px] w-8 bg-[#36B936]" />
-              <span className="text-xs font-medium uppercase tracking-wider text-[#36B936] sm:text-sm">
+              <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">
                 {compliance.eyebrow}
               </span>
             </motion.div>
@@ -212,12 +210,12 @@ export default function DynamicDelivery({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.7, ease: EASE, delay: 0.1 }}
-              className="mx-auto mb-4 max-w-[720px] px-2 text-balance text-2xl font-medium leading-[1.15] tracking-tight text-white sm:mb-8 sm:text-3xl md:text-4xl"
+              className="mx-auto mb-4 max-w-[720px] px-2 text-balance text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.15] tracking-tight text-white sm:mb-8"
             >
               {compliance.heading}
             </motion.h2>
 
-            <p className="mx-auto max-w-[540px] px-2 text-sm font-light leading-[1.65] tracking-tight text-white/75 sm:text-base sm:leading-[1.7] lg:text-[1.15rem]">
+            <p className="mx-auto max-w-[540px] px-2 text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-[1.65] tracking-tight text-white/75 sm:leading-[1.7]">
               {compliance.sentences.map((sentence, i) => (
                 <motion.span
                   key={i}
