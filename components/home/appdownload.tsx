@@ -22,6 +22,8 @@ interface CompactSaaSBannerProps {
   description?: string;
   phoneImageSrc?: string;        // Used for mobile view
   desktopImageSrc?: string;      // Used for desktop view (overflows top, anchored to bottom)
+  /** Mobile: show the whole image resting on the banner's bottom edge instead of cropping it. */
+  mobileImageFull?: boolean;
   appStoreUrl?: string;
   playStoreUrl?: string;
   onAppStoreClick?: () => void;
@@ -68,6 +70,7 @@ const CompactSaaSBanner: React.FC<CompactSaaSBannerProps> = ({
   description = "Track shipments, get instant updates, and manage your deliveries anytime, anywhere.",
   phoneImageSrc = "/phone-mockup.png",
   desktopImageSrc = "/phone-mockup-desktop.png",
+  mobileImageFull = false,
   appStoreUrl = "#",
   playStoreUrl = "#",
   onAppStoreClick,
@@ -139,7 +142,9 @@ const CompactSaaSBanner: React.FC<CompactSaaSBannerProps> = ({
               <img
                 src={phoneImageSrc}
                 alt="ZAJEL app preview mobile"
-                className="pointer-events-none relative mb-[-45%] h-auto w-[58%] max-w-[260px] object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.3)] sm:hidden"
+                className={`pointer-events-none relative block h-auto object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.3)] sm:hidden ${
+                  mobileImageFull ? "w-[82%] max-w-[340px]" : "mb-[-45%] w-[58%] max-w-[260px]"
+                }`}
               />
             )}
 
