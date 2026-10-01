@@ -26,11 +26,9 @@ export default function ValueAddedServices({
           className="mb-8 xs:mb-10 text-center sm:mb-[clamp(2rem,6vw,4rem)]"
         >
           <div className="mb-3 xs:mb-4 flex items-center justify-center gap-3 sm:gap-4">
-            <span className="h-[2px] w-6 xs:w-8" style={{ backgroundColor: LIGHT_GREEN }} />
             <span className="text-xs sm:text-sm font-medium tracking-wider uppercase" style={{ color: LIGHT_GREEN }}>
               Value Added Services
             </span>
-            <span className="h-[2px] w-6 xs:w-8" style={{ backgroundColor: LIGHT_GREEN }} />
           </div>
 
           <h2 className="mx-auto max-w-[720px] text-2xl xs:text-3xl font-medium leading-[1.15] tracking-tight text-[#0A4D26] md:text-4xl px-2">

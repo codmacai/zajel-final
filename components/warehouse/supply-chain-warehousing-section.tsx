@@ -11,7 +11,6 @@ export default function SupplyChainWarehousingSection() {
         {/* 1. Header (Eyebrow + Main Title) */}
         <div className="flex flex-col justify-center">
           <div className="flex items-center gap-3 mb-3 sm:mb-4">
-            <span className="w-6 sm:w-8 h-[2px] bg-[#36b936] shrink-0" />
             <h2 className="text-[#36b936] font-medium text-xs sm:text-sm tracking-wider uppercase">
               {eyebrow}
             </h2>

@@ -84,7 +84,6 @@ const SeaWhatWeMove = () => {
           className="text-center mb-[clamp(2rem,6vw,4rem)]"
         >
           <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="w-8 h-[2px]" style={{ backgroundColor: '#36B936' }} />
             <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
               Cargo Capability
             </span>

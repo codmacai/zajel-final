@@ -62,7 +62,6 @@ const SeaFreightBanner = ({
         {/* Section heading — centered, top */}
         <div className="mx-auto mb-8 sm:mb-12 max-w-3xl text-center px-2">
           <div className="mb-3 sm:mb-4 flex items-center justify-center gap-3">
-            <span className="w-8 h-[2px]" style={{ backgroundColor: '#36B936' }} />
             <h3
               className="font-medium text-xs sm:text-sm tracking-wider uppercase"
               style={{ color: '#36B936' }}

@@ -43,11 +43,9 @@ const InternationalShippingTimes = ({
           className="text-center mb-8 sm:mb-10 lg:mb-12"
         >
           <div className="mb-2.5 flex items-center justify-center gap-2.5">
-            <span className="h-[2px] w-5 sm:w-6" style={{ backgroundColor: LIGHT_GREEN }} />
             <span className="text-[11px] sm:text-xs font-medium tracking-widest uppercase" style={{ color: LIGHT_GREEN }}>
               {EYEBROW}
             </span>
-            <span className="h-[2px] w-5 sm:w-6" style={{ backgroundColor: LIGHT_GREEN }} />
           </div>
 
           <h2 className="text-[1.5rem] sm:text-[1.75rem] md:text-4xl lg:text-[2.5rem] text-[#0A4D26] font-medium tracking-tight leading-[1.2] max-w-[820px] mx-auto px-2">

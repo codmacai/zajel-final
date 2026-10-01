@@ -41,7 +41,6 @@ const ClearanceTimelineTable = () => {
       <div className="mx-auto max-w-5xl">
         <div className={cx('text-center mb-8 sm:mb-10 px-2', animateBase, fade(isVisible))}>
           <div className="flex items-center justify-center gap-4 mb-4">
-            <span className="w-8 h-[2px]" style={{ backgroundColor: '#36B936' }}></span>
             <span style={{ color: '#36B936' }} className="font-medium text-xs sm:text-sm tracking-wider uppercase">
               Efficiency & Timeframe
             </span>

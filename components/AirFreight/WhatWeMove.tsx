@@ -56,7 +56,6 @@ export default function WhatWeMove() {
           className="mb-8 xs:mb-10 text-center sm:mb-[clamp(2rem,6vw,4rem)]"
         >
           <div className="mb-3 xs:mb-4 flex items-center justify-center gap-3">
-            <span className="h-[2px] w-6 xs:w-8" style={{ backgroundColor: "#36B936" }} />
             <span className="text-xs sm:text-sm font-medium tracking-wider uppercase" style={{ color: "#36B936" }}>
               Cargo Capability
             </span>

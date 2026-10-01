@@ -37,11 +37,9 @@ const CoverageMap: FC = () => {
         className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center mb-6 sm:mb-8"
       >
         <div className="flex items-center justify-center gap-3 mb-3 sm:mb-4">
-          <span className="w-6 sm:w-8 h-[2px] bg-[#36B936]" />
           <span className="text-[#36B936] text-xs sm:text-sm font-medium tracking-wider uppercase">
             Our Coverage
           </span>
-          <span className="w-6 sm:w-8 h-[2px] bg-[#36B936]" />
         </div>
         <h2
           id="coverage-heading"

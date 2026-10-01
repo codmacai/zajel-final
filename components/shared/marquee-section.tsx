@@ -165,7 +165,6 @@ export function MarqueeSection({
         {/* Header container keeps standard mobile padding so the title/eyebrow don't stick to the edges */}
         <div className={cx("text-center mb-8 sm:mb-12 lg:mb-14 px-4 sm:px-0", ANIMATE_BASE, fadeIn(isVisible))}>
           <div className="flex items-center justify-center gap-3 mb-3">
-            <span className="w-6 sm:w-8 h-[2px]" style={{ backgroundColor: LIME }} />
             <h2 style={{ color: LIME }} className="font-medium text-xs sm:text-sm tracking-wider uppercase">
               {eyebrow}
             </h2>

@@ -83,7 +83,6 @@ export default function DynamicDelivery({
               className="mb-10 text-center sm:mb-14 lg:mb-16"
             >
               <div className="mb-4 flex items-center justify-center gap-3">
-                <span className="h-[2px] w-8 bg-[#36B936]" />
                 <span className="text-xs font-medium uppercase tracking-wider text-[#36B936] sm:text-sm">
                   {eyebrow}
                 </span>
@@ -201,7 +200,6 @@ export default function DynamicDelivery({
               transition={{ duration: 0.7, ease: EASE }}
               className="mb-4 flex items-center justify-center gap-3 sm:mb-6"
             >
-              <span className="h-[2px] w-8 bg-[#36B936]" />
               <span className="text-xs font-medium uppercase tracking-wider text-[#36B936] sm:text-sm">
                 {compliance.eyebrow}
               </span>

@@ -133,11 +133,9 @@ const ChooseVehicle: FC = () => {
           className="text-center mb-12 sm:mb-16 lg:mb-20"
         >
           <div className="flex items-center justify-center gap-3 sm:gap-4 mb-4">
-            <span className="w-6 sm:w-8 h-[2px]" style={{ backgroundColor: '#36B936' }} />
             <span style={{ color: '#36B936' }} className="font-medium text-xs sm:text-sm tracking-wider uppercase">
               {data.eyebrow}
             </span>
-            <span className="w-6 sm:w-8 h-[2px]" style={{ backgroundColor: '#36B936' }} />
           </div>
 
           <motion.h2

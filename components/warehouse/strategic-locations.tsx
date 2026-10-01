@@ -27,7 +27,6 @@ export default function StrategicLocations() {
       <div className="mx-auto max-w-[1320px]">
         {/* Section Header Tag */}
         <div className={cx("flex items-center justify-center gap-3 mb-3", ANIMATE_BASE, fade(isVisible))}>
-          <span className="w-6 sm:w-8 h-[2px] shrink-0" style={{ backgroundColor: LIME }} />
           <h2 style={{ color: LIME }} className="font-medium text-xs sm:text-sm tracking-wider uppercase">
             {STRATEGIC_LOCATIONS_EYEBROW}
           </h2>

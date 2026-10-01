@@ -54,7 +54,6 @@ export default function DomesticVsInternational({
           className="mx-auto flex w-full max-w-[1320px] flex-col items-center pb-10 text-center sm:pb-14"
         >
           <div className="mb-4 flex items-center justify-center gap-3">
-            <span className="h-[2px] w-8 bg-[#36B936]" />
             <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">
               Service Comparison
             </span>

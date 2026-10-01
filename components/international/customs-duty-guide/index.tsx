@@ -127,11 +127,9 @@ const CustomsDutyGuide = ({ onGetQuote, onContactSupport }: CustomsDutyGuideProp
           className="text-center mb-12 sm:mb-16 lg:mb-20"
         >
           <div className="mb-3 sm:mb-4 flex items-center justify-center gap-3">
-            <span className="h-[2px] w-6 sm:w-8" style={{ backgroundColor: LIME }} />
             <span className="text-xs sm:text-sm font-medium tracking-widest uppercase" style={{ color: LIME }}>
               {EYEBROW}
             </span>
-            <span className="h-[2px] w-6 sm:w-8" style={{ backgroundColor: LIME }} />
           </div>
 
           <h2 className="text-[1.5rem] sm:text-[1.75rem] md:text-4xl lg:text-[2.5rem] text-[#0A4D26] font-medium tracking-tight leading-[1.2] max-w-[820px] mx-auto px-2">

@@ -15,7 +15,6 @@ export default function AirFreightGuide() {
           transition={SMOOTH_TRANSITION}
           className="flex items-center justify-center gap-3 sm:gap-4"
         >
-          <span className="h-[2px] w-6 sm:w-8 bg-[#36B936]" />
           <span className="text-xs sm:text-sm font-medium tracking-wider uppercase text-[#36B936]">
             Global Network
           </span>

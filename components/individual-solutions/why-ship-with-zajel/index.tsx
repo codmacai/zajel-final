@@ -26,7 +26,6 @@ export default function WhyShipWithZajel() {
           className="mx-auto flex w-full max-w-[1320px] flex-col items-center pb-10 text-center sm:pb-14"
         >
           <div className="mb-4 flex items-center justify-center gap-3">
-            <span className="h-[2px] w-8 bg-[#36B936]" />
             <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">
               Core Advantages
             </span>
@@ -78,11 +77,9 @@ export default function WhyShipWithZajel() {
           className="mt-14 sm:mt-16"
         >
           <div className="mb-6 flex items-center justify-center gap-3 sm:mb-8">
-            <span className="h-[1px] w-12 bg-[#0A4D26]/15" />
             <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#0A4D26]/50">
               Backed By
             </span>
-            <span className="h-[1px] w-12 bg-[#0A4D26]/15" />
           </div>
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">

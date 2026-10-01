@@ -144,11 +144,9 @@ function Header({
     <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
       {/* Eyebrow with side lines matching WhyChooseZajel style */}
       <div className="flex items-center justify-center lg:justify-start gap-3 mb-4">
-        <span className="w-6 h-[2px] bg-[#36B936]" />
         <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
           {eyebrow}
         </span>
-        <span className="w-6 h-[2px] bg-[#36B936]" />
       </div>
 
       <h2 className="max-w-[560px] text-2xl sm:text-3xl md:text-4xl text-[#0A4D26] font-medium tracking-tight mb-4">

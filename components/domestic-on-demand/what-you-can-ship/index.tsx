@@ -67,11 +67,9 @@ const WhatYouCanShip: FC<WhatYouCanShipProps> = ({
             transition={smoothTransition}
             className="flex items-center justify-center gap-3 sm:gap-4 mb-4"
           >
-            <span className="w-6 sm:w-8 h-[2px] bg-[#36B936]" />
             <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
               Cargo Specifications & Limits
             </span>
-            <span className="w-6 sm:w-8 h-[2px] bg-[#36B936]" />
           </motion.div>
 
           <motion.h2

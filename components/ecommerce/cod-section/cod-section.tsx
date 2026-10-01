@@ -38,11 +38,9 @@ const CodSection = () => {
           <div className="relative z-10 text-center max-w-[820px] mx-auto mb-12 sm:mb-20">
             {/* Eyebrow with side lines */}
             <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-              <span className="w-6 sm:w-8 h-[2px]" style={{ background: LIGHT_GREEN }} />
               <span className="font-medium text-[11px] sm:text-sm tracking-widest uppercase" style={{ color: LIGHT_GREEN }}>
                 {EYEBROW}
               </span>
-              <span className="w-6 sm:w-8 h-[2px]" style={{ background: LIGHT_GREEN }} />
             </div>
 
             <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-[2.75rem] font-medium leading-[1.3] sm:leading-[1.25] text-white tracking-tight">

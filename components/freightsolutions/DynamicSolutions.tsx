@@ -53,7 +53,6 @@ export default function DynamicSolutions({
         <div className={cx("text-center mb-8 sm:mb-12 lg:mb-14", ANIMATE_BASE, fade(isVisible))}>
           {eyebrow && (
             <div className="flex items-center justify-center gap-3 sm:gap-4 mb-4">
-              <span className="w-6 sm:w-8 h-[2px] shrink-0 bg-[#36B936]" />
               <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
                 {eyebrow}
               </span>

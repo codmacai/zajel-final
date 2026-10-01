@@ -166,7 +166,6 @@ function Header({ eyebrow, heading, description, footnote, activeIndex, total, s
       className="flex flex-col items-center text-center"
     >
       <span className="inline-flex items-center gap-2.5 text-[#36B936] font-medium text-[11px] sm:text-[12px] tracking-[0.24em] uppercase mb-[clamp(1rem,2.5vw,1.25rem)]">
-        <span className="w-5 h-px bg-[#36B936]" />
         {eyebrow}
       </span>
 

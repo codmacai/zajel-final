@@ -189,7 +189,6 @@ const TirTransportEditorial = ({
         {/* Header */}
         <motion.div {...reveal()} className="max-w-[760px] text-left 2xl:max-w-[880px]">
           <div className="mb-3 flex items-center gap-3 sm:mb-4">
-            <span className="h-px w-8 bg-[#36B936]" aria-hidden />
             <span className="text-[11px] font-medium uppercase tracking-wider text-[#36B936] sm:text-xs md:text-sm">
               Global Customs Transit
             </span>

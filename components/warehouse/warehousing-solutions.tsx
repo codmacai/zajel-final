@@ -23,7 +23,6 @@ export default function WarehousingSolutions() {
       <div className="mx-auto max-w-[1320px]">
         <div className={cx("text-center mb-8 sm:mb-12 lg:mb-14", ANIMATE_BASE, fade(isVisible))}>
           <div className="flex items-center justify-center gap-3 sm:gap-4 mb-4">
-            <span className="w-6 sm:w-8 h-[2px] shrink-0" style={{ backgroundColor: "#36B936" }} />
             <span style={{ color: "#36B936" }} className="font-medium text-xs sm:text-sm tracking-wider uppercase">
               {WAREHOUSING_SOLUTIONS_EYEBROW}
             </span>

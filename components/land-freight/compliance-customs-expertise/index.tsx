@@ -25,7 +25,6 @@ const ComplianceCustomsExpertise = () => {
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.1 }}
           className="flex items-center justify-center gap-3 mb-4 sm:mb-5"
         >
-          <span className="w-8 h-[2px]" style={{ backgroundColor: '#36B936' }} />
           <span style={{ color: '#36B936' }} className="font-medium text-xs sm:text-sm tracking-wider uppercase">
             {eyebrow}
           </span>

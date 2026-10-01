@@ -138,7 +138,6 @@ const OurFleetSection = () => {
           className="mx-auto mb-[clamp(2rem,4vw,3.5rem)] max-w-[720px] text-center"
         >
           <div className="mb-3 flex items-center justify-center gap-2.5 sm:gap-3">
-            <span className="h-[2px] w-8 bg-[#36B936]" />
             <span className="text-[clamp(0.6875rem,0.75vw,0.8125rem)] font-medium uppercase tracking-wider text-[#36B936]">
               Our Fleet
             </span>

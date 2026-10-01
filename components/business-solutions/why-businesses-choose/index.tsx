@@ -69,7 +69,6 @@ export default function WhyBusinessesChoose({ ctaHref }: WhyBusinessesChooseProp
           className="mb-10 sm:mb-12 md:mb-16 text-center"
         >
           <div className="mb-4 flex items-center justify-center gap-3">
-            <span className="h-[2px] w-8 bg-[#36B936]" />
             <h2 className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">{whyChooseHeader.eyebrow}</h2>
           </div>
 

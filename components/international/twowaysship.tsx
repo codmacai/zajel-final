@@ -194,7 +194,6 @@ const TwoWaysToShipAndJourney: FC = () => {
             transition={smoothTransition}
             className="flex items-center justify-center gap-2.5 sm:gap-4 mb-3 sm:mb-4"
           >
-            <span className="w-6 sm:w-8 h-[2px]" style={{ backgroundColor: '#36B936' }}></span>
             <span style={{ color: '#36B936' }} className="font-medium text-[10px] sm:text-xs md:text-sm tracking-widest uppercase">
               {data.eyebrow}
             </span>

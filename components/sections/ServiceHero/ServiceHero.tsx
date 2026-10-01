@@ -133,7 +133,6 @@ export default function ServiceHero({ variant }: { variant: ServiceHeroKey }) {
           {/* Text: above the image on mobile, overlaid at the TOP on md+ */}
           <div className="order-first shrink-0 pb-5 pt-2 md:absolute md:inset-x-0 md:top-0 md:z-10 md:flex md:flex-col md:p-[clamp(1.75rem,4vw,4rem)]">
             <div className="mb-3 flex items-center justify-center gap-2.5 md:justify-start">
-              <span className="h-[2px] w-[clamp(1.25rem,2vw,2rem)] shrink-0 bg-[#36B936]" />
               <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-[#36B936]">
                 {badgeText}
               </span>

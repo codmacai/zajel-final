@@ -203,7 +203,6 @@ const ContactSection = ({ content = seaFreightContent, onSubmit, className }: Co
       <div ref={ref} className="w-full max-w-[1320px] mx-auto px-4 sm:px-6">
         <div className={cx('text-center max-w-[600px] mx-auto mb-6 sm:mb-8', animateBase, fade(isVisible))}>
           <span className="inline-flex items-center gap-2 text-[#36B936] font-medium text-[10px] sm:text-[11px] tracking-[0.22em] uppercase mb-3">
-            <span className="w-4 h-px bg-[#36B936]" />
             {eyebrow}
           </span>
           <h2 className="text-[#0A4D26] font-normal leading-[1.15] text-[1.6rem] sm:text-[2rem] lg:text-[2.2rem] tracking-tight mb-2.5">

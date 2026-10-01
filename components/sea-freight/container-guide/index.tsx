@@ -342,7 +342,6 @@ export default function ContainerGuide() {
           className="text-center mb-[clamp(1.75rem,5vw,4rem)]"
         >
           <div className="flex items-center justify-center gap-2.5 sm:gap-3 mb-3 sm:mb-4">
-            <span className="w-6 sm:w-8 h-[2px]" style={{ backgroundColor: '#36B936' }} />
             <span className="text-[#36B936] font-medium text-[11px] sm:text-xs md:text-sm tracking-wider uppercase">
               Container Guide
             </span>

@@ -244,7 +244,6 @@ const MarineCargoInsurance = ({ onRequestQuote, seaFreightQuoteHref = '#sea-frei
           className="mx-auto flex w-full max-w-[1320px] flex-col items-center text-center pb-8 sm:pb-14"
         >
           <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="w-8 h-[2px]" style={{ backgroundColor: '#36B936' }} />
             <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
               Cargo Protection
             </span>
