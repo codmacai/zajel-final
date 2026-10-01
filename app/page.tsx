@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/seo';
 import CompactSaaSBanner from "@/components/home/appdownload";
+import BrandFilm from "@/components/home/BrandFilm";
 import LatestNews from "@/components/home/blog";
 import CertificationsGrid from "@/components/home/CertificationsGrid";
 import FeaturedProjects from "@/components/home/FeaturedProjects";
@@ -22,6 +23,7 @@ export default function Home() {
     <main>
       <Hero />
       <ServicesSection/>
+      <BrandFilm/>
       <WhyChooseUs/>
       <HowItWorks/>
       <ZajelNowBanner/>
