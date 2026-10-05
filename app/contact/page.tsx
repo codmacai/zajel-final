@@ -22,7 +22,6 @@ const CONTACT_ITEMS: {
   href?: string;
 }[] = [
   { icon: <PhoneIcon />, label: 'Phone', primary: '+971 60 053 1111', href: 'tel:+971600531111' },
-  { icon: <EmailIcon />, label: 'Email', primary: 'info@zajel.ae', href: 'mailto:info@zajel.ae' },
   { icon: <ClockIcon />, label: 'Business hours', primary: 'Mon – Sat: 8 AM – 5 PM', secondary: '' },
   { icon: <PinIcon />, label: 'Headquarters', primary: 'Dubai, United Arab Emirates', secondary: 'ZAJEL Courier Services' },
   { icon: <PinIcon />, label: 'Branch office', primary: 'Abu Dhabi, United Arab Emirates', secondary: 'ZAJEL Courier Services' },

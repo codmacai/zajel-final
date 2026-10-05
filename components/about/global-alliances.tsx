@@ -25,7 +25,7 @@ const defaultContent = {
     },
     {
       title: 'DF Alliance by DP World',
-      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR.png',
+      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR copy.png',
       description:
         "Premium Member of DP World's global network spanning 190+ countries, granting access to vetted logistics partners and deep local expertise worldwide.",
       badge: 'Premium Member',
