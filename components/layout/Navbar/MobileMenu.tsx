@@ -75,8 +75,9 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
           position: "fixed",
           inset: 0,
           background: "rgba(0,0,0,0.4)",
-          backdropFilter: "blur(6px)",
-          WebkitBackdropFilter: "blur(6px)",
+          // blur only while open: an invisible full-screen blur still costs every frame on phones
+          backdropFilter: isOpen ? "blur(6px)" : "none",
+          WebkitBackdropFilter: isOpen ? "blur(6px)" : "none",
           zIndex: 58,
           opacity: isOpen ? 1 : 0,
           pointerEvents: isOpen ? "auto" : "none",
@@ -96,9 +97,14 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
           display: "flex",
           flexDirection: "column",
           transform: isOpen ? "translateX(0)" : "translateX(100%)",
-          transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1)",
+          // once closed it is hidden: its shadow no longer leaks onto the page edge,
+          // and its links can't be reached by keyboard while it's off screen
+          visibility: isOpen ? "visible" : "hidden",
+          transition: isOpen
+            ? "transform 0.5s cubic-bezier(0.16,1,0.3,1)"
+            : "transform 0.5s cubic-bezier(0.16,1,0.3,1), visibility 0s linear 0.5s",
           willChange: "transform",
-          boxShadow: "-30px 0 60px rgba(0,0,0,0.1)",
+          boxShadow: isOpen ? "-30px 0 60px rgba(0,0,0,0.1)" : "none",
         }}
       >
         <div
