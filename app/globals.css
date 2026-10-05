@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  --color-brand: #36B936;
+  --color-brand-dark: #2ea22e;
+  --color-heading: #064423;
+  --color-body: #6B7280;
+  --color-paper: #FAFAF8;
+
+  --text-h2-min: 28px;
+  --text-h2-max: 40px;
+  --text-h3-min: 18px;
+  --text-h3-max: 22px;
+
+  --text-body: 14px;
+  --text-body-lg: 16px;
+
+  --text-eyebrow: 12px;
+
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-manrope);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+}
+
+.section-eyebrow {
+  display: block;
+  font-size: var(--text-eyebrow);
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-brand);
+  margin-bottom: 8px;
+}
+
+.section-heading {
+  font-size: clamp(var(--text-h2-min), 4vw, var(--text-h2-max));
+  font-weight: 400;
+  color: var(--color-heading);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.section-desc {
+  font-size: var(--text-body);
+  font-weight: 400;
+  color: var(--color-body);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .section-desc {
+    font-size: var(--text-body-lg);
+  }
+}

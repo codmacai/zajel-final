@@ -1,0 +1,23 @@
+/* Pure-CSS entrance for the above-the-fold hero: no JS needed, so the heading
+   is visible on first paint instead of waiting for hydration.
+   `backwards` (not `both`) so hover transforms on the CTA aren't overridden. */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.title { animation: fadeDown 1.2s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+.desc  { animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s backwards; }
+.cta   { animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s backwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .title, .desc, .cta { animation: none; }
+}

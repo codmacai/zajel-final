@@ -1,0 +1,44 @@
+import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
+import {
+  WhyShipInternationally,
+  InternationalShippingTimes,
+  CustomsDutyGuide,
+} from '@/components/international';
+import InternationalFaq from '@/components/international/faq';
+import TwoWaysToShipAndJourney from '@/components/international/twowaysship';
+import InternationalHero from '@/components/international/hero';
+import CTABanner from '@/components/shared/CTABanner';
+
+export const metadata: Metadata = pageMetadata({
+  title: "International Shipping",
+  description:
+    "Ship internationally from the UAE to 200+ countries with reliable express and standard delivery, real-time tracking, and full customs clearance support.",
+  path: '/international-courier',
+});
+
+export default function InternationalPage() {
+  return (
+    <main>
+      <InternationalHero/>
+      <TwoWaysToShipAndJourney/>
+      <WhyShipInternationally />
+      <InternationalShippingTimes
+        bannerImageSrc="/international/air-cargo-loading.webp"
+        bannerImageAlt="Palletised cargo being loaded onto a freighter aircraft for international shipping"
+      />
+      <CustomsDutyGuide />
+      <InternationalFaq/>
+      <CTABanner
+        image="/ChatGPT Image Apr 23, 2026 at 11_02_53 AM.webp"
+        imageAlt="Zajel courier handing over an international shipment"
+  title="Book International Shipping in Minutes"
+  description="Declare your document's weight and pay instantly, or request a quote for your package, book on zajel.com, or download the app for booking on the go."
+  buttons={[
+    { label: "Ship Internationally", href: "/send-shipment", variant: "primary" },
+    { label: "Download the Zajel App", href: "/#download-app", variant: "secondary" },
+  ]}
+/>
+    </main>
+  );
+}
