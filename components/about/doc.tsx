@@ -42,6 +42,11 @@ const content = {
 // Drawn in a fixed 618 x 532 box so the corner radii and the slanted folder
 // tab keep their proportions at every size (the card holds this aspect ratio).
 // ---------------------------------------------------------------------------
+// Until a PDF is uploaded, its card asks for a copy by email instead of
+// linking to a missing file. The about page passes which files exist.
+const requestHref = (title: string) =>
+  `mailto:info@zajel.ae?subject=${encodeURIComponent(`Request: Zajel ${title}`)}`;
+
 const CARD_PATH =
   "M40 37 H250 Q267 37 284.7 27.6 L319.3 9.4 Q337 0 355 0 H582 A36 36 0 0 1 618 36 V492 A40 40 0 0 1 578 532 H40 A40 40 0 0 1 0 492 V77 A40 40 0 0 1 40 37 Z";
 
@@ -99,7 +104,8 @@ const ArrowUpRightIcon: FC = () => (
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
-const CompanyDocuments: FC = () => {
+/** `available`: file names in /public/documents that exist (checked on the server). */
+const CompanyDocuments: FC<{ available?: string[] }> = ({ available = [] }) => {
   return (
     <section
       className={`${manrope.className} w-full overflow-hidden bg-white px-4 py-16 sm:px-8 sm:py-28 md:py-32 lg:px-20 lg:py-40`}
@@ -141,6 +147,7 @@ const CompanyDocuments: FC = () => {
           {/* Cards: narrow, near-square folder shape */}
           <div className="mx-auto grid w-full max-w-[820px] grid-cols-1 justify-items-center gap-4 sm:gap-8 md:grid-cols-2">
             {content.documents.map((doc) => {
+              const ready = available.includes(doc.fileUrl.split("/").pop() ?? "");
               const t = themes[doc.theme];
               return (
                 <motion.article
@@ -149,11 +156,9 @@ const CompanyDocuments: FC = () => {
                   className={`group w-full max-w-[380px] ${t.shadow} transition-transform duration-500 hover:-translate-y-1`}
                 >
                   <a
-                    href={doc.fileUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    download
-                    aria-label={`Download ${doc.title} PDF`}
+                    href={ready ? doc.fileUrl : requestHref(doc.title)}
+                    {...(ready ? { target: "_blank", rel: "noopener noreferrer", download: true } : {})}
+                    aria-label={ready ? `Download ${doc.title} PDF` : `Request the ${doc.title} by email`}
                     className="relative block aspect-[618/532] w-full rounded-[2rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#36B936]"
                   >
                     {/* Folder shape */}
@@ -186,7 +191,7 @@ const CompanyDocuments: FC = () => {
                       </p>
 
                       <span className={`mt-auto pt-3 text-[11px] font-medium sm:text-xs ${t.foot}`}>
-                        PDF · Ready to download
+                        {ready ? "PDF · Ready to download" : "PDF · Request a copy"}
                       </span>
                     </div>
                   </a>

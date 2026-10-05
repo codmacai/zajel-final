@@ -24,10 +24,9 @@ export default function InternationalPage() {
       <TwoWaysToShipAndJourney/>
       <WhyShipInternationally />
       <InternationalShippingTimes
-  bannerImageSrc="/international/reference-startimage.webp
-"
-  bannerImageAlt="Zajel courier delivering an international shipment"
-/>
+        bannerImageSrc="/international/air-cargo-loading.webp"
+        bannerImageAlt="Palletised cargo being loaded onto a freighter aircraft for international shipping"
+      />
       <CustomsDutyGuide />
       <InternationalFaq/>
       <CTABanner

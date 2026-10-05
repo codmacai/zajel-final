@@ -16,7 +16,8 @@ import CompanyDocuments from '@/components/about/doc';
 import CTABanner from '@/components/shared/CTABanner';
 import CompactSaaSBanner from '@/components/home/appdownload';
 
-const HAS_DOCUMENTS = ['company-profile.pdf', 'ims-policy.pdf'].every((f) =>
+// which company documents have been uploaded to /public/documents/
+const DOCUMENTS_READY = ['company-profile.pdf', 'ims-policy.pdf'].filter((f) =>
   existsSync(join(process.cwd(), 'public', 'documents', f))
 );
 
@@ -39,8 +40,8 @@ export default function AboutPage() {
       <EnvironmentalResponsibility />
       <FacilityGallery />
       <CompactSaaSBanner/>
-      {/* shown once the PDFs are uploaded to /public/documents/ (so it never links to a 404) */}
-      {HAS_DOCUMENTS && <CompanyDocuments />}
+      {/* a card downloads its PDF once it's in /public/documents/, and asks for a copy by email until then */}
+      <CompanyDocuments available={DOCUMENTS_READY} />
       <CTABanner
               image="/ChatGPT Image Apr 23, 2026 at 11_02_53 AM.webp"
               imageAlt="Courier delivering a package doorstep to doorstep in the UAE"
