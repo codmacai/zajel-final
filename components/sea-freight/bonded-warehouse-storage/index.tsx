@@ -100,7 +100,7 @@ interface BondedWarehouseStorageProps {
 
 export default function BondedWarehouseStorage({
   onLearnMore,
-  contactHref = '#contact',
+  contactHref = '/contact',
 }: BondedWarehouseStorageProps) {
   return (
     <section

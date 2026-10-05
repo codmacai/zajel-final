@@ -23,7 +23,7 @@ export const WAREHOUSING_SOLUTIONS_CARDS: SolutionCard[] = [
     description:
       "Flexible storage that adapts to your operational cycle — from cargo awaiting customs clearance to standing inventory held for ongoing regional distribution. Every item is tracked in real time within secure, monitored facilities.",
     buttonLabel: "Request a Quote",
-    buttonUrl: "/quote",
+    buttonUrl: "/quotation",
   },
   {
     id: "ecommerce",
@@ -33,7 +33,7 @@ export const WAREHOUSING_SOLUTIONS_CARDS: SolutionCard[] = [
     description:
       "Products are received, stored, and organized, then picked, packed, and dispatched through Zajel's own delivery network — letting you scale without investing in your own warehouse or fulfillment infrastructure.",
     buttonLabel: "Request a Quote",
-    buttonUrl: "/quote",
+    buttonUrl: "/quotation",
   },
   {
     id: "coldchain",
@@ -43,7 +43,7 @@ export const WAREHOUSING_SOLUTIONS_CARDS: SolutionCard[] = [
     description:
       "Built for goods that must stay within a set thermal range. Perishables, medical supplies, and other sensitive products keep their integrity from arrival to dispatch, with temperature logs kept for compliance.",
     buttonLabel: "Request a Quote",
-    buttonUrl: "/quote",
+    buttonUrl: "/quotation",
   },
   {
     id: "dangerous-goods",
@@ -53,6 +53,6 @@ export const WAREHOUSING_SOLUTIONS_CARDS: SolutionCard[] = [
     description:
       "Hazardous materials, chemicals, and other regulated goods handled with the infrastructure, permits, and trained personnel needed for full compliance, including open yard space for industrial and project cargo.",
     buttonLabel: "Request a Quote",
-    buttonUrl: "/quote",
+    buttonUrl: "/quotation",
   },
 ];

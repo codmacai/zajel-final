@@ -32,7 +32,7 @@ export const INTEGRATIONS: IntegrationCard[] = [
       'Compatible with WooCommerce multisite setups',
     ],
     buttonLabel: 'Connect WooCommerce',
-    buttonUrl: '/integrations/woocommerce',
+    buttonUrl: '/contact',
   },
 ];
 
@@ -41,7 +41,7 @@ export const API_ACCESS: ApiAccessContent = {
   text:
     'For platforms beyond Shopify and WooCommerce, Zajel provides REST API access so your development team can build a custom integration with any order management system, marketplace, or ERP. API documentation and technical onboarding support are included with every business account.',
   primaryCta: 'View Integration Documentation',
-  primaryUrl: '/docs/integrations',
+  primaryUrl: '/contact',
   secondaryCta: 'Talk to Our Integration Team',
   secondaryUrl: '/contact',
 };

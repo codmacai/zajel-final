@@ -4,6 +4,8 @@ import { IndividualIcon, BusinessIcon, SecureIcon } from "@/components/home/Serv
 export interface SubService {
   label: string;
   slug: string;
+  /** where the link goes: the page that covers this service */
+  href: string;
 }
 
 export interface ServiceCategory {
@@ -26,7 +28,8 @@ const slugify = (label: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 
-const buildSub = (labels: string[]): SubService[] => labels.map((label) => ({ label, slug: slugify(label) }));
+const buildSub = (items: [label: string, href: string][]): SubService[] =>
+  items.map(([label, href]) => ({ label, slug: slugify(label), href }));
 
 export const SERVICE_CATEGORIES: ServiceCategory[] = [
   {
@@ -39,7 +42,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     ctaLabel: "View solutions",
     image: "/Homepage/individual.webp",
     icon: IndividualIcon,
-    subServices: buildSub(["International shipping", "Same-day & next-day delivery"]),
+    subServices: buildSub([
+      ["International shipping", "/international-courier"],
+      ["Same-day & next-day delivery", "/domestic-courier"],
+    ]),
   },
   {
     id: "business",
@@ -51,7 +57,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     ctaLabel: "View solutions",
     image: "/Homepage/7be9399d-bd5b-44e2-97ed-97d5efce871c.webp",
     icon: BusinessIcon,
-    subServices: buildSub(["Freight forwarding (air, sea, land)", "E-commerce fulfillment", "Last-mile delivery"]),
+    // last-mile is part of e-commerce, so it lives under that one line
+    subServices: buildSub([
+      ["Freight forwarding (air, sea, land)", "/business-solutions#services"],
+      ["E-commerce fulfillment & last-mile delivery", "/ecommerce"],
+    ]),
   },
   {
     id: "secure",
@@ -64,10 +74,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     image: "/Homepage/secure.webp",
     icon: SecureIcon,
     subServices: buildSub([
-      "MOFA document delivery",
-      "Dubai Courts courier",
-      "Dubai Customs clearance",
-      "EID & passport delivery",
+      ["MOFA document delivery", "/secure-docs"],
+      ["Dubai Courts courier", "/secure-docs"],
+      ["Dubai Customs clearance", "/customs-clearance"],
+      ["EID & passport delivery", "/secure-id"],
     ]),
   },
 ];

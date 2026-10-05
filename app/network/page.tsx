@@ -21,7 +21,9 @@ export default function NetworkPage() {
   return (
     <main>
       <ServiceHero variant="network" />
-      <LogisticsNetworkSection/>
+      <div id="explore-network" className="scroll-mt-24">
+        <LogisticsNetworkSection />
+      </div>
       <RegionalCoverageSection/>
       <FreightServicesSection/>
       <StrategicAlliancesSection/>

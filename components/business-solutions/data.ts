@@ -7,7 +7,7 @@ export const heroData = {
   description:
     "Whether you're fulfilling online orders or moving freight across borders, Zajel supports the operation — not just the shipment.",
   buttonLabel: 'Get a Quote',
-  buttonUrl: '/quote',
+  buttonUrl: '/quotation',
   heroImage: '/Homepage/7be9399d-bd5b-44e2-97ed-97d5efce871c.webp',
 };
 
@@ -113,7 +113,7 @@ export const valueAddedServices: ValueService[] = [
     title: 'Warehousing and Storage',
     description:
       'Short term and long term storage in Dubai with real-time inventory tracking. Temperature controlled options available for pharma, food, and healthcare products. Integrated with our freight and delivery network for seamless dispatch.',
-    href: '/warehousing',
+    href: '/warehouse',
   },
   {
     id: 'packing',
@@ -222,7 +222,7 @@ export interface CtaButton {
 }
 
 export const ctaButtons: CtaButton[] = [
-  { id: 'quote', label: 'Get a Quote', url: '/quote', variant: 'primary' },
+  { id: 'quote', label: 'Get a Quote', url: '/quotation', variant: 'primary' },
   { id: 'team', label: 'Talk to Our Team', url: '/contact', variant: 'secondary' },
   { id: 'calculator', label: 'Calculate Shipping Rate', url: '/rate-calculator', variant: 'secondary' },
 ];

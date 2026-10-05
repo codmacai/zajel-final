@@ -13,7 +13,7 @@ export const LAND_FREIGHT_CARDS: LandFreightCard[] = [
     title: 'Full Truckload (FTL)',
     description: 'A dedicated truck for your cargo alone — suited to large or high-volume shipments.',
     buttonLabel: 'Learn More',
-    buttonUrl: '/services/land-freight/ftl',
+    buttonUrl: '/quotation',
   },
   {
     id: 'ltl',
@@ -22,6 +22,6 @@ export const LAND_FREIGHT_CARDS: LandFreightCard[] = [
     title: 'Less than Truckload (LTL)',
     description: "Shared truck space for smaller shipments — cost-effective when you don't need a full truck.",
     buttonLabel: 'Learn More',
-    buttonUrl: '/services/land-freight/ltl',
+    buttonUrl: '/quotation',
   },
 ];

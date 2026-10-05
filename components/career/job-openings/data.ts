@@ -17,7 +17,7 @@ export const JOBS: Job[] = [
     description: 'Coordinate daily logistics operations, support drivers, and ensure SLA compliance.',
     location: 'Dubai, UAE',
     type: 'Full-Time',
-    href: '/careers/apply?role=operations-executive-1',
+    href: 'mailto:info@zajel.ae?subject=Application%3A%20Operations%20Executive',
   },
   {
     id: 'operations-executive-2',
@@ -25,7 +25,7 @@ export const JOBS: Job[] = [
     description: 'Coordinate daily logistics operations, support drivers, and ensure SLA compliance.',
     location: 'Dubai, UAE',
     type: 'Full-Time',
-    href: '/careers/apply?role=operations-executive-2',
+    href: 'mailto:info@zajel.ae?subject=Application%3A%20Operations%20Executive',
   },
   {
     id: 'operations-executive-3',
@@ -33,6 +33,6 @@ export const JOBS: Job[] = [
     description: 'Coordinate daily logistics operations, support drivers, and ensure SLA compliance.',
     location: 'Dubai, UAE',
     type: 'Full-Time',
-    href: '/careers/apply?role=operations-executive-3',
+    href: 'mailto:info@zajel.ae?subject=Application%3A%20Operations%20Executive',
   },
 ];

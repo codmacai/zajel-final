@@ -40,8 +40,8 @@ export default function BusinessSolutionsPage() {
               description="Get a quote, talk to our logistics team or calculate your shipping rate, however you want to start.We're ready"
               priority
               buttons={[
-                { label: "Get a quote", href: "/domestic-courier#pickup", variant: "primary" },
-                { label: "Talk to our team", href: "/domestic-courier#rate", variant: "secondary" },
+                { label: "Get a quote", href: "/quotation", variant: "primary" },
+                { label: "Talk to our team", href: "/contact", variant: "secondary" },
               ]}
             />
     </main>

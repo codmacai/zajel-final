@@ -19,7 +19,8 @@ export default function ServicesSection() {
   return (
     <section
       ref={ref}
-      className={`w-full py-14 sm:py-20 lg:py-24 px-4 sm:px-6 md:px-10 lg:px-20 bg-[#FAFAF8] overflow-hidden ${styles.servicesSection}`}
+      id="solutions"
+      className={`scroll-mt-24 w-full py-14 sm:py-20 lg:py-24 px-4 sm:px-6 md:px-10 lg:px-20 bg-[#FAFAF8] overflow-hidden ${styles.servicesSection}`}
     >
       <div className="mx-auto w-full max-w-[1200px]">
         {/* Section Heading */}

@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { pageMetadata } from '@/lib/seo';
 import {
   AboutHero,
@@ -13,6 +15,10 @@ import {
 import CompanyDocuments from '@/components/about/doc';
 import CTABanner from '@/components/shared/CTABanner';
 import CompactSaaSBanner from '@/components/home/appdownload';
+
+const HAS_DOCUMENTS = ['company-profile.pdf', 'ims-policy.pdf'].every((f) =>
+  existsSync(join(process.cwd(), 'public', 'documents', f))
+);
 
 export const metadata: Metadata = pageMetadata({
   title: "About Us",
@@ -33,7 +39,8 @@ export default function AboutPage() {
       <EnvironmentalResponsibility />
       <FacilityGallery />
       <CompactSaaSBanner/>
-      <CompanyDocuments/>
+      {/* shown once the PDFs are uploaded to /public/documents/ (so it never links to a 404) */}
+      {HAS_DOCUMENTS && <CompanyDocuments />}
       <CTABanner
               image="/ChatGPT Image Apr 23, 2026 at 11_02_53 AM.webp"
               imageAlt="Courier delivering a package doorstep to doorstep in the UAE"
@@ -41,9 +48,9 @@ export default function AboutPage() {
               description="For everyone who needs something moved.."
               priority
               buttons={[
-                { label: "Explore Our Solutions", href: "/domestic-courier#pickup", variant: "primary" },
-                { label: "Careers at Zajel", href: "/domestic-courier#rate", variant: "secondary" },
-                { label: "Get in Touch", href: "/domestic-courier#track", variant: "secondary" },
+                { label: "Explore Our Solutions", href: "/#solutions", variant: "primary" },
+                { label: "Careers at Zajel", href: "/careers", variant: "secondary" },
+                { label: "Get in Touch", href: "/contact", variant: "secondary" },
               ]}
             />
     </main>

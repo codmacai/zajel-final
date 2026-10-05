@@ -97,7 +97,8 @@ const GlobalAlliances: FC = () => {
 
   return (
     <section
-      className="w-full select-none overflow-hidden bg-[#FAFBF8] py-14 font-['Manrope',sans-serif] sm:py-20 lg:py-28"
+      id="certifications"
+      className="w-full scroll-mt-24 select-none overflow-hidden bg-[#FAFBF8] py-14 font-['Manrope',sans-serif] sm:py-20 lg:py-28"
       aria-labelledby="global-alliances-heading"
     >
       {/* Header */}

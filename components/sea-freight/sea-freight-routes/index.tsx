@@ -29,7 +29,7 @@ interface SeaFreightRoutesProps {
   contactHref?: string;
 }
 
-const SeaFreightRoutes = ({ onGetQuote, contactHref = '#contact' }: SeaFreightRoutesProps) => {
+const SeaFreightRoutes = ({ onGetQuote, contactHref = '/contact' }: SeaFreightRoutesProps) => {
   return (
     <section
       className="w-full relative overflow-hidden py-[clamp(3.5rem,10vw,9rem)] font-sans"

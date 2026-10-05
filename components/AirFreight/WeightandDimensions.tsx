@@ -15,7 +15,7 @@ interface WeightDimensionGuidelinesProps {
 
 export default function WeightDimensionGuidelines({
   onGetQuote,
-  contactHref = "#contact",
+  contactHref = "/contact",
 }: WeightDimensionGuidelinesProps) {
   return (
     <section

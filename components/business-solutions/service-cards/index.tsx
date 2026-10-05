@@ -17,7 +17,8 @@ const cleanIconMap = {
 export default function ServiceCards() {
   return (
     <section
-      className="relative w-full overflow-hidden font-['Manrope',sans-serif]"
+      id="services"
+      className="relative w-full scroll-mt-24 overflow-hidden font-['Manrope',sans-serif]"
       style={{ background: 'linear-gradient(180deg, #0A5A2E 0%, #064423 30%, #053A20 55%, #04321C 75%, #042B18 100%)' }}
     >
       <div aria-hidden className="pointer-events-none absolute -left-24 -top-24 h-[520px] w-[520px] rounded-full bg-[#36B936]/10 blur-[130px]" />
@@ -61,12 +62,12 @@ export default function ServiceCards() {
                       }`}
                     >
                       <span className={`h-1.5 w-1.5 rounded-full ${isGreen ? 'bg-white' : 'bg-[#36B936]'}`} />
-                      <span className={`text-[11px] font-medium uppercase tracking-[0.16em] ${isGreen ? 'text-white' : 'text-[#36B936]'}`}>
+                      <span className={`text-[12px] sm:text-[13px] font-semibold uppercase tracking-[0.16em] ${isGreen ? 'text-white' : 'text-[#36B936]'}`}>
                         {card.title}
                       </span>
                     </span>
 
-                    <p className={`mb-5 max-w-[85%] text-lg sm:text-xl font-medium leading-snug ${isGreen ? 'text-white' : 'text-neutral-900'}`}>
+                    <p className={`mb-5 max-w-[88%] text-[22px] sm:text-2xl lg:text-[28px] font-medium leading-snug ${isGreen ? 'text-white' : 'text-neutral-900'}`}>
                       {card.description}
                     </p>
 

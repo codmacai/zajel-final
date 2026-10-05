@@ -14,7 +14,7 @@ const defaultContent: SeaFreightHeroContent = {
   description:
     "Weekly sailings through Jebel Ali and Khalifa Port with in-house clearance, bonded storage and the inland leg included on arrival.",
   primaryCta: { label: "Book space", url: "/contact" },
-  secondaryCta: { label: "Download schedule", url: "/schedule.pdf" },
+  secondaryCta: { label: "Ask for the schedule", url: "/contact" },
   image_url: "/sea-freight/ChatGPT Image Apr 24, 2026 at 01_16_23 PM.webp",
   imageAlt: "Container ship loaded with cargo containers at sea",
 };

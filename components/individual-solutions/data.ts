@@ -8,7 +8,7 @@ export const heroData = {
   description:
     "Whatever you're sending, wherever it's going — same day across the UAE, or international to 200+ countries.",
   primaryButtonLabel: 'Get a Quote',
-  primaryButtonUrl: '/quote',
+  primaryButtonUrl: '/quotation',
   secondaryButtonLabel: 'Download App',
   heroImage: '/individual/magnific_create-a-premium-photorea_jUiWB0SLD0.webp',
 };

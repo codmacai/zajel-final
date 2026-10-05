@@ -12,7 +12,7 @@ interface ValueAddedServicesProps {
 
 export default function ValueAddedServices({
   onRequestQuote,
-  contactHref = "#contact",
+  contactHref = "/contact",
 }: ValueAddedServicesProps) {
   return (
     <section className="w-full overflow-hidden bg-white px-4 py-12 xs:px-6 sm:py-16 lg:px-12 lg:py-24">

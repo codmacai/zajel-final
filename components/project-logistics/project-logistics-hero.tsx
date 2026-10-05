@@ -16,7 +16,7 @@ const content: DynamicHeroContent = {
   description: hero.description,
   primaryCta: {
     label: hero.ctaText ?? "Request a Quote",
-    url: hero.ctaHref ?? "/quote",
+    url: hero.ctaHref ?? "/quotation",
   },
   image_url: hero.image,
   imageAlt: hero.title,

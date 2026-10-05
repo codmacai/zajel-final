@@ -51,7 +51,7 @@ export const FREIGHT_CARDS: FreightCard[] = [
     title: "Standard Air Freight",
     description: "Scheduled air cargo for shipments moving on regular routes and timelines.",
     buttonLabel: "Request a Quote",
-    buttonUrl: "/quote",
+    buttonUrl: "/quotation",
   },
   {
     id: "charter",
@@ -60,7 +60,7 @@ export const FREIGHT_CARDS: FreightCard[] = [
     description:
       "Dedicated aircraft for large, specialized, or time-critical loads that don't fit standard capacity.",
     buttonLabel: "Request a Quote",
-    buttonUrl: "/quote",
+    buttonUrl: "/quotation",
   },
   {
     id: "aog",
@@ -68,7 +68,7 @@ export const FREIGHT_CARDS: FreightCard[] = [
     title: "AOG (Aircraft on Ground)",
     description: "Emergency delivery of critical parts to a grounded aircraft, moved with immediate priority.",
     buttonLabel: "Request a Quote",
-    buttonUrl: "/quote",
+    buttonUrl: "/quotation",
   },
 ];
 

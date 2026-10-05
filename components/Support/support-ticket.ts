@@ -82,7 +82,7 @@ import {
     {
       title: "Schedule a Pickup",
       description: "Book a pickup for your next shipment. Select location, time, and details.",
-      href: "/schedule-pickup",
+      href: "/send-shipment",
       icon: CalendarCheck,
     },
     {
@@ -100,7 +100,7 @@ import {
     {
       title: "Download App",
       description: "Access tracking, booking, and support directly from your mobile device.",
-      href: "/download-app",
+      href: "/#download-app",
       icon: Smartphone,
     },
   ];

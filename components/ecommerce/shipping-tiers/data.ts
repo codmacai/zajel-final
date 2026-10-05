@@ -25,7 +25,7 @@ export const TIERS: ShippingTier[] = [
       'COD collection',
     ],
     buttonLabel: 'Download the App',
-    buttonUrl: '/download-app',
+    buttonUrl: '/#download-app',
     recommended: false,
   },
   {
@@ -47,7 +47,7 @@ export const TIERS: ShippingTier[] = [
       'Monthly performance reports',
     ],
     buttonLabel: 'Talk to Sales',
-    buttonUrl: '/contact-sales',
+    buttonUrl: '/contact',
     recommended: true,
   },
   {
@@ -66,7 +66,7 @@ export const TIERS: ShippingTier[] = [
       'Custom SLA agreements',
     ],
     buttonLabel: 'Talk to Sales',
-    buttonUrl: '/contact-sales',
+    buttonUrl: '/contact',
     recommended: false,
   },
 ];

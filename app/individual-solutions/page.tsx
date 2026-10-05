@@ -34,8 +34,8 @@ export default function IndividualSolutionsPage() {
                     description="Book either service on zajel.com or download the app for booking on the go."
                     priority
                     buttons={[
-                      { label: "Get the App", href: "/domestic-courier#pickup", variant: "primary" },
-                      { label: "Download the Zajel App", href: "/domestic-courier#rate", variant: "secondary" },
+                      { label: "Get the App", href: "/#download-app", variant: "primary" },
+                      { label: "Send a shipment", href: "/send-shipment", variant: "secondary" },
                     ]}
                   />
     </main>

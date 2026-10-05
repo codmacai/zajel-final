@@ -54,7 +54,7 @@ export interface ShippingTier {
         "Monthly performance reports",
       ],
       buttonLabel: "Talk to Sales",
-      buttonUrl: "/contact-sales",
+      buttonUrl: "/contact",
       recommended: true,
     },
     {

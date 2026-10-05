@@ -26,7 +26,7 @@ export const CUSTOMS_CLEARANCE_CARDS: readonly ClearanceCard[] = [
     description:
       "End-to-end import declarations through Dubai Trade Portal and Mirsal 2, accurate HS code classification and duty assessment, inspection coordination, and permits for regulated goods before arrival.",
     buttonLabel: "Request a Quote",
-    buttonUrl: "/quote",
+    buttonUrl: "/quotation",
   },
   {
     id: "export",
@@ -36,7 +36,7 @@ export const CUSTOMS_CLEARANCE_CARDS: readonly ClearanceCard[] = [
     description:
       "Export declarations, destination compliance checks, and Certificates of Origin, plus the added declarations and transit documentation needed for re-exports from UAE free zones.",
     buttonLabel: "Request a Quote",
-    buttonUrl: "/quote",
+    buttonUrl: "/quotation",
   },
   {
     id: "transit",
@@ -46,6 +46,6 @@ export const CUSTOMS_CLEARANCE_CARDS: readonly ClearanceCard[] = [
     description:
       "Temporary import permits, transit declarations, and bonded warehouse movements for cargo passing through the UAE or brought in for exhibition, repair, or processing.",
     buttonLabel: "Request a Quote",
-    buttonUrl: "/quote",
+    buttonUrl: "/quotation",
   },
 ] as const;

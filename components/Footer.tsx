@@ -58,12 +58,12 @@ const COLUMNS: FooterColumn[] = [
 
 // Not in the navbar, so routes are unchanged from the old footer.
 const LEGAL_LINKS: FooterLink[] = [
-  { label: 'Claims', href: '/claims' },
-  { label: 'Service Alerts', href: '/alerts' },
-  { label: 'PDPL', href: '/pdpl' },
-  { label: 'Terms & Conditions', href: '/terms' },
-  { label: 'Privacy Policy', href: '/policy' },
-  { label: 'Accessibility', href: '/ally' },
+  { label: 'Claims', href: '/support' },
+  { label: 'Service Alerts', href: '/help' },
+  { label: 'PDPL', href: '/legal#pdpl' },
+  { label: 'Terms & Conditions', href: '/legal#terms' },
+  { label: 'Privacy Policy', href: '/legal#privacy' },
+  { label: 'Accessibility', href: '/legal#accessibility' },
 ];
 
 /* -------------------------------------------------------------------------- */

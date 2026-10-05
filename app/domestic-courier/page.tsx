@@ -40,9 +40,9 @@ export default function DomesticOnDemandPage() {
         description="Same day or next day, doorstep to doorstep, anywhere in the UAE."
         priority
         buttons={[
-          { label: "Book a Pickup", href: "/domestic-courier#pickup", variant: "primary" },
-          { label: "Calculate Shipping Rate", href: "/domestic-courier#rate", variant: "secondary" },
-          { label: "Track Your Shipment", href: "/domestic-courier#track", variant: "secondary" },
+          { label: "Book a Pickup", href: "/send-shipment", variant: "primary" },
+          { label: "Calculate Shipping Rate", href: "/quotation", variant: "secondary" },
+          { label: "Track Your Shipment", href: "/track", variant: "secondary" },
         ]}
       />
     </main>

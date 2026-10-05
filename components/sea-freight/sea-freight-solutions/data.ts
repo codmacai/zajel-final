@@ -23,7 +23,7 @@ export const SEA_FREIGHT_CARDS: FreightCard[] = [
     title: 'Full Container Load (FCL)',
     description: 'A dedicated container for your cargo alone, suited to large or high-volume shipments.',
     buttonLabel: 'Request a Quote',
-    buttonUrl: '/quote',
+    buttonUrl: '/quotation',
   },
   {
     id: 'lcl',
@@ -33,7 +33,7 @@ export const SEA_FREIGHT_CARDS: FreightCard[] = [
     description:
       "Shared container space for smaller shipments, cost-effective when you don't need a full container.",
     buttonLabel: 'Request a Quote',
-    buttonUrl: '/quote',
+    buttonUrl: '/quotation',
   },
   {
     id: 'special-equipment',
@@ -42,7 +42,7 @@ export const SEA_FREIGHT_CARDS: FreightCard[] = [
     title: 'Special Equipment',
     description: 'Flat racks, open tops, and other specialized container equipment for non-standard cargo.',
     buttonLabel: 'Request a Quote',
-    buttonUrl: '/quote',
+    buttonUrl: '/quotation',
   },
   {
     id: 'roro',
@@ -51,7 +51,7 @@ export const SEA_FREIGHT_CARDS: FreightCard[] = [
     title: 'RoRo (Roll-on Roll-off)',
     description: 'For vehicles and wheeled equipment driven directly onto and off the vessel.',
     buttonLabel: 'Request a Quote',
-    buttonUrl: '/quote',
+    buttonUrl: '/quotation',
   },
   {
     id: 'breakbulk',
@@ -60,7 +60,7 @@ export const SEA_FREIGHT_CARDS: FreightCard[] = [
     title: 'Breakbulk',
     description: 'For cargo too large or irregular for standard containers, loaded individually.',
     buttonLabel: 'Request a Quote',
-    buttonUrl: '/quote',
+    buttonUrl: '/quotation',
   },
   {
     id: 'bulk',
@@ -69,7 +69,7 @@ export const SEA_FREIGHT_CARDS: FreightCard[] = [
     title: 'Bulk',
     description: 'For unpackaged cargo shipped in volume, loaded and unloaded directly.',
     buttonLabel: 'Request a Quote',
-    buttonUrl: '/quote',
+    buttonUrl: '/quotation',
   },
   {
     id: 'dg',
@@ -78,7 +78,7 @@ export const SEA_FREIGHT_CARDS: FreightCard[] = [
     title: 'DG Shipping',
     description: 'Certified handling for hazardous and regulated cargo, to full compliance standards.',
     buttonLabel: 'Request a Quote',
-    buttonUrl: '/quote',
+    buttonUrl: '/quotation',
   },
   {
     id: 'temperature-controlled',
@@ -87,6 +87,6 @@ export const SEA_FREIGHT_CARDS: FreightCard[] = [
     title: 'Reefer Containers',
     description: 'Temperature-controlled containers for perishables and sensitive cargo.',
     buttonLabel: 'Request a Quote',
-    buttonUrl: '/quote',
+    buttonUrl: '/quotation',
   },
 ];

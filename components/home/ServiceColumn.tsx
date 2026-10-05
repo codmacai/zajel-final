@@ -55,7 +55,7 @@ export default function ServiceColumn({
           {category.subServices.map((sub, i) => (
             <Link
               key={sub.slug}
-              href={`${category.path}#${sub.slug}`}
+              href={sub.href}
               className={styles.serviceSubLink}
               style={{ transitionDelay: `${index * 80 + i * 40}ms` }}
             >

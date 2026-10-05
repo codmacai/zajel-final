@@ -45,7 +45,7 @@ interface WhatCanYouSendProps {
 export default function WhatCanYouSend({
   onBookShipment,
   onContactSpecialItems,
-  bookShipmentHref = '/book-shipment',
+  bookShipmentHref = '/send-shipment',
   contactHref = '/contact',
 }: WhatCanYouSendProps) {
   return (

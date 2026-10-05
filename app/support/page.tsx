@@ -27,10 +27,10 @@ import {
 
 const ACTIONS: { href: string; icon: LucideIcon; title: string; text: string }[] = [
   { href: '/track', icon: Search, title: 'Track your shipment', text: 'Enter your tracking number to see real-time status updates.' },
-  { href: '/schedule-pickup', icon: CalendarCheck, title: 'Schedule a pickup', text: 'Choose a location, time and details for your next shipment.' },
-  { href: '/quote', icon: Calculator, title: 'Get a quote', text: 'Calculate domestic and international shipping rates instantly.' },
+  { href: '/send-shipment', icon: CalendarCheck, title: 'Schedule a pickup', text: 'Choose a location, time and details for your next shipment.' },
+  { href: '/quotation', icon: Calculator, title: 'Get a quote', text: 'Calculate domestic and international shipping rates instantly.' },
   { href: '#contact', icon: MessageSquare, title: 'Contact our team', text: 'Reach support by phone, email or through the portal.' },
-  { href: '/app', icon: Smartphone, title: 'Download the app', text: 'Track, book and get support from your mobile device.' },
+  { href: '/#download-app', icon: Smartphone, title: 'Download the app', text: 'Track, book and get support from your mobile device.' },
 ];
 
 const PRODUCTS = ['Express delivery', 'International shipping', 'Freight', 'E-commerce fulfilment', 'Other'];
@@ -39,7 +39,7 @@ const ISSUES = ['Delayed shipment', 'Damaged shipment', 'Lost shipment', 'Billin
 
 const QUICK_LINKS: { href: string; icon: LucideIcon; label: string }[] = [
   { href: '/track', icon: Box, label: 'Track your shipment' },
-  { href: '/faqs', icon: FileText, label: 'View FAQs' },
+  { href: '/faq', icon: FileText, label: 'View FAQs' },
   { href: '#contact', icon: Phone, label: 'Contact support' },
 ];
 

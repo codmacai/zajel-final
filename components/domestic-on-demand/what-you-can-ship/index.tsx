@@ -41,7 +41,7 @@ interface WhatYouCanShipProps {
 const WhatYouCanShip: FC<WhatYouCanShipProps> = ({
   onBookShipment,
   onContactTeam,
-  contactHref = '#contact',
+  contactHref = '/contact',
 }) => {
   return (
     <section

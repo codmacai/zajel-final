@@ -36,8 +36,8 @@ export default function InternationalPage() {
   title="Book International Shipping in Minutes"
   description="Declare your document's weight and pay instantly, or request a quote for your package, book on zajel.com, or download the app for booking on the go."
   buttons={[
-    { label: "Ship Internationally", href: "/international-courier#book", variant: "primary" },
-    { label: "Download the Zajel App", href: "/app", variant: "secondary" },
+    { label: "Ship Internationally", href: "/send-shipment", variant: "primary" },
+    { label: "Download the Zajel App", href: "/#download-app", variant: "secondary" },
   ]}
 />
     </main>

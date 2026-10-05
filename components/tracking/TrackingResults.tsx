@@ -79,7 +79,6 @@ export default function TrackingResults() {
   const query = useSearchParams().get('q');
   const { shipment, loading, error } = useShipment(query);
 
-  const nextHref = `${TRACK_ROUTES.timeline}?q=${encodeURIComponent(query ?? '')}`;
 
   return (
     <section className="flex w-full flex-col items-center bg-white px-4 pb-20 pt-32 sm:px-6 md:pb-24 md:pt-40 lg:px-8">
@@ -152,7 +151,12 @@ export default function TrackingResults() {
               </div>
             </div>
 
-            <TrackingActionButtons onBack={() => router.back()} onNext={() => router.push(nextHref)} />
+            {/* the shipment timeline view isn't built yet: back to search, or straight to help */}
+            <TrackingActionButtons
+              onBack={() => router.push(TRACK_ROUTES.search)}
+              onNext={() => router.push('/contact')}
+              nextLabel="Need help?"
+            />
           </div>
         </div>
       )}
