@@ -185,7 +185,6 @@ export default function WhyChooseUs() {
             </div>
             <div className="wcz-dest-value">
               195
-              <span></span>
             </div>
             <div className="wcz-dest-label">Countries Served</div>
           </div>

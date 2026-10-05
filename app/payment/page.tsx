@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 const WAYS = [
-  { Icon: Phone, title: 'Call us', line: '600 53 1111', href: 'tel:+971600531111', note: 'Sun – Sat, 8 AM – 6 PM' },
+  { Icon: Phone, title: 'Call us', line: '600 53 1111', href: 'tel:+971600531111', note: 'Mon – Sat, 8 AM – 5 PM' },
   { Icon: Mail, title: 'Email us', line: 'info@zajel.ae', href: 'mailto:info@zajel.ae', note: 'We reply within 24 hours' },
   { Icon: MessageSquare, title: 'Send a message', line: 'Contact form', href: '/contact', note: 'Tell us about your shipment' },
 ] as const;
