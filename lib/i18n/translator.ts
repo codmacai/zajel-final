@@ -53,7 +53,7 @@ function skipped(el: Element | null): boolean {
 function lookup(en: string): string | null {
   if (!dict) return null;
   const k = norm(en);
-  if (!k || !/[A-Za-z]/.test(k)) return null;
+  if (!k || !/[A-Za-z]|\d'/.test(k)) return null;
   if (dict[k]) return dict[k];
   const m = k.match(/^(.*?)(\s*[:*…]+)$/);
   if (m && dict[m[1]]) return dict[m[1]] + m[2];
