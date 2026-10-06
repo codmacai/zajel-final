@@ -98,3 +98,6 @@ html[dir="rtl"] :is(input[type="tel"], input[type="email"], input[type="number"]
 html[dir="rtl"] .rtl-keep-layout { direction: ltr; }
 html[dir="rtl"] .rtl-keep-layout .rtl-copy { direction: rtl; text-align: right; }
 html[dir="rtl"] .wcz-ship-content.rtl-copy { width: fit-content; }
+@media (min-width: 640px) {
+  html[dir="rtl"] #download-app .rtl-copy { width: fit-content; max-width: 58%; }
+}
