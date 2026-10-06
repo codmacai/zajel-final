@@ -101,3 +101,8 @@ html[dir="rtl"] .wcz-ship-content.rtl-copy { width: fit-content; }
 @media (min-width: 640px) {
   html[dir="rtl"] #download-app .rtl-copy { width: fit-content; max-width: 58%; }
 }
+html[dir="rtl"] .emx-clip-panel .rtl-copy { width: fit-content; }
+@media (min-width: 768px) {
+  html[dir="rtl"] .emx-clip-panel .rtl-copy { max-width: none; }
+  html[dir="rtl"] .emx-clip-panel .rtl-copy p { max-width: none; white-space: nowrap; }
+}
