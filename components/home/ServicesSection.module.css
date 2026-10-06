@@ -197,6 +197,29 @@
   .serviceCardLinks { gap: 8px; margin-bottom: 28px; }
 }
 
+/* Long lists sit two to a row, so every card is about the same height and
+   no list looks crowded; short lists keep one per row. */
+.serviceCardLinks[data-cols="2"] {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr; /* every pill in a card the same height */
+}
+.serviceCardLinks[data-cols="2"] .serviceSubLink {
+  min-height: 40px;
+}
+@media (min-width: 768px) {
+  .serviceCardLinks[data-cols="2"] .serviceSubLink {
+    padding: 10px 10px 10px 12px;
+    line-height: 1.25;
+    font-size: 12px;
+    letter-spacing: -0.005em;
+  }
+}
+/* the button sits on the same line at the foot of every card */
+.serviceCardCta {
+  margin-top: auto;
+}
+
 .serviceSubLink {
   display: flex;
   align-items: center;

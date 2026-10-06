@@ -51,7 +51,7 @@ export default function ServiceColumn({
           {t(`services.${category.id}.desc`, category.description)}
         </p>
 
-        <div className={styles.serviceCardLinks}>
+        <div className={styles.serviceCardLinks} data-cols={category.subServices.length > 3 ? 2 : 1}>
           {category.subServices.map((sub, i) => (
             <Link
               key={sub.slug}
