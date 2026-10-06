@@ -223,7 +223,7 @@ function EntryPanel({ category, entry }: { category: Category; entry: ContainerE
 
   return (
     <div
-      className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] rounded-[1.25rem] sm:rounded-[1.5rem] lg:rounded-[1.75rem] overflow-hidden border bg-white"
+      className="rtl-keep-split grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] rounded-[1.25rem] sm:rounded-[1.5rem] lg:rounded-[1.75rem] overflow-hidden border bg-white"
       style={{ borderColor: BRAND.hairline, boxShadow: '0 30px 70px -25px rgba(0,0,0,0.45)' }}
     >
       {/* Editorial copy */}

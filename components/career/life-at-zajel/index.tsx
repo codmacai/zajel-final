@@ -32,7 +32,7 @@ const LifeAtZajel = () => {
     <section className="w-full overflow-hidden bg-[#FDFDFD] px-4 py-10 sm:px-6 sm:py-16 lg:px-24 lg:py-24">
       <div className="mx-auto max-w-[1300px]">
         {/* Top */}
-        <div className="mb-6 grid grid-cols-1 items-start gap-6 md:mb-10 lg:grid-cols-12 lg:gap-12">
+        <div className="rtl-keep-split mb-6 grid grid-cols-1 items-start gap-6 md:mb-10 lg:grid-cols-12 lg:gap-12">
           <Reveal x={-30} y={0} className="pt-1 lg:col-span-5">
             <h2 className={`${typo.h2} mb-4 text-[#1b4332] sm:mb-5 lg:mb-6`}>
               Life at Zajel — More <br /> Than Just Work

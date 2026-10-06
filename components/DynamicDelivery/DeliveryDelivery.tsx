@@ -106,7 +106,7 @@ export default function DynamicDelivery({
               className="relative mx-auto mt-20 max-w-[1180px] rounded-[1.25rem] border border-white/10 shadow-[0_20px_56px_-16px_rgba(5,54,26,0.22)] sm:mt-28 sm:rounded-[2rem] md:rounded-[2.5rem] lg:mt-32"
               style={{ background: GREEN_GRADIENT }}
             >
-              <div className="grid grid-cols-1 items-stretch lg:grid-cols-[1.05fr_0.95fr]">
+              <div className="rtl-keep-split grid grid-cols-1 items-stretch lg:grid-cols-[1.05fr_0.95fr]">
                 {/* Text side */}
                 <div className="relative z-10 order-2 flex flex-col justify-center p-6 sm:p-10 md:p-12 lg:order-1 lg:p-16">
                   {badge && (

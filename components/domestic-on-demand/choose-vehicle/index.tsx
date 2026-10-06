@@ -58,7 +58,7 @@ const VehicleCard: FC<VehicleCardProps> = ({ label, image, text, features, delay
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
       transition={{ ...smoothTransition, delay }}
-      className={`relative w-full rounded-2xl sm:rounded-[2rem] overflow-hidden flex flex-col lg:flex-row items-stretch shadow-[0_16px_40px_rgba(6,68,35,0.06)] border ${
+      className={`rtl-keep-split relative w-full rounded-2xl sm:rounded-[2rem] overflow-hidden flex flex-col lg:flex-row items-stretch shadow-[0_16px_40px_rgba(6,68,35,0.06)] border ${
         isFilled
           ? 'bg-gradient-to-br from-[#36B936] to-[#247A24] border-transparent text-white'
           : 'bg-gradient-to-br from-[#0D2A22] via-[#0A4D26] to-[#042B18] border-[#36B936]/30 text-white'

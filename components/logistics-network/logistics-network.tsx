@@ -24,7 +24,7 @@ export default function LogisticsNetworkSection({
       style={{ backgroundColor: BRAND.paper }}
     >
       <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative grid grid-cols-1 lg:grid-cols-12 items-center">
+        <div className="rtl-keep-split relative grid grid-cols-1 lg:grid-cols-12 items-center">
           {/* Left Column: Content Container in #36b936 */}
           <div
             className="lg:col-span-7 p-6 sm:p-10 lg:p-16 flex flex-col justify-center text-white rounded-2xl lg:rounded-l-2xl lg:rounded-r-none relative z-0 shadow-lg lg:shadow-none"

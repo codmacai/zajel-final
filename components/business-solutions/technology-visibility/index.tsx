@@ -46,7 +46,7 @@ export default function TechnologyVisibility({ quoteHref = '/quotation' }: Techn
         </motion.div>
 
         {/* Balanced grid: single column on phones/tablets, two columns on large screens */}
-        <div className="grid grid-cols-1 items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="rtl-keep-split grid grid-cols-1 items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Left column: content */}
           <motion.div
             initial={{ opacity: 0, y: 32 }}

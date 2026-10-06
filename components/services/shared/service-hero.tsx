@@ -24,7 +24,7 @@ const ServiceHero = ({
         On desktop the grid puts text + buttons in the left column (rows 1–2)
         and lets the image span both rows on the right.
       */}
-      <div className="mx-auto w-full max-w-[1280px] grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-y-8 lg:gap-x-16 lg:gap-y-0 items-center">
+      <div className="rtl-keep-split mx-auto w-full max-w-[1280px] grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-y-8 lg:gap-x-16 lg:gap-y-0 items-center">
         <div className="flex flex-col items-start text-start lg:col-start-1 lg:row-start-1 lg:self-end lg:pb-10">
           <motion.p
             {...fadeUp(0.1)}

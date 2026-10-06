@@ -106,3 +106,5 @@ html[dir="rtl"] .emx-clip-panel .rtl-copy { width: fit-content; }
   html[dir="rtl"] .emx-clip-panel .rtl-copy { max-width: none; }
   html[dir="rtl"] .emx-clip-panel .rtl-copy p { max-width: none; white-space: nowrap; }
 }
+html[dir="rtl"] .rtl-keep-split { direction: ltr; }
+html[dir="rtl"] .rtl-keep-split > * { direction: rtl; }

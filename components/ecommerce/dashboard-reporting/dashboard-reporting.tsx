@@ -57,7 +57,7 @@ const DashboardReporting: FC = () => {
         </div>
 
         {/* Two-column split optimized for foldables & tablets */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-stretch">
+        <div className="rtl-keep-split grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-stretch">
           {/* Left: floating UI frame with full cover image and overlapping nav */}
           <motion.div
             initial={{ opacity: 0, x: -25 }}

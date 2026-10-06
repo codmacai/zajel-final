@@ -48,7 +48,7 @@ export default function RoadFreightCoverage() {
         </div>
 
         {/* Layout Grid: Full background on mobile, Side-by-side on desktop */}
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 w-full items-stretch">
+        <div className="rtl-keep-split relative z-10 grid grid-cols-1 lg:grid-cols-2 w-full items-stretch">
 
           {/* Content Column */}
           <motion.div

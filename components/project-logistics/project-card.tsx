@@ -33,7 +33,7 @@ const ProjectCard = ({
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.7, ease: EASE }}
       // Mobile: one unified card. Desktop: two separate cards in a grid.
-      className="grid grid-cols-1 overflow-hidden rounded-[1.5rem] border border-[#0A4D26]/10 bg-[#F8F9F8] shadow-sm lg:grid-cols-12 lg:gap-5 lg:overflow-visible lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none"
+      className="rtl-keep-split grid grid-cols-1 overflow-hidden rounded-[1.5rem] border border-[#0A4D26]/10 bg-[#F8F9F8] shadow-sm lg:grid-cols-12 lg:gap-5 lg:overflow-visible lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none"
     >
       {/* Image */}
       <div
