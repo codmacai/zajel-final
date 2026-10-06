@@ -1,5 +1,6 @@
 import type { JSX } from "react";
 import { IndividualIcon, BusinessIcon, SecureIcon } from "@/components/home/ServiceIcons";
+import { solutionsCategories } from "@/data/navigation";
 
 export interface SubService {
   label: string;
@@ -28,8 +29,9 @@ const slugify = (label: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 
-const buildSub = (items: [label: string, href: string][]): SubService[] =>
-  items.map(([label, href]) => ({ label, slug: slugify(label), href }));
+/** The services under each solution are the ones the navbar lists for it, so the two always match. */
+const fromNav = (id: string): SubService[] =>
+  (solutionsCategories.find((c) => c.id === id)?.items ?? []).map((i) => ({ label: i.name, slug: slugify(i.name), href: i.path }));
 
 export const SERVICE_CATEGORIES: ServiceCategory[] = [
   {
@@ -42,10 +44,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     ctaLabel: "View solutions",
     image: "/Homepage/individual.webp",
     icon: IndividualIcon,
-    subServices: buildSub([
-      ["International shipping", "/international-courier"],
-      ["Same-day & next-day delivery", "/domestic-courier"],
-    ]),
+    subServices: fromNav("individual"),
   },
   {
     id: "business",
@@ -57,11 +56,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     ctaLabel: "View solutions",
     image: "/Homepage/7be9399d-bd5b-44e2-97ed-97d5efce871c.webp",
     icon: BusinessIcon,
-    // last-mile is part of e-commerce, so it lives under that one line
-    subServices: buildSub([
-      ["Freight forwarding (air, sea, land)", "/business-solutions#services"],
-      ["E-commerce fulfillment & last-mile delivery", "/ecommerce"],
-    ]),
+    subServices: fromNav("business"),
   },
   {
     id: "secure",
@@ -73,11 +68,6 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     ctaLabel: "View solutions",
     image: "/Homepage/secure.webp",
     icon: SecureIcon,
-    subServices: buildSub([
-      ["MOFA document delivery", "/secure-docs"],
-      ["Dubai Courts courier", "/secure-docs"],
-      ["Dubai Customs clearance", "/customs-clearance"],
-      ["EID & passport delivery", "/secure-id"],
-    ]),
+    subServices: fromNav("secure"),
   },
 ];
