@@ -1,23 +1,26 @@
 "use client";
 
-import { useTranslation } from "react-i18next";
+import { useSyncExternalStore } from "react";
+import { getLang, setLang, subscribe } from "@/lib/i18n/translator";
 
 export default function LanguageSwitcher() {
-  const { i18n } = useTranslation();
-  const isAr = i18n.language === "ar";
-
-  const toggle = () => {
-    const next = isAr ? "en" : "ar";
-    i18n.changeLanguage(next);
-    localStorage.setItem("lang", next);
-    document.documentElement.dir = next === "ar" ? "rtl" : "ltr";
-    document.documentElement.lang = next;
-  };
+  const lang = useSyncExternalStore(subscribe, getLang, () => "en" as const);
+  const isAr = lang === "ar";
 
   return (
-    <button onClick={toggle} className="lang-toggle" style={{ display: "flex", alignItems: "center", gap: 6 }}>
-      <span style={{ fontSize: 18, lineHeight: 1 }}>🇦🇪</span>
-      <span>{isAr ? "EN" : "AR"}</span>
+    <button
+      type="button"
+      onClick={() => void setLang(isAr ? "en" : "ar")}
+      className="lang-toggle"
+      style={{ display: "flex", alignItems: "center", gap: 6 }}
+      aria-label={isAr ? "Switch to English" : "التبديل إلى العربية"}
+      lang={isAr ? "en" : "ar"}
+      data-no-translate
+    >
+      <span style={{ fontSize: 18, lineHeight: 1 }} aria-hidden="true">
+        🇦🇪
+      </span>
+      <span>{isAr ? "EN" : "عربي"}</span>
     </button>
   );
 }

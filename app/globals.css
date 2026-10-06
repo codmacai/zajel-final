@@ -67,3 +67,29 @@ body {
     font-size: var(--text-body-lg);
   }
 }
+/* ===========================================================================
+   Arabic (html[lang="ar"], set by lib/i18n/translator.ts)
+   =========================================================================== */
+
+/* held back for a moment on load, until the page is in Arabic (no English flash) */
+html.i18n-pending body {
+  opacity: 0;
+}
+
+html[lang="ar"] body,
+html[lang="ar"] body :where(*:not(svg, svg *, [data-no-translate], [data-no-translate] *)) {
+  font-family: var(--font-arabic), var(--font-manrope), sans-serif !important;
+  /* Arabic letters join; tracking pulls them apart */
+  letter-spacing: 0 !important;
+}
+
+/* arrows and chevrons point the way the page reads */
+html[dir="rtl"] :is(.lucide-arrow-right, .lucide-arrow-left, .lucide-chevron-right, .lucide-chevron-left, .lucide-arrow-up-right, .lucide-move-right, .lucide-chevrons-right, .lucide-chevrons-left) {
+  transform: scaleX(-1);
+}
+
+/* numbers, codes, phone numbers and emails stay left-to-right inside Arabic text */
+html[dir="rtl"] :is(input[type="tel"], input[type="email"], input[type="number"]) {
+  direction: ltr;
+  text-align: right;
+}

@@ -1,5 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
+import { arabic } from "./fonts";
+import I18nRuntime from "@/components/i18n/I18nRuntime";
+import { I18N_BOOT_SCRIPT } from "@/lib/i18n/translator";
 import Navbar from "@/components/layout/Navbar/Navbar";
 import Footer from "@/components/Footer"; // Adjust the import path based on where your Footer component is located
 import { SITE } from "@/lib/seo";
@@ -101,8 +104,13 @@ const websiteJsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${manrope.variable} h-full antialiased`}>
+    <html lang="en" className={`${manrope.variable} ${arabic.variable} h-full antialiased`} suppressHydrationWarning>
+      <head>
+        {/* Arabic visitors: right-to-left before first paint (see lib/i18n/translator.ts) */}
+        <script dangerouslySetInnerHTML={{ __html: I18N_BOOT_SCRIPT }} />
+      </head>
       <body className="min-h-full flex flex-col">
+        <I18nRuntime />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify([organizationJsonLd, websiteJsonLd]).replace(/</g, "\\u003c") }}
