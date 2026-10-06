@@ -85,7 +85,7 @@ const CompactSaaSBanner: React.FC<CompactSaaSBannerProps> = ({
 
       {/* Main Banner Card: overflow-visible on desktop allows top overflow */}
       <div
-        className="compact-banner relative my-16 w-full max-w-[1140px] lg:max-w-[1240px] xl:max-w-[1320px] overflow-hidden rounded-[28px] shadow-[0_20px_60px_-15px_rgba(54,185,54,0.55)] sm:overflow-visible"
+        className="compact-banner rtl-keep-layout relative my-16 w-full max-w-[1140px] lg:max-w-[1240px] xl:max-w-[1320px] overflow-hidden rounded-[28px] shadow-[0_20px_60px_-15px_rgba(54,185,54,0.55)] sm:overflow-visible"
         style={{ background: BANNER_BG }}
       >
         {/* Desktop pattern: outlined diamonds behind the phone */}
@@ -96,7 +96,7 @@ const CompactSaaSBanner: React.FC<CompactSaaSBannerProps> = ({
 
         <div className="relative z-10 flex flex-col sm:min-h-[400px] sm:flex-row sm:items-center">
           {/* Left column: copy and CTA */}
-          <div className="relative z-20 w-full px-6 pb-6 pt-12 text-center sm:w-[58%] sm:py-14 sm:pl-16 sm:pr-4 sm:text-left md:pl-20">
+          <div className="rtl-copy relative z-20 w-full px-6 pb-6 pt-12 text-center sm:w-[58%] sm:py-14 sm:pl-16 sm:pr-4 sm:text-left md:pl-20">
             <h2
               className="mx-auto max-w-[560px] font-semibold leading-[1.15] tracking-tight text-white [text-shadow:0_2px_12px_rgba(10,77,38,0.35)] sm:mx-0"
               style={{ fontSize: "clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem)" }}

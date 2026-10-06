@@ -99,7 +99,7 @@ export default function WhyChooseUs() {
           </div>
 
           {/* Shipments Card */}
-          <div className={`wcz-card wcz-card-shipments wcz-delay-3 ${isVisible ? "is-visible" : ""}`}>
+          <div className={`wcz-card wcz-card-shipments rtl-keep-layout wcz-delay-3 ${isVisible ? "is-visible" : ""}`}>
             <div className="wcz-ship-pattern" aria-hidden="true" />
             <div className="wcz-ship-icon-badge" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -117,7 +117,7 @@ export default function WhyChooseUs() {
                 />
               </svg>
             </div>
-            <div className="wcz-ship-content">
+            <div className="wcz-ship-content rtl-copy">
               <div className="wcz-ship-value">
                 60M
                 <span>+</span>

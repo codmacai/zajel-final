@@ -95,7 +95,7 @@ export default function EmxBanner() {
       `}</style>
 
       {/* Outer Card Wrapper Matched to CompactSaaSBanner dimensions */}
-      <div className="relative my-16 w-full max-w-[1140px] rounded-[28px] overflow-visible shadow-[0_24px_50px_-20px_rgba(6,68,35,0.45)]">
+      <div className="rtl-keep-layout relative my-16 w-full max-w-[1140px] rounded-[28px] overflow-visible shadow-[0_24px_50px_-20px_rgba(6,68,35,0.45)]">
         <div
           className="relative min-h-[560px] sm:min-h-[300px] md:min-h-[270px] rounded-[28px] overflow-visible"
           style={{ background: `linear-gradient(135deg, ${PANEL_1} 0%, ${PANEL_2} 100%)` }}
@@ -135,7 +135,7 @@ export default function EmxBanner() {
                   "inset 0 1px 0 rgba(255,255,255,0.14), inset 1px 0 0 rgba(255,255,255,0.07)",
               }}
             >
-              <div className="relative z-10 w-full pt-12 pl-6 pr-4 xs:pt-16 xs:pl-8 sm:pt-7 md:pt-0 md:pl-8 lg:pl-10 max-w-[95%] xs:max-w-[88%] sm:max-w-[75%] md:max-w-sm">
+              <div className="rtl-copy relative z-10 w-full pt-12 pl-6 pr-4 xs:pt-16 xs:pl-8 sm:pt-7 md:pt-0 md:pl-8 lg:pl-10 max-w-[95%] xs:max-w-[88%] sm:max-w-[75%] md:max-w-sm">
                 <TextBlock />
               </div>
             </div>

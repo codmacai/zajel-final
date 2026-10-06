@@ -93,3 +93,8 @@ html[dir="rtl"] :is(input[type="tel"], input[type="email"], input[type="number"]
   direction: ltr;
   text-align: right;
 }
+
+/* RTL: banners with artwork on the right keep their layout; Arabic copy sits on the left */
+html[dir="rtl"] .rtl-keep-layout { direction: ltr; }
+html[dir="rtl"] .rtl-keep-layout .rtl-copy { direction: rtl; text-align: right; }
+html[dir="rtl"] .wcz-ship-content.rtl-copy { width: fit-content; }
