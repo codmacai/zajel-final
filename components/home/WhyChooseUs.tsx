@@ -43,7 +43,7 @@ export default function WhyChooseUs() {
 
               <div className="wcz-tracking-phone" aria-hidden="true">
                 <Image
-                  src="/Homepage/whychooseus/track.png"
+                  src="/Homepage/whychooseus/app-shipment-tracking-screen.png"
                   alt=""
                   fill
                   sizes="(max-width: 767px) 90vw, 400px"

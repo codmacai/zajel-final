@@ -13,13 +13,13 @@ const CONTENT = {
   description: 'Designed to handle everything from urgent document delivery to large, bulky cargo with absolute reliability and care.',
   motorbike: {
     label: 'Motorbike Delivery',
-    image: '/domestic/AAFF_Bike.png',
+    image: '/domestic/zajel-delivery-motorbike.png',
     text: 'Built for speed. Ideal for documents, small parcels, and anything that needs to move quickly through city traffic.',
     features: ['Fast through traffic', 'Best for documents & small parcels', 'Same day and next day delivery'],
   },
   van: {
     label: 'Van Delivery',
-    image: '/domestic/AAFF_Van_Lateral.png',
+    image: '/domestic/zajel-delivery-van.png',
     text: 'Built for size. Ideal for bulky items, multiple parcels, and shipments too large for a motorbike.',
     features: ['Handles bulky or heavy packages', 'Room for multiple items', 'Same day and next day delivery'],
   },

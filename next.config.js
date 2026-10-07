@@ -9,7 +9,8 @@ const ALIAS_HOSTS = ['www.zajel.com', 'zajel.ae', 'www.zajel.ae'];
 // Pages from the previous (ASP.NET) site. Matching ignores letter case, and
 // any query string (e.g. a tracking number) is passed through. A source must
 // never also match its own destination (e.g. /Careers would catch /careers and
-// loop), so for sections the new site still has, only sub-pages are redirected.
+// loop) or a folder in public/, so for sections the new site still has, only
+// sub-pages are redirected.
 const LEGACY_PAGES = [
   ['/Home/Index', '/'],
   ['/Home/:path*', '/'],
@@ -26,9 +27,8 @@ const LEGACY_PAGES = [
   ['/Tracking/:path*', '/track'],
   ['/Tracking', '/track'],
   ['/Track/Index', '/track'],
+  // Not /Career: it would also catch the /career/ image folder.
   ['/Careers/:path+', '/careers'],
-  ['/Career/:path*', '/careers'],
-  ['/Career', '/careers'],
   ['/FAQ/:path+', '/faq'],
 ];
 
