@@ -3,17 +3,18 @@ import type { Metadata } from 'next';
 /**
  * Site-wide SEO settings.
  *
- * The live domain is not connected yet. Set NEXT_PUBLIC_SITE_URL (for example
- * https://www.zajel.com) in Vercel once it is, and every canonical link,
- * sitemap entry and social preview will switch to it. Until then we fall back
- * to the Vercel production URL, then to localhost for local development.
+ * The public address is https://zajel.com. Every canonical link, og:url,
+ * sitemap entry, robots.txt line and structured-data URL is built from it.
+ * NEXT_PUBLIC_SITE_URL overrides it (e.g. for a staging domain); `next dev`
+ * uses localhost so local links keep working.
  */
+const PRODUCTION_URL = 'https://zajel.com';
+
 function resolveSiteUrl(): string {
   const explicit = process.env.NEXT_PUBLIC_SITE_URL;
   if (explicit) return explicit.replace(/\/+$/, '');
-  const vercel = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-  if (vercel) return `https://${vercel}`;
-  return 'http://localhost:3000';
+  if (process.env.NODE_ENV === 'development') return 'http://localhost:3000';
+  return PRODUCTION_URL;
 }
 
 export const SITE = {

@@ -45,7 +45,7 @@ const ROUTES: Entry[] = [
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
   return ROUTES.map(({ path, priority, changeFrequency }) => ({
-    url: `${SITE.url}${path === '/' ? '' : path}`,
+    url: `${SITE.url}${path}`,
     lastModified,
     changeFrequency,
     priority,

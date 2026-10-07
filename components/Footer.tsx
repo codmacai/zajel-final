@@ -8,7 +8,11 @@ import Logo from '@/components/Logo';
 /*  Content — names and routes taken from the navbar                          */
 /* -------------------------------------------------------------------------- */
 
-type FooterLink = { label: string; href: string };
+type FooterLink = { label: string; href: string; external?: boolean };
+
+// Dubai Customs / customer portal used for customs submissions. Paste the portal
+// address here; the footer link is hidden while it is empty.
+const CUSTOMS_PORTAL_URL = '';
 type FooterColumn = { title: string; links: FooterLink[] };
 
 const COLUMNS: FooterColumn[] = [
@@ -52,6 +56,9 @@ const COLUMNS: FooterColumn[] = [
       { label: 'Help Center', href: '/support' },
       { label: 'FAQ', href: '/faq' },
       { label: 'Blog', href: '/#news' },
+      ...(CUSTOMS_PORTAL_URL
+        ? [{ label: 'Customs Submission', href: CUSTOMS_PORTAL_URL, external: true }]
+        : []),
     ],
   },
 ];
@@ -189,9 +196,15 @@ export default function Footer() {
                 <ul className="flex flex-col gap-2.5">
                   {col.links.map((link) => (
                     <li key={link.href + link.label}>
-                      <Link href={link.href} className={linkClass}>
-                        {link.label}
-                      </Link>
+                      {link.external ? (
+                        <a href={link.href} target="_blank" rel="noopener" className={linkClass}>
+                          {link.label}
+                        </a>
+                      ) : (
+                        <Link href={link.href} className={linkClass}>
+                          {link.label}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -202,7 +215,19 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-10 flex flex-col gap-2 border-t border-white/15 pt-4 text-xs text-white/70 lg:mt-12 lg:flex-row lg:items-center lg:justify-between">
-          <p>© {new Date().getFullYear()} ZAJEL Courier Services</p>
+          <p>
+            © {new Date().getFullYear()} ZAJEL Courier Services
+            <span aria-hidden="true" className="mx-2">·</span>
+            Website by{' '}
+            <a
+              href="https://marketlube.in"
+              target="_blank"
+              rel="noopener"
+              className={`rounded underline-offset-2 transition-colors hover:text-white hover:underline ${focusRing}`}
+            >
+              Marketlube
+            </a>
+          </p>
 
           <ul className="flex flex-wrap gap-x-4 gap-y-1">
             {LEGAL_LINKS.map((link) => (

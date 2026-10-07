@@ -137,13 +137,17 @@ const HeroSection: React.FC = () => {
 
             <div className="absolute inset-x-0 top-0 flex flex-wrap items-start justify-between gap-10 px-[clamp(1.5rem,3.5vw,3.5rem)] pt-[clamp(1.75rem,3vw,3rem)] lg:flex-nowrap">
               <div className="flex-shrink-0">
-                <h1
+                {/* The mobile layout carries the page's only <h1>; this desktop copy is a
+                    heading for screen readers but not a second <h1> for search engines. */}
+                <p
+                  role="heading"
+                  aria-level={1}
                   className={`${styles.animTitleD} ${styles.h1StyleLight} mb-6 text-[clamp(1.9rem,2.6vw,3rem)] leading-[1.15] tracking-tight`}
                 >
                   {t("hero.title.line1", "Intelligent Movement,")}
                   <br />
                   {t("hero.title.line2", "Nationwide and Beyond")}
-                </h1>
+                </p>
 
                 <form
                   onSubmit={handleTrackSubmit}
