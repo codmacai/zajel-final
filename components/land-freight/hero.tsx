@@ -15,7 +15,7 @@ const defaultContent: LandFreightHeroContent = {
     "FTL and LTL across the Emirates and into Saudi, Oman and Kuwait, one waybill, one contact, manifests filed before you reach the border.",
   primaryCta: { label: "Book a truck", url: "/contact" },
   secondaryCta: { label: "View coverage", url: "/network" },
-  image_url: "/land-freight/hero/ChatGPT Image Sep 9, 2026, 12_08_04 PM.webp",
+  image_url: "/land-freight/hero/land-freight-hero.webp",
   imageAlt: "Land Freight Trucking",
 };
 

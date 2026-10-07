@@ -5,7 +5,7 @@ export const HERO: HeroContent = {
   title: 'Oversized & Project Cargo Logistics UAE: Planned, Permitted, Delivered',
   description:
     "Reactors, blades, transformers, cranes — cargo that won't fit standard freight. Zajel's project team engineers the route, clears the permits, and moves it, corridor by corridor.",
-  image: '/Homepage/projects/magnific_create-an-ultrarealistic-_jU2tnyyLD0 (1).jpg',
+  image: '/Homepage/projects/project-cargo-hero.jpg',
   stats: [
     { value: '186+', label: 'project moves delivered' },
     { value: '46', label: 'countries worked in' },
@@ -22,7 +22,7 @@ export const PROJECTS: Project[] = [
     title: 'Vehicle export',
     place: 'Dubai, UAE',
     caption: 'A vehicle prepared and exported by air, with secure handling door to door.',
-    image: '/Homepage/Screenshot 2026-09-28 at 12.29.54 PM.webp',
+    image: '/Homepage/vehicle-export-flatbed.webp',
     alt: 'Vehicle loaded on a flatbed at an air cargo terminal',
   },
   {
@@ -30,14 +30,14 @@ export const PROJECTS: Project[] = [
     place: 'Dubai to India & London',
     caption:
       'A fragile, time-sensitive building model moved to real-estate exhibitions, with overseas warehousing arranged en route.',
-    image: '/Homepage/Screenshot 2026-09-28 at 12.30.33 PM.png',
+    image: '/Homepage/project-cargo-pipes-flatbed.png',
     alt: 'Crated exhibition model being handled and displayed',
   },
   {
     title: 'Special equipment, sea freight',
     place: 'Flat-rack ocean transport',
     caption: 'Oversized cylindrical equipment loaded onto flat-rack containers for ocean transport.',
-    image: '/Homepage/Screenshot 2026-09-28 at 12.30.33 PM.png',
+    image: '/Homepage/project-cargo-pipes-flatbed.png',
     alt: 'Large cylindrical equipment loaded onto a flat-rack container',
   },
   {

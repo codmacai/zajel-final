@@ -107,8 +107,8 @@ export interface Route {
   // "Choose Your Delivery Arrangement" + "Compliance & Customs"
   // ---------------------------------------------------------------------------
   
-  export const DOOR_TO_DOOR_BASE_IMAGE_SRC = "/choose/ChatGPT Image Sep 28, 2026, 03_27_16 PM.webp";
-  export const DOOR_TO_DOOR_CUTOUT_IMAGE_SRC = "/choose/ChatGPT Image Sep 28, 2026, 03_27_25 PM (2).png";
+  export const DOOR_TO_DOOR_BASE_IMAGE_SRC = "/choose/door-to-door-courier-base.webp";
+  export const DOOR_TO_DOOR_CUTOUT_IMAGE_SRC = "/choose/door-to-door-courier-cutout.png";
   
   export const OTHER_ARRANGEMENTS_LINE =
     "Also available on request: Door-to-Airport, Airport-to-Door, and Airport-to-Airport arrangements — for businesses managing part of the logistics themselves.";

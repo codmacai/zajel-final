@@ -36,7 +36,7 @@ export default function SeaFreightPage() {
 
       <SeaWhatWeMove />
       <SeaFreightBanner
-        imageSrc="/sea-freight/magnific_breakbulk-shipment-uae-to_XmkRhJ7Bfo.webp"
+        imageSrc="/sea-freight/breakbulk-shipment.webp"
         imageAlt="Container ship at port"
       />
 

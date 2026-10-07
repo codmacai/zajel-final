@@ -12,7 +12,7 @@ const defaultContent = {
   heading: 'About Zajel Logistic Services, Since 2008',
   intro:
     "We don't just move parcels, goods, and shipments. We move businesses, relationships, and markets forward — with the intelligence, precision, and care of a trusted logistics partner.",
-  heroImageUrl: '/about/gallery/magnific_remove-texgt_Cqw0eUHEEy.webp',
+  heroImageUrl: '/about/gallery/port-worker-sunset.webp',
   heroImageAlt: 'Zajel fleet and warehouse operations',
 };
 

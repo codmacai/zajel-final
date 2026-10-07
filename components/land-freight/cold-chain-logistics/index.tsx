@@ -63,7 +63,7 @@ interface ColdChainGridSectionProps {
 }
 
 export default function ColdChainGridSection({
-  heroImageSrc = '/ChatGPT Image Oct 5, 2026 at 01_47_27 PM.png',
+  heroImageSrc = '/cold-chain-warehouse.png',
   heroImageAlt = 'Temperature Controlled Cold Chain Logistics',
   onRequestQuote,
   onContactTeam,

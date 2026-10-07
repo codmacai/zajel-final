@@ -53,7 +53,7 @@ const CATEGORIES: Category[] = [
         maxCargo: '28,230 kg',
         description:
           'Standard, weatherproof container for general dry cargo — furniture, clothing, electronics, packaged goods. Fully enclosed with end doors for loading/unloading.',
-        image: '/sea-freight/container/ChatGPT Image Sep 29, 2026, 04_12_36 AM.webp',
+        image: '/sea-freight/container/standard-container.webp',
       },
       {
         size: "40'",
@@ -65,7 +65,7 @@ const CATEGORIES: Category[] = [
         maxCargo: '26,700 kg',
         description:
           "Same general-purpose use as the 20' Standard, with double the length for cargo where space matters more than weight.",
-        image: '/sea-freight/container/ChatGPT Image Sep 29, 2026, 04_12_36 AM.webp',
+        image: '/sea-freight/container/standard-container.webp',
       },
       {
         size: "40' HC",
@@ -76,7 +76,7 @@ const CATEGORIES: Category[] = [
         tare: '4,020 kg',
         maxCargo: '26,460 kg',
         description: "Same footprint as the 40' Standard but taller, for cargo that needs extra headroom.",
-        image: '/sea-freight/container/ChatGPT Image Sep 29, 2026, 04_12_36 AM.webp',
+        image: '/sea-freight/container/standard-container.webp',
       },
       {
         size: "45' HC",
@@ -87,7 +87,7 @@ const CATEGORIES: Category[] = [
         tare: '4,800 kg',
         maxCargo: '27,700 kg',
         description: "Extra length and height beyond the 40' HC — maximum volume for larger shipments.",
-        image: '/sea-freight/container/ChatGPT Image Sep 29, 2026, 04_12_36 AM.webp',
+        image: '/sea-freight/container/standard-container.webp',
       },
     ],
   },
@@ -106,7 +106,7 @@ const CATEGORIES: Category[] = [
         maxCargo: '30,480 kg',
         description:
           "For over-height or awkward dry cargo that won't fit through standard doors. Removable roof bows and tarpaulin allow top-loading of machinery, pipes, timber, and construction equipment.",
-        image: '/sea-freight/container/ChatGPT Image Sep 29, 2026, 04_15_53 AM.webp',
+        image: '/sea-freight/container/open-top-container.webp',
       },
       {
         size: "40'",
@@ -117,7 +117,7 @@ const CATEGORIES: Category[] = [
         tare: '3,810 kg',
         maxCargo: '26,670 kg',
         description: "Same top-loading design as the 20' Open-Top, with extra length for bulkier oversized cargo.",
-        image: '/sea-freight/container/ChatGPT Image Sep 29, 2026, 04_15_53 AM.webp',
+        image: '/sea-freight/container/open-top-container.webp',
       },
     ],
   },
@@ -136,7 +136,7 @@ const CATEGORIES: Category[] = [
         maxCargo: '21,500 kg',
         description:
           'Open-sided flat platform with fixed or collapsible end walls, for heavy or irregularly shaped cargo — machinery, yachts, vehicles, industrial equipment.',
-        image: '/sea-freight/container/ChatGPT Image Sep 29, 2026, 04_04_33 AM.webp',
+        image: '/sea-freight/container/flat-rack-container.webp',
       },
       {
         size: "40'",
@@ -148,7 +148,7 @@ const CATEGORIES: Category[] = [
         maxCargo: '40,800 kg',
         description:
           'Longer platform version of the Flat-Rack, for larger, heavier shipments that exceed standard container dimensions.',
-        image: '/sea-freight/container/ChatGPT Image Sep 29, 2026, 04_04_33 AM.webp',
+        image: '/sea-freight/container/flat-rack-container.webp',
       },
     ],
   },
@@ -167,7 +167,7 @@ const CATEGORIES: Category[] = [
         maxCargo: '21,450 kg',
         description:
           'Temperature-controlled container with an integrated refrigeration unit, for perishable and sensitive goods — food, pharmaceuticals, meat, seafood, chemicals.',
-        image: '/sea-freight/container/ChatGPT Image Sep 29, 2026, 04_04_39 AM.webp',
+        image: '/sea-freight/container/reefer-container.webp',
       },
       {
         size: "40'",
@@ -179,7 +179,7 @@ const CATEGORIES: Category[] = [
         maxCargo: '26,630 kg',
         description:
           "Same temperature-controlled function as the 20' Reefer, sized for larger volumes of perishable cargo.",
-        image: '/sea-freight/container/ChatGPT Image Sep 29, 2026, 04_04_39 AM.webp',
+        image: '/sea-freight/container/reefer-container.webp',
       },
     ],
   },
@@ -198,7 +198,7 @@ const CATEGORIES: Category[] = [
         maxCargo: '26,290 kg',
         description:
           'For safe transport of bulk liquids — chemicals, food-grade products, fuel, gases — under regulated pressure. Available in classifications (T11, T14, T50, T75) for hazardous and non-hazardous substances; can include insulation or heating for temperature-sensitive liquids.',
-        image: '/sea-freight/container/ChatGPT Image Sep 29, 2026, 04_04_26 AM.webp',
+        image: '/sea-freight/container/iso-tank-container.webp',
       },
     ],
   },

@@ -43,7 +43,7 @@ export default function AboutPage() {
       {/* a card downloads its PDF once it's in /public/documents/, and asks for a copy by email until then */}
       <CompanyDocuments available={DOCUMENTS_READY} />
       <CTABanner
-              image="/ChatGPT Image Apr 23, 2026 at 11_02_53 AM.webp"
+              image="/zajel-courier-hero.webp"
               imageAlt="Courier delivering a package doorstep to doorstep in the UAE"
               title="Zajel — intelligent movement,"
               description="For everyone who needs something moved.."

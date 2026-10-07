@@ -54,7 +54,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     title: "Business Logistics",
     description: "Freight, fulfillment, and last-mile networks built to keep growing operations on schedule.",
     ctaLabel: "View solutions",
-    image: "/Homepage/7be9399d-bd5b-44e2-97ed-97d5efce871c.webp",
+    image: "/Homepage/business-logistics-port-sea-air.webp",
     icon: BusinessIcon,
     subServices: fromNav("business"),
   },

@@ -57,14 +57,14 @@ export default function WhyChooseUs() {
           <div className={`wcz-card wcz-card-reach wcz-delay-1 ${isVisible ? "is-visible" : ""}`}>
             <div className="wcz-reach-map">
               <Image
-                src="/Homepage/whychooseus/ChatGPT Image Aug 4, 2026, 01_04_26 PM (1).png"
+                src="/Homepage/whychooseus/world-network-map.png"
                 alt="International shipping network map"
                 fill
                 sizes="(max-width: 1023px) 100vw, 40vw"
                 className="wcz-reach-map-base"
               />
               <Image
-                src="/Homepage/whychooseus/ChatGPT Image Aug 4, 2026, 11_27_44 AM (1).png"
+                src="/Homepage/whychooseus/partnership-handshake.png"
                 alt="Map of Zajel delivery coverage across the UAE"
                 fill
                 sizes="(max-width: 1023px) 100vw, 40vw"
@@ -125,7 +125,7 @@ export default function WhyChooseUs() {
               <div className="wcz-ship-label">{content.shipments.title}</div>
             </div>
             <div className="wcz-ship-illustration" aria-hidden="true">
-              <Image src="/Homepage/whychooseus/magnific_photo-a-person-wearing-gr_nVaG47XYQD.webp" alt="" fill sizes="320px" />
+              <Image src="/Homepage/whychooseus/packing-shipment-box.webp" alt="" fill sizes="320px" />
             </div>
           </div>
 

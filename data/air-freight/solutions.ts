@@ -45,7 +45,7 @@ export interface Route {
   export const FREIGHT_CARDS: FreightCard[] = [
     {
       id: "standard",
-      image: "/airfreight/solutions/ChatGPT Image Sep 2, 2026, 08_24_53 AM.webp",
+      image: "/airfreight/solutions/standard-air-freight.webp",
       title: "Standard Air Freight",
       description: "Scheduled air cargo for shipments moving on regular routes and timelines.",
       buttonLabel: "Request a Quote",
@@ -53,7 +53,7 @@ export interface Route {
     },
     {
       id: "charter",
-      image: "/airfreight/solutions/ChatGPT Image Sep 2, 2026, 08_23_14 AM.webp",
+      image: "/airfreight/solutions/charter-air-freight.webp",
       title: "Charter Air Freight",
       description:
         "Dedicated or shared aircraft for large, specialized, or time-critical loads that don't fit standard capacity.",
@@ -62,7 +62,7 @@ export interface Route {
     },
     {
       id: "aog",
-      image: "/airfreight/solutions/ChatGPT Image Aug 31, 2026, 03_22_56 PM.webp",
+      image: "/airfreight/solutions/aog-air-freight.webp",
       title: "AOG (Aircraft on Ground)",
       description: "Emergency delivery of critical parts to a grounded aircraft, moved with immediate priority.",
       buttonLabel: "Request a Quote",

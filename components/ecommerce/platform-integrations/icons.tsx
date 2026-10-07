@@ -35,7 +35,7 @@ export const ShopifyMark: FC<{ className?: string }> = ({ className = '' }) => (
 
 export const WooMark: FC<{ className?: string }> = ({ className = '' }) => (
   <Image
-    src="/ecommerce/Woo_logo_white copy.svg"
+    src="/ecommerce/woocommerce-logo-white.svg"
     alt=""
     aria-hidden="true"
     width={160}

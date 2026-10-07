@@ -5,7 +5,7 @@ import WhenToChooseFreight, {
   type BodyPart,
 } from '@/components/shared/Whentochoosefrieght';
 
-const IMAGE_SRC = '/sea-freight/whentochoose/magnific_create-an-ultrarealistic-_0evwpOkTfW.webp';
+const IMAGE_SRC = '/sea-freight/whentochoose/when-to-choose-sea-freight.webp';
 
 const BODY: BodyPart[] = [
   { text: 'Sea freight fits shipments where ' },

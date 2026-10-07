@@ -1,8 +1,8 @@
 // components/SeaFreight/ChooseDeliveryAndComplianceSea/ChooseDeliveryAndComplianceSea.tsx
 import DynamicDelivery from "@/components/DynamicDelivery/DeliveryDelivery";
 
-const BASE_IMAGE_SRC = "/choose/ChatGPT Image Sep 28, 2026, 03_27_16 PM.webp";
-const CUTOUT_IMAGE_SRC = "/choose/ChatGPT Image Sep 28, 2026, 03_27_25 PM (2).png";
+const BASE_IMAGE_SRC = "/choose/door-to-door-courier-base.webp";
+const CUTOUT_IMAGE_SRC = "/choose/door-to-door-courier-cutout.png";
 
 const OTHER_ARRANGEMENTS_LINE =
   "Also available on request: Door-to-Port, Port-to-Door, and Port-to-Port arrangements — for businesses managing part of the logistics themselves.";

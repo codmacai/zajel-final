@@ -12,12 +12,12 @@ type CertItem = {
 };
 
 const certs: CertItem[] = [
-  { id: "1", name: "ISO 9001:2015", logo: "/Homepage/alliances/magnific_photo-five-logos-displaye_ovriEs7829 copy 2.png" },
-  { id: "2", name: "ISO 14001:2015", logo: "/Homepage/alliances/magnific_photo-five-logos-displaye_ovriEs7829 copy 3.png" },
-  { id: "3", name: "ISO 45001:2018", logo: "/Homepage/alliances/magnific_photo-five-logos-displaye_ovriEs7829 copy 4.png" },
-  { id: "4", name: "FIATA Alliance", logo: "/Homepage/alliances/magnific_photo-five-logos-displaye_ovriEs7829 copy 5.png" },
-  { id: "5", name: "IATA Cargo Agent", logo: "/Homepage/alliances/magnific_photo-five-logos-displaye_ovriEs7829 copy 6.png" },
-  { id: "6", name: "TAPA Certified", logo: "/Homepage/alliances/magnific_photo-five-logos-displaye_ovriEs7829 copy.png" },
+  { id: "1", name: "ISO 9001:2015", logo: "/Homepage/alliances/jctrans-logo.png" },
+  { id: "2", name: "ISO 14001:2015", logo: "/Homepage/alliances/nafl-logo.png" },
+  { id: "3", name: "ISO 45001:2018", logo: "/Homepage/alliances/fiata-logo.png" },
+  { id: "4", name: "FIATA Alliance", logo: "/Homepage/alliances/iata-logo.png" },
+  { id: "5", name: "IATA Cargo Agent", logo: "/Homepage/alliances/icv-logo.png" },
+  { id: "6", name: "TAPA Certified", logo: "/Homepage/alliances/wlp-logo.png" },
 ];
 
 export default function CertificationsGrid() {

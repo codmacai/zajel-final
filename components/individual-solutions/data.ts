@@ -10,7 +10,7 @@ export const heroData = {
   primaryButtonLabel: 'Get a Quote',
   primaryButtonUrl: '/quotation',
   secondaryButtonLabel: 'Download App',
-  heroImage: '/individual/magnific_create-a-premium-photorea_jUiWB0SLD0.webp',
+  heroImage: '/individual/individual-doorstep-delivery-hero.webp',
 };
 
 export interface ServiceCard {

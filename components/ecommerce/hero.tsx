@@ -18,7 +18,7 @@ const defaultContent: EcommerceHeroContent = {
   title: "E-commerce Logistics Solutions: Delivery Built for Online Sellers",
   description:
     "Cash on Delivery collection, a dedicated account manager, and nationwide delivery: everything an online seller needs from a logistics partner, in one place.",
-  image_url: "/ecommerce/ChatGPT Image Sep 9, 2026, 09_52_13 AM.webp",
+  image_url: "/ecommerce/ecommerce-hero.webp",
 };
 
 interface EcommerceHeroProps {

@@ -21,7 +21,7 @@ export const CUSTOMS_CLEARANCE_CARDS: readonly ClearanceCard[] = [
   {
     id: "import",
     Icon: ImportIcon,
-    image: "/custom-clearance/magnific_photorealistic-profession_Lw3W8jMswO.webp",
+    image: "/custom-clearance/import-clearance.webp",
     title: "Import Clearance",
     description:
       "End-to-end import declarations through Dubai Trade Portal and Mirsal 2, accurate HS code classification and duty assessment, inspection coordination, and permits for regulated goods before arrival.",
@@ -31,7 +31,7 @@ export const CUSTOMS_CLEARANCE_CARDS: readonly ClearanceCard[] = [
   {
     id: "export",
     Icon: ExportIcon,
-    image: "/custom-clearance/magnific_photorealistic-profession_WDhHSVGcXe.jpg",
+    image: "/custom-clearance/export-clearance.jpg",
     title: "Export Clearance",
     description:
       "Export declarations, destination compliance checks, and Certificates of Origin, plus the added declarations and transit documentation needed for re-exports from UAE free zones.",
@@ -41,7 +41,7 @@ export const CUSTOMS_CLEARANCE_CARDS: readonly ClearanceCard[] = [
   {
     id: "transit",
     Icon: TransitIcon,
-    image: "/custom-clearance/magnific_photorealistic-premium-lo_fHsynKHCDY.webp",
+    image: "/custom-clearance/transit-re-export-clearance.webp",
     title: "Transit & Re-export Processing",
     description:
       "Temporary import permits, transit declarations, and bonded warehouse movements for cargo passing through the UAE or brought in for exhibition, repair, or processing.",

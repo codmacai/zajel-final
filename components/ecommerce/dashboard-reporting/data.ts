@@ -5,7 +5,7 @@ export const HEADING = 'Your E-commerce Command Center';
 export const INTRO =
   'Every Zajel e-commerce account includes access to a dedicated merchant dashboard. Track orders, monitor deliveries, reconcile COD payments, and pull performance reports from a single interface.';
 
-export const DASHBOARD_IMAGE = '/ecommerce/2f82b3b662a489c425c2b2889d60b9dc (1).png';
+export const DASHBOARD_IMAGE = '/ecommerce/business-dashboard.png';
 
 export const FEATURES: DashboardFeature[] = [
   {

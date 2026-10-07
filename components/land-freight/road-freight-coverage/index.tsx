@@ -9,22 +9,22 @@ const coverageStops = [
   {
     label: 'Domestic',
     blurb: 'Distribution within the UAE, city to city.',
-    iconSrc: '/customs_icon/magnific_other-a-white-line-drawin_jU2KSWjLD0.png',
+    iconSrc: '/customs_icon/domestic-icon.png',
   },
   {
     label: 'Import',
     blurb: 'Bringing cargo into the UAE by road from regional origins.',
-    iconSrc: '/customs_icon/magnific_other-a-white-line-drawin_jU2KSWjLD0 (1).png',
+    iconSrc: '/customs_icon/import-icon.png',
   },
   {
     label: 'Export',
     blurb: 'Sending cargo out of the UAE to regional and cross-border destinations.',
-    iconSrc: '/customs_icon/magnific_other-a-white-line-drawin_jU2KSWjLD0 (2).png',
+    iconSrc: '/customs_icon/export-icon.png',
   },
   {
     label: 'Cross-Border',
     blurb: 'Coverage across the GCC, Turkey, Jordan, Syria, and Europe.',
-    iconSrc: '/customs_icon/magnific_other-a-white-line-drawin_jU2KSWjLD0 (3).png',
+    iconSrc: '/customs_icon/cross-border-icon.png',
   },
 ];
 
@@ -37,7 +37,7 @@ export default function RoadFreightCoverage() {
         {/* Mobile Background Image (Visible only on mobile/tablet, hidden on desktop) */}
         <div className="absolute inset-0 z-0 lg:hidden">
           <Image
-            src="/roadcustoms/magnific_photorealistic-premium-lo_xSZbr02jfW.jpg"
+            src="/roadcustoms/road-customs-inspection.jpg"
             alt="Land Freight Coverage Background"
             fill
             className="object-cover object-center"
@@ -101,7 +101,7 @@ export default function RoadFreightCoverage() {
             className="hidden lg:block relative w-full h-full min-h-[460px] bg-[#132219]"
           >
             <Image
-              src="/roadcustoms/magnific_photorealistic-premium-lo_xSZbr02jfW.jpg"
+              src="/roadcustoms/road-customs-inspection.jpg"
               alt="Land Freight Coverage"
               fill
               className="object-cover object-center"

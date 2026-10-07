@@ -15,7 +15,7 @@ const defaultContent = {
     'Zajel holds ISO 14001 certification for environmental management, which means sustainability is built into how we plan routes, manage facilities, and operate our fleet. This is not a statement of intent. It is an audited standard that governs our operations.',
   paragraph2:
     "In practice, ISO 14001 drives route optimization to reduce fuel consumption and emissions across our delivery and freight operations. It governs waste management at our warehouse facilities and sets targets for energy efficiency across our offices and logistics infrastructure. As the UAE's logistics sector continues to grow, operating within a certified environmental framework ensures that growth does not come at the expense of responsibility.",
-  backgroundImage: '/about/magnific_create-an-ultrarealistic-_TdQyDWBVNR.webp', // 👈 Update with your image path
+  backgroundImage: '/about/facility-aerial-solar-panels.webp', // 👈 Update with your image path
 };
 
 const fadeUpVariants: Variants = {

@@ -60,7 +60,7 @@ const CoverageMap: FC = () => {
         <div className="relative w-full max-w-4xl">
           <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] min-h-[300px] sm:min-h-[400px]">
             <Image
-              src="/ChatGPTImageSep27202603_43_00PM.webp"
+              src="/uae-delivery-coverage-map.webp"
               alt="Map of the UAE showing Zajel's delivery coverage"
               fill
               priority

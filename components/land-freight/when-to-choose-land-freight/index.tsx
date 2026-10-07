@@ -5,7 +5,7 @@ import WhenToChooseFreight, {
   type BodyPart,
 } from '@/components/shared/Whentochoosefrieght';
 
-const IMAGE_SRC = '/land-freight/ChatGPT Image Sep 9, 2026, 11_17_19 AM.webp';
+const IMAGE_SRC = '/land-freight/when-to-choose-land-freight.webp';
 
 const BODY: BodyPart[] = [
   { text: 'Land freight fits regional distribution and cross-border shipments where ' },

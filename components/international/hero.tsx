@@ -18,7 +18,7 @@ const defaultContent: InternationalHeroContent = {
   title: "International Shipping UAE: Doorstep Delivery to 200+ Countries",
   description:
     "Documents or packages, delivered in 3–4 days. Customs handled end to end, with tracking and a delivery arrangement that fits your shipment.",
-  image_url: "/international/ChatGPT Image May 12, 2026 at 02_03_10 AM.webp",
+  image_url: "/international/international-air-cargo-hero.webp",
 };
 
 interface InternationalHeroProps {

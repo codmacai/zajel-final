@@ -10,7 +10,7 @@ interface CareersHeroData {
   image_url: string;
 }
 
-const FALLBACK_IMAGE = '/career/image copy 13.webp';
+const FALLBACK_IMAGE = '/career/career-hero-team.webp';
 
 interface CareerHeroProps {
   lang?: Lang;

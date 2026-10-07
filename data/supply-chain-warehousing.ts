@@ -19,7 +19,7 @@ export const SUPPLY_CHAIN_WAREHOUSING_CONTENT: SupplyChainWarehousingContent = {
   highlightLine:
     "One provider from arrival to storage to delivery means fewer handoffs, fewer delays, and full visibility at every stage.",
   image: {
-    src:"/warehouse/magnific_aeroplane-should-be-white_ksi8V3F16B.webp",
+    src:"/warehouse/warehouse-port-airport-aerial.webp",
     alt: "State-of-the-art warehousing and logistics facility in Dubai",
   },
 };

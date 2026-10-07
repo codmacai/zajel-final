@@ -8,7 +8,7 @@ export const heroData = {
     "Whether you're fulfilling online orders or moving freight across borders, Zajel supports the operation — not just the shipment.",
   buttonLabel: 'Get a Quote',
   buttonUrl: '/quotation',
-  heroImage: '/Homepage/7be9399d-bd5b-44e2-97ed-97d5efce871c.webp',
+  heroImage: '/Homepage/business-logistics-port-sea-air.webp',
 };
 
 export interface ServiceCard {
@@ -210,7 +210,7 @@ export const technologyContent = {
   description:
     'Every Zajel business account includes access to the Zajel portal, a centralized platform where you manage shipments, track deliveries, reconcile payments, and pull performance data. No spreadsheets. No chasing updates. Everything in one place.',
   ctaLabel: 'Get Quote',
-  image: '/ecommerce/2f82b3b662a489c425c2b2889d60b9dc (1).png',
+  image: '/ecommerce/business-dashboard.png',
   imageAlt: 'Zajel business logistics dashboard',
 };
 

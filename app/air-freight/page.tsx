@@ -32,7 +32,7 @@ export default function Home() {
       <ChooseDeliveryAndCompliance/>
       <WhatWeMove/>
       <StoreToDoorBanner
-        imageSrc="/airfreight/magnific_wind-turbine-blade-transp_cpEJciO0eP.webp"
+        imageSrc="/airfreight/wind-turbine-blade-transport.webp"
         imageAlt="Oversized project cargo being loaded"
       />
       <IndustriesWeServe/>

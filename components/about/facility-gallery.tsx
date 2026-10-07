@@ -17,25 +17,25 @@ const defaultContent = {
       id: 1,
       title: 'Dubai Headquarters',
       caption: 'Zajel headquarters, Al Rostamani Building, Dubai',
-      image: '/about/gallery/magnific_create-an-ultrarealistic-_gOnfXiwSXO.webp', // 👈 Replace with real Zajel asset
+      image: '/about/gallery/zajel-headquarters.webp', // 👈 Replace with real Zajel asset
     },
     {
       id: 2,
       title: 'Warehouse Operations',
       caption: 'Warehouse facility, Dubai',
-      image: '/about/gallery/magnific_ultrarealistic-cinematic-_Xmk3H4sBfo.webp', // 👈 Replace with real Zajel asset
+      image: '/about/gallery/warehouse-aisle.webp', // 👈 Replace with real Zajel asset
     },
     {
       id: 3,
       title: 'Fleet Vehicles',
       caption: 'Zajel delivery fleet',
-      image: '/about/gallery/magnific_ultrarealistic-cinematic-_s7Gv0tml8e.jpg', // 👈 Replace with real Zajel asset
+      image: '/about/gallery/zajel-van-fleet.jpg', // 👈 Replace with real Zajel asset
     },
     {
       id: 4,
       title: 'Team at Work',
       caption: 'Our operations team',
-      image: '/about/gallery/magnific_ultrarealistic-cinematic-_bx9dOx85Y2 (1).jpg', // 👈 Replace with real Zajel asset
+      image: '/about/gallery/team-meeting.jpg', // 👈 Replace with real Zajel asset
     },
   ],
 };

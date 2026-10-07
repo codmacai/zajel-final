@@ -14,67 +14,67 @@ const defaultContent = {
   heading: 'Our Alliances & Accreditations',
   intro:
     'Connecting Zajel to global networks, trade facilitation benefits, and internationally recognized standards across air, sea, and land logistics.',
-  logoStripImage: '/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR.webp', // update to match your asset
+  logoStripImage: '/alliances-logo-strip.webp', // update to match your asset
   alliances: [
     {
       title: 'WCA Inter Global',
-      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR copy 2.png',
+      logo: '/global-alliance/wca-inter-global-logo.png',
       description:
         'Member of the World Cargo Alliance, connecting Zajel with qualified logistics partners across every major trade market globally for reliable origin and destination handling.',
       badge: 'Global Network',
     },
     {
       title: 'DF Alliance by DP World',
-      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR copy.png',
+      logo: '/global-alliance/df-alliance-logo.png',
       description:
         "Premium Member of DP World's global network spanning 190+ countries, granting access to vetted logistics partners and deep local expertise worldwide.",
       badge: 'Premium Member',
     },
     {
       title: 'JCtrans (JC Premium)',
-      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR copy 3.png',
+      logo: '/global-alliance/jctrans-logo.png',
       description:
         "Leading international freight forwarding network that strengthens Zajel's coverage on key trade lanes, particularly routes connecting the UAE with Asian manufacturing markets.",
       badge: 'Trade Lanes',
     },
     {
       title: 'FIATA',
-      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR copy 5.png',
+      logo: '/global-alliance/fiata-logo.png',
       description:
         'The International Federation of Freight Forwarders Associations, reflecting strict adherence to recognized standards in global freight forwarding and trade documentation.',
       badge: 'Industry Standard',
     },
     {
       title: 'IATA',
-      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR copy 6.png',
+      logo: '/global-alliance/iata-logo.png',
       description:
         'International Air Transport Association accreditation ensuring air freight services meet global protocols for cargo handling, documentation, and carrier relationships.',
       badge: 'Air Cargo Standard',
     },
     {
       title: 'NAFL UAE',
-      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR copy 4.png',
+      logo: '/global-alliance/nafl-logo.png',
       description:
         'National Association of Freight and Logistics membership, connecting Zajel with the domestic freight community and supporting regulatory alignment across UAE operations.',
       badge: 'UAE Community',
     },
     {
       title: 'ICV (In-Country Value)',
-      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR copy 7.png',
+      logo: '/global-alliance/icv-logo.png',
       description:
         "Certified contribution to the UAE's national economy through local employment, local procurement, and continuous investment in UAE-based operations.",
       badge: 'UAE Certified',
     },
     {
       title: 'WLP',
-      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR.png',
+      logo: '/global-alliance/wlp-logo.png',
       description:
         'World Logistics Passport member, unlocking global trade facilitation benefits, operational hub advantages, and streamlined logistics routing.',
       badge: 'Trade Facilitation',
     },
     {
       title: 'BSCIC (JAS-ANZ Accredited)',
-      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR (1).png',
+      logo: '/global-alliance/bscic-jas-anz-logo.png',
       description:
         "Certified under Joint Accreditation System of Australia & New Zealand (JAS-ANZ), validating the integrity and quality of Zajel's management systems.",
       badge: 'Quality Accreditation',

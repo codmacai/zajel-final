@@ -21,21 +21,21 @@ const TRUCK_TYPES: TruckType[] = [
     title: '40-Foot Box Truck',
     description:
       'Full-size enclosed box trucks built for high-volume, full truckload (FTL) shipments. The standard choice for long-haul and cross-border moves where maximum cargo capacity is the priority.',
-    imageUrl: '/land-freight/vehicle/magnific__background__67106.png',
+    imageUrl: '/land-freight/vehicle/box-truck-40ft.png',
   },
   {
     id: 'flatbed',
     title: 'Flatbed Trailers',
     description:
       'Open platform trailers for oversized cargo, construction materials, machinery, and equipment that cannot fit in enclosed containers. Available with securing equipment including straps, chains, and dunnage for safe transport.',
-    imageUrl: '/land-freight/vehicle/magnific__background__67105.png',
+    imageUrl: '/land-freight/vehicle/flatbed-trailer.png',
   },
   {
     id: 'standard-dry',
     title: 'Standard Dry Trucks',
     description:
       'Enclosed dry freight trucks for general cargo, packaged goods, and palletized shipments. Available in multiple sizes from 3-ton pickup trucks for local deliveries to 40-foot trailers for full truckload (FTL) shipments across the GCC and beyond.',
-    imageUrl: '/land-freight/vehicle/magnific__background__67110.png',
+    imageUrl: '/land-freight/vehicle/standard-dry-truck.png',
   },
   {
     id: 'reefer',
@@ -47,21 +47,21 @@ const TRUCK_TYPES: TruckType[] = [
       'Real-time temperature monitoring',
       'Cold chain compliance documentation',
     ],
-    imageUrl: '/land-freight/vehicle/magnific__background__67109.png',
+    imageUrl: '/land-freight/vehicle/refrigerated-truck.png',
   },
   {
     id: 'curtain-side',
     title: 'Curtain-side Trailers',
     description:
       'Side-loading trailers that allow quick loading and unloading from the side without specialized dock equipment. Suitable for oversized pallets, building materials, and shipments that require crane or forklift loading from the side.',
-    imageUrl: '/land-freight/vehicle/magnific__background__67107.png',
+    imageUrl: '/land-freight/vehicle/curtain-side-trailer.png',
   },
   {
     id: 'low-loader',
     title: 'Low Loader Trailers',
     description:
       'Heavy-duty trailers designed for transporting heavy machinery, industrial equipment, and project cargo that exceeds standard height and weight limits. Used for construction equipment, generators, and large industrial components.',
-    imageUrl: '/land-freight/vehicle/magnific__background__67108.png',
+    imageUrl: '/land-freight/vehicle/low-loader-trailer.png',
   },
 ];
 

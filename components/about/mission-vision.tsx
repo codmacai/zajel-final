@@ -15,12 +15,12 @@ const defaultContent = {
   mission: {
     label: 'Our Mission',
     text: 'To move goods, businesses, and communities with intelligence, reliability, and care, by combining human judgment with advanced systems across the logistics spectrum.',
-    image: '/about/mission/magnific_create-an-ultrarealistic-_5jNdEh1Kxe.webp',
+    image: '/about/mission/warehouse-packing-team.webp',
   },
   vision: {
     label: 'Our Vision',
     text: "To become the region's most trusted and intelligently connected logistics partner, setting the standard for how movement works across the Middle East and beyond.",
-    image: '/about/magnific_remove-the-text_s7Ghs1rl8e.webp',
+    image: '/about/dubai-port-aerial.webp',
   },
   stats: [
     { value: '17', label: 'Years of Success' },

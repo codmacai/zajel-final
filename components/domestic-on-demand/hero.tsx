@@ -17,7 +17,7 @@ const defaultContent: DomesticHeroContent = {
   title: "Same Day Delivery Across the UAE",
   description:
     "Schedule your pickup, by day or by time — arriving within 1 hour, delivered within 2. Same-city or city-to-city, straight to the door.",
-  image_url: "/domestic/ChatGPT Image Sep 9, 2026, 09_23_27 AM.webp",
+  image_url: "/domestic/same-day-delivery-hero.webp",
 };
 
 interface DomesticHeroProps {

@@ -39,8 +39,8 @@ export const howItWorksContent = {
   heading: "From pickup to delivery, in four simple steps",
   steps: [
     { id: 1, imageKey: "book" as ImageKey, imageUrl: "/Homepage/whychooseus/track.png", imageAlt: "Book a shipment", title: "Book Your Shipment", description: "Enter your details and get an instant quote online." },
-    { id: 2, imageKey: "handle" as ImageKey, imageUrl: "/Homepage/howto/magnific_photo-a-30yearold-middle-_P3DOsUE42C.png", imageAlt: "We handle it", title: "We Handle It", description: "Our team picks up and prepares your shipment with care." },
+    { id: 2, imageKey: "handle" as ImageKey, imageUrl: "/Homepage/howto/courier-packing-box.png", imageAlt: "We handle it", title: "We Handle It", description: "Our team picks up and prepares your shipment with care." },
     { id: 3, imageKey: "track" as ImageKey, imageUrl: "/Homepage/howto/track-shipment.png", imageAlt: "Track in real time", title: "Track in Real Time", description: "Follow your shipment's journey every step of the way." },
-    { id: 4, imageKey: "receive" as ImageKey, imageUrl: "/Homepage/howto/magnific_photo-a-30yearold-middle-_jU2rFW3LD0.png", imageAlt: "Receive your delivery", title: "Receive Your Delivery", description: "Get your shipment delivered safely, right on time." },
+    { id: 4, imageKey: "receive" as ImageKey, imageUrl: "/Homepage/howto/customer-receiving-delivery.png", imageAlt: "Receive your delivery", title: "Receive Your Delivery", description: "Get your shipment delivered safely, right on time." },
   ] satisfies HowItWorksStep[],
 };

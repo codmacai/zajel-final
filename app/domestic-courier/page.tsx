@@ -34,7 +34,7 @@ export default function DomesticOnDemandPage() {
       <BookThroughApp />
       <DomesticFaqSection/>
       <CTABanner
-        image="/ChatGPT Image Apr 23, 2026 at 11_02_53 AM.webp"
+        image="/zajel-courier-hero.webp"
         imageAlt="Courier delivering a package doorstep to doorstep in the UAE"
         title="Schedule your way."
         description="Same day or next day, doorstep to doorstep, anywhere in the UAE."
