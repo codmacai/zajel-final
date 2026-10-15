@@ -27,7 +27,7 @@ export default function WarehousePage() {
       <StrategicLocations/>
       <IndustriesWeServe/>
       <WarehouseFaqSection/>
-      <ContactBand
+      {/* <ContactBand
   badgeText="Get a Warehousing Services Quote"
   title="Get a Warehousing Services Quote"
   descriptionLead="Whether you need short-term holding for goods in transit, full-service e-commerce fulfillment, or temperature-controlled storage for regulated products, Zajel's warehousing team can design a solution around your supply chain."
@@ -39,9 +39,9 @@ export default function WarehousePage() {
   }}
   primaryCta={{ 
     label: "Get a Warehousing Quote", 
-    url: "/contact" 
+    url: "/support" 
   }}
-/>
+/> */}
 
       {/* Rest of the Warehousing page content goes below. */}
     </main>

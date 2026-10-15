@@ -1,19 +1,22 @@
 import type { Metadata } from 'next';
 
+/** The live site's canonical address — what every canonical, og:url, sitemap and robots URL uses. */
+export const PRODUCTION_SITE_URL = 'https://www.zajel.com';
+
 /**
  * Site-wide SEO settings.
  *
- * The live domain is not connected yet. Set NEXT_PUBLIC_SITE_URL (for example
- * https://www.zajel.com) in Vercel once it is, and every canonical link,
- * sitemap entry and social preview will switch to it. Until then we fall back
- * to the Vercel production URL, then to localhost for local development.
+ * NEXT_PUBLIC_SITE_URL (read at build time) overrides the site address — set it for a staging
+ * build so its links point at the staging host. Without it, any production build uses
+ * https://www.zajel.com. Only `next dev` falls back to localhost, so a forgotten env var can
+ * never again publish http://localhost:3000 as the canonical address.
  */
 function resolveSiteUrl(): string {
   const explicit = process.env.NEXT_PUBLIC_SITE_URL;
   if (explicit) return explicit.replace(/\/+$/, '');
   const vercel = process.env.VERCEL_PROJECT_PRODUCTION_URL;
   if (vercel) return `https://${vercel}`;
-  return 'http://localhost:3000';
+  return process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : PRODUCTION_SITE_URL;
 }
 
 export const SITE = {

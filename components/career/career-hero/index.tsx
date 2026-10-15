@@ -10,7 +10,7 @@ interface CareersHeroData {
   image_url: string;
 }
 
-const FALLBACK_IMAGE = '/career/image copy 13.webp';
+const FALLBACK_IMAGE = '/career/image-copy-13.webp';
 
 interface CareerHeroProps {
   lang?: Lang;
@@ -66,4 +66,4 @@ const CareerHero = async ({ lang = 'en', ctaHref = '#open-positions' }: CareerHe
   );
 };
 
-export default CareerHero;
+export default CareerHero;

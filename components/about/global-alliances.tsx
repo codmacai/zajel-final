@@ -18,7 +18,7 @@ const defaultContent = {
   alliances: [
     {
       title: 'WCA Inter Global',
-      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR copy 2.png',
+      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR-copy-2.png',
       description:
         'Member of the World Cargo Alliance, connecting Zajel with qualified logistics partners across every major trade market globally for reliable origin and destination handling.',
       badge: 'Global Network',
@@ -32,35 +32,35 @@ const defaultContent = {
     },
     {
       title: 'JCtrans (JC Premium)',
-      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR copy 3.png',
+      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR-copy-3.png',
       description:
         "Leading international freight forwarding network that strengthens Zajel's coverage on key trade lanes, particularly routes connecting the UAE with Asian manufacturing markets.",
       badge: 'Trade Lanes',
     },
     {
       title: 'FIATA',
-      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR copy 5.png',
+      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR-copy-5.png',
       description:
         'The International Federation of Freight Forwarders Associations, reflecting strict adherence to recognized standards in global freight forwarding and trade documentation.',
       badge: 'Industry Standard',
     },
     {
       title: 'IATA',
-      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR copy 6.png',
+      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR-copy-6.png',
       description:
         'International Air Transport Association accreditation ensuring air freight services meet global protocols for cargo handling, documentation, and carrier relationships.',
       badge: 'Air Cargo Standard',
     },
     {
       title: 'NAFL UAE',
-      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR copy 4.png',
+      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR-copy-4.png',
       description:
         'National Association of Freight and Logistics membership, connecting Zajel with the domestic freight community and supporting regulatory alignment across UAE operations.',
       badge: 'UAE Community',
     },
     {
       title: 'ICV (In-Country Value)',
-      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR copy 7.png',
+      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR-copy-7.png',
       description:
         "Certified contribution to the UAE's national economy through local employment, local procurement, and continuous investment in UAE-based operations.",
       badge: 'UAE Certified',
@@ -74,7 +74,7 @@ const defaultContent = {
     },
     {
       title: 'BSCIC (JAS-ANZ Accredited)',
-      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR (1).png',
+      logo: '/global-alliance/magnific_photo-the-iata-logo-with-_TdQ6OvAVNR-1.png',
       description:
         "Certified under Joint Accreditation System of Australia & New Zealand (JAS-ANZ), validating the integrity and quality of Zajel's management systems.",
       badge: 'Quality Accreditation',
@@ -207,4 +207,4 @@ const GlobalAlliances: FC = () => {
   );
 };
 
-export default GlobalAlliances;
+export default GlobalAlliances;

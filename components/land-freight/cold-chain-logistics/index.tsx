@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 import { ArrowRight, CheckCircle2, Snowflake, Thermometer, Wifi, ShieldCheck } from 'lucide-react';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
@@ -65,10 +66,13 @@ interface ColdChainGridSectionProps {
 export default function ColdChainGridSection({
   heroImageSrc = '/landfreight/cold-chain-hero.png',
   heroImageAlt = 'Temperature Controlled Cold Chain Logistics',
-  onRequestQuote,
+  onRequestQuote: onRequestQuoteProp,
   onContactTeam,
-  contactHref = '/contact',
+  contactHref = '/support',
 }: ColdChainGridSectionProps) {
+  const router = useRouter();
+  // Quote requests go to the support center unless a page passes its own handler.
+  const onRequestQuote = onRequestQuoteProp ?? (() => router.push('/support'));
   const [activeCard, setActiveCard] = useState<string>('range');
 
   return (
@@ -268,4 +272,4 @@ export default function ColdChainGridSection({
       </div>
     </section>
   );
-}
+}

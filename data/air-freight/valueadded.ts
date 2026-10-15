@@ -51,7 +51,7 @@ export const FREIGHT_CARDS: FreightCard[] = [
     title: "Standard Air Freight",
     description: "Scheduled air cargo for shipments moving on regular routes and timelines.",
     buttonLabel: "Request a Quote",
-    buttonUrl: "/quotation",
+    buttonUrl: "/support",
   },
   {
     id: "charter",
@@ -60,7 +60,7 @@ export const FREIGHT_CARDS: FreightCard[] = [
     description:
       "Dedicated aircraft for large, specialized, or time-critical loads that don't fit standard capacity.",
     buttonLabel: "Request a Quote",
-    buttonUrl: "/quotation",
+    buttonUrl: "/support",
   },
   {
     id: "aog",
@@ -68,7 +68,7 @@ export const FREIGHT_CARDS: FreightCard[] = [
     title: "AOG (Aircraft on Ground)",
     description: "Emergency delivery of critical parts to a grounded aircraft, moved with immediate priority.",
     buttonLabel: "Request a Quote",
-    buttonUrl: "/quotation",
+    buttonUrl: "/support",
   },
 ];
 
@@ -214,4 +214,4 @@ export const VALUE_ADDED_SERVICES: ServiceItem[] = [
     description:
       "Protect your air freight shipment against loss, damage, or delay during transit. Coverage is available for all cargo types and can be added at the time of booking, with guidance from our team on appropriate coverage levels based on cargo value and route.",
   },
-];
+];

@@ -20,7 +20,7 @@ export default function ChooseDeliveryAndCompliance() {
         title: "Door-to-Door",
         body: "Pickup at your origin address, delivered straight to the final destination — no extra coordination required on your end. This is how most Zajel air freight shipments move, start to finish.",
         ctaLabel: "Request Door-to-Door Quote",
-        ctaUrl: "/quotation?arrangement=door-to-door",
+        ctaUrl: "/support",
         baseImage: DOOR_TO_DOOR_BASE_IMAGE_SRC,
         cutoutImage: DOOR_TO_DOOR_CUTOUT_IMAGE_SRC,
         baseAlt: "Door-to-Door air freight background",
@@ -34,4 +34,4 @@ export default function ChooseDeliveryAndCompliance() {
       }}
     />
   );
-}
+}

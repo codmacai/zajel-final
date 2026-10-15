@@ -2,7 +2,16 @@
 
 import { useTranslation } from "react-i18next";
 
+// Arabic isn't implemented yet (no translations / RTL layout), so the toggle is hidden.
+// Flip this to true once the i18n setup is in place.
+const SHOW_LANGUAGE_SWITCHER = false;
+
 export default function LanguageSwitcher() {
+  if (!SHOW_LANGUAGE_SWITCHER) return null;
+  return <LanguageToggle />;
+}
+
+function LanguageToggle() {
   const { i18n } = useTranslation();
   const isAr = i18n.language === "ar";
 
@@ -20,4 +29,4 @@ export default function LanguageSwitcher() {
       <span>{isAr ? "EN" : "AR"}</span>
     </button>
   );
-}
+}

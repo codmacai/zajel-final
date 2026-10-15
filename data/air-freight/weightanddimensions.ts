@@ -61,7 +61,7 @@ import {
       title: "Standard Air Freight",
       description: "Scheduled air cargo for shipments moving on regular routes and timelines.",
       buttonLabel: "Request a Quote",
-      buttonUrl: "/quotation",
+      buttonUrl: "/support",
     },
     {
       id: "charter",
@@ -70,7 +70,7 @@ import {
       description:
         "Dedicated aircraft for large, specialized, or time-critical loads that don't fit standard capacity.",
       buttonLabel: "Request a Quote",
-      buttonUrl: "/quotation",
+      buttonUrl: "/support",
     },
     {
       id: "aog",
@@ -78,7 +78,7 @@ import {
       title: "AOG (Aircraft on Ground)",
       description: "Emergency delivery of critical parts to a grounded aircraft, moved with immediate priority.",
       buttonLabel: "Request a Quote",
-      buttonUrl: "/quotation",
+      buttonUrl: "/support",
     },
   ];
   
@@ -290,4 +290,4 @@ import {
       description:
         "Non-stackable cargo may incur additional charges as it limits how other freight can be loaded around it. Proper packaging and palletization helps optimize space and cost.",
     },
-  ];
+  ];

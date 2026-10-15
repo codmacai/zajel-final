@@ -7,7 +7,7 @@ export const heroData = {
   description:
     "Whether you're fulfilling online orders or moving freight across borders, Zajel supports the operation — not just the shipment.",
   buttonLabel: 'Get a Quote',
-  buttonUrl: '/quotation',
+  buttonUrl: '/support',
   heroImage: '/Homepage/7be9399d-bd5b-44e2-97ed-97d5efce871c.webp',
 };
 
@@ -210,7 +210,7 @@ export const technologyContent = {
   description:
     'Every Zajel business account includes access to the Zajel portal, a centralized platform where you manage shipments, track deliveries, reconcile payments, and pull performance data. No spreadsheets. No chasing updates. Everything in one place.',
   ctaLabel: 'Get Quote',
-  image: '/ecommerce/2f82b3b662a489c425c2b2889d60b9dc (1).png',
+  image: '/ecommerce/2f82b3b662a489c425c2b2889d60b9dc-1.png',
   imageAlt: 'Zajel business logistics dashboard',
 };
 
@@ -222,8 +222,8 @@ export interface CtaButton {
 }
 
 export const ctaButtons: CtaButton[] = [
-  { id: 'quote', label: 'Get a Quote', url: '/quotation', variant: 'primary' },
-  { id: 'team', label: 'Talk to Our Team', url: '/contact', variant: 'secondary' },
+  { id: 'quote', label: 'Get a Quote', url: '/support', variant: 'primary' },
+  { id: 'team', label: 'Talk to Our Team', url: '/support', variant: 'secondary' },
   { id: 'calculator', label: 'Calculate Shipping Rate', url: '/rate-calculator', variant: 'secondary' },
 ];
 

@@ -11,7 +11,7 @@ interface FaqPageProps {
 }
 
 /** Pure server component: only <FaqExplorer /> ships client JS. */
-export default function FaqPage({ quoteHref = '/contact' }: FaqPageProps) {
+export default function FaqPage({ quoteHref = '/support' }: FaqPageProps) {
   return (
     <div className="w-full bg-white font-sans text-[#1b4332]">
       {/* Hero */}
@@ -51,7 +51,6 @@ export default function FaqPage({ quoteHref = '/contact' }: FaqPageProps) {
         descriptionLead="Our support team and dedicated logistics account managers are ready to help you navigate your shipping requirements across the UAE and worldwide."
         descriptionDetail="Reach out by email or phone, or request a quote and we'll get back to you."
         contactInfo={{
-          email: CONTACT.email,
           phone: CONTACT.phone,
           address: CONTACT.office,
         }}
@@ -62,4 +61,4 @@ export default function FaqPage({ quoteHref = '/contact' }: FaqPageProps) {
       />
     </div>
   );
-}
+}

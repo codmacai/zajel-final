@@ -18,8 +18,8 @@ const defaultContent: AirFreightHeroContent = {
   description:
     "From standard cargo to specialized project shipments, Zajel moves it by air, with customs handled and the right delivery arrangement for your business.",
   button: "Get my rate",
-  ctaLink: "/contact",
-  image_url: "/international/ChatGPT Image May 12, 2026 at 02_03_10 AM.webp",
+  ctaLink: "/support",
+  image_url: "/international/ChatGPT-Image-May-12-2026-at-02_03_10-AM.webp",
 };
 
 const icon = (
@@ -49,4 +49,4 @@ const AirFreightHero: FC<Props> = ({ content = defaultContent, isRtl }) => (
   />
 );
 
-export default AirFreightHero;
+export default AirFreightHero;

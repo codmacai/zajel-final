@@ -13,7 +13,7 @@ import CTABanner from '@/components/shared/CTABanner';
 export const metadata: Metadata = pageMetadata({
   title: "International Shipping",
   description:
-    "Ship internationally from the UAE to 200+ countries with reliable express and standard delivery, real-time tracking, and full customs clearance support.",
+    "Ship internationally from the UAE to 195 countries with reliable express and standard delivery, real-time tracking, and full customs clearance support.",
   path: '/international-courier',
 });
 
@@ -30,7 +30,7 @@ export default function InternationalPage() {
       <CustomsDutyGuide />
       <InternationalFaq/>
       <CTABanner
-        image="/ChatGPT Image Apr 23, 2026 at 11_02_53 AM.webp"
+        image="/ChatGPT-Image-Apr-23-2026-at-11_02_53-AM.webp"
         imageAlt="Zajel courier handing over an international shipment"
   title="Book International Shipping in Minutes"
   description="Declare your document's weight and pay instantly, or request a quote for your package, book on zajel.com, or download the app for booking on the go."
@@ -41,4 +41,4 @@ export default function InternationalPage() {
 />
     </main>
   );
-}
+}

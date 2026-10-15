@@ -28,7 +28,7 @@ const defaultContent = {
         'We send you a secure payment link to confirm',
       ],
       buttonLabel: 'Request a Package Quote',
-      buttonUrl: '/quotation?type=package',
+      buttonUrl: '/support',
     },
   },
   journey: {
@@ -338,4 +338,4 @@ const TwoWaysToShipAndJourney: FC = () => {
   );
 };
 
-export default TwoWaysToShipAndJourney;
+export default TwoWaysToShipAndJourney;

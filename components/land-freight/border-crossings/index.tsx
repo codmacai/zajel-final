@@ -41,7 +41,7 @@ interface BorderCrossingsProps {
 
 const BorderCrossings = ({
   onContactRoutePlanning,
-  contactHref = '/contact',
+  contactHref = '/support',
   primaryCta,
   secondaryCta,
   isRtl = false,
@@ -201,4 +201,4 @@ const BorderCrossings = ({
   );
 };
 
-export default BorderCrossings;
+export default BorderCrossings;

@@ -54,7 +54,7 @@ export interface ShippingTier {
         "Monthly performance reports",
       ],
       buttonLabel: "Talk to Sales",
-      buttonUrl: "/contact",
+      buttonUrl: "/support",
       recommended: true,
     },
     {
@@ -76,4 +76,4 @@ export interface ShippingTier {
       buttonUrl: "/custom-proposal",
       recommended: false,
     },
-  ];
+  ];

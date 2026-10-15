@@ -42,7 +42,7 @@ export const STRATEGIC_LOCATIONS_CARDS: LocationCard[] = [
   {
     id: "freezone",
     icon: Landmark,
-    image: "/warehouse/location/magnific_photorealistic-premium-lo_rgNzWnNxtc (1).webp",
+    image: "/warehouse/location/magnific_photorealistic-premium-lo_rgNzWnNxtc-1.webp",
     title: "Free Zone Advantages",
     body: "Goods stored in UAE free zones benefit from customs duty exemption while in zone, reducing duty costs for re-export and regional distribution.",
     tag: "Duty exemption in-zone",

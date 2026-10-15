@@ -36,7 +36,7 @@ const heroData = {
   description:
     'When trust is non-negotiable. We provide dedicated, highly secure courier services relied upon by leading UAE government entities and institutions.',
   buttonLabel: 'Contact Secure Team',
-  buttonUrl: '/contact',
+  buttonUrl: '/support',
 };
 
 const isRtl = false;
@@ -323,7 +323,7 @@ const standards = {
 };
 
 const ctaButtons = [
-  { label: 'Contact Secure Team', url: '/contact', Icon: ContactIcon, variant: 'primary' as const },
+  { label: 'Contact Secure Team', url: '/support', Icon: ContactIcon, variant: 'primary' as const },
   { label: 'Explore Secure Networks', url: '#secure-networks', Icon: NetworkIcon, variant: 'secondary' as const },
 ];
 
@@ -773,4 +773,4 @@ export default function SecureSolutions() {
       <ConversionBandSection />
     </main>
   );
-}
+}

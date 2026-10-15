@@ -14,17 +14,17 @@ const coverageStops = [
   {
     label: 'Import',
     blurb: 'Bringing cargo into the UAE by road from regional origins.',
-    iconSrc: '/customs_icon/magnific_other-a-white-line-drawin_jU2KSWjLD0 (1).png',
+    iconSrc: '/customs_icon/magnific_other-a-white-line-drawin_jU2KSWjLD0-1.png',
   },
   {
     label: 'Export',
     blurb: 'Sending cargo out of the UAE to regional and cross-border destinations.',
-    iconSrc: '/customs_icon/magnific_other-a-white-line-drawin_jU2KSWjLD0 (2).png',
+    iconSrc: '/customs_icon/magnific_other-a-white-line-drawin_jU2KSWjLD0-2.png',
   },
   {
     label: 'Cross-Border',
     blurb: 'Coverage across the GCC, Turkey, Jordan, Syria, and Europe.',
-    iconSrc: '/customs_icon/magnific_other-a-white-line-drawin_jU2KSWjLD0 (3).png',
+    iconSrc: '/customs_icon/magnific_other-a-white-line-drawin_jU2KSWjLD0-3.png',
   },
 ];
 
@@ -115,4 +115,4 @@ export default function RoadFreightCoverage() {
       </div>
     </section>
   );
-}
+}

@@ -49,7 +49,7 @@ export interface Route {
       title: "Standard Air Freight",
       description: "Scheduled air cargo for shipments moving on regular routes and timelines.",
       buttonLabel: "Request a Quote",
-      buttonUrl: "/quotation",
+      buttonUrl: "/support",
     },
     {
       id: "charter",
@@ -58,7 +58,7 @@ export interface Route {
       description:
         "Dedicated aircraft for large, specialized, or time-critical loads that don't fit standard capacity.",
       buttonLabel: "Request a Quote",
-      buttonUrl: "/quotation",
+      buttonUrl: "/support",
     },
     {
       id: "aog",
@@ -66,7 +66,7 @@ export interface Route {
       title: "AOG (Aircraft on Ground)",
       description: "Emergency delivery of critical parts to a grounded aircraft, moved with immediate priority.",
       buttonLabel: "Request a Quote",
-      buttonUrl: "/quotation",
+      buttonUrl: "/support",
     },
   ];
   
@@ -74,7 +74,7 @@ export interface Route {
   // "When to Choose Air Freight" — transit guide banner + cross-sell
   // ---------------------------------------------------------------------------
   
-  export const TRANSIT_GUIDE_IMAGE_SRC = "/airfreight/solutions/ChatGPT Image Sep 8, 2026, 01_21_41 AM.webp";
+  export const TRANSIT_GUIDE_IMAGE_SRC = "/airfreight/solutions/ChatGPT-Image-Sep-8-2026-01_21_41-AM.webp";
   
   export interface BodyPart {
     text: string;
@@ -118,4 +118,4 @@ export interface Route {
   export const COMPLIANCE_BODY_SENTENCES = [
     "Crossing borders by air comes with documentation, duty, and regulatory requirements that vary by cargo and destination.",
     "Zajel manages customs clearance and compliance on your behalf, so your shipment moves without unnecessary delays.",
-  ];
+  ];

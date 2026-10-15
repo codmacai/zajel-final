@@ -14,7 +14,7 @@ import CTABanner from '@/components/shared/CTABanner';
 export const metadata: Metadata = pageMetadata({
   title: "Individual Solutions",
   description:
-    "Whatever you're sending, wherever it's going — same day across the UAE, or international to 200+ countries.",
+    "Whatever you're sending, wherever it's going — same day across the UAE, or international to 195 countries.",
   path: '/individual-solutions',
 });
 
@@ -27,7 +27,7 @@ export default function IndividualSolutionsPage() {
       <DomesticVsInternational />
       <WhatCanYouSend/>
       <CTABanner
-                            image="/ChatGPT Image Apr 23, 2026 at 11_02_53 AM.webp"
+                            image="/ChatGPT-Image-Apr-23-2026-at-11_02_53-AM.webp"
 
                     imageAlt="Courier delivering a package doorstep to doorstep in the UAE"
                     title="Same day or international"
@@ -40,4 +40,4 @@ export default function IndividualSolutionsPage() {
                   />
     </main>
   );
-}
+}

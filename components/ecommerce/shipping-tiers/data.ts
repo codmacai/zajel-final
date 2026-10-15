@@ -47,7 +47,7 @@ export const TIERS: ShippingTier[] = [
       'Monthly performance reports',
     ],
     buttonLabel: 'Talk to Sales',
-    buttonUrl: '/contact',
+    buttonUrl: '/support',
     recommended: true,
   },
   {
@@ -66,7 +66,7 @@ export const TIERS: ShippingTier[] = [
       'Custom SLA agreements',
     ],
     buttonLabel: 'Talk to Sales',
-    buttonUrl: '/contact',
+    buttonUrl: '/support',
     recommended: false,
   },
-];
+];

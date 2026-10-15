@@ -35,7 +35,7 @@ const defaultContent = {
       id: 4,
       title: 'Team at Work',
       caption: 'Our operations team',
-      image: '/about/gallery/magnific_ultrarealistic-cinematic-_bx9dOx85Y2 (1).jpg', // 👈 Replace with real Zajel asset
+      image: '/about/gallery/magnific_ultrarealistic-cinematic-_bx9dOx85Y2-1.jpg', // 👈 Replace with real Zajel asset
     },
   ],
 };
@@ -192,4 +192,4 @@ const FacilityGallery: FC = () => {
   );
 };
 
-export default FacilityGallery;
+export default FacilityGallery;

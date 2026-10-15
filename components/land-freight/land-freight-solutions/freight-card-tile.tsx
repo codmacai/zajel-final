@@ -120,7 +120,7 @@ const FreightCardTile = ({
           className="mt-6 flex items-center justify-start pt-2"
         >
           <Link
-            href={buttonUrl || '/contact'}
+            href={buttonUrl || '/support'}
             className="inline-flex items-center gap-2 rounded-full bg-[#36B936] px-4 py-2 text-xs font-medium text-[#05361A] transition-all duration-200 hover:scale-[1.03] hover:bg-[#2fa32f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#36B936]"
           >
             <span>{buttonLabel || 'Learn More'}</span>
@@ -132,4 +132,4 @@ const FreightCardTile = ({
   );
 };
 
-export default FreightCardTile;
+export default FreightCardTile;

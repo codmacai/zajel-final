@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Open App</title>
+
+  <!-- Optional: better preview when shared on Instagram/WhatsApp -->
+  <meta property="og:title" content="Open Our App" />
+  <meta property="og:description" content="Continue in the app or on the website." />
+  <meta property="og:type" content="website" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f6f7f9;
+      color: #111827;
+    }
+
+    .card {
+      width: 90%;
+      max-width: 420px;
+      background: white;
+      border-radius: 18px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 24px;
+    }
+
+    p {
+      color: #6b7280;
+      line-height: 1.5;
+    }
+
+    .button {
+      display: block;
+      margin-top: 18px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      background: #111827;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Opening the app...</h1>
+    <p>If nothing happens, choose an option below.</p>
+
+    <a id="mainButton" class="button" href="#">Open App</a>
+    <a id="webButton" class="button secondary" href="#">Continue on Website</a>
+  </div>
+
+  <script>
+    // -----------------------------
+    // CHANGE THESE VALUES
+    // -----------------------------
+
+    const IOS_APP_STORE_URL = "https://apps.apple.com/ae/app/zajel-logistics-services/id6739629287";
+    const ANDROID_PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.zajel.app";
+    const WEBSITE_URL = "https://www.zajel.com/";
+
+    // Custom deep links. Your mobile apps must support these.
+    const IOS_DEEP_LINK = "zajelapp://home";
+    const ANDROID_DEEP_LINK = "zajelapp://home";
+
+    // Optional: use a specific page/product/offer from the URL.
+    // Example: https://go.yourwebsite.com/open?path=/product/123
+    const params = new URLSearchParams(window.location.search);
+    const path = params.get("path") || "";
+
+    const finalWebsiteUrl = WEBSITE_URL + path;
+    const finalIosDeepLink = IOS_DEEP_LINK + path;
+    const finalAndroidDeepLink = ANDROID_DEEP_LINK + path;
+
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+    const isAndroid = /android/i.test(userAgent);
+    const isInstagram = /Instagram/i.test(userAgent);
+
+    const mainButton = document.getElementById("mainButton");
+    const webButton = document.getElementById("webButton");
+
+    webButton.href = finalWebsiteUrl;
+
+    function openAppWithFallback(deepLink, fallbackUrl) {
+      const startTime = Date.now();
+
+      // Try opening the app
+      window.location.href = deepLink;
+
+      // If app does not open, send user to store after delay
+      setTimeout(function () {
+        const elapsed = Date.now() - startTime;
+
+        // If user is still on this page, assume app did not open
+        if (elapsed < 2500) {
+          window.location.href = fallbackUrl;
+        }
+      }, 1800);
+    }
+
+    if (isIOS) {
+      mainButton.href = finalIosDeepLink;
+      mainButton.onclick = function (e) {
+        e.preventDefault();
+        openAppWithFallback(finalIosDeepLink, IOS_APP_STORE_URL);
+      };
+
+      // Auto-open. Instagram may block this sometimes.
+      if (!isInstagram) {
+        openAppWithFallback(finalIosDeepLink, IOS_APP_STORE_URL);
+      }
+    } else if (isAndroid) {
+      mainButton.href = finalAndroidDeepLink;
+      mainButton.onclick = function (e) {
+        e.preventDefault();
+        openAppWithFallback(finalAndroidDeepLink, ANDROID_PLAY_STORE_URL);
+      };
+
+      if (!isInstagram) {
+        openAppWithFallback(finalAndroidDeepLink, ANDROID_PLAY_STORE_URL);
+      }
+    } else {
+      mainButton.textContent = "Continue on Website";
+      mainButton.href = finalWebsiteUrl;
+      window.location.href = finalWebsiteUrl;
+    }
+  </script>
+</body>
+</html>

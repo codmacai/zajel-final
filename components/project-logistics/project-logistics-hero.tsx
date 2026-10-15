@@ -16,7 +16,7 @@ const content: DynamicHeroContent = {
   description: hero.description,
   primaryCta: {
     label: hero.ctaText ?? "Request a Quote",
-    url: hero.ctaHref ?? "/quotation",
+    url: hero.ctaHref ?? "/support",
   },
   image_url: hero.image,
   imageAlt: hero.title,
@@ -26,4 +26,4 @@ const ProjectLogisticsHero: FC = () => (
   <DynamicHero id="project-logistics-hero" content={content} />
 );
 
-export default ProjectLogisticsHero;
+export default ProjectLogisticsHero;

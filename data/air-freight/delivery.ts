@@ -49,7 +49,7 @@ export interface Route {
       title: "Standard Air Freight",
       description: "Scheduled air cargo for shipments moving on regular routes and timelines.",
       buttonLabel: "Request a Quote",
-      buttonUrl: "/quotation",
+      buttonUrl: "/support",
     },
     {
       id: "charter",
@@ -58,7 +58,7 @@ export interface Route {
       description:
         "Dedicated aircraft for large, specialized, or time-critical loads that don't fit standard capacity.",
       buttonLabel: "Request a Quote",
-      buttonUrl: "/quotation",
+      buttonUrl: "/support",
     },
     {
       id: "aog",
@@ -66,7 +66,7 @@ export interface Route {
       title: "AOG (Aircraft on Ground)",
       description: "Emergency delivery of critical parts to a grounded aircraft, moved with immediate priority.",
       buttonLabel: "Request a Quote",
-      buttonUrl: "/quotation",
+      buttonUrl: "/support",
     },
   ];
   
@@ -107,8 +107,8 @@ export interface Route {
   // "Choose Your Delivery Arrangement" + "Compliance & Customs"
   // ---------------------------------------------------------------------------
   
-  export const DOOR_TO_DOOR_BASE_IMAGE_SRC = "/choose/ChatGPT Image Sep 28, 2026, 03_27_16 PM.webp";
-  export const DOOR_TO_DOOR_CUTOUT_IMAGE_SRC = "/choose/ChatGPT Image Sep 28, 2026, 03_27_25 PM (2).png";
+  export const DOOR_TO_DOOR_BASE_IMAGE_SRC = "/choose/ChatGPT-Image-Sep-28-2026-03_27_16-PM.webp";
+  export const DOOR_TO_DOOR_CUTOUT_IMAGE_SRC = "/choose/ChatGPT-Image-Sep-28-2026-03_27_25-PM-2.png";
   
   export const OTHER_ARRANGEMENTS_LINE =
     "Also available on request: Door-to-Airport, Airport-to-Door, and Airport-to-Airport arrangements — for businesses managing part of the logistics themselves.";
@@ -118,4 +118,4 @@ export interface Route {
   export const COMPLIANCE_BODY_SENTENCES = [
     "Crossing borders by air comes with documentation, duty, and regulatory requirements that vary by cargo and destination.",
     "Zajel manages customs clearance and compliance on your behalf, so your shipment moves without unnecessary delays.",
-  ];
+  ];

@@ -1,5 +1,6 @@
 "use client";
 
+import { useSupportAction } from '@/hooks/useSupportAction';
 import { motion } from "framer-motion";
 import { LIGHT_GREEN, VALUE_ADDED_SERVICES } from "@/data/air-freight/valueadded";
 
@@ -11,9 +12,10 @@ interface ValueAddedServicesProps {
 }
 
 export default function ValueAddedServices({
-  onRequestQuote,
-  contactHref = "/contact",
+  onRequestQuote: onRequestQuoteProp,
+  contactHref = "/support",
 }: ValueAddedServicesProps) {
+  const onRequestQuote = useSupportAction(onRequestQuoteProp);
   return (
     <section className="w-full overflow-hidden bg-white px-4 py-12 xs:px-6 sm:py-16 lg:px-12 lg:py-24">
       <div className="mx-auto max-w-[1320px]">
@@ -106,4 +108,4 @@ export default function ValueAddedServices({
       </div>
     </section>
   );
-}
+}

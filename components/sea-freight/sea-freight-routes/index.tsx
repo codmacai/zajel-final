@@ -1,5 +1,6 @@
 'use client';
 
+import { useSupportAction } from '@/hooks/useSupportAction';
 import { ArrowRight, Anchor } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -29,7 +30,8 @@ interface SeaFreightRoutesProps {
   contactHref?: string;
 }
 
-const SeaFreightRoutes = ({ onGetQuote, contactHref = '/contact' }: SeaFreightRoutesProps) => {
+const SeaFreightRoutes = ({ onGetQuote: onGetQuoteProp, contactHref = '/support' }: SeaFreightRoutesProps) => {
+  const onGetQuote = useSupportAction(onGetQuoteProp);
   return (
     <section
       className="w-full relative overflow-hidden py-[clamp(3.5rem,10vw,9rem)] font-sans"

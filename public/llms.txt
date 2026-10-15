@@ -1,0 +1,40 @@
+# Zajel
+
+> Zajel (ZAJEL Courier Services) is a UAE logistics company founded in Dubai in 2008. It offers same-day and next-day courier delivery across the UAE, international shipping to 195 countries, air, sea and land freight, customs clearance, warehousing, e-commerce fulfilment and secure government and document courier services. Customer support: 600 53 11 11.
+
+## Courier and delivery
+
+- [Domestic On-Demand Delivery](https://www.zajel.com/domestic-courier): Same-day and next-day doorstep delivery across the UAE, by motorbike (up to 10 kg) or car (up to 30 kg).
+- [International Shipping](https://www.zajel.com/international-courier): Express and standard shipping from the UAE to 195 countries with tracking and customs clearance support.
+- [E-commerce Fulfilment](https://www.zajel.com/ecommerce): Store integrations, order fulfilment, nationwide delivery, cash on delivery and merchant reporting.
+- [Send a Shipment](https://www.zajel.com/send-shipment): Book a domestic or international doorstep pickup online.
+- [Track a Shipment](https://www.zajel.com/track): Track a Zajel shipment by AWB or mobile number.
+- [Rate Calculator](https://www.zajel.com/quotation): Instant domestic and international courier rates.
+
+## Freight and logistics
+
+- [Air Freight](https://www.zajel.com/air-freight): Express and consolidated air cargo from the UAE worldwide, including dangerous goods and door-to-door delivery.
+- [Sea Freight](https://www.zajel.com/sea-freight): FCL and LCL shipping from UAE ports, with bonded storage, marine insurance and customs clearance.
+- [Land Freight](https://www.zajel.com/land-freight): FTL and LTL road freight across the UAE and GCC and cross-border to Jordan, Turkey and Europe, with TIR transit and cold chain.
+- [Customs Clearance](https://www.zajel.com/customs-clearance): Customs clearance and brokerage for air, sea and land shipments across the UAE.
+- [Warehousing](https://www.zajel.com/warehouse): Dubai warehousing and distribution with real-time inventory management.
+- [Project Logistics](https://www.zajel.com/projects): Oversized and project cargo across the UAE by air, sea and land.
+- [Industry Solutions](https://www.zajel.com/industry): Sector-specific logistics, from cold chain pharma to oil and gas cargo.
+
+## Secure solutions
+
+- [Secure Solutions](https://www.zajel.com/secure-solutions): High-security courier services for UAE government entities and institutions.
+- [Government & Institutional Logistics](https://www.zajel.com/secure-gov): Documented, compliant courier services for UAE public institutions.
+- [Secure ID Delivery](https://www.zajel.com/secure-id): Passports, Emirates ID cards and licences delivered with recipient verification at the door.
+- [Secure Document Courier](https://www.zajel.com/secure-docs): Legal and official documents with chain-of-custody controls and tamper-evident packaging.
+- [Secure Mail](https://www.zajel.com/secure-mail): Confidential correspondence hand-delivered to the named recipient anywhere in the UAE.
+
+## Company
+
+- [About Zajel](https://www.zajel.com/about)
+- [Business Solutions](https://www.zajel.com/business-solutions)
+- [Individual Solutions](https://www.zajel.com/individual-solutions)
+- [Logistics Network](https://www.zajel.com/network)
+- [Careers](https://www.zajel.com/careers)
+- [Support Center](https://www.zajel.com/support)
+- [FAQ](https://www.zajel.com/faq): Answers on courier, freight, customs, warehousing and e-commerce in the UAE.

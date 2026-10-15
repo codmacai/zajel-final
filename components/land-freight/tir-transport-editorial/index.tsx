@@ -168,7 +168,7 @@ const TirTransportEditorial = ({
   heroImageSrc = '/landfreight/tir-transport.png',
   heroImageAlt = 'International Logistics and TIR Transport',
   onRequestQuote,
-  quoteHref,
+  quoteHref = '/support',
   onLearnMoreCustoms,
   customsHref = '/customs-clearance',
 }: TirTransportEditorialProps) => {
@@ -336,4 +336,4 @@ const TirTransportEditorial = ({
   );
 };
 
-export default TirTransportEditorial;
+export default TirTransportEditorial;

@@ -34,16 +34,16 @@ export default function BusinessSolutionsPage() {
       <TechnologyVisibility />
       <WhyBusinessesChoose />
       <CTABanner
-        image="/ChatGPT Image Apr 23, 2026 at 11_02_53 AM.webp"
+        image="/ChatGPT-Image-Apr-23-2026-at-11_02_53-AM.webp"
         imageAlt="Courier delivering a package doorstep to doorstep in the UAE"
               title="Ready to Scale"
               description="Get a quote, talk to our logistics team or calculate your shipping rate, however you want to start.We're ready"
               priority
               buttons={[
-                { label: "Get a quote", href: "/quotation", variant: "primary" },
-                { label: "Talk to our team", href: "/contact", variant: "secondary" },
+                { label: "Get a quote", href: "/support", variant: "primary" },
+                { label: "Talk to our team", href: "/support", variant: "secondary" },
               ]}
             />
     </main>
   );
-}
+}

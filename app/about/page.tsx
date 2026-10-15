@@ -43,7 +43,7 @@ export default function AboutPage() {
       {/* a card downloads its PDF once it's in /public/documents/, and asks for a copy by email until then */}
       <CompanyDocuments available={DOCUMENTS_READY} />
       <CTABanner
-              image="/ChatGPT Image Apr 23, 2026 at 11_02_53 AM.webp"
+              image="/ChatGPT-Image-Apr-23-2026-at-11_02_53-AM.webp"
               imageAlt="Courier delivering a package doorstep to doorstep in the UAE"
               title="Zajel — intelligent movement,"
               description="For everyone who needs something moved.."
@@ -51,7 +51,7 @@ export default function AboutPage() {
               buttons={[
                 { label: "Explore Our Solutions", href: "/#solutions", variant: "primary" },
                 { label: "Careers at Zajel", href: "/careers", variant: "secondary" },
-                { label: "Get in Touch", href: "/contact", variant: "secondary" },
+                { label: "Get in Touch", href: "/support", variant: "secondary" },
               ]}
             />
     </main>

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { dockItems } from "@/data/dockItems";
-import { TRACK_ROUTES } from "@/components/tracking/data";
+import { TRACK_ROUTES, trackResultsHref } from "@/components/tracking/data";
 import DockItem from "./DockItem"; // desktop dock item
 import MobileDock from "./MobileDock"; // mobile notch dock (separate file)
 import styles from "./Hero.module.css";
@@ -20,7 +20,7 @@ const HeroSection: React.FC = () => {
     e.preventDefault();
     const value = String(new FormData(e.currentTarget).get("awb") ?? "").trim();
     router.push(
-      value ? `${TRACK_ROUTES.results}?q=${encodeURIComponent(value)}` : TRACK_ROUTES.search
+      value ? trackResultsHref(value) : TRACK_ROUTES.search
     );
   };
 
@@ -74,7 +74,7 @@ const HeroSection: React.FC = () => {
           <p className="mt-3 max-w-[34ch] text-balance text-sm font-light leading-relaxed text-[#0A4D26]/70">
             {t(
               "hero.subtitle",
-              "From a single shipment to a full supply chain, Zajel moves what matters, across the UAE and to 200+ countries beyond it"
+              "From a single shipment to a full supply chain, Zajel moves what matters, across the UAE and to 195 countries beyond it"
             )}
           </p>
 
@@ -176,7 +176,7 @@ const HeroSection: React.FC = () => {
               >
                 {t(
                   "hero.subtitle",
-                  "From a single shipment to a full supply chain, Zajel moves what matters, across the UAE and to 200+ countries beyond it"
+                  "From a single shipment to a full supply chain, Zajel moves what matters, across the UAE and to 195 countries beyond it"
                 )}
               </p>
             </div>

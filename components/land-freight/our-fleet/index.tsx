@@ -21,21 +21,21 @@ const TRUCK_TYPES: TruckType[] = [
     title: '40-Foot Box Truck',
     description:
       'Full-size enclosed box trucks built for high-volume, full truckload (FTL) shipments. The standard choice for long-haul and cross-border moves where maximum cargo capacity is the priority.',
-    imageUrl: '/land-freight/vehicle/ChatGPT Image Sep 29, 2026, 03_43_04 AM.png',
+    imageUrl: '/land-freight/vehicle/ChatGPT-Image-Sep-29-2026-03_43_04-AM.png',
   },
   {
     id: 'flatbed',
     title: 'Flatbed Trailers',
     description:
       'Open platform trailers for oversized cargo, construction materials, machinery, and equipment that cannot fit in enclosed containers. Available with securing equipment including straps, chains, and dunnage for safe transport.',
-    imageUrl: '/land-freight/vehicle/ChatGPT Image Sep 29, 2026, 03_22_23 AM.png',
+    imageUrl: '/land-freight/vehicle/ChatGPT-Image-Sep-29-2026-03_22_23-AM.png',
   },
   {
     id: 'standard-dry',
     title: 'Standard Dry Trucks',
     description:
       'Enclosed dry freight trucks for general cargo, packaged goods, and palletized shipments. Available in multiple sizes from 3-ton pickup trucks for local deliveries to 40-foot trailers for full truckload (FTL) shipments across the GCC and beyond.',
-    imageUrl: '/land-freight/vehicle/ChatGPT Image Sep 29, 2026, 03_44_41 AM.png',
+    imageUrl: '/land-freight/vehicle/ChatGPT-Image-Sep-29-2026-03_44_41-AM.png',
   },
   {
     id: 'reefer',
@@ -47,21 +47,21 @@ const TRUCK_TYPES: TruckType[] = [
       'Real-time temperature monitoring',
       'Cold chain compliance documentation',
     ],
-    imageUrl: '/land-freight/vehicle/ChatGPT Image Sep 29, 2026, 03_29_33 AM.webp',
+    imageUrl: '/land-freight/vehicle/ChatGPT-Image-Sep-29-2026-03_29_33-AM.webp',
   },
   {
     id: 'curtain-side',
     title: 'Curtain-side Trailers',
     description:
       'Side-loading trailers that allow quick loading and unloading from the side without specialized dock equipment. Suitable for oversized pallets, building materials, and shipments that require crane or forklift loading from the side.',
-    imageUrl: '/land-freight/vehicle/ChatGPT Image Sep 29, 2026, 03_37_54 AM.webp',
+    imageUrl: '/land-freight/vehicle/ChatGPT-Image-Sep-29-2026-03_37_54-AM.webp',
   },
   {
     id: 'low-loader',
     title: 'Low Loader Trailers',
     description:
       'Heavy-duty trailers designed for transporting heavy machinery, industrial equipment, and project cargo that exceeds standard height and weight limits. Used for construction equipment, generators, and large industrial components.',
-    imageUrl: '/land-freight/vehicle/ChatGPT Image Sep 29, 2026, 03_33_34 AM.webp',
+    imageUrl: '/land-freight/vehicle/ChatGPT-Image-Sep-29-2026-03_33_34-AM.webp',
   },
 ];
 
@@ -178,14 +178,14 @@ const OurFleetSection = () => {
 
           <div className="flex w-full flex-col sm:w-auto sm:flex-row items-center gap-3 shrink-0">
             <Link
-              href="/contact"
+              href="/support"
               className="inline-flex w-full sm:w-auto items-center justify-center rounded-full bg-[#36B936] px-6 py-3 text-xs sm:text-sm font-medium text-[#05361A] transition-all duration-200 hover:scale-[1.03] hover:bg-[#2fa32f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#36B936]"
             >
               Get a Land Freight Quote
             </Link>
 
             <Link
-              href="/contact?type=project-cargo"
+              href="/support?type=project-cargo"
               className="group inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-xs sm:text-sm font-medium text-white backdrop-blur-sm transition-all duration-200 hover:bg-white hover:text-[#0A4D26] hover:scale-[1.02]"
             >
               <span>Contact Us for Project Cargo</span>
@@ -199,4 +199,4 @@ const OurFleetSection = () => {
   );
 };
 
-export default OurFleetSection;
+export default OurFleetSection;

@@ -1,8 +1,8 @@
 // components/SeaFreight/ChooseDeliveryAndComplianceSea/ChooseDeliveryAndComplianceSea.tsx
 import DynamicDelivery from "@/components/DynamicDelivery/DeliveryDelivery";
 
-const BASE_IMAGE_SRC = "/choose/ChatGPT Image Sep 28, 2026, 03_27_16 PM.webp";
-const CUTOUT_IMAGE_SRC = "/choose/ChatGPT Image Sep 28, 2026, 03_27_25 PM (2).png";
+const BASE_IMAGE_SRC = "/choose/ChatGPT-Image-Sep-28-2026-03_27_16-PM.webp";
+const CUTOUT_IMAGE_SRC = "/choose/ChatGPT-Image-Sep-28-2026-03_27_25-PM-2.png";
 
 const OTHER_ARRANGEMENTS_LINE =
   "Also available on request: Door-to-Port, Port-to-Door, and Port-to-Port arrangements — for businesses managing part of the logistics themselves.";
@@ -23,7 +23,7 @@ const ChooseDeliveryAndComplianceSea = () => (
       title: "Door-to-Door",
       body: "Pickup at your origin address, delivered straight to the final destination — no extra coordination required on your end. This is how most Zajel sea freight shipments move, start to finish.",
       ctaLabel: "Request Door-to-Door Quote",
-      ctaUrl: "/quotation?arrangement=door-to-door",
+      ctaUrl: "/support",
       baseImage: BASE_IMAGE_SRC,
       cutoutImage: CUTOUT_IMAGE_SRC,
       baseAlt: "Door-to-Door sea freight background",
@@ -38,4 +38,4 @@ const ChooseDeliveryAndComplianceSea = () => (
   />
 );
 
-export default ChooseDeliveryAndComplianceSea;
+export default ChooseDeliveryAndComplianceSea;
