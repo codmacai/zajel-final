@@ -5,7 +5,7 @@ import { Minus, Plus } from 'lucide-react';
 import { typo } from '@/components/ui copy/typography';
 import type { FaqCategory } from './data';
 
-/** Accordion for one category. Remounted (via `key`) on tab change so the first item re-opens. */
+/** Accordion for one category (every category is rendered; inactive ones are hidden). */
 function FaqList({ category, panelId }: { category: FaqCategory; panelId: string }) {
   const [open, setOpen] = useState<Set<number>>(() => new Set([0]));
 
@@ -83,9 +83,8 @@ export default function FaqExplorer({ categories }: { categories: FaqCategory[] 
   const [activeId, setActiveId] = useState(categories[0].id);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  const active = categories.find((c) => c.id === activeId) ?? categories[0];
   const tabId = (id: string) => `${uid}-tab-${id}`;
-  const panelId = `${uid}-panel`;
+  const panelId = (id: string) => `${uid}-panel-${id}`;
 
   const select = (index: number) => {
     const next = (index + categories.length) % categories.length;
@@ -124,7 +123,7 @@ export default function FaqExplorer({ categories }: { categories: FaqCategory[] 
                 type="button"
                 id={tabId(cat.id)}
                 aria-selected={isActive}
-                aria-controls={panelId}
+                aria-controls={panelId(cat.id)}
                 tabIndex={isActive ? 0 : -1}
                 onClick={() => setActiveId(cat.id)}
                 onKeyDown={(e) => onKeyDown(e, i)}
@@ -141,16 +140,27 @@ export default function FaqExplorer({ categories }: { categories: FaqCategory[] 
         </div>
       </div>
 
-      <div id={panelId} role="tabpanel" aria-labelledby={tabId(active.id)} className="mt-8 sm:mt-10 lg:mt-12">
-        <div className="mb-5 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 sm:mb-6">
-          <h2 className={`${typo.subheading} text-[#1b4332]`}>{active.heading}</h2>
-          <span className="text-[12px] font-medium text-[#2d6a4f]/70 sm:text-[12.5px]">
-            {active.questions.length} {active.questions.length === 1 ? 'question' : 'questions'}
-          </span>
-        </div>
+      {/* Every category is in the HTML so crawlers see all questions and answers; only the
+          selected one is shown. */}
+      {categories.map((cat) => (
+        <div
+          key={cat.id}
+          id={panelId(cat.id)}
+          role="tabpanel"
+          aria-labelledby={tabId(cat.id)}
+          hidden={cat.id !== activeId}
+          className="mt-8 sm:mt-10 lg:mt-12"
+        >
+          <div className="mb-5 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 sm:mb-6">
+            <h2 className={`${typo.subheading} text-[#1b4332]`}>{cat.heading}</h2>
+            <span className="text-[12px] font-medium text-[#2d6a4f]/70 sm:text-[12.5px]">
+              {cat.questions.length} {cat.questions.length === 1 ? 'question' : 'questions'}
+            </span>
+          </div>
 
-        <FaqList key={active.id} category={active} panelId={active.id} />
-      </div>
+          <FaqList category={cat} panelId={cat.id} />
+        </div>
+      ))}
     </div>
   );
 }

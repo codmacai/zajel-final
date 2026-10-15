@@ -12,7 +12,7 @@ export const SECURE_MAIL_HERO: HeroContent = {
   title: "Confidential Mail,\nProtected End to End",
   description: "Sensitive correspondence is sealed, tracked and delivered directly to the named recipient.",
   primaryLabel: "Send Secure Mail",
-  primaryHref: "/contact",
+  primaryHref: "/support",
   secondaryLabel: "Track Shipment",
   secondaryHref: "/track",
   image: "/securesol/mail-desktop-image.webp",

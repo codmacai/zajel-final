@@ -19,7 +19,7 @@ export const Domestc_FAQS: FaqQuestion[] = [
       {
         question: "What's the difference between same day and next day delivery?",
         answer:
-          'Both let you schedule your pickup by day and time. With same day delivery, pickup happens today, within 1 hour of your chosen slot, and delivery follows within 2 hours. Next day delivery schedules the same process for the following day, for shipments where a next-day window works better.',
+          'Both let you schedule your pickup by day and time. With same day delivery, pickup happens today, within 1 hour of your chosen slot, and delivery follows within 1 hour. Next day delivery schedules the same process for the following day, for shipments where a next-day window works better.',
       },
       {
         question: 'Can I schedule my pickup for a specific time?',

@@ -37,16 +37,15 @@ const ROUTES: Entry[] = [
   { path: '/about', priority: 0.6, changeFrequency: 'yearly' },
   { path: '/network', priority: 0.6, changeFrequency: 'yearly' },
   { path: '/careers', priority: 0.5, changeFrequency: 'weekly' },
-  { path: '/contact', priority: 0.6, changeFrequency: 'yearly' },
   { path: '/support', priority: 0.5, changeFrequency: 'monthly' },
   { path: '/faq', priority: 0.6, changeFrequency: 'monthly' },
 ];
 
+// No lastModified: it was always the build time, which search engines learn to ignore. Add a
+// real per-page date here only if one is tracked.
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
   return ROUTES.map(({ path, priority, changeFrequency }) => ({
     url: `${SITE.url}${path}`,
-    lastModified,
     changeFrequency,
     priority,
   }));

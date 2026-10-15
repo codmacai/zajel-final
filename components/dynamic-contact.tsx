@@ -43,7 +43,7 @@ export default function ContactBand({
   contactInfo = DEFAULT_CONTACT_INFO,
   primaryCta = {
     label: 'Request a Freight Quote',
-    url: '/contact',
+    url: '/support',
   },
   secondaryCta,
   onCtaClick,
@@ -95,57 +95,42 @@ export default function ContactBand({
             </div>
 
             {/* Dynamic Glassmorphism Contact Details */}
-            {(mergedContact.email || mergedContact.phone || mergedContact.address) && (
-              <div className="mt-7 sm:mt-9 grid w-full max-w-[940px] grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
-                {mergedContact.email && (
-                  <a
-                    href={`mailto:${mergedContact.email}`}
-                    className="group flex flex-col items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] p-4 sm:p-4.5 backdrop-blur-md transition-all duration-300 hover:border-[#36B936]/40 hover:bg-white/[0.08]"
-                  >
-                    <span className="mb-2 flex h-9 w-9 items-center justify-center rounded-lg bg-[#36B936]/15 text-[#36B936] transition-transform duration-300 group-hover:scale-105">
-                      <Mail className="h-4.5 w-4.5" strokeWidth={1.75} />
-                    </span>
-                    <span className="text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-white/50">
-                      Email Us
-                    </span>
-                    <span className="mt-0.5 text-xs sm:text-sm font-medium text-white/95 truncate max-w-full">
-                      {mergedContact.email}
-                    </span>
-                  </a>
-                )}
+          {(mergedContact.email || mergedContact.phone || mergedContact.address) && (
+            <div className="mt-7 sm:mt-9 grid w-full max-w-[640px] grid-cols-1 sm:grid-cols-2 gap-3.5">
+              {/* {mergedContact.email && ( ...unchanged... )} */}
 
-                {mergedContact.phone && (
-                  <a
-                    href={`tel:${mergedContact.phone.replace(/\s+/g, '')}`}
-                    className="group flex flex-col items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] p-4 sm:p-4.5 backdrop-blur-md transition-all duration-300 hover:border-[#36B936]/40 hover:bg-white/[0.08]"
-                  >
-                    <span className="mb-2 flex h-9 w-9 items-center justify-center rounded-lg bg-[#36B936]/15 text-[#36B936] transition-transform duration-300 group-hover:scale-105">
-                      <Phone className="h-4.5 w-4.5" strokeWidth={1.75} />
-                    </span>
-                    <span className="text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-white/50">
-                      Call Directly
-                    </span>
-                    <span className="mt-0.5 text-xs sm:text-sm font-medium text-white/95 truncate max-w-full">
-                      {mergedContact.phone}
-                    </span>
-                  </a>
-                )}
+              {mergedContact.phone && (
+                <a
+                  href={`tel:${mergedContact.phone.replace(/\s+/g, '')}`}
+                  className="group flex flex-col items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] p-4 sm:p-4.5 backdrop-blur-md transition-all duration-300 hover:border-[#36B936]/40 hover:bg-white/[0.08]"
+                >
+                  <span className="mb-2 flex h-9 w-9 items-center justify-center rounded-lg bg-[#36B936]/15 text-[#36B936] transition-transform duration-300 group-hover:scale-105">
+                    <Phone className="h-4.5 w-4.5" strokeWidth={1.75} />
+                  </span>
+                  <span className="text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-white/50">
+                    Call Directly
+                  </span>
+                  <span className="mt-0.5 text-xs sm:text-sm font-medium text-white/95 truncate max-w-full">
+                    {mergedContact.phone}
+                  </span>
+                </a>
+              )}
 
-                {mergedContact.address && (
-                  <div className="group flex flex-col items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] p-4 sm:p-4.5 backdrop-blur-md transition-all duration-300 hover:border-[#36B936]/40 hover:bg-white/[0.08] sm:col-span-2 lg:col-span-1">
-                    <span className="mb-2 flex h-9 w-9 items-center justify-center rounded-lg bg-[#36B936]/15 text-[#36B936] transition-transform duration-300 group-hover:scale-105">
-                      <MapPin className="h-4.5 w-4.5" strokeWidth={1.75} />
-                    </span>
-                    <span className="text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-white/50">
-                      Headquarters
-                    </span>
-                    <span className="mt-0.5 text-xs sm:text-sm font-medium text-white/95 text-center leading-snug line-clamp-2">
-                      {mergedContact.address}
-                    </span>
-                  </div>
-                )}
-              </div>
-            )}
+              {mergedContact.address && (
+                <div className="group flex flex-col items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] p-4 sm:p-4.5 backdrop-blur-md transition-all duration-300 hover:border-[#36B936]/40 hover:bg-white/[0.08]">
+                  <span className="mb-2 flex h-9 w-9 items-center justify-center rounded-lg bg-[#36B936]/15 text-[#36B936] transition-transform duration-300 group-hover:scale-105">
+                    <MapPin className="h-4.5 w-4.5" strokeWidth={1.75} />
+                  </span>
+                  <span className="text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-white/50">
+                    Headquarters
+                  </span>
+                  <span className="mt-0.5 text-xs sm:text-sm font-medium text-white/95 text-center leading-snug line-clamp-2">
+                    {mergedContact.address}
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
 
             {/* Signature CTA Buttons */}
             {(primaryCta || secondaryCta) && (

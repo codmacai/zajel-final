@@ -2,22 +2,46 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { solutionsCategories, aboutItems, resourcesItems, type NavItem } from "@/data/navigation";
+import {
+  solutionsCategories,
+  aboutItems,
+  resourcesItems,
+  type NavItem,
+} from "@/data/navigation";
+
 import Badge from "./Badge";
 import IconPlaceholder from "./IconPlaceholder";
 import Chevron from "./Chevron";
 import Logo from "./Logo";
 import LanguageSwitcher from "./LanguageSwitcher";
+import AccountLink from "./AccountLink";
 
-export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+export default function MobileMenu({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
   const [openSection, setOpenSection] = useState<string | null>(null);
-  const [mobileSubCat, setMobileSubCat] = useState<Record<string, number | null>>({});
+  const [mobileSubCat, setMobileSubCat] = useState<
+    Record<string, number | null>
+  >({});
 
-  const toggle = (key: string) => setOpenSection((p) => (p === key ? null : key));
-  const toggleSub = (key: string, idx: number) => setMobileSubCat((p) => ({ ...p, [key]: p[key] === idx ? null : idx }));
+  const toggle = (key: string) => {
+    setOpenSection((p) => (p === key ? null : key));
+  };
+
+  const toggleSub = (key: string, idx: number) => {
+    setMobileSubCat((p) => ({
+      ...p,
+      [key]: p[key] === idx ? null : idx,
+    }));
+  };
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
+
     return () => {
       document.body.style.overflow = "";
     };
@@ -28,18 +52,41 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
     { label: "Track", path: "/track" },
   ];
 
-  const megaItems: { key: string; label: string; categories?: typeof solutionsCategories; items?: NavItem[] }[] = [
-    { key: "solutions", label: "Solutions", categories: solutionsCategories },
-    { key: "about", label: "About Us", items: aboutItems },
-    { key: "resources", label: "Resources", items: resourcesItems },
+  const megaItems: {
+    key: string;
+    label: string;
+    categories?: typeof solutionsCategories;
+    items?: NavItem[];
+  }[] = [
+    {
+      key: "solutions",
+      label: "Solutions",
+      categories: solutionsCategories,
+    },
+    {
+      key: "about",
+      label: "About Us",
+      items: aboutItems,
+    },
+    {
+      key: "resources",
+      label: "Resources",
+      items: resourcesItems,
+    },
   ];
 
   const renderFlatItem = (item: NavItem, iIdx: number) => (
     <Link
       key={iIdx}
       href={item.path}
-      onClick={() => onClose()}
-      style={{ display: "flex", alignItems: "center", gap: 16, padding: "12px 24px 12px 32px", textDecoration: "none" }}
+      onClick={onClose}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 16,
+        padding: "12px 24px 12px 32px",
+        textDecoration: "none",
+      }}
     >
       <div
         style={{
@@ -57,25 +104,47 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
       >
         {item.icon ?? <IconPlaceholder />}
       </div>
+
       <div>
-        <p style={{ margin: 0, fontSize: 14, fontWeight: 500, color: "#0A4D26", display: "flex", alignItems: "center", gap: 6 }}>
+        <p
+          style={{
+            margin: 0,
+            fontSize: 14,
+            fontWeight: 500,
+            color: "#0A4D26",
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
+          }}
+        >
           {item.name}
+
           {item.badge && <Badge type={item.badge} />}
         </p>
-        <p style={{ margin: "4px 0 0", fontSize: 12, fontWeight: 300, color: "#6b7280" }}>{item.desc}</p>
+
+        <p
+          style={{
+            margin: "4px 0 0",
+            fontSize: 12,
+            fontWeight: 300,
+            color: "#6b7280",
+          }}
+        >
+          {item.desc}
+        </p>
       </div>
     </Link>
   );
 
   return (
     <>
+      {/* Overlay */}
       <div
         onClick={onClose}
         style={{
           position: "fixed",
           inset: 0,
           background: "rgba(0,0,0,0.4)",
-          // blur only while open: an invisible full-screen blur still costs every frame on phones
           backdropFilter: isOpen ? "blur(6px)" : "none",
           WebkitBackdropFilter: isOpen ? "blur(6px)" : "none",
           zIndex: 58,
@@ -85,6 +154,7 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
         }}
       />
 
+      {/* Mobile menu */}
       <div
         style={{
           position: "fixed",
@@ -96,17 +166,25 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
           zIndex: 59,
           display: "flex",
           flexDirection: "column",
-          transform: isOpen ? "translateX(0)" : "translateX(100%)",
-          // once closed it is hidden: its shadow no longer leaks onto the page edge,
-          // and its links can't be reached by keyboard while it's off screen
+
+          transform: isOpen
+            ? "translateX(0)"
+            : "translateX(100%)",
+
           visibility: isOpen ? "visible" : "hidden",
+
           transition: isOpen
             ? "transform 0.5s cubic-bezier(0.16,1,0.3,1)"
             : "transform 0.5s cubic-bezier(0.16,1,0.3,1), visibility 0s linear 0.5s",
+
           willChange: "transform",
-          boxShadow: isOpen ? "-30px 0 60px rgba(0,0,0,0.1)" : "none",
+
+          boxShadow: isOpen
+            ? "-30px 0 60px rgba(0,0,0,0.1)"
+            : "none",
         }}
       >
+        {/* Header */}
         <div
           style={{
             display: "flex",
@@ -119,8 +197,10 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
           }}
         >
           <Logo />
+
           <button
             onClick={onClose}
+            aria-label="Close menu"
             style={{
               background: "transparent",
               border: "none",
@@ -134,18 +214,36 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
               transition: "color 0.2s",
             }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M18 6L6 18M6 6l12 12"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
             </svg>
           </button>
         </div>
 
-        <div style={{ flex: 1, overflowY: "auto", padding: "12px 0" }}>
+        {/* Scrollable menu */}
+        <div
+          style={{
+            flex: 1,
+            overflowY: "auto",
+            padding: "12px 0",
+          }}
+        >
+          {/* Standard menu items */}
           {menuItems.map((item) => (
             <Link
               key={item.path}
               href={item.path}
-              onClick={() => onClose()}
+              onClick={onClose}
               style={{
                 display: "block",
                 padding: "16px 24px",
@@ -160,88 +258,177 @@ export default function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClo
             </Link>
           ))}
 
-          {megaItems.map(({ key, label, categories, items }) => (
-            <div key={key} style={{ borderBottom: "1px solid rgba(0,0,0,0.03)" }}>
-              <button
-                onClick={() => toggle(key)}
+          {/* Mega menu sections */}
+          {megaItems.map(
+            ({ key, label, categories, items }) => (
+              <div
+                key={key}
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  width: "100%",
-                  padding: "16px 24px",
-                  fontSize: 15,
-                  fontWeight: 400,
-                  color: "#0A4D26",
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
+                  borderBottom:
+                    "1px solid rgba(0,0,0,0.03)",
                 }}
               >
-                {label}
-                <Chevron open={openSection === key} />
-              </button>
+                <button
+                  onClick={() => toggle(key)}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    width: "100%",
+                    padding: "16px 24px",
+                    fontSize: 15,
+                    fontWeight: 400,
+                    color: "#0A4D26",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  {label}
 
-              {openSection === key && (
-                <div style={{ paddingBottom: 16 }}>
-                  {categories &&
-                    categories.map((cat, catIdx) => (
-                      <div key={cat.id}>
-                        <button
-                          onClick={() => toggleSub(key, catIdx)}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            width: "100%",
-                            padding: "12px 24px 12px 32px",
-                            fontSize: 11,
-                            fontWeight: cat.highlight ? 700 : 600,
-                            color: cat.highlight ? "#0A4D26" : "#9ca3af",
-                            textTransform: "uppercase",
-                            letterSpacing: "0.1em",
-                            background: "none",
-                            border: "none",
-                            cursor: "pointer",
-                          }}
-                        >
-                          {cat.columnLabel}
-                          <Chevron open={mobileSubCat[key] === catIdx} />
-                        </button>
+                  <Chevron open={openSection === key} />
+                </button>
 
-                        {mobileSubCat[key] === catIdx && cat.items.map((item, iIdx) => renderFlatItem(item, iIdx))}
-                      </div>
-                    ))}
+                {openSection === key && (
+                  <div
+                    style={{
+                      paddingBottom: 16,
+                    }}
+                  >
+                    {/* Categories */}
+                    {categories &&
+                      categories.map(
+                        (cat, catIdx) => (
+                          <div key={cat.id}>
+                            <button
+                              onClick={() =>
+                                toggleSub(
+                                  key,
+                                  catIdx
+                                )
+                              }
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent:
+                                  "space-between",
+                                width: "100%",
+                                padding:
+                                  "12px 24px 12px 32px",
+                                fontSize: 11,
+                                fontWeight:
+                                  cat.highlight
+                                    ? 700
+                                    : 600,
+                                color: cat.highlight
+                                  ? "#0A4D26"
+                                  : "#9ca3af",
+                                textTransform:
+                                  "uppercase",
+                                letterSpacing:
+                                  "0.1em",
+                                background: "none",
+                                border: "none",
+                                cursor: "pointer",
+                              }}
+                            >
+                              {cat.columnLabel}
 
-                  {items && items.map((item, iIdx) => renderFlatItem(item, iIdx))}
-                </div>
-              )}
-            </div>
-          ))}
+                              <Chevron
+                                open={
+                                  mobileSubCat[
+                                    key
+                                  ] === catIdx
+                                }
+                              />
+                            </button>
 
-          <div style={{ padding: "24px" }}>
+                            {mobileSubCat[key] ===
+                              catIdx &&
+                              cat.items.map(
+                                (item, iIdx) =>
+                                  renderFlatItem(
+                                    item,
+                                    iIdx
+                                  )
+                              )}
+                          </div>
+                        )
+                      )}
+
+                    {/* Flat items */}
+                    {items &&
+                      items.map(
+                        (item, iIdx) =>
+                          renderFlatItem(
+                            item,
+                            iIdx
+                          )
+                      )}
+                  </div>
+                )}
+              </div>
+            )
+          )}
+
+          {/* Support Center - Last menu item */}
+          <Link
+            href="/support"
+            onClick={onClose}
+            style={{
+              display: "block",
+              padding: "16px 24px",
+              fontSize: 15,
+              fontWeight: 400,
+              color: "#0A4D26",
+              textDecoration: "none",
+              borderBottom:
+                "1px solid rgba(0,0,0,0.03)",
+            }}
+          >
+            Support Center
+          </Link>
+
+          {/* Language */}
+          <div
+            style={{
+              padding: "24px",
+            }}
+          >
             <LanguageSwitcher />
           </div>
         </div>
 
+        {/* Footer */}
         <div
           style={{
             padding: "20px 24px 32px",
             background: "#fafafa",
-            borderTop: "1px solid rgba(0,0,0,0.03)",
+            borderTop:
+              "1px solid rgba(0,0,0,0.03)",
             display: "flex",
             flexDirection: "column",
             gap: 12,
             flexShrink: 0,
           }}
         >
-          <Link href="/login" className="btn-login" style={{ width: "100%", textAlign: "center" }}>
-            Login
-          </Link>
+          <AccountLink
+            onClick={onClose}
+            style={{
+              width: "100%",
+              textAlign: "center",
+            }}
+          />
+
           <Link
-            href="/quotation"
+            href="/support"
             className="btn-quote"
-            style={{ width: "100%", textAlign: "center", justifyContent: "center", display: "flex" }}
+            style={{
+              width: "100%",
+              textAlign: "center",
+              justifyContent: "center",
+              display: "flex",
+            }}
           >
             Get a Quote
           </Link>

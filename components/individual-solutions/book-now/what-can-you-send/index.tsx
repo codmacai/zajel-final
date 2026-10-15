@@ -13,9 +13,9 @@ interface SizeLimitRow {
 
 const SIZE_LIMIT_ROWS: SizeLimitRow[] = [
   { shipmentType: 'Documents', maxWeight: 'Up to 4 kg' },
-  { shipmentType: 'Small Parcels', maxWeight: 'Up to 30 kg' },
-  { shipmentType: 'Large Packages', maxWeight: 'Up to 70 kg' },
-  { shipmentType: 'Heavy or Oversized', maxWeight: 'Above 70 kg' },
+  { shipmentType: 'Parcels', maxWeight: 'Up to 30 kg' },
+  // { shipmentType: 'Large Packages', maxWeight: 'Up to 70 kg' },
+  // { shipmentType: 'Heavy or Oversized', maxWeight: 'Above 70 kg' },
 ];
 
 const PACKING_TIPS = [
@@ -46,7 +46,7 @@ export default function WhatCanYouSend({
   onBookShipment,
   onContactSpecialItems,
   bookShipmentHref = '/send-shipment',
-  contactHref = '/contact',
+  contactHref = '/support',
 }: WhatCanYouSendProps) {
   return (
     <section className="w-full overflow-hidden bg-white px-4 py-16 font-sans sm:px-6 sm:py-20 md:px-12 lg:px-20 lg:py-24">
@@ -65,7 +65,7 @@ export default function WhatCanYouSend({
             </span>
           </div>
           <h2 className="mx-auto max-w-[720px] text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.15] tracking-tight text-[#0A4D26]">
-            What Can You Send?
+            What Can You Send Internationally?
           </h2>
           <p className="mt-4 sm:mt-5 max-w-[560px] text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed text-[#0A4D26]/75">
             Zajel ships documents, parcels, and packages of all sizes. Here is a quick guide to what

@@ -20,7 +20,7 @@ export default function SolutionCardTile({
   title,
   description,
   buttonLabel = "Learn More",
-  buttonUrl = "/contact",
+  buttonUrl = "/support",
   isVisible,
   delayOffset,
   sizes = "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw",
