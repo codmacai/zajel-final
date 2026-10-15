@@ -6,9 +6,9 @@ export const heroData = {
   eyebrow: 'Domestic & International',
   title: 'Individual Solutions — Personal Delivery, Handled Right',
   description:
-    "Whatever you're sending, wherever it's going — same day across the UAE, or international to 200+ countries.",
+    "Whatever you're sending, wherever it's going — same day across the UAE, or international to 195 countries.",
   primaryButtonLabel: 'Get a Quote',
-  primaryButtonUrl: '/quotation',
+  primaryButtonUrl: '/support',
   secondaryButtonLabel: 'Download App',
   heroImage: '/individual/individual-doorstep-delivery-hero.webp',
 };
@@ -27,7 +27,7 @@ export const serviceCards: ServiceCard[] = [
     id: 'domestic',
     title: 'Domestic On Demand',
     description: 'Same day delivery, picked up and delivered within hours.',
-    features: ['Pickup within 2 hours', 'Same-day & next-day delivery', 'Live tracking, every step'],
+    features: ['Pickup within 1 hour', 'Same-day & next-day delivery', 'Live tracking, every step'],
     buttonLabel: 'Explore Domestic On Demand',
     buttonUrl: '/domestic-courier',
   },
@@ -35,15 +35,15 @@ export const serviceCards: ServiceCard[] = [
     id: 'international',
     title: 'International Shipping',
     description: 'Global reach with local expertise — sent right.',
-    features: ['Delivery to 200+ countries', 'Door-to-door tracking', 'Customs handled for you'],
+    features: ['Delivery to 195 countries', 'Door-to-door tracking', 'Customs handled for you'],
     buttonLabel: 'Explore International Shipping',
     buttonUrl: '/international-courier',
   },
 ];
 
 export const whyShipCards = {
-  domestic: { label: 'Domestic On Demand', text: 'Pickup and delivery within 2 hours, same city.' },
-  international: { label: 'International Shipping', text: 'Delivered in 3-4 days to 200+ countries.' },
+  domestic: { label: 'Domestic On Demand', text: 'Pickup and delivery within 2 hours, same and cross cities.' },
+  international: { label: 'International Shipping', text: 'Delivered in 3-4 days to 195 countries.' },
 };
 
 export interface BackedByPoint {
@@ -53,5 +53,5 @@ export interface BackedByPoint {
 export const backedByPoints: BackedByPoint[] = [
   { text: 'Real-time tracking on every shipment, domestic or international' },
   { text: 'Nationwide coverage across every emirate' },
-  { text: '15+ years of experience and 45M+ shipments delivered' },
+  { text: '17+ years of experience and 60M+ shipments delivered' },
 ];

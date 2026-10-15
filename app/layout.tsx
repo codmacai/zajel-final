@@ -6,6 +6,8 @@ import { I18N_BOOT_SCRIPT } from "@/lib/i18n/translator";
 import Navbar from "@/components/layout/Navbar/Navbar";
 import Footer from "@/components/Footer"; // Adjust the import path based on where your Footer component is located
 import { SITE } from "@/lib/seo";
+import { AuthProvider } from "@/components/providers/AuthProvider";
+import SiteChrome from "@/components/layout/SiteChrome";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -23,17 +25,6 @@ export const metadata: Metadata = {
   },
   description: SITE.description,
   applicationName: SITE.name,
-  keywords: [
-    "courier UAE",
-    "same day delivery Dubai",
-    "international shipping UAE",
-    "air freight UAE",
-    "sea freight UAE",
-    "land freight GCC",
-    "customs clearance UAE",
-    "warehousing Dubai",
-    "e-commerce fulfilment UAE",
-  ],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
@@ -115,9 +106,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify([organizationJsonLd, websiteJsonLd]).replace(/</g, "\\u003c") }}
         />
-        <Navbar />
-        <div className="flex-grow">{children}</div>
-        <Footer />
+        <AuthProvider>
+          <SiteChrome>
+            <Navbar />
+          </SiteChrome>
+          <div className="flex-grow">{children}</div>
+          <SiteChrome>
+            <Footer />
+          </SiteChrome>
+        </AuthProvider>
       </body>
     </html>
   );

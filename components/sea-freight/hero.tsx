@@ -12,9 +12,9 @@ const defaultContent: SeaFreightHeroContent = {
   titleLine1: "Port to port,",
   titleLine2: "priced plainly.",
   description:
-    "Weekly sailings through Jebel Ali and Khalifa Port with in-house clearance, bonded storage and the inland leg included on arrival.",
-  primaryCta: { label: "Book space", url: "/contact" },
-  secondaryCta: { label: "Ask for the schedule", url: "/contact" },
+    "Flexible sea freight solutions connecting global ports with dependable transit, smooth customs clearance, and end-to-end logistics tailored to your business needs.",
+  primaryCta: { label: "Book space", url: "/support" },
+  // secondaryCta: { label: "Ask for the schedule", url: "/support" },
   image_url: "/sea-freight/sea-freight-hero.webp",
   imageAlt: "Container ship loaded with cargo containers at sea",
 };

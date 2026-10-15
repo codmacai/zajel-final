@@ -1,5 +1,6 @@
 'use client';
 
+import { useSupportAction } from '@/hooks/useSupportAction';
 import { ArrowRight, Clock, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -26,11 +27,13 @@ interface InternationalShippingTimesProps {
 }
 
 const InternationalShippingTimes = ({
-  onGetQuote,
-  onContactSupport,
+  onGetQuote: onGetQuoteProp,
+  onContactSupport: onContactSupportProp,
   bannerImageSrc,
   bannerImageAlt = 'Zajel courier delivering an international shipment',
 }: InternationalShippingTimesProps) => {
+  const onGetQuote = useSupportAction(onGetQuoteProp);
+  const onContactSupport = useSupportAction(onContactSupportProp);
   return (
     <section className="w-full relative overflow-hidden py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-10 bg-white font-['Manrope',sans-serif]">
       <div className="max-w-[1100px] mx-auto relative z-10">
@@ -92,7 +95,7 @@ const InternationalShippingTimes = ({
 
             <div className="flex items-baseline gap-2.5">
               <span className="text-white font-normal tracking-tight leading-none text-[clamp(2rem,5vw,3.25rem)]">
-                3&ndash;4
+                3 - 5
               </span>
               <div className="flex flex-col">
                 <span className="text-white/90 font-medium text-[clamp(0.85rem,1.6vw,1.1rem)] tracking-tight leading-none mb-0.5">

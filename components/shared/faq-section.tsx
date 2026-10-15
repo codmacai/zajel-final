@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useId, useState } from 'react';
+import { motion } from 'framer-motion';
 import { useInView } from '@/hooks/useInView';
+import FaqJsonLd from '@/lib/faq-json-ld';
 
 export interface FaqQuestion {
   question: string;
@@ -26,6 +27,9 @@ export interface FaqSectionProps {
   defaultOpenIndex?: number | null;
   allowMultipleOpen?: boolean;
   className?: string;
+  /** Emit FAQPage structured data for these questions (default true). Turn off only if the
+   * page already outputs FAQPage JSON-LD for the same questions. */
+  structuredData?: boolean;
 }
 
 const DEFAULT_THEME: FaqTheme = {
@@ -55,6 +59,7 @@ function DownChevron() {
 }
 
 interface FaqRowProps {
+  id: string;
   q: FaqQuestion;
   isOpen: boolean;
   isLast: boolean;
@@ -62,14 +67,18 @@ interface FaqRowProps {
   theme: FaqTheme;
 }
 
-function FaqRow({ q, isOpen, isLast, onToggle, theme }: FaqRowProps) {
+function FaqRow({ id, q, isOpen, isLast, onToggle, theme }: FaqRowProps) {
   return (
     <div
       className="flex flex-col"
       style={{ borderBottom: !isLast ? `1px solid ${theme.borderColor}` : "none" }}
     >
-      <button 
-        onClick={onToggle} 
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={isOpen}
+        aria-controls={`${id}-answer`}
+        id={`${id}-question`}
         className="w-full flex items-center justify-between px-4 sm:px-7 lg:px-9 py-4 sm:py-5 text-left group"
       >
         <span
@@ -91,24 +100,25 @@ function FaqRow({ q, isOpen, isLast, onToggle, theme }: FaqRowProps) {
         </motion.span>
       </button>
 
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={SMOOTH_TRANSITION}
-            className="overflow-hidden"
+      {/* Every answer is always in the HTML (search engines and AI crawlers read closed ones too);
+          a closed one is just collapsed. grid-rows 0fr -> 1fr animates the height without measuring. */}
+      <div
+        id={`${id}-answer`}
+        role="region"
+        aria-labelledby={`${id}-question`}
+        className={`grid transition-[grid-template-rows,opacity] duration-[400ms] ease-[cubic-bezier(0.04,0.62,0.23,0.98)] motion-reduce:transition-none ${
+          isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+        }`}
+      >
+        <div className="overflow-hidden" inert={!isOpen}>
+          <div
+            className="px-4 sm:px-7 lg:px-9 pb-5 sm:pb-6 pt-1 text-[13px] sm:text-[14px] lg:text-[14.5px] leading-relaxed pr-8 sm:pr-14 whitespace-pre-line font-normal"
+            style={{ color: `${theme.answerColor}99` }}
           >
-            <div
-              className="px-4 sm:px-7 lg:px-9 pb-5 sm:pb-6 pt-1 text-[13px] sm:text-[14px] lg:text-[14.5px] leading-relaxed pr-8 sm:pr-14 whitespace-pre-line font-normal"
-              style={{ color: `${theme.answerColor}99` }}
-            >
-              {q.answer}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {q.answer}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -121,7 +131,9 @@ export default function FaqSection({
   defaultOpenIndex = 0,
   allowMultipleOpen = false,
   className = "",
+  structuredData = true,
 }: FaqSectionProps) {
+  const uid = useId();
   const { ref: sectionRef, isVisible } = useInView<HTMLDivElement>();
   const mergedTheme: FaqTheme = { ...DEFAULT_THEME, ...theme };
 
@@ -151,6 +163,7 @@ export default function FaqSection({
         paddingBottom: "clamp(48px, 8vh, 128px)",
       }}
     >
+      {structuredData && items.length > 0 && <FaqJsonLd items={items} />}
       <div className="w-full mx-auto px-4 sm:px-6" style={{ maxWidth: "clamp(320px, 90vw, 1040px)" }}>
         <div
           className="text-center"
@@ -191,6 +204,7 @@ export default function FaqSection({
           {items.map((q, i) => (
             <FaqRow
               key={q.question}
+              id={`${uid}-${i}`}
               q={q}
               isOpen={openIndexes.has(i)}
               isLast={i === items.length - 1}

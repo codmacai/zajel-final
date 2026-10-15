@@ -13,7 +13,7 @@ const defaultContent: LandFreightHeroContent = {
   titleLine2: "borders handled.",
   description:
     "FTL and LTL across the Emirates and into Saudi, Oman and Kuwait, one waybill, one contact, manifests filed before you reach the border.",
-  primaryCta: { label: "Book a truck", url: "/contact" },
+  primaryCta: { label: "Book a truck", url: "/support" },
   secondaryCta: { label: "View coverage", url: "/network" },
   image_url: "/land-freight/hero/land-freight-hero.webp",
   imageAlt: "Land Freight Trucking",

@@ -28,9 +28,9 @@ export const Ecommerce_Faqs: FaqQuestion[] = [
       {
         question: 'What reports do I get as a merchant?',
         answer: 'Your merchant dashboard includes live order tracking, daily COD collection summaries, weekly and monthly delivery performance reports (success rates, transit times, return rates), and export options for CSV and PDF.',
-      },
-      {
-        question: 'Is there a minimum number of orders to use Zajel?',
-        answer: 'No. Zajel serves merchants from 1 order per day to thousands. There are no minimum volume requirements and no long-term contracts required to get started. Pricing scales with your volume.',
       }
+      // {
+      //   question: 'Is there a minimum number of orders to use Zajel?',
+      //   answer: 'No. Zajel serves merchants from 1 order per day to thousands. There are no minimum volume requirements and no long-term contracts required to get started. Pricing scales with your volume.',
+      // }
 ];

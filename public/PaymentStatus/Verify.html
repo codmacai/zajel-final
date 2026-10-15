@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+
+        .bg {
+            /* background-color: #6c7bee; */
+            width: 480px;
+            overflow: hidden;
+            margin: 0 auto;
+            box-sizing: border-box;
+            padding: 40px;
+            font-family: 'Roboto';
+            margin-top: 40px;
+        }
+
+        .card {
+            background-color: #fff;
+            width: 100%;
+            float: left;
+            margin-top: 40px;
+            border-radius: 5px;
+            box-sizing: border-box;
+            padding: 80px 30px 25px 30px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        }
+
+        .card__success {
+            position: absolute;
+            top: -50px;
+            left: 145px;
+            width: 100px;
+            height: 100px;
+            border-radius: 100%;
+            background-color: #60c878;
+            border: 5px solid #fff;
+        }
+
+            .card__success i {
+                color: #fff;
+                line-height: 100px;
+                font-size: 45px;
+            }
+
+        .card__failure {
+            position: absolute;
+            top: -50px;
+            left: 145px;
+            width: 100px;
+            height: 100px;
+            border-radius: 100%;
+            background-color: #be0000;
+            border: 5px solid #fff;
+        }
+
+            .card__failure i {
+                color: #fff;
+                line-height: 100px;
+                font-size: 45px;
+            }
+
+        .card__msg {
+            text-transform: uppercase;
+            color: #55585b;
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .card__submsg {
+            color: #959a9e;
+            font-size: 16px;
+            font-weight: 400;
+            margin-top: 0px;
+        }
+
+        .card__body {
+            background-color: #f8f6f6;
+            border-radius: 4px;
+            width: 100%;
+            margin-top: 30px;
+            float: left;
+            box-sizing: border-box;
+            padding: 30px;
+        }
+
+        .card__avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+            top: 7px;
+        }
+
+        .card__recipient-info {
+            display: inline-block;
+        }
+
+        .card__recipient {
+            color: #232528;
+            text-align: left;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .card__email {
+            color: #838890;
+            text-align: left;
+            margin-top: 0px;
+        }
+
+        .card__price {
+            color: #232528;
+            font-size: 70px;
+            margin-top: 25px;
+            margin-bottom: 30px;
+        }
+
+            .card__price span {
+                font-size: 60%;
+            }
+
+        .card__method {
+            color: black;
+            text-transform: uppercase;
+            text-align: left;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .card__payment {
+            background-color: #fff;
+            border-radius: 4px;
+            width: 100%;
+            height: 100px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card__credit-card {
+            width: 50px;
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        .card__card-details {
+            display: inline-block;
+            text-align: left;
+        }
+
+        .card__card-type {
+            text-transform: uppercase;
+            color: #232528;
+            font-weight: 600;
+            font-size: 12px;
+            margin-bottom: 3px;
+        }
+
+        .card__card-number {
+            color: #838890;
+            font-size: 12px;
+            margin-top: 0px;
+        }
+
+        .card__tags {
+            clear: both;
+            padding-top: 15px;
+        }
+
+        .card__tag {
+            text-transform: uppercase;
+            background-color: aliceblue;
+            box-sizing: border-box;
+            padding: 3px 5px;
+            border-radius: 3px;
+            font-size: 10px;
+            color: black;
+            font-weight: bold;
+        }
+
+
+
+
+        body {
+            background: #dcf0fa;
+        }
+
+        .container {
+            max-width: 60%;
+            margin: 50px auto;
+            overflow: hidden;
+        }
+
+        .printer-top {
+            z-index: 1;
+            border: 6px solid #666666;
+            height: 6px;
+            border-bottom: 0;
+            border-radius: 6px 6px 0 0;
+            background: #333333;
+        }
+
+        .printer-bottom {
+            z-index: 0;
+            border: 6px solid #666666;
+            height: 6px;
+            border-top: 0;
+            border-radius: 0 0 6px 6px;
+            background: #333333;
+        }
+
+        .paper-container {
+            position: relative;
+            overflow: hidden;
+            height: 467px;
+        }
+
+        .paper {
+            background: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            height: 447px;
+            position: absolute;
+            z-index: 2;
+            margin: 0 12px;
+            margin-top: -12px;
+            animation: print 5000ms cubic-bezier(0.68, -0.55, 0.265, 0.9);
+            -moz-animation: print 5000ms cubic-bezier(0.68, -0.55, 0.265, 0.9);
+        }
+
+        .main-contents {
+            margin: 0 12px;
+            padding: 24px;
+        }
+
+        .jagged-edge {
+            position: relative;
+            height: 20px;
+            width: 100%;
+            margin-top: -1px;
+        }
+
+            .jagged-edge:after {
+                content: "";
+                display: block;
+                position: absolute;
+                //bottom: 20px;
+                left: 0;
+                right: 0;
+                height: 20px;
+                background: linear-gradient(45deg, transparent 33.333%, #ffffff 33.333%, #ffffff 66.667%, transparent 66.667%), linear-gradient(-45deg, transparent 33.333%, #ffffff 33.333%, #ffffff 66.667%, transparent 66.667%);
+                background-size: 16px 40px;
+                background-position: 0 -20px;
+            }
+
+        .success-icon {
+            text-align: center;
+            font-size: 48px;
+            height: 72px;
+            background: #359d00;
+            border-radius: 50%;
+            width: 72px;
+            height: 72px;
+            margin: 16px auto;
+            color: #fff;
+        }
+
+        .failure-icon {
+            text-align: center;
+            font-size: 48px;
+            height: 72px;
+            background: #be0000;
+            border-radius: 50%;
+            width: 72px;
+            height: 72px;
+            margin: 16px auto;
+            color: #fff;
+        }
+
+        .success-title {
+            font-size: 22px;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            color: #666;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .success-description {
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+            line-height: 21px;
+            color: #999;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .order-details {
+            text-align: center;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .order-number-label {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .order-number {
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            line-height: 48px;
+            font-size: 48px;
+            padding: 8px 0;
+            margin-bottom: 24px;
+        }
+
+        .complement {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #32a852;
+        }
+
+        @keyframes print {
+            0% {
+                transform: translateY(-90%);
+            }
+
+            100% {
+                transform: translateY(0%);
+            }
+        }
+
+        @-webkit-keyframes print {
+            0% {
+                -webkit-transform: translateY(-90%);
+            }
+
+            100% {
+                -webkit-transform: translateY(0%);
+            }
+        }
+
+        @-moz-keyframes print {
+            0% {
+                -moz-transform: translateY(-90%);
+            }
+
+            100% {
+                -moz-transform: translateY(0%);
+            }
+        }
+
+        @-ms-keyframes print {
+            0% {
+                -ms-transform: translateY(-90%);
+            }
+
+            100% {
+                -ms-transform: translateY(0%);
+            }
+        }
+    </style>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/dollar.png" type="image/png" sizes="16x16">
+    <title>Payment Response</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <h2 style="color: #dd0000;width: 100%;text-align: center;">PLEASE DO NOT CLOSE THE PAGE, YOU WILL BE REDIRECTED TO THE APPLICATION NOW!</h2>
+    <div class="bg">
+        <div class="card" id="cardBody">
+            <div class="">
+                <div class="logo">
+                    <a class="navbar-brand" href="/"><img src="/assets/img/new-images/logo.svg" alt=""></a>
+                </div>
+            </div>
+            <div id="bodyContents"></div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    // -----------------------------
+    // Matches .env's PRODUCTION value for VITE_API_BASE_URL — www.zajel.com and the real API
+    // are different origins in production, so this has to be absolute. This page is a plain
+    // static file so it can't read .env at build time, it has to be hardcoded here instead.
+    // If you deploy this page somewhere else (e.g. UAT, see .env.staging), change this to
+    // that environment's API URL instead.
+    // -----------------------------
+    const PREPAID_API_BASE = "https://api.zajel.com/services/prepaid";
+
+    let systemClicked = 1;
+    $(document).ready(function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const paymentResponse = (urlParams.get('response')).trim();
+        if (paymentResponse != (null || undefined)) {
+            let jsonResponse = JSON.parse(paymentResponse);
+            if (jsonResponse != (null || undefined)) {
+
+                let paymentStatus = jsonResponse?.statusInfo?.status == "SUCCESS" ? '<span class="card__success"><i class="ion-checkmark"></i></span>' : `<span class="card__failure"><i class="ion-alert"></i></span>`
+                let paymentMessage = jsonResponse?.statusInfo?.status == "SUCCESS" ? 'Payment Complete' : 'Payment Could not be completed';
+                let successMessage = jsonResponse?.statusInfo?.status == "SUCCESS" ? `<h2 class="card__submsg">Thank you for completing the payment! You will shortly receive an email of your payment.</h2>
+                    <div class="card__body">
+                        <h1 class="card__price"><span>${jsonResponse?.paymentInfo?.amount?.currency}</span>${jsonResponse?.paymentInfo?.amount?.value}<span>.00</span></h1>
+
+                        <p class="card__method">Payment method</p>
+                        <div class="card__payment">
+                            <img src="https://seeklogo.com/images/V/VISA-logo-F3440F512B-seeklogo.com.png" class="card__credit-card">
+                            <div class="card__card-details">
+                                <p class="card__card-type">Credit / debit card</p>
+                                <p class="card__card-number">Visa ending in ${jsonResponse?.paymentInfo?.cardMaskNumber}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card__tags">
+                        <span class="card__tag">completed</span>
+                        <span class="card__tag">#${jsonResponse?.paymentInfo?.customerReferenceId}</span>
+                    </div>` : `<div class="card__body"><p>Please contact the concerned person to check how to process again.</p><div class="card__tags">
+                        <span class="card__tag">Failed</span>
+                        <span class="card__tag">#${jsonResponse?.paymentInfo?.customerReferenceId}</span>
+                    </div></div>`
+                let orderDetails = jsonResponse?.statusInfo?.status == "SUCCESS" ? `<div class="order-details">
+                        <div class="order-number-label">Reference Number</div>
+                        <div class="order-number">${jsonResponse?.paymentInfo?.customerReferenceId}</div>
+                        <div class="complement">Thank You!</div>
+                    </div>` : '';
+
+                let content = `${paymentStatus}
+                                    <h1 class="card__msg">${paymentMessage}</h1>
+                                    ${successMessage}`;
+
+                document.getElementById("bodyContents").innerHTML = content;
+                sendDataToApi(paymentResponse, jsonResponse);
+            }
+        }
+    });
+    window.addEventListener('beforeunload', function (e) {
+        if (systemClicked != 1) {
+            alert("This will affect the booking process! are you sure about closing this page ?");
+            e.preventDefault();
+            e.returnValue = '';
+        }
+    });
+    function sendDataToApi(data, jsonResponse) {
+        $.ajax({
+            url: PREPAID_API_BASE + '/api/payment/pass-data-to-api',
+            cache: true,
+            type: 'GET',
+            data: { successResponse: data },
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+
+                let urlParams = new URLSearchParams(window.location.search);
+                let sourceParam = urlParams.get('source');
+                let refParam = (urlParams.get('ref')).trim();
+
+                // Check for source parameter first
+
+		      if (refParam == 'cod' || refParam == 'eidofd' || refParam == 'intnlqd') {
+				if (jsonResponse != undefined) {
+					    window.opener.postMessage(jsonResponse, "https://bk.zajel.com");
+					}
+				}
+               else if (sourceParam && sourceParam.trim() !== '' && sourceParam.trim().toUpperCase() === 'WEB') {
+                    if (jsonResponse != undefined) {
+                        window.opener.postMessage(jsonResponse?.statusInfo, "https://bk.zajel.com");
+                    }
+                }
+               else if (refParam == 'newzfze' && sourceParam && sourceParam.trim() !== '' && sourceParam.trim().toUpperCase() === 'NEWZFZE' ) {
+                    if (jsonResponse != undefined) {
+                        window.opener.postMessage(jsonResponse, "https://zfze.zajel.com");
+                    }
+                }
+               else if (refParam == 'zfze') {
+                    if (jsonResponse != undefined) {
+                        window.opener.postMessage(jsonResponse?.statusInfo, "https://zfze.zajel.com");
+                    }
+                } else if (refParam == 'mabooking') {
+                    if (jsonResponse != undefined) {
+                        window.opener.postMessage(jsonResponse?.statusInfo, "https://dashboard.zajel.com:6565"); // Change to the origin of your main page
+                    }
+                }
+                else {
+                    setTimeout(function () {
+                        let phoneNumber = "97147018000";
+                        let message = encodeURIComponent("");
+                        let appUrl = `whatsapp://send?phone=&text=`;
+                        let webUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+                        systemClicked = 1;
+                        if (isMobile()) {
+                            console.log("Mobile device detected");
+                            window.location.href = appUrl;
+                            setTimeout(() => {
+                                window.location.href = webUrl;
+                            }, 1000);
+                        } else {
+                            console.log("Desktop device detected");
+                            window.location.href = webUrl;
+                        }
+                    }, 3000);
+                }
+            },
+            error: function (err) {
+            }
+        });
+    }
+    function isMobile() {
+        return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    }
+</script>

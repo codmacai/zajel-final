@@ -65,10 +65,10 @@ const DESCRIPTION =
   'Expand your global footprint with seamless international shipping backed by reliable transit networks, fast customs clearance, and global coverage.';
 
 const CARDS: FeatureCard[] = [
-  { id: 'countries', Icon: GlobeIcon, title: '200+ Countries Reached', description: 'A global network from a single pickup in the UAE.' },
-  { id: 'delivery', Icon: ClockIcon, title: '3-4 Day Delivery', description: 'Fast, predictable transit times, worldwide.' },
+  { id: 'countries', Icon: GlobeIcon, title: '195 Countries Reached', description: 'A global network from a single pickup in the UAE.' },
+  { id: 'delivery', Icon: ClockIcon, title: '3-5 Day Delivery', description: 'Fast, predictable transit times, worldwide.' },
   { id: 'tracking', Icon: TrackingIcon, title: 'Real-Time Tracking', description: 'Follow your shipment from pickup to delivery.' },
-  { id: 'experience', Icon: ExperienceIcon, title: '15+ Years of Experience', description: 'A track record built on 45M+ shipments.' },
+  { id: 'experience', Icon: ExperienceIcon, title: '17+ Years of Experience', description: 'A track record built on 60M+ shipments.' },
 ];
 
 interface FeatureCardTileProps {

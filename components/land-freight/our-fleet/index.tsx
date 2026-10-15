@@ -178,14 +178,14 @@ const OurFleetSection = () => {
 
           <div className="flex w-full flex-col sm:w-auto sm:flex-row items-center gap-3 shrink-0">
             <Link
-              href="/contact"
+              href="/support"
               className="inline-flex w-full sm:w-auto items-center justify-center rounded-full bg-[#36B936] px-6 py-3 text-xs sm:text-sm font-medium text-[#05361A] transition-all duration-200 hover:scale-[1.03] hover:bg-[#2fa32f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#36B936]"
             >
               Get a Land Freight Quote
             </Link>
 
             <Link
-              href="/contact?type=project-cargo"
+              href="/support?type=project-cargo"
               className="group inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-xs sm:text-sm font-medium text-white backdrop-blur-sm transition-all duration-200 hover:bg-white hover:text-[#0A4D26] hover:scale-[1.02]"
             >
               <span>Contact Us for Project Cargo</span>

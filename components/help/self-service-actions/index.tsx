@@ -36,7 +36,7 @@ const TOP_ROW: ActionCard[] = [
 
 const BOTTOM_ROW: ActionCard[] = [
   {
-    href: '/contact',
+    href: '/support',
     Icon: MessageSquare,
     title: 'Contact Our Team',
     description: 'Reach our support team by phone, email, or through the portal for any inquiry.',
