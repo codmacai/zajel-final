@@ -39,6 +39,7 @@ const ROUTES: Entry[] = [
   { path: '/careers', priority: 0.5, changeFrequency: 'weekly' },
   { path: '/support', priority: 0.5, changeFrequency: 'monthly' },
   { path: '/faq', priority: 0.6, changeFrequency: 'monthly' },
+  { path: '/events', priority: 0.5, changeFrequency: 'weekly' },
 ];
 
 // No lastModified: it was always the build time, which search engines learn to ignore. Add a

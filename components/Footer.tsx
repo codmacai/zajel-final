@@ -55,6 +55,7 @@ const COLUMNS: FooterColumn[] = [
       { label: 'Help Center', href: '/support' },
       { label: 'FAQ', href: '/faq' },
       { label: 'Blog', href: '/#news' },
+      { label: 'Events', href: '/events' },
       ...(CUSTOMS_PORTAL_URL
         ? [{ label: 'Customs Submission', href: CUSTOMS_PORTAL_URL, external: true }]
         : []),
