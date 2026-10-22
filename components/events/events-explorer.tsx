@@ -4,7 +4,8 @@ import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { MapPin } from 'lucide-react';
 import { typo } from '@/components/ui copy/typography';
-import type { ZajelEvent } from './data';
+import { lastDay, type ZajelEvent } from './data';
+import { dateRange, fmt, todayIso } from './format';
 
 type Tab = 'upcoming' | 'past';
 
@@ -13,23 +14,12 @@ const TABS: { key: Tab; label: string }[] = [
   { key: 'past', label: 'Past Events' },
 ];
 
-// Parsed as UTC so the day never shifts with the visitor's time zone.
-const toDate = (iso: string) => new Date(`${iso}T00:00:00Z`);
-const fmt = (iso: string, opts: Intl.DateTimeFormatOptions) =>
-  toDate(iso).toLocaleDateString('en-GB', { timeZone: 'UTC', ...opts });
-
-function dateRange({ startDate, endDate }: ZajelEvent) {
-  const full = { day: 'numeric', month: 'long', year: 'numeric' } as const;
-  if (!endDate) return fmt(startDate, full);
-  return `${fmt(startDate, { day: 'numeric', month: 'long' })} – ${fmt(endDate, full)}`;
-}
-
 export default function EventsExplorer({ events }: { events: ZajelEvent[] }) {
   const [tab, setTab] = useState<Tab>('upcoming');
 
   const { upcoming, past } = useMemo(() => {
-    const today = new Date().toISOString().slice(0, 10);
-    const isPast = (e: ZajelEvent) => (e.endDate ?? e.startDate) < today;
+    const today = todayIso();
+    const isPast = (e: ZajelEvent) => lastDay(e) < today;
     const byStart = (a: ZajelEvent, b: ZajelEvent) => a.startDate.localeCompare(b.startDate);
     return {
       upcoming: events.filter((e) => !isPast(e)).sort(byStart),
@@ -75,8 +65,8 @@ export default function EventsExplorer({ events }: { events: ZajelEvent[] }) {
         <ul className="divide-y divide-[#1b4332]/10 border-b border-[#1b4332]/10">
           {list.map((event) => (
             <li
-              key={`${event.startDate}-${event.title}`}
-              className="grid grid-cols-[64px_1fr] gap-x-5 gap-y-4 py-7 sm:grid-cols-[88px_1fr_auto] sm:items-center sm:gap-x-8 sm:py-9"
+              key={event.slug}
+              className="group relative grid grid-cols-[64px_1fr] gap-x-5 gap-y-4 py-7 sm:grid-cols-[88px_1fr_auto] sm:items-center sm:gap-x-8 sm:py-9"
             >
               {/* Date block */}
               <div className="flex flex-col items-center justify-center self-start rounded-2xl border border-[#1b4332]/10 bg-[#F8F9F8] py-3 text-center">
@@ -97,8 +87,14 @@ export default function EventsExplorer({ events }: { events: ZajelEvent[] }) {
                   </span>
                   <span className={`${typo.meta} text-[#1b4332]/50`}>{dateRange(event)}</span>
                 </div>
-                <h3 className="text-lg font-medium leading-snug tracking-tight text-[#1b4332] sm:text-xl">
-                  {event.title}
+                <h3 className="text-lg font-medium leading-snug tracking-tight text-[#1b4332] transition-colors group-hover:text-[#2ea22e] sm:text-xl">
+                  {/* The link covers the whole row, so clicking anywhere opens the event. */}
+                  <Link
+                    href={`/events/${event.slug}`}
+                    className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none focus-visible:after:rounded-2xl focus-visible:after:outline focus-visible:after:outline-2 focus-visible:after:outline-[#1b4332]"
+                  >
+                    {event.title}
+                  </Link>
                 </h3>
                 <p className={`${typo.body} mt-2 max-w-[62ch] text-[#2d6a4f]`}>{event.summary}</p>
                 <p className="mt-3 flex items-center gap-1.5 text-[13px] text-[#1b4332]/60">
@@ -107,9 +103,9 @@ export default function EventsExplorer({ events }: { events: ZajelEvent[] }) {
                 </p>
               </div>
 
-              {/* Action */}
-              {tab === 'upcoming' && event.href && (
-                <div className="col-start-2 sm:col-start-3">
+              {/* Action (above the row link, so it keeps its own destination) */}
+              <div className="relative z-10 col-start-2 flex flex-wrap items-center gap-x-5 gap-y-3 sm:col-start-3 sm:flex-col sm:items-end">
+                {tab === 'upcoming' && event.href && (
                   <Link
                     href={event.href}
                     className="inline-flex items-center gap-2 rounded-full border border-[#1b4332]/15 px-5 py-2.5 text-sm font-medium text-[#1b4332] transition-colors hover:border-[#36B936] hover:bg-[#36B936] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1b4332]"
@@ -117,8 +113,14 @@ export default function EventsExplorer({ events }: { events: ZajelEvent[] }) {
                     Register Interest
                     <span aria-hidden="true">→</span>
                   </Link>
-                </div>
-              )}
+                )}
+                <Link
+                  href={`/events/${event.slug}`}
+                  className="text-[13px] font-medium text-[#1b4332]/60 underline-offset-4 transition-colors hover:text-[#1b4332] hover:underline"
+                >
+                  View Details
+                </Link>
+              </div>
             </li>
           ))}
         </ul>
