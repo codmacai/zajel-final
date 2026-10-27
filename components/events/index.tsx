@@ -18,11 +18,11 @@ export default function EventsPage() {
           <div className="mx-auto max-w-[760px] text-center">
             <Eyebrow className="mb-4">Events</Eyebrow>
 
-            <h1 className={`${typo.h1} mb-4 text-[#1b4332] sm:mb-5`}>Meet Zajel in Person</h1>
+            <h1 className={`${typo.h1} mb-4 text-[#1b4332] sm:mb-5`}>Where Logistics Leaders Meet</h1>
 
             <p className={`${typo.lead} mx-auto max-w-[58ch] text-[#2d6a4f]`}>
-              Exhibitions, conferences and workshops where our logistics specialists share what moves cargo
-              faster across the UAE and worldwide. Find an upcoming event or catch up on where we have been.
+              Join Zajel at the exhibitions, conferences and workshops shaping logistics across the UAE and the
+              region. Meet our specialists, explore new solutions and see where we have been.
             </p>
           </div>
         </div>
