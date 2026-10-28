@@ -12,7 +12,7 @@ export const serviceHeroData: Record<"customs" | "warehouse" | "industry" | "net
     detailParagraph:
       "Zajel provides end to end customs clearance and brokerage services across the UAE, managing every step from document preparation to final cargo release. Whether your shipment arrives by air, sea, or land, our team handles the regulatory process so your goods move through borders without unnecessary delays.",
     ctaText: "Get a Clearance Quote",
-    ctaHref: "/contact",
+    ctaHref: "/support",
     ctaVariant: "arrow",
     backgroundImage: "/warehouse/customs-clearance-hero.jpg",
     backgroundImageAlt: "Customs Clearance UAE",
@@ -38,7 +38,7 @@ export const serviceHeroData: Record<"customs" | "warehouse" | "industry" | "net
     detailParagraph:
       "Zajel operates dedicated warehouse facilities in Dubai, providing secure storage, real-time inventory management, and distribution services that connect directly to our air, sea, and land freight networks.",
     ctaText: "Get a Warehousing Quote",
-    ctaHref: "/contact",
+    ctaHref: "/support",
     ctaVariant: "arrow",
     backgroundImage: "/warehouse/warehouse-hero.webp",
     backgroundImageAlt: "Dubai Warehousing and Distribution",
@@ -65,7 +65,7 @@ export const serviceHeroData: Record<"customs" | "warehouse" | "industry" | "net
     detailParagraph:
       "Zajel provides industry logistics solutions across the UAE that are designed around the specific requirements of each sector we serve. With over 45 million shipments delivered across 195 countries and four ISO certifications governing our operations, Zajel brings both scale and precision to every sector.",
     ctaText: "Find Your Industry",
-    ctaHref: "/contact",
+    ctaHref: "/support",
     ctaVariant: "arrow",
     backgroundImage: "/industry/industry-solutions-hero.webp",
     backgroundImageAlt: "Industry Logistics Solutions",
@@ -102,9 +102,9 @@ export const serviceHeroData: Record<"customs" | "warehouse" | "industry" | "net
     overlayVariant: "network",
     stats: [
       { type: "numeric", value: 195, label: "Countries Covered" },
-      { type: "numeric", value: 500, suffix: "+", label: "Destinations Worldwide" },
+      { type: "numeric", value: 500, suffix: "K+", label: "Destinations Worldwide" },
       { type: "numeric", value: 60, suffix: "M+", label: "Shipments Delivered" },
-      { type: "numeric", value: 3, label: "Global Alliances" },
+      { type: "numeric", value: 2, label: "Global Alliances" },
     ],
   },
 };

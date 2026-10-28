@@ -8,13 +8,13 @@ import type { Metadata } from 'next';
  * NEXT_PUBLIC_SITE_URL overrides it (e.g. for a staging domain); `next dev`
  * uses localhost so local links keep working.
  */
-const PRODUCTION_URL = 'https://zajel.com';
+export const PRODUCTION_SITE_URL = 'https://zajel.com';
 
 function resolveSiteUrl(): string {
   const explicit = process.env.NEXT_PUBLIC_SITE_URL;
   if (explicit) return explicit.replace(/\/+$/, '');
   if (process.env.NODE_ENV === 'development') return 'http://localhost:3000';
-  return PRODUCTION_URL;
+  return PRODUCTION_SITE_URL;
 }
 
 export const SITE = {

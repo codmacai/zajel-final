@@ -24,9 +24,9 @@ const defaultContent = {
   },
   stats: [
     { value: '17', label: 'Years of Success' },
-    { value: '45M+', label: 'Shipments Delivered' },
+    { value: '60M+', label: 'Shipments Delivered' },
     { value: '195', label: 'Countries Covered' },
-    { value: '500+', label: 'Worldwide Destinations' },
+    { value: '500k+', label: 'Items Handled Daily' },
   ],
 };
 

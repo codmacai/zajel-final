@@ -1,6 +1,16 @@
 'use client';
 
-import { useState, type FormEvent, type ReactNode } from 'react';
+import { useEffect, useState, type FormEvent, type ReactNode } from 'react';
+import Link from 'next/link';
+import { ArrowRight, ChevronDown, Loader2 } from 'lucide-react';
+import { useAuthContext } from '@/components/providers/AuthProvider';
+import { useValidateShipment } from '@/hooks/useValidateShipment';
+import { useCountries, useDocumentWeights } from '@/hooks/useInternationalReferenceData';
+import { useRateCard } from '@/hooks/useInternationalShipment';
+import { expandDocumentWeightOptions, parseRateQuote, type RateQuote } from '@/lib/shipment/rateCard';
+import AddressAutocompleteInput from '@/components/shipment/AddressAutocompleteInput';
+import { EMPTY_GEO_ADDRESS, type GeoAddress, type InternationalLookupItem, type ServiceOption } from '@/types/shipment';
+import { BIKE_MAX_KG, CAR_MAX_KG, OVERWEIGHT_MESSAGE, vehicleForWeight } from '@/components/send-shipment/data';
 
 /* -------------------------------------------------------------------------- */
 /*  Content — edit copy, locations and box presets here                       */
@@ -11,7 +21,7 @@ const CONTENT = {
   title: 'Courier Rate Calculator',
   badges: ['No hidden fees', 'Secure', 'Instant quote'],
   stats: [
-    { value: '200+', label: 'Countries' },
+    { value: '195', label: 'Countries' },
     { value: '24/7', label: 'Support' },
     { value: '99.5%', label: 'On-time delivery' },
   ],
@@ -21,29 +31,33 @@ const CONTENT = {
   tabs: { domestic: 'Domestic', international: 'International', document: 'Document', parcel: 'Parcel' },
   from: 'From',
   to: 'To',
+  fromCountry: 'From country',
+  toCountry: 'To country',
   dropdownDefault: 'Select',
+  countryPlaceholder: 'Select a country',
   infoBanner: 'Charges are based on the higher of actual weight and volumetric weight.',
+  docsOnlyBanner: 'International rates currently cover documents only — parcels are coming soon.',
   weight: 'Weight',
-  shipmentValue: 'Shipment Value (AED)',
+  docWeight: 'Document weight',
+  weightPlaceholder: 'Select weight',
   unsureSize: 'Not sure about the size? Pick a preset box.',
   dims: { length: 'Length (cm)', width: 'Width (cm)', height: 'Height (cm)' },
   numberPlaceholder: '0',
   submit: 'Calculate Rate',
+  addressPlaceholder: 'Search an address in the UAE',
+  resultsTitle: 'Available services',
+  inclVat: 'incl. VAT',
+  book: 'Book now',
+  sameCountryError: "From and to countries can't be the same.",
+  noIntlRate: 'No rate is available for this route and weight right now. Please try a different weight or contact support.',
 } as const;
 
-const UAE_CITIES = ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'Ras Al Khaimah', 'Fujairah', 'Umm Al Quwain'];
-const COUNTRIES = [
-  'Saudi Arabia',
-  'Qatar',
-  'Kuwait',
-  'Bahrain',
-  'Oman',
-  'Jordan',
-  'Egypt',
-  'United States',
-  'United Kingdom',
-  'India',
-];
+/**
+ * International flag — flip together with SHOW_INTERNATIONAL in
+ * components/send-shipment/data.ts. See that file's comment: the booking wizard's
+ * international UI/API wiring isn't built yet even though this toggle is on.
+ */
+const SHOW_INTERNATIONAL = true;
 
 const BOX_SIZES = [
   { label: 'Small', dims: 'L23 x W14 x H4CM', l: 23, w: 14, h: 4 },
@@ -52,7 +66,6 @@ const BOX_SIZES = [
 ] as const;
 
 type RouteType = 'domestic' | 'international';
-type ShipmentType = 'document' | 'parcel';
 type WeightUnit = 'Kg' | 'G';
 
 /* -------------------------------------------------------------------------- */
@@ -89,12 +102,6 @@ const DocumentIcon = () => (
   </svg>
 );
 
-const ParcelIcon = () => (
-  <svg aria-hidden="true" width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M15.6 3.91646L8.725 0.154738C8.54131 0.0532399 8.33487 0 8.125 0C7.91513 0 7.70869 0.0532399 7.525 0.154738L0.65 3.91802C0.453663 4.02544 0.289768 4.18361 0.175431 4.37601C0.0610939 4.5684 0.000508014 4.78797 0 5.01177V12.4836C0.000508014 12.7074 0.0610939 12.927 0.175431 13.1194C0.289768 13.3118 0.453663 13.47 0.65 13.5774L7.525 17.3407C7.70869 17.4422 7.91513 17.4954 8.125 17.4954C8.33487 17.4954 8.54131 17.4422 8.725 17.3407L15.6 13.5774C15.7963 13.47 15.9602 13.3118 16.0746 13.1194C16.1889 12.927 16.2495 12.7074 16.25 12.4836V5.01255C16.2499 4.78835 16.1895 4.5683 16.0752 4.37545C15.9608 4.18261 15.7967 4.02407 15.6 3.91646ZM8.125 1.24849L14.4016 4.68599L12.0758 5.95943L5.79844 2.52193L8.125 1.24849ZM8.125 8.12349L1.84844 4.68599L4.49687 3.23599L10.7734 6.67349L8.125 8.12349ZM1.25 5.77974L7.5 9.20005V15.9024L1.25 12.4844V5.77974ZM15 12.4813L8.75 15.9024V9.20318L11.25 7.83521V10.6235C11.25 10.7892 11.3158 10.9482 11.4331 11.0654C11.5503 11.1826 11.7092 11.2485 11.875 11.2485C12.0408 11.2485 12.1997 11.1826 12.3169 11.0654C12.4342 10.9482 12.5 10.7892 12.5 10.6235V7.15083L15 5.77974V12.4805V12.4813Z" fill="currentColor"/>
-  </svg>
-);
-
 const BoxPresetIcon = () => (
   <svg aria-hidden="true" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M21.0489 14.0197L8.97588 11.6097L10.5849 10.5547L26.5469 13.6197L21.9979 19.5897L21.0489 14.0197Z" fill="#354C07"/>
@@ -112,12 +119,6 @@ const InfoIcon = () => (
     <circle cx="12" cy="12" r="10" />
     <line x1="12" y1="8" x2="12" y2="12" />
     <line x1="12" y1="16" x2="12.01" y2="16" />
-  </svg>
-);
-
-const ChevronDown = () => (
-  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="6 9 12 15 18 9" />
   </svg>
 );
 
@@ -140,43 +141,15 @@ const INPUT_CLS =
 /*  Small building blocks                                                     */
 /* -------------------------------------------------------------------------- */
 
-const FieldLabel = ({ htmlFor, children }: { htmlFor: string; children: ReactNode }) => (
+const FieldLabel = ({ htmlFor, children, optional }: { htmlFor: string; children: ReactNode; optional?: boolean }) => (
   <label htmlFor={htmlFor} className="mb-1.5 flex items-center gap-0.5 text-[11px] font-normal text-[#064423]/70">
     {children}
-    <span className="mx-0.5 text-[#36B936]" aria-hidden="true">*</span>
+    {optional ? (
+      <span className="ml-1 text-[#064423]/40">(optional)</span>
+    ) : (
+      <span className="mx-0.5 text-[#36B936]" aria-hidden="true">*</span>
+    )}
   </label>
-);
-
-interface SelectFieldProps {
-  id: string;
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  options: readonly string[];
-}
-
-const SelectField = ({ id, label, value, onChange, options }: SelectFieldProps) => (
-  <div className="min-w-0 flex-1">
-    <FieldLabel htmlFor={id}>{label}</FieldLabel>
-    <div className="relative">
-      <select
-        id={id}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className={`${INPUT_CLS} cursor-pointer appearance-none pr-10`}
-      >
-        <option value="">{CONTENT.dropdownDefault}</option>
-        {options.map((o) => (
-          <option key={o} value={o}>
-            {o}
-          </option>
-        ))}
-      </select>
-      <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2">
-        <ChevronDown />
-      </span>
-    </div>
-  </div>
 );
 
 interface NumberFieldProps {
@@ -185,11 +158,14 @@ interface NumberFieldProps {
   value: string;
   onChange: (value: string) => void;
   className?: string;
+  optional?: boolean;
 }
 
-const NumberField = ({ id, label, value, onChange, className = '' }: NumberFieldProps) => (
+const NumberField = ({ id, label, value, onChange, className = '', optional }: NumberFieldProps) => (
   <div className={`min-w-0 ${className}`}>
-    <FieldLabel htmlFor={id}>{label}</FieldLabel>
+    <FieldLabel htmlFor={id} optional={optional}>
+      {label}
+    </FieldLabel>
     <input
       id={id}
       type="number"
@@ -203,36 +179,106 @@ const NumberField = ({ id, label, value, onChange, className = '' }: NumberField
   </div>
 );
 
+interface SelectFieldProps<T extends string | number> {
+  id: string;
+  label: string;
+  value: T | '';
+  onChange: (value: string) => void;
+  options: { value: T; label: string }[];
+  placeholder: string;
+  disabled?: boolean;
+  className?: string;
+}
+
+function SelectField<T extends string | number>({ id, label, value, onChange, options, placeholder, disabled, className = '' }: SelectFieldProps<T>) {
+  return (
+    <div className={`min-w-0 ${className}`}>
+      <FieldLabel htmlFor={id}>{label}</FieldLabel>
+      <div className="relative">
+        <select
+          id={id}
+          value={value}
+          disabled={disabled}
+          onChange={(e) => onChange(e.target.value)}
+          className={`${INPUT_CLS} appearance-none pr-9 disabled:cursor-not-allowed disabled:opacity-60`}
+        >
+          <option value="" disabled>
+            {placeholder}
+          </option>
+          {options.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
+        <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#064423]/35" aria-hidden="true" />
+      </div>
+    </div>
+  );
+}
+
+const countryOptions = (countries: InternationalLookupItem[]) => countries.map((c) => ({ value: c.code, label: c.name }));
+
 /* -------------------------------------------------------------------------- */
 /*  Calculator                                                                */
 /* -------------------------------------------------------------------------- */
 
 export default function CourierCalculator() {
+  // Rates don't need an account: logged-out visitors are quoted through the PrePaid API's guest
+  // access. A signed-in customer's phone is still sent so they get their own account rates.
+  const { ready, phone } = useAuthContext();
+  const { validateShipment, validating, error: validateError } = useValidateShipment();
+  const { getCountries } = useCountries();
+  const { getDocumentWeights } = useDocumentWeights();
+  const { getRateCard, loading: rating, error: rateError } = useRateCard();
+
   const [routeType, setRouteType] = useState<RouteType>('domestic');
-  const [shipmentType, setShipmentType] = useState<ShipmentType>('document');
   const [weightUnit, setWeightUnit] = useState<WeightUnit>('Kg');
-  const [from, setFrom] = useState('');
-  const [to, setTo] = useState('');
+  const [from, setFrom] = useState<GeoAddress>(EMPTY_GEO_ADDRESS);
+  const [to, setTo] = useState<GeoAddress>(EMPTY_GEO_ADDRESS);
   const [weight, setWeight] = useState('');
-  const [shipmentValue, setShipmentValue] = useState('');
   const [length, setLength] = useState('');
   const [width, setWidth] = useState('');
   const [height, setHeight] = useState('');
   const [selectedBox, setSelectedBox] = useState<string | null>(null);
+  const [services, setServices] = useState<ServiceOption[] | null>(null);
 
-  const options = routeType === 'domestic' ? UAE_CITIES : COUNTRIES;
-  const boxes = shipmentType === 'document' ? BOX_SIZES.slice(0, 1) : BOX_SIZES;
+  // International: country-to-country, documents only — no address autocomplete/dimensions.
+  const [countries, setCountries] = useState<InternationalLookupItem[]>([]);
+  const [documentWeights, setDocumentWeights] = useState<number[]>([]);
+  const [fromCountry, setFromCountry] = useState('');
+  const [toCountry, setToCountry] = useState('');
+  const [intlWeight, setIntlWeight] = useState('');
+  const [intlQuote, setIntlQuote] = useState<RateQuote | null>(null);
+  const [intlNoRate, setIntlNoRate] = useState(false);
 
-  // Switching domestic/international changes the option lists, so stale picks are cleared.
+  const countryRestriction = routeType === 'domestic' ? 'ae' : undefined;
+  const docWeightOptions = expandDocumentWeightOptions(documentWeights);
+
+  // Country list + document weight brackets are only needed once International is picked.
+  useEffect(() => {
+    if (routeType !== 'international' || countries.length > 0) return;
+    void (async () => {
+      const [countryList, weights] = await Promise.all([getCountries(), getDocumentWeights()]);
+      if (countryList) setCountries(countryList);
+      if (weights) setDocumentWeights(weights);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [routeType, countries.length]);
+
+  // Switching domestic/international changes which addresses/fields are valid, so stale picks
+  // are cleared. International is documents only and domestic is always a parcel, so there's
+  // no shipment-type choice to reset.
   const changeRoute = (type: RouteType) => {
     setRouteType(type);
-    setFrom('');
-    setTo('');
-  };
-
-  const changeShipmentType = (type: ShipmentType) => {
-    setShipmentType(type);
-    setSelectedBox(null);
+    setFrom(EMPTY_GEO_ADDRESS);
+    setTo(EMPTY_GEO_ADDRESS);
+    setServices(null);
+    setFromCountry('');
+    setToCountry('');
+    setIntlWeight('');
+    setIntlQuote(null);
+    setIntlNoRate(false);
   };
 
   // Choosing a preset box fills in the dimensions too.
@@ -244,20 +290,38 @@ export default function CourierCalculator() {
   };
 
   const positive = (v: string) => Number(v) > 0;
-  const canSubmit =
-    from !== '' &&
-    to !== '' &&
-    positive(weight) &&
-    positive(shipmentValue) &&
-    positive(length) &&
-    positive(width) &&
-    positive(height);
+  const weightKg = positive(weight) ? (weightUnit === 'G' ? Number(weight) / 1000 : Number(weight)) : 0;
+  // Domestic vehicle follows the weight: bike up to 10 kg, car up to 30 kg, nothing heavier.
+  const domesticVehicle = vehicleForWeight(weightKg);
+  const overweight = weightKg > CAR_MAX_KG;
+  const canSubmitDomestic =
+    !!from.latitude && !!to.latitude && !!domesticVehicle && positive(length) && positive(width) && positive(height);
+  const canSubmitIntl = !!fromCountry && !!toCountry && fromCountry !== toCountry && positive(intlWeight);
+  const canSubmit = routeType === 'international' ? canSubmitIntl : canSubmitDomestic;
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!canSubmit) return;
-    // TODO: send { routeType, shipmentType, from, to, weight, weightUnit, shipmentValue, length, width, height }
-    // to your rates API, or navigate to your quote results page.
+    if (!canSubmit || (routeType === 'domestic' && !domesticVehicle)) return;
+
+    if (routeType === 'international') {
+      setIntlQuote(null);
+      setIntlNoRate(false);
+      const result = await getRateCard({ fromCountry, toCountry, docType: 'DOC', weight: Number(intlWeight) });
+      const quote = parseRateQuote(result);
+      setIntlQuote(quote);
+      if (result && !quote) setIntlNoRate(true);
+      return;
+    }
+
+    setServices(null);
+    const result = await validateShipment({
+      phoneNo: phone ?? '',
+      parcelType: domesticVehicle!,
+      from: { city: from.city, latitude: from.latitude, longitude: from.longitude },
+      to: { city: to.city, latitude: to.latitude, longitude: to.longitude },
+      dimensions: [{ lengthCm: Number(length), widthCm: Number(width), heightCm: Number(height), weightKg }],
+    });
+    if (result) setServices(result.availableServices);
   };
 
   return (
@@ -309,6 +373,7 @@ export default function CourierCalculator() {
           <div className="flex flex-col gap-5 rounded-[1.5rem] bg-white p-5 sm:p-6">
             <h3 className="text-center text-[13px] font-normal text-[#064423]/80">{CONTENT.leftTitle}</h3>
 
+            {SHOW_INTERNATIONAL && (
             <div className={TAB_WRAPPER} role="group" aria-label="Route type">
               {(['domestic', 'international'] as const).map((type) => (
                 <button
@@ -323,142 +388,312 @@ export default function CourierCalculator() {
                 </button>
               ))}
             </div>
+            )}
 
-            <div className="flex flex-col gap-4">
-              <div className="flex items-start gap-3">
-                <div className="mt-1 flex flex-shrink-0 flex-col items-center">
-                  <PinFromIcon />
-                  <div style={{ width: '2px', height: '44px', borderLeft: '2px dashed #36B936', marginTop: '4px' }} />
+            {routeType === 'international' ? (
+              <div className="flex flex-col gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="mt-1 flex flex-shrink-0 flex-col items-center">
+                    <PinFromIcon />
+                    <div style={{ width: '2px', height: '44px', borderLeft: '2px dashed #36B936', marginTop: '4px' }} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <SelectField
+                      id="calc-from-country"
+                      label={CONTENT.fromCountry}
+                      value={fromCountry}
+                      onChange={(v) => {
+                        setFromCountry(v);
+                        setIntlQuote(null);
+                      }}
+                      options={countryOptions(countries)}
+                      placeholder={CONTENT.countryPlaceholder}
+                    />
+                  </div>
                 </div>
-                <SelectField id="calc-from" label={CONTENT.from} value={from} onChange={setFrom} options={options} />
-              </div>
 
-              <div className="flex items-start gap-3">
-                <div className="mt-1 flex-shrink-0">
-                  <PinToIcon />
+                <div className="flex items-start gap-3">
+                  <div className="mt-1 flex-shrink-0">
+                    <PinToIcon />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <SelectField
+                      id="calc-to-country"
+                      label={CONTENT.toCountry}
+                      value={toCountry}
+                      onChange={(v) => {
+                        setToCountry(v);
+                        setIntlQuote(null);
+                      }}
+                      options={countryOptions(countries)}
+                      placeholder={CONTENT.countryPlaceholder}
+                    />
+                  </div>
                 </div>
-                <SelectField id="calc-to" label={CONTENT.to} value={to} onChange={setTo} options={options} />
+                {fromCountry && toCountry && fromCountry === toCountry && (
+                  <p role="alert" className="mx-1 text-[12px] text-red-600">
+                    {CONTENT.sameCountryError}
+                  </p>
+                )}
               </div>
-            </div>
+            ) : (
+              <div className="flex flex-col gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="mt-1 flex flex-shrink-0 flex-col items-center">
+                    <PinFromIcon />
+                    <div style={{ width: '2px', height: '44px', borderLeft: '2px dashed #36B936', marginTop: '4px' }} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <AddressAutocompleteInput
+                      id="calc-from"
+                      variant="compact"
+                      label={CONTENT.from}
+                      required
+                      placeholder={CONTENT.addressPlaceholder}
+                      value={from}
+                      onChange={(place) => {
+                        setFrom(place);
+                        setServices(null);
+                      }}
+                      countryRestriction={countryRestriction}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="mt-1 flex-shrink-0">
+                    <PinToIcon />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <AddressAutocompleteInput
+                      id="calc-to"
+                      variant="compact"
+                      label={CONTENT.to}
+                      required
+                      placeholder={CONTENT.addressPlaceholder}
+                      value={to}
+                      onChange={(place) => {
+                        setTo(place);
+                        setServices(null);
+                      }}
+                      countryRestriction={countryRestriction}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* RIGHT: shipment details */}
           <div className="flex flex-col gap-4 rounded-[1.5rem] bg-white p-5 sm:p-6">
             <h3 className="text-center text-[13px] font-normal text-[#064423]/80">{CONTENT.rightTitle}</h3>
 
-            <div className={TAB_WRAPPER} role="group" aria-label="Shipment type">
-              {(['document', 'parcel'] as const).map((type) => (
-                <button
-                  key={type}
-                  type="button"
-                  aria-pressed={shipmentType === type}
-                  onClick={() => changeShipmentType(type)}
-                  className={`${TAB_BTN_BASE} ${shipmentType === type ? TAB_BTN_ACTIVE : TAB_BTN_INACTIVE}`}
-                >
-                  {type === 'document' ? <DocumentIcon /> : <ParcelIcon />}
-                  {CONTENT.tabs[type]}
-                </button>
-              ))}
-            </div>
+            {routeType === 'international' ? (
+              <>
+                <div className="flex items-center gap-2 rounded-full bg-[#064423] px-4 py-2.5 text-[13px] text-[#36B936]">
+                  <DocumentIcon />
+                  {CONTENT.tabs.document}
+                </div>
 
-            <div className="flex items-center gap-2 rounded-xl border border-[#36B936]/10 bg-[#F6FCF6] px-3 py-2.5">
-              <span className="flex-shrink-0">
-                <InfoIcon />
-              </span>
-              <p className="text-[11px] leading-snug text-[#064423]/50">{CONTENT.infoBanner}</p>
-            </div>
+                <div className="flex items-center gap-2 rounded-xl border border-[#36B936]/10 bg-[#F6FCF6] px-3 py-2.5">
+                  <span className="flex-shrink-0">
+                    <InfoIcon />
+                  </span>
+                  <p className="text-[11px] leading-snug text-[#064423]/50">{CONTENT.docsOnlyBanner}</p>
+                </div>
 
-            {/* Weight + shipment value */}
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <div className="min-w-0 flex-1">
-                <FieldLabel htmlFor="calc-weight">{CONTENT.weight}</FieldLabel>
-                <div className="flex items-center gap-2">
-                  <input
-                    id="calc-weight"
-                    type="number"
-                    inputMode="decimal"
-                    min={0}
-                    value={weight}
-                    onChange={(e) => setWeight(e.target.value)}
-                    placeholder={CONTENT.numberPlaceholder}
-                    className={`${INPUT_CLS} min-w-0 flex-1`}
-                  />
-                  <div className="flex flex-shrink-0 rounded-full bg-[#EFEFEF] p-1" role="group" aria-label="Weight unit">
-                    {(['Kg', 'G'] as const).map((u) => (
-                      <button
-                        key={u}
-                        type="button"
-                        aria-pressed={weightUnit === u}
-                        onClick={() => setWeightUnit(u)}
-                        className={`rounded-full px-3 py-1.5 text-[11px] transition-all duration-200 ${
-                          weightUnit === u
-                            ? 'bg-[#064423] text-[#36B936] shadow-sm'
-                            : 'text-[#064423]/40 hover:text-[#064423]/70'
-                        }`}
-                      >
-                        {u}
-                      </button>
-                    ))}
+                <SelectField
+                  id="calc-intl-weight"
+                  label={CONTENT.docWeight}
+                  value={intlWeight}
+                  onChange={(v) => {
+                    setIntlWeight(v);
+                    setIntlQuote(null);
+                  }}
+                  options={docWeightOptions.map((w) => ({ value: String(w), label: `${w} Kg` }))}
+                  placeholder={CONTENT.weightPlaceholder}
+                />
+
+                {rateError && (
+                  <p role="alert" className="rounded-xl border border-red-100 bg-red-50 px-3 py-2.5 text-[12px] text-red-600">
+                    {rateError}
+                  </p>
+                )}
+                {intlNoRate && !rateError && (
+                  <p role="alert" className="rounded-xl border border-red-100 bg-red-50 px-3 py-2.5 text-[12px] text-red-600">
+                    {CONTENT.noIntlRate}
+                  </p>
+                )}
+              </>
+            ) : (
+              <>
+                <div className="flex items-center gap-2 rounded-xl border border-[#36B936]/10 bg-[#F6FCF6] px-3 py-2.5">
+                  <span className="flex-shrink-0">
+                    <InfoIcon />
+                  </span>
+                  <p className="text-[11px] leading-snug text-[#064423]/50">{CONTENT.infoBanner}</p>
+                </div>
+
+                {/* Weight */}
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <div className="min-w-0 flex-1">
+                    <FieldLabel htmlFor="calc-weight">{CONTENT.weight}</FieldLabel>
+                    <div className="flex items-center gap-2">
+                      <input
+                        id="calc-weight"
+                        type="number"
+                        inputMode="decimal"
+                        min={0}
+                        value={weight}
+                        onChange={(e) => setWeight(e.target.value)}
+                        placeholder={CONTENT.numberPlaceholder}
+                        className={`${INPUT_CLS} min-w-0 flex-1`}
+                      />
+                      <div className="flex flex-shrink-0 rounded-full bg-[#EFEFEF] p-1" role="group" aria-label="Weight unit">
+                        {(['Kg', 'G'] as const).map((u) => (
+                          <button
+                            key={u}
+                            type="button"
+                            aria-pressed={weightUnit === u}
+                            onClick={() => setWeightUnit(u)}
+                            className={`rounded-full px-3 py-1.5 text-[11px] transition-all duration-200 ${
+                              weightUnit === u
+                                ? 'bg-[#064423] text-[#36B936] shadow-sm'
+                                : 'text-[#064423]/40 hover:text-[#064423]/70'
+                            }`}
+                          >
+                            {u}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <p className={`mt-1.5 text-[11px] ${overweight ? 'text-red-600' : 'text-[#064423]/50'}`} role={overweight ? 'alert' : undefined}>
+                      {overweight
+                        ? OVERWEIGHT_MESSAGE
+                        : domesticVehicle === 'car'
+                          ? `Goes by car (over ${BIKE_MAX_KG} kg, up to ${CAR_MAX_KG} kg).`
+                          : domesticVehicle === 'bike'
+                            ? `Goes by bike (up to ${BIKE_MAX_KG} kg).`
+                            : `Up to ${BIKE_MAX_KG} kg goes by bike, up to ${CAR_MAX_KG} kg by car.`}
+                    </p>
                   </div>
                 </div>
-              </div>
 
-              <NumberField
-                id="calc-value"
-                label={CONTENT.shipmentValue}
-                value={shipmentValue}
-                onChange={setShipmentValue}
-                className="flex-1"
-              />
-            </div>
+                {/* Box presets */}
+                <div>
+                  <p className="mb-2 text-[12px] text-[#064423]/70">{CONTENT.unsureSize}</p>
+                  <div className={`grid gap-2 grid-cols-3`}>
+                    {BOX_SIZES.map((box) => {
+                      const isSelected = selectedBox === box.label;
+                      return (
+                        <button
+                          key={box.label}
+                          type="button"
+                          aria-pressed={isSelected}
+                          onClick={() => pickBox(box)}
+                          className={`flex flex-col items-center gap-1 rounded-2xl border px-2 py-3 text-center transition-all duration-200 ${
+                            isSelected
+                              ? 'border-[#36B936] bg-[#F0FAF0]'
+                              : 'border-[#E8EBE8] bg-white hover:border-[#36B936]/40'
+                          }`}
+                        >
+                          <BoxPresetIcon />
+                          <p className={`text-[10px] leading-tight ${isSelected ? 'font-semibold text-[#064423]' : 'text-[#064423]/50'}`}>
+                            {box.dims}
+                          </p>
+                          <p className={`mt-1 text-[11px] ${isSelected ? 'font-semibold text-[#064423]' : 'text-[#064423]/60'}`}>
+                            {box.label}
+                          </p>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
 
-            {/* Box presets */}
-            <div>
-              <p className="mb-2 text-[12px] text-[#064423]/70">{CONTENT.unsureSize}</p>
-              <div className={`grid gap-2 ${boxes.length === 1 ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-3'}`}>
-                {boxes.map((box) => {
-                  const isSelected = selectedBox === box.label;
-                  return (
-                    <button
-                      key={box.label}
-                      type="button"
-                      aria-pressed={isSelected}
-                      onClick={() => pickBox(box)}
-                      className={`flex flex-col items-center gap-1 rounded-2xl border px-2 py-3 text-center transition-all duration-200 ${
-                        isSelected
-                          ? 'border-[#36B936] bg-[#F0FAF0]'
-                          : 'border-[#E8EBE8] bg-white hover:border-[#36B936]/40'
-                      }`}
-                    >
-                      <BoxPresetIcon />
-                      <p className={`text-[10px] leading-tight ${isSelected ? 'font-semibold text-[#064423]' : 'text-[#064423]/50'}`}>
-                        {box.dims}
-                      </p>
-                      <p className={`mt-1 text-[11px] ${isSelected ? 'font-semibold text-[#064423]' : 'text-[#064423]/60'}`}>
-                        {box.label}
-                      </p>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+                {/* Dimensions */}
+                <div className="grid grid-cols-3 gap-3">
+                  <NumberField id="calc-length" label={CONTENT.dims.length} value={length} onChange={setLength} />
+                  <NumberField id="calc-width" label={CONTENT.dims.width} value={width} onChange={setWidth} />
+                  <NumberField id="calc-height" label={CONTENT.dims.height} value={height} onChange={setHeight} />
+                </div>
 
-            {/* Dimensions */}
-            <div className="grid grid-cols-3 gap-3">
-              <NumberField id="calc-length" label={CONTENT.dims.length} value={length} onChange={setLength} />
-              <NumberField id="calc-width" label={CONTENT.dims.width} value={width} onChange={setWidth} />
-              <NumberField id="calc-height" label={CONTENT.dims.height} value={height} onChange={setHeight} />
-            </div>
+                {validateError && (
+                  <p role="alert" className="rounded-xl border border-red-100 bg-red-50 px-3 py-2.5 text-[12px] text-red-600">
+                    {validateError}
+                  </p>
+                )}
+              </>
+            )}
 
             <button
               type="submit"
-              disabled={!canSubmit}
-              className="mt-1 w-full rounded-full bg-[#36B936] py-4 text-[14px] text-white transition-all duration-200 hover:bg-[#2da52d] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-[#36B936] disabled:active:scale-100"
+              disabled={!ready || !canSubmit || validating || rating}
+              className="mt-1 flex w-full items-center justify-center gap-2 rounded-full bg-[#36B936] py-4 text-[14px] text-white transition-all duration-200 hover:bg-[#2da52d] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-[#36B936] disabled:active:scale-100"
             >
+              {(validating || rating) && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
               {CONTENT.submit}
             </button>
           </div>
         </div>
+
+        {/* Live rate from /api/international/rate-card */}
+        {routeType === 'international' && intlQuote && (
+          <div className="mt-6 rounded-[1.5rem] bg-white p-5 sm:p-6" aria-live="polite">
+            <h3 className="mb-4 text-[15px] font-medium text-[#064423]">{CONTENT.resultsTitle}</h3>
+            <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-[#E8EBE8] px-4 py-3.5">
+              <div className="min-w-0">
+                <p className="text-[14px] font-medium text-[#064423]">
+                  {intlQuote.service || 'Document'} · {intlQuote.weightLabel || `${intlWeight} Kg`}
+                </p>
+                <p className="mt-0.5 text-[12px] text-[#064423]/50">Door-to-door document delivery</p>
+              </div>
+              <div className="flex items-center gap-4">
+                <p className="whitespace-nowrap text-right text-[18px] font-medium text-[#064423]">
+                  {intlQuote.currency} {intlQuote.total.toFixed(2)}
+                  <span className="block text-[11px] font-normal text-[#064423]/45">{CONTENT.inclVat}</span>
+                </p>
+                <Link
+                  href="/send-shipment"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-[#064423] px-4 py-2 text-[13px] text-[#36B936] transition-opacity hover:opacity-90"
+                >
+                  {CONTENT.book} <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Live services + prices from /api/shipments/validate */}
+        {routeType === 'domestic' && services && (
+          <div className="mt-6 rounded-[1.5rem] bg-white p-5 sm:p-6" aria-live="polite">
+            <h3 className="mb-4 text-[15px] font-medium text-[#064423]">{CONTENT.resultsTitle}</h3>
+            <ul className="flex flex-col gap-3">
+              {services.map((service) => (
+                <li
+                  key={service.serviceCode}
+                  className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-[#E8EBE8] px-4 py-3.5"
+                >
+                  <div className="min-w-0">
+                    <p className="text-[14px] font-medium text-[#064423]">{service.name}</p>
+                    {service.description && <p className="mt-0.5 text-[12px] text-[#064423]/50">{service.description}</p>}
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <p className="whitespace-nowrap text-right text-[18px] font-medium text-[#064423]">
+                      AED {service.grossAmount.toFixed(2)}
+                      <span className="block text-[11px] font-normal text-[#064423]/45">{CONTENT.inclVat}</span>
+                    </p>
+                    <Link
+                      href="/send-shipment"
+                      className="inline-flex items-center gap-1.5 rounded-full bg-[#064423] px-4 py-2 text-[13px] text-[#36B936] transition-opacity hover:opacity-90"
+                    >
+                      {CONTENT.book} <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                    </Link>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </form>
     </div>
   );

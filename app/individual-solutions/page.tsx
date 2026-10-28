@@ -14,7 +14,7 @@ import CTABanner from '@/components/shared/CTABanner';
 export const metadata: Metadata = pageMetadata({
   title: "Individual Solutions",
   description:
-    "Whatever you're sending, wherever it's going — same day across the UAE, or international to 200+ countries.",
+    "Whatever you're sending, wherever it's going — same day across the UAE, or international to 195 countries.",
   path: '/individual-solutions',
 });
 

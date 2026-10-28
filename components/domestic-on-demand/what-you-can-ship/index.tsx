@@ -18,15 +18,15 @@ interface ShippingTierRow {
 const SHIPPING_TIERS: ShippingTierRow[] = [
   {
     vehicleType: 'Motorbike',
-    maxWeight: 'Up to 5 kg',
-    maxDimensions: '40 x 30 x 20 cm',
+    maxWeight: 'Up to 10 kg',
+    maxDimensions: '45 x 45 x 45 cm',
     bestFor: 'Documents, small parcels, envelopes',
     icon: <Bike className="w-4 h-4 sm:w-5 sm:h-5 text-[#7BE07B]" />,
   },
   {
     vehicleType: 'Van',
-    maxWeight: 'Up to 70 kg',
-    maxDimensions: '120 x 80 x 80 cm',
+    maxWeight: 'Up to 30 kg',
+    maxDimensions: '200 x 150 x 130 cm',
     bestFor: 'Large boxes, multiple packages',
     icon: <Package className="w-4 h-4 sm:w-5 sm:h-5 text-[#7BE07B]" />,
   },
@@ -41,7 +41,7 @@ interface WhatYouCanShipProps {
 const WhatYouCanShip: FC<WhatYouCanShipProps> = ({
   onBookShipment,
   onContactTeam,
-  contactHref = '/contact',
+  contactHref = '/support',
 }) => {
   return (
     <section
@@ -68,7 +68,7 @@ const WhatYouCanShip: FC<WhatYouCanShipProps> = ({
             className="flex items-center justify-center gap-3 sm:gap-4 mb-4"
           >
             <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
-              Cargo Specifications & Limits
+              Package Specifications & Limits
             </span>
           </motion.div>
 
@@ -89,7 +89,7 @@ const WhatYouCanShip: FC<WhatYouCanShipProps> = ({
             transition={{ ...smoothTransition, delay: 0.1 }}
             className="text-white/70 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto px-2"
           >
-            Choose the ideal vehicle class for your cargo. Review our approximate maximum weights, dimensions, and best-fit use cases below.
+            Choose the ideal vehicle class for your packages. Review our approximate maximum weights, dimensions, and best-fit use cases below.
           </motion.p>
         </div>
 

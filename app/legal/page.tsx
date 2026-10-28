@@ -66,7 +66,7 @@ export default function LegalPage() {
 
         <p className="mt-8 text-[14px] text-[#064423]/65">
           Questions about a claim or your data?{' '}
-          <Link href="/contact" className="font-medium text-[#064423] underline-offset-4 hover:underline">
+          <Link href="/support" className="font-medium text-[#064423] underline-offset-4 hover:underline">
             Contact us
           </Link>
           .

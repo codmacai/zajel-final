@@ -1,6 +1,8 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { trackShipment } from './trackingApi';
-import type { Shipment } from './types';
+import type { Shipment, ShipmentQuery } from './types';
 
 interface UseShipmentResult {
   shipment: Shipment | null;
@@ -8,39 +10,39 @@ interface UseShipmentResult {
   error: string | null;
 }
 
+interface Settled {
+  key: string;
+  shipment: Shipment | null;
+  error: string | null;
+}
 
-export function useShipment(query: string | null): UseShipmentResult {
-  const [shipment, setShipment] = useState<Shipment | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+export function useShipment(query: ShipmentQuery | null): UseShipmentResult {
+  const value = query?.value ?? null;
+  const optionCode = query?.optionCode ?? null;
+  const key = value && optionCode ? `${optionCode}:${value}` : null;
+
+  // Only the settled result is stored; "loading" is derived (a key with no result yet), so the
+  // effect never has to set state synchronously.
+  const [settled, setSettled] = useState<Settled | null>(null);
 
   useEffect(() => {
-    if (!query) {
-      setShipment(null);
-      setError(null);
-      setLoading(false);
-      return;
-    }
-
+    if (!key || !value || !optionCode) return;
     let isMounted = true;
-    setLoading(true);
-    setError(null);
 
-    trackShipment(query)
-      .then((result) => {
-        if (isMounted) setShipment(result);
+    trackShipment({ value, optionCode })
+      .then((shipment) => {
+        if (isMounted) setSettled({ key, shipment, error: null });
       })
       .catch((err) => {
-        if (isMounted) setError(err instanceof Error ? err.message : 'Something went wrong.');
-      })
-      .finally(() => {
-        if (isMounted) setLoading(false);
+        if (isMounted) setSettled({ key, shipment: null, error: err instanceof Error ? err.message : 'Something went wrong.' });
       });
 
     return () => {
       isMounted = false;
     };
-  }, [query]);
+  }, [key, value, optionCode]);
 
-  return { shipment, loading, error };
+  if (!key) return { shipment: null, loading: false, error: null };
+  if (settled?.key !== key) return { shipment: null, loading: true, error: null };
+  return { shipment: settled.shipment, loading: false, error: settled.error };
 }

@@ -1,8 +1,6 @@
-// The shapes below are what a real backend response is expected to look
-// like. Keeping this as the single source of truth means the mock data,
-// the API call, and every page that renders shipment info all agree on
-// the same contract — swap trackingApi.ts for a real fetch later and
-// nothing else needs to change.
+// View-model types consumed by the tracking pages (TrackShipment / TrackingResults).
+// Populated from the *raw* API types below by lib/tracking/map.ts, which runs server-side in
+// app/api/track/route.ts — the browser never sees the raw shape (or the YARP API key).
 
 export interface ShipmentParty {
   name: string;
@@ -12,27 +10,30 @@ export interface ShipmentParty {
 
 export interface ServiceInfo {
   serviceType: string;
-  weightKg: number;
+  weightKg: number | null;
   pieces: number;
 }
 
-export type ShipmentStatus =
-  | 'created'
-  | 'picked_up'
-  | 'at_hub'
-  | 'in_transit'
-  | 'out_for_delivery'
-  | 'delivered';
+// Real API stage keys are dynamic strings (e.g. "pickup_completed", "accept", "delivered")
+// rather than a fixed enum — kept as `string` rather than a union so the UI doesn't break
+// when the backend returns a stage it doesn't already know about.
+export type ShipmentStatus = string;
+
+export interface LatLng {
+  lat: number;
+  lng: number;
+}
 
 export interface TimelineStep {
   status: ShipmentStatus;
   label: string;
   location: string;
-  // Real API should return an ISO timestamp (e.g. "2026-01-05T09:00:00Z").
-  // Formatting for display happens in the UI, not in the data itself.
-  datetime: string;
-  note: string;
+  /** Pre-formatted date/time the API gives per stage (or derived from its events) — '' if not yet reached. */
+  dateLabel: string;
+  /** True once this stage has been reached. */
   done: boolean;
+  /** True for the single stage the shipment is currently sitting at. */
+  isActive: boolean;
 }
 
 export interface ProofOfDeliveryInfo {
@@ -51,10 +52,97 @@ export interface Shipment {
   receiver: ShipmentParty;
   origin: string;
   destination: string;
+  /** Only populated when the API actually supplies coordinates (rare) — geocode `origin`/`destination` as a fallback. */
+  originCoordinates: LatLng | null;
+  destinationCoordinates: LatLng | null;
   service: ServiceInfo;
-  deliveredAtLabel?: string; // e.g. "Jan 5, 2026 at 02:30 PM"
-  deliveredOnLabel?: string; // e.g. "Jan 6, 2026"
+  deliveredAtLabel?: string;
+  deliveredOnLabel?: string;
   routeMapImageUrl?: string;
   timeline: TimelineStep[];
   proofOfDelivery?: ProofOfDeliveryInfo;
+}
+
+export type TrackingOptionCode = 'ref' | 'phone';
+
+/** What the tracking form on TrackShipment submits — which field the user typed into. */
+export interface ShipmentQuery {
+  value: string;
+  optionCode: TrackingOptionCode;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Raw shapes returned by the real MobileApp.API GetShipments endpoint      */
+/* (ported 1:1 from zajel_site_new_angular's tracking.types.ts).            */
+/* ------------------------------------------------------------------------ */
+
+export interface RawDestinationInformation {
+  customerName: string;
+  customerPhone: string;
+  receiverAddress: string;
+  country: string;
+  area: string;
+  city: string;
+  zone: string;
+  customerAddress: string;
+  customerAddress2?: string;
+  /** Sic — the API's own field name is misspelled ("desitnation"). Often an empty string. */
+  desitnationLat?: string;
+  destinationLng?: string;
+}
+
+export interface RawOriginInformation {
+  senderName: string;
+  originCity: string;
+  originCountry: string;
+  originAddress: string;
+  senderPhone: string;
+}
+
+export interface RawPiecesDetails {
+  pieceCount: number;
+  packageDescription: string;
+}
+
+export interface RawShipmentEvent {
+  id: number;
+  awb: string;
+  event_name: string;
+  event_time: string;
+  event_time_epoch: number;
+  event_user: string | null;
+  location_lat: string | null;
+  location_lon: string | null;
+  remarks: string | null;
+  event_user_type: string;
+}
+
+export interface RawShipmentStage {
+  friendlyName: string;
+  stageName: string;
+  stageKey: string;
+  isActive: boolean;
+}
+
+export interface RawShipment {
+  refNumber: string;
+  currentStatus: string;
+  shipmentDate: string;
+  deliveryDate: string | null;
+  serviceType: string;
+  orderDescription: string;
+  destinationInformation: RawDestinationInformation;
+  originInformation: RawOriginInformation;
+  piecesDetails: RawPiecesDetails;
+  shipmentEvents: RawShipmentEvent[];
+  shipmentStages: RawShipmentStage[];
+}
+
+export interface RawShipmentApiResponse {
+  shipmentCount: number;
+  pageNumber: number;
+  totalPages: number;
+  nextPageAvailable: boolean;
+  pageShipmentCount: number;
+  shipments: RawShipment[];
 }

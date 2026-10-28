@@ -4,7 +4,7 @@ export const International_FAQS: FaqQuestion[] = [
     {
         question: 'How long does international shipping take from the UAE?',
         answer:
-          'Most shipments are delivered within 3-4 days, to any of the 200+ countries in our network.',
+          'Most shipments are delivered within 3-4 days, to any of the 195 countries in our network.',
       },
       {
         question: 'Do I pay upfront when sending a package?',
@@ -25,11 +25,11 @@ export const International_FAQS: FaqQuestion[] = [
         answer:
           'Shipping rates depend on the destination country, package weight and dimensions, and the service level you choose (express or standard). Use our online quotation tool or contact our team for an instant rate based on your specific shipment details.',
       },
-      {
-        question: 'Do I need to fill out customs forms?',
-        answer:
-          'Zajel prepares all required customs documentation on your behalf. When you book an international shipment, we collect the necessary information including item descriptions, declared values, and recipient details. Our team handles the paperwork so your shipment clears customs without delays.',
-      },
+      // {
+      //   question: 'Do I need to fill out customs forms?',
+      //   answer:
+      //     'Zajel prepares all required customs documentation on your behalf. When you book an international shipment, we collect the necessary information including item descriptions, declared values, and recipient details. Our team handles the paperwork so your shipment clears customs without delays.',
+      // },
       {
         question: 'Can I ship food items internationally from the UAE?',
         answer:
@@ -45,16 +45,16 @@ export const International_FAQS: FaqQuestion[] = [
         answer:
           'Every international shipment includes real-time tracking through the Zajel app and web portal. You receive tracking updates at every milestone including pickup, export clearance, in transit, arrival at destination, customs clearance, and final delivery. The recipient also receives delivery notifications.',
       },
-      {
-        question: 'Does Zajel handle customs clearance at the destination?',
-        answer:
-          'Yes. Zajel manages customs clearance at both origin and destination through our global alliance network spanning 195 countries. Our partners at the destination handle local customs processes, duty payments (if DDP), and final delivery.',
-      },
-      {
-        question: 'What is the maximum weight for international shipments?',
-        answer:
-          'Standard international shipments can weigh up to 70 kg. For heavier or oversized items, Zajel offers freight forwarding services by air, sea, or land. Contact our team for a freight quote if your shipment exceeds standard courier limits.',
-      },
+      // {
+      //   question: 'Does Zajel handle customs clearance at the destination?',
+      //   answer:
+      //     'Yes. Zajel manages customs clearance at both origin and destination through our global alliance network spanning 195 countries. Our partners at the destination handle local customs processes, duty payments (if DDP), and final delivery.',
+      // },
+      // {
+      //   question: 'What is the maximum weight for international shipments?',
+      //   answer:
+      //     'Standard international shipments can weigh up to 70 kg. For heavier or oversized items, Zajel offers freight forwarding services by air, sea, or land. Contact our team for a freight quote if your shipment exceeds standard courier limits.',
+      // },
       {
         question: 'Can I ship documents internationally?',
         answer:

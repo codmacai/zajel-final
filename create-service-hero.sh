@@ -472,7 +472,7 @@ export const serviceHeroData: Record<"customs" | "warehouse" | "industry" | "net
       { type: "numeric", value: 195, label: "Countries Covered" },
       { type: "numeric", value: 500, suffix: "+", label: "Destinations Worldwide" },
       { type: "numeric", value: 45, suffix: "M+", label: "Shipments Delivered" },
-      { type: "numeric", value: 3, label: "Global Alliances" },
+      { type: "numeric", value: 2, label: "Global Alliances" },
     ],
   },
 };

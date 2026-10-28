@@ -27,7 +27,7 @@ interface ValueAddedServicesProps {
   contactHref?: string;
 }
 
-export default function ValueAddedServices({ quoteHref = '/quotation', contactHref = '/contact' }: ValueAddedServicesProps) {
+export default function ValueAddedServices({ quoteHref = '/support', contactHref = '/support' }: ValueAddedServicesProps) {
   return (
     <section className="w-full bg-white px-4 py-12 font-['Manrope',sans-serif] sm:px-6 sm:py-16 md:px-12 md:py-20 lg:px-20 lg:py-24">
       <div className="mx-auto max-w-[1320px]">

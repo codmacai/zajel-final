@@ -31,7 +31,7 @@ export default function Page() {
         // `<` escaped so answer text can never close the script tag
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
       />
-      <FaqPage quoteHref="/contact" />
+      <FaqPage quoteHref="/support" />
     </main>
   );
 }

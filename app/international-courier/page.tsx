@@ -13,7 +13,7 @@ import CTABanner from '@/components/shared/CTABanner';
 export const metadata: Metadata = pageMetadata({
   title: "International Shipping",
   description:
-    "Ship internationally from the UAE to 200+ countries with reliable express and standard delivery, real-time tracking, and full customs clearance support.",
+    "Ship internationally from the UAE to 195 countries with reliable express and standard delivery, real-time tracking, and full customs clearance support.",
   path: '/international-courier',
 });
 

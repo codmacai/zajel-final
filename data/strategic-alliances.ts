@@ -11,13 +11,13 @@ export interface AllianceCardData {
     "Zajel's global coverage is strengthened by our membership in established international logistics networks. These alliances extend our physical reach to markets and routes where our partners maintain on-the-ground operations.";
   
   export const STRATEGIC_ALLIANCES: AllianceCardData[] = [
-    {
-      title: "DF Alliance by DP World",
-      description:
-        "A global freight forwarder network spanning more than 190 countries. Membership gives Zajel access to vetted logistics partners in every major trade market, ensuring reliable handling and local expertise for shipments moving to or through destinations where we do not maintain a direct presence.",
-      logoSrc: "/Homepage/alliances/df-alliance-logo.png",
-      logoAlt: "DF Alliance by DP World Logo",
-    },
+    // {
+    //   title: "DF Alliance by DP World",
+    //   description:
+    //     "A global freight forwarder network spanning more than 190 countries. Membership gives Zajel access to vetted logistics partners in every major trade market, ensuring reliable handling and local expertise for shipments moving to or through destinations where we do not maintain a direct presence.",
+    //   logoSrc: "/Homepage/alliances/df-alliance-logo.png",
+    //   logoAlt: "DF Alliance by DP World Logo",
+    // },
     {
       title: "JCtrans Premium Membership",
       description:

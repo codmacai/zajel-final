@@ -12,7 +12,7 @@ export const SECURE_DOCS_HERO: HeroContent = {
   title: "Legal & Official Papers,\nHandled With Care",
   description: "Contracts, court filings and official records moved with strict custody controls and confirmed delivery.",
   primaryLabel: "Send a Document",
-  primaryHref: "/contact",
+  primaryHref: "/support",
   secondaryLabel: "Track Shipment",
   secondaryHref: "/track",
   image: "/securesol/secure-legal-documents.webp",

@@ -1,9 +1,9 @@
 import type { FaqQuestion } from "@/components/shared/faq-section";
 
 /**
- * FAQPage structured data for a page's FAQ section. The accordion only renders
- * an answer while it is open, so this keeps every question and answer in the
- * server HTML for search engines (and makes the page eligible for FAQ rich results).
+ * FAQPage structured data for a page's FAQ section — makes the page eligible for FAQ rich
+ * results. components/shared/faq-section.tsx emits it automatically; use it directly only for
+ * a FAQ that isn't built with that component.
  */
 export default function FaqJsonLd({ items }: { items: FaqQuestion[] }) {
   const jsonLd = {

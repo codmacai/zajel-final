@@ -1,5 +1,6 @@
 'use client';
 
+import { useSupportAction } from '@/hooks/useSupportAction';
 import { ArrowRight, ShieldAlert } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -115,7 +116,9 @@ interface CustomsDutyGuideProps {
   onContactSupport?: () => void;
 }
 
-const CustomsDutyGuide = ({ onGetQuote, onContactSupport }: CustomsDutyGuideProps) => {
+const CustomsDutyGuide = ({ onGetQuote: onGetQuoteProp, onContactSupport: onContactSupportProp }: CustomsDutyGuideProps) => {
+  const onGetQuote = useSupportAction(onGetQuoteProp);
+  const onContactSupport = useSupportAction(onContactSupportProp);
   return (
     <section className="w-full py-16 sm:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-white overflow-hidden font-sans">
       <div className="mx-auto max-w-7xl">

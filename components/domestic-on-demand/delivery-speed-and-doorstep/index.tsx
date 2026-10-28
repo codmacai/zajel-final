@@ -16,7 +16,7 @@ const CONTENT = {
     text: 'Schedule your pickup for today, at a time that suits you. Same city or city-to-city.',
     features: [
       'Pickup within 1 hour of your scheduled time',
-      'Delivered within 2 hours of pickup',
+      'Delivered within 1 hour of pickup',
       'Same-city or city-to-city',
     ],
   },

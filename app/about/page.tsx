@@ -51,7 +51,7 @@ export default function AboutPage() {
               buttons={[
                 { label: "Explore Our Solutions", href: "/#solutions", variant: "primary" },
                 { label: "Careers at Zajel", href: "/careers", variant: "secondary" },
-                { label: "Get in Touch", href: "/contact", variant: "secondary" },
+                { label: "Get in Touch", href: "/support", variant: "secondary" },
               ]}
             />
     </main>

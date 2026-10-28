@@ -155,10 +155,10 @@ export default function WhyChooseUs() {
             </div>
             <div className="wcz-dest-content">
               <div className="wcz-dest-value">
-                500
+                500k
                 <span>+</span>
               </div>
-              <div className="wcz-dest-label">Worldwide Destinations</div>
+              <div className="wcz-dest-label">Items Handled Daily</div>
             </div>
           </div>
 

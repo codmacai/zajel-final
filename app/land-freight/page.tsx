@@ -17,8 +17,6 @@ import IndustriesWeServe from '@/components/land-freight/industry';
 import HowFreightQuoteWorks from '@/components/land-freight/HowItworks';
 import LandFreightHero from '@/components/land-freight/hero';
 import LandFreightFAQS from '@/components/land-freight/faq';
-import { LandFreight_FAQS } from '@/data/land-freight-faq';
-import FaqJsonLd from '@/lib/faq-json-ld';
 
 export const metadata: Metadata = pageMetadata({
   title: "Land Freight Services",
@@ -54,7 +52,6 @@ export default function LandFreightPage() {
       <ColdChainGridSection />
 
       <LandFreightFAQS />
-      <FaqJsonLd items={LandFreight_FAQS} />
     </main>
   );
 }
