@@ -68,3 +68,20 @@ export const CTA_HINTS: Hints = {
   buttons: { itemLabel: 'Button' },
   'buttons.*.external': { label: 'Opens in a new tab' },
 };
+
+export const SERVICE_HERO_HINTS: Hints = {
+  badgeText: { label: 'Badge' },
+  headingPrimary: { label: 'Heading' },
+  headingHighlight: { label: 'Heading, highlighted part' },
+  leadParagraph: { label: 'Intro' },
+  detailParagraph: { label: 'Details' },
+  ctaText: { label: 'Button text' },
+  ctaHref: { label: 'Button link' },
+  backgroundImage: { kind: 'image', label: 'Background image' },
+  backgroundImageAlt: { label: 'Background image description' },
+  cardBg: { hidden: true },
+  imageOpacity: { hidden: true },
+  overlayVariant: { hidden: true },
+  showGlowOrbs: { hidden: true },
+  stats: { itemLabel: 'Number' },
+};

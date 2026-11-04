@@ -7,11 +7,13 @@ import IndustriesWeServe from "@/components/industries-we-serve/industries-we-se
 import { CUSTOMS_CLEARANCE_FAQS } from "@/data/customs-clearance-faqs";
 import CustomsFaqSection from "@/components/customs-clearance/customs-faq-section";
 import HowClearanceWorks from "@/components/customs-clearance/howitworks";
+import CmsScope from '@/components/cms/CmsScope';
 
 export const generateMetadata = cmsMetadata('customs-clearance', '/customs-clearance');
 
 export default function CustomsClearancePage() {
   return (
+    <CmsScope page="customs-clearance">
     <main>
       <ServiceHero variant="customs" />
       <CustomsClearanceServices/>
@@ -23,5 +25,6 @@ export default function CustomsClearancePage() {
 
       {/* Rest of the Customs Clearance page content goes below. */}
     </main>
+    </CmsScope>
   );
 }

@@ -1,14 +1,17 @@
 "use client";
 
 import FaqSection from "@/components/shared/faq-section";
-import { CUSTOMS_CLEARANCE_FAQS } from "@/data/customs-clearance-faqs";
+import { CUSTOMS_FAQ, type CUSTOMS_FAQContent } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
-export default function CustomsFaqSection() {
+function CustomsFaqSection({ content }: { content: CUSTOMS_FAQContent }) {
   return (
     <FaqSection
-      eyebrow="FAQ"
-      heading="Frequently Asked Questions"
-      items={CUSTOMS_CLEARANCE_FAQS}
+      eyebrow={content.eyebrow}
+      heading={content.heading}
+      items={content.items}
     />
   );
 }
+
+export default cmsSection('customs-clearance.faq', CUSTOMS_FAQ, CustomsFaqSection);

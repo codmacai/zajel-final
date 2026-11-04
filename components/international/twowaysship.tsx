@@ -5,7 +5,7 @@ import type { FC } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { INTERNATIONAL_TWO_WAYS, type INTERNATIONAL_TWO_WAYSContent } from './content';
-import { serverSection } from '@/lib/cms/server';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const smoothTransition = { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const };
 
@@ -308,4 +308,4 @@ const TwoWaysToShipAndJourney = ({ content }: { content: INTERNATIONAL_TWO_WAYSC
   );
 };
 
-export default serverSection('international-courier.two-ways', INTERNATIONAL_TWO_WAYS, TwoWaysToShipAndJourney);
+export default cmsSection('international-courier.two-ways', INTERNATIONAL_TWO_WAYS, TwoWaysToShipAndJourney);

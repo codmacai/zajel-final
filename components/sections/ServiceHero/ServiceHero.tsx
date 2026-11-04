@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useLayoutEffect, useRef, type CSSProperties } from "react";
 import CountUp from "./CountUp";
 import { serviceHeroData, type ServiceHeroKey } from "./serviceHeroData";
+import type { ServiceHeroData } from "./types";
+import { useSection } from "@/components/cms/CmsProvider";
 
 /**
  * Keeps the heading on exactly two lines (primary line + highlight line).
@@ -51,7 +53,20 @@ function useFitHeading(deps: unknown[]) {
   return ref;
 }
 
+/** The CMS page each hero belongs to (its key is `${page}.hero`). */
+const PAGE_OF: Record<ServiceHeroKey, string> = {
+  customs: 'customs-clearance',
+  warehouse: 'warehouse',
+  industry: 'industry',
+  network: 'network',
+};
+
 export default function ServiceHero({ variant }: { variant: ServiceHeroKey }) {
+  const content = useSection(`${PAGE_OF[variant]}.hero`, serviceHeroData[variant]);
+  return content ? <ServiceHeroView content={content} /> : null;
+}
+
+function ServiceHeroView({ content }: { content: ServiceHeroData }) {
   const {
     badgeText,
     headingPrimary,
@@ -67,7 +82,7 @@ export default function ServiceHero({ variant }: { variant: ServiceHeroKey }) {
     overlayVariant = "standard",
     showGlowOrbs = false,
     stats,
-  } = serviceHeroData[variant];
+  } = content;
 
   const headingRef = useFitHeading([headingPrimary, headingHighlight]);
 

@@ -3,6 +3,8 @@
 
 import { useInView } from '../../hooks/useInView';
 import ProcessStepsSection from '../shared/Steps';
+import { CUSTOMS_STEPS, type CUSTOMS_STEPSContent } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const cx = (...classes: Array<string | false | undefined>) => classes.filter(Boolean).join(' ');
 const animateBase = 'transition-all duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)]';
@@ -12,25 +14,11 @@ const fade = (isVisible: boolean) => (isVisible ? 'opacity-100 translate-y-0' : 
 // Timeline table content
 // ---------------------------------------------------------------------------
 
-const timelineLabel = 'Typical Clearance Timelines';
-
-interface TimelineRow {
-  cargoType: string;
-  timeline: string;
-}
-
-const timelineRows: TimelineRow[] = [
-  { cargoType: 'Standard general cargo', timeline: '1 to 2 business days' },
-  { cargoType: 'Air cargo (compliant docs)', timeline: 'Same day' },
-  { cargoType: 'Free zone transit processing', timeline: '2 to 3 business days' },
-  { cargoType: 'Inspection / restricted goods', timeline: '3 to 5 business days' },
-];
-
 // ---------------------------------------------------------------------------
 // Timeline table (Forced 2-column layout across all devices)
 // ---------------------------------------------------------------------------
 
-const ClearanceTimelineTable = () => {
+const ClearanceTimelineTable = ({ content }: { content: CUSTOMS_STEPSContent }) => {
   const { ref: tableRef, isVisible } = useInView<HTMLDivElement>();
 
   return (
@@ -42,12 +30,12 @@ const ClearanceTimelineTable = () => {
         <div className={cx('text-center mb-8 sm:mb-10 px-2', animateBase, fade(isVisible))}>
           <div className="flex items-center justify-center gap-4 mb-4">
             <span style={{ color: '#36B936' }} className="font-medium text-xs sm:text-sm tracking-wider uppercase">
-              Efficiency & Timeframe
+              {content.timelineEyebrow}
             </span>
           </div>
 
           <h3 className="text-2xl sm:text-3xl md:text-4xl text-[#0D2A22] font-light tracking-tight leading-[1.15]">
-            {timelineLabel}
+            {content.timelineLabel}
           </h3>
         </div>
 
@@ -65,18 +53,18 @@ const ClearanceTimelineTable = () => {
             <thead>
               <tr className="border-b border-white/10 bg-white/[0.04]">
                 <th className="p-3.5 sm:p-[clamp(1.1rem,2.4vw,1.65rem)] text-[11px] sm:text-[12px] font-medium text-white/50 tracking-[0.14em] uppercase w-[58%]">
-                  Cargo Type
+                  {content.columnCargo}
                 </th>
                 <th 
                   className="p-3.5 sm:p-[clamp(1.1rem,2.4vw,1.65rem)] text-[11px] sm:text-[12px] font-medium tracking-[0.14em] uppercase w-[42%]"
                   style={{ color: '#36b936' }}
                 >
-                  Timeline
+                  {content.columnTimeline}
                 </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/[0.06]">
-              {timelineRows.map((row) => (
+              {content.timelineRows.map((row) => (
                 <tr
                   key={row.cargoType}
                   className="group transition-colors duration-300 hover:bg-white/[0.06]"
@@ -104,42 +92,17 @@ const ClearanceTimelineTable = () => {
 // Section
 // ---------------------------------------------------------------------------
 
-const HowClearanceWorks = () => (
+const HowClearanceWorks = ({ content }: { content: CUSTOMS_STEPSContent }) => (
   <>
     <ProcessStepsSection
-      eyebrow="Customs Clearance"
-      heading={<>How Customs Clearance<br />Works in the UAE</>}
-      description="A clear, four-step process from document prep to cargo release."
-      steps={[
-        {
-          number: '01',
-          title: 'Document Preparation',
-          description:
-            'We gather and verify all shipment documents, ensuring consistency between the commercial invoice, packing list, and transport documents. Any discrepancies are resolved before submission.',
-        },
-        {
-          number: '02',
-          title: 'Declaration Filing',
-          description:
-            'Our licensed brokers submit the customs declaration through the Mirsal 2 system on the Dubai Trade Portal, where automated validation checks data against current regulations.',
-        },
-        {
-          number: '03',
-          title: 'Assessment and Inspection',
-          description:
-            'Customs authorities assess applicable duties and may select the shipment for physical or X-ray inspection. We coordinate the inspection process and provide all supporting documentation to minimize hold times.',
-        },
-        {
-          number: '04',
-          title: 'Payment and Release',
-          description:
-            'Once approved, we process duty payments electronically and secure the release order for your cargo to be collected or delivered to its final destination.',
-        },
-      ]}
+      eyebrow={content.eyebrow}
+      heading={<>{content.headingLine1}<br />{content.headingLine2}</>}
+      description={content.description}
+      steps={content.steps}
     />
 
-    <ClearanceTimelineTable />
+    <ClearanceTimelineTable content={content} />
   </>
 );
 
-export default HowClearanceWorks;
+export default cmsSection('customs-clearance.how-it-works', CUSTOMS_STEPS, HowClearanceWorks);
