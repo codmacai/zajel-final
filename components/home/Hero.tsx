@@ -3,15 +3,15 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useTranslation } from "react-i18next";
 import { dockItems } from "@/data/dockItems";
 import { TRACK_ROUTES, trackResultsHref } from "@/components/tracking/data";
 import DockItem from "./DockItem"; // desktop dock item
 import MobileDock from "./MobileDock"; // mobile notch dock (separate file)
 import styles from "./Hero.module.css";
+import { cmsSection } from "@/components/cms/CmsProvider";
+import { HOME_HERO, type HomeHeroContent } from "./content";
 
-const HeroSection: React.FC = () => {
-  const { t } = useTranslation();
+const HeroSection = ({ content }: { content: HomeHeroContent }) => {
   const router = useRouter();
 
   // A tracking number goes straight to the results page (/trackresults?q=...).
@@ -34,13 +34,14 @@ const HeroSection: React.FC = () => {
     <>
       {dockItems.map((item, i) => {
         const isActive = i === activeIndex;
+        const action = content.actions[i];
         return (
           <React.Fragment key={item.href}>
             <DockItem
-              href={item.href}
+              href={action?.href ?? item.href}
               icon={item.icon}
-              label={t(item.labelKey, item.labelDefault)}
-              sublabel={t(item.sublabelKey, item.sublabelDefault)}
+              label={action?.label ?? item.labelDefault}
+              sublabel={action?.sublabel ?? item.sublabelDefault}
               isActive={isActive}
               variant="desktop"
               onActivate={() => activateItem(i)}
@@ -65,17 +66,14 @@ const HeroSection: React.FC = () => {
         <div className="mx-auto flex w-full max-w-[400px] flex-col items-center text-center">
           {/* Title */}
           <h1 className="mt-3 text-balance text-[clamp(1.625rem,7vw,2rem)] font-medium leading-[1.15] tracking-tight text-[#0A4D26]">
-            {t("hero.title.line1", "Intelligent Movement,")}
+            {content.titleLine1}
             <br />
-            {t("hero.title.line2", "Nationwide and Beyond")}
+            {content.titleLine2}
           </h1>
 
           {/* Description */}
           <p className="mt-3 max-w-[34ch] text-balance text-sm font-light leading-relaxed text-[#0A4D26]/70">
-            {t(
-              "hero.subtitle",
-              "From a single shipment to a full supply chain, Zajel moves what matters, across the UAE and to 195 countries beyond it"
-            )}
+            {content.subtitle}
           </p>
 
           {/* Track form */}
@@ -86,24 +84,24 @@ const HeroSection: React.FC = () => {
             <input
               type="text"
               name="awb"
-              aria-label={t("hero.search.placeholder", "Enter AWB number to track")}
+              aria-label={content.trackPlaceholderMobile}
               autoComplete="off"
-              placeholder={t("hero.search.placeholder", "Enter AWB number to track")}
+              placeholder={content.trackPlaceholderMobile}
               className={`${styles.n2Style} h-full min-w-0 flex-1 bg-transparent px-4 text-left text-sm text-[#0A4D26] outline-none placeholder:text-[#9CA3AF]`}
             />
             <button
               type="submit"
               className="h-full flex-shrink-0 rounded-full bg-[#36B936] px-5 text-sm font-medium text-white transition-colors active:bg-[#2ea22e]"
             >
-              {t("hero.search.button", "Track")}
+              {content.trackButton}
             </button>
           </form>
 
           {/* Image */}
           <div className="relative mt-6 aspect-[4/3] max-h-[34svh] w-full overflow-hidden rounded-[1.5rem] border border-[#0A3D2D]/20 shadow-md">
             <Image
-              src="/Homepage/hero-zajel-boxes.webp"
-              alt="Green Zajel parcels on a warehouse floor"
+              src={content.image}
+              alt={content.imageAlt}
               fill
               priority
               sizes="100vw"
@@ -126,8 +124,8 @@ const HeroSection: React.FC = () => {
             className={`${styles.animBannerD} relative h-[clamp(440px,40vw,620px)] w-full overflow-hidden rounded-[clamp(20px,2vw,32px)] bg-gray-800 shadow-sm`}
           >
             <Image
-              src="/Homepage/hero-zajel-boxes.webp"
-              alt="Green Zajel parcels on a warehouse floor"
+              src={content.image}
+              alt={content.imageAlt}
               fill
               priority
               sizes="100vw"
@@ -144,9 +142,9 @@ const HeroSection: React.FC = () => {
                   aria-level={1}
                   className={`${styles.animTitleD} ${styles.h1StyleLight} mb-6 text-[clamp(1.9rem,2.6vw,3rem)] leading-[1.15] tracking-tight`}
                 >
-                  {t("hero.title.line1", "Intelligent Movement,")}
+                  {content.titleLine1}
                   <br />
-                  {t("hero.title.line2", "Nationwide and Beyond")}
+                  {content.titleLine2}
                 </p>
 
                 <form
@@ -156,21 +154,21 @@ const HeroSection: React.FC = () => {
                   <span
                     className={`${styles.n2Style} whitespace-nowrap border-r border-gray-200 pl-4 pr-3 text-[clamp(0.7rem,0.75vw,0.8rem)] font-medium uppercase tracking-wide text-[#9CA3AF]`}
                   >
-                    {t("hero.search.label", "AWB")}
+                    {content.trackLabel}
                   </span>
                   <input
                     type="text"
                     name="awb"
-                    aria-label={t("hero.search.placeholder", "Enter your AWB number to track")}
+                    aria-label={content.trackPlaceholder}
                     autoComplete="off"
-                    placeholder={t("hero.search.placeholder", "Enter your AWB number to track")}
+                    placeholder={content.trackPlaceholder}
                     className={`${styles.n2Style} min-w-0 flex-1 bg-transparent px-4 text-[clamp(0.8rem,0.85vw,0.875rem)] outline-none placeholder:text-[#9CA3AF]`}
                   />
                   <button
                     type="submit"
                     className="flex flex-shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-[#36B936] px-[clamp(1.25rem,1.8vw,1.75rem)] py-2.5 text-[clamp(0.8rem,0.85vw,0.875rem)] font-medium text-white transition-colors hover:bg-[#2ea22e]"
                   >
-                    {t("hero.search.button", "Track")}
+                    {content.trackButton}
                   </button>
                 </form>
               </div>
@@ -178,10 +176,7 @@ const HeroSection: React.FC = () => {
               <p
                 className={`${styles.animSubtitleD} ${styles.bc1StyleLight} max-w-[min(32vw,420px)] pt-2 text-left text-[clamp(0.95rem,1.05vw,1.125rem)] leading-relaxed`}
               >
-                {t(
-                  "hero.subtitle",
-                  "From a single shipment to a full supply chain, Zajel moves what matters, across the UAE and to 195 countries beyond it"
-                )}
+                {content.subtitle}
               </p>
             </div>
           </div>
@@ -201,4 +196,4 @@ const HeroSection: React.FC = () => {
   );
 };
 
-export default HeroSection;
+export default cmsSection('home.hero', HOME_HERO, HeroSection);

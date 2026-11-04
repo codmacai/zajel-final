@@ -4,23 +4,11 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useSharedRevealObserver, useReveal } from "@/lib/useReveal";
 import "./CertificationsGrid.css";
+import { cmsSection } from "@/components/cms/CmsProvider";
+import { HOME_CERTIFICATIONS, type HomeCertificationsContent } from "./content";
 
-type CertItem = {
-  id: string;
-  name: string; // used for alt text and aria-label
-  logo: string; // path inside /public
-};
 
-const certs: CertItem[] = [
-  { id: "1", name: "ISO 9001:2015", logo: "/Homepage/alliances/jctrans-logo.png" },
-  { id: "2", name: "ISO 14001:2015", logo: "/Homepage/alliances/nafl-logo.png" },
-  { id: "3", name: "ISO 45001:2018", logo: "/Homepage/alliances/fiata-logo.png" },
-  { id: "4", name: "FIATA Alliance", logo: "/Homepage/alliances/iata-logo.png" },
-  { id: "5", name: "IATA Cargo Agent", logo: "/Homepage/alliances/icv-logo.png" },
-  { id: "6", name: "TAPA Certified", logo: "/Homepage/alliances/wlp-logo.png" },
-];
-
-export default function CertificationsGrid() {
+function CertificationsGrid({ content }: { content: HomeCertificationsContent }) {
   const { register } = useSharedRevealObserver();
   const { ref: sectionRef, isVisible } = useReveal<HTMLElement>(register);
 
@@ -29,15 +17,15 @@ export default function CertificationsGrid() {
       <div className="cg-container">
         {/* Header */}
         <div className="cg-header">
-          <span className="cg-eyebrow">Accreditations &amp; Alliances</span>
-          <h2 className="cg-heading">Certified for global trust</h2>
+          <span className="cg-eyebrow">{content.eyebrow}</span>
+          <h2 className="cg-heading">{content.heading}</h2>
         </div>
 
         {/* 3x2 grid, 3 columns on every device */}
         <div className="cg-grid">
-          {certs.map((item, index) => (
+          {content.logos.map((item, index) => (
             <Link
-              href="/about#certifications"
+              href={content.linkHref}
               key={item.id}
               className={`cg-cell cg-delay-${index}`}
               aria-label={item.name}
@@ -56,8 +44,8 @@ export default function CertificationsGrid() {
 
         {/* Link below the grid */}
         <div className="cg-footer cg-delay-6">
-          <Link href="/about#certifications" className="cg-link">
-            <span>View all in About Us</span>
+          <Link href={content.linkHref} className="cg-link">
+            <span>{content.linkLabel}</span>
             <ArrowUpRight className="cg-link-icon" size={16} />
           </Link>
         </div>
@@ -65,3 +53,5 @@ export default function CertificationsGrid() {
     </section>
   );
 }
+
+export default cmsSection('home.certifications', HOME_CERTIFICATIONS, CertificationsGrid);

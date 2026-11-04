@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useTranslation } from "react-i18next";
 import { useReveal } from "@/lib/useReveal";
 import { ArrowIcon } from "./ServiceIcons";
 import type { ServiceCategory } from "@/data/services";
@@ -17,7 +16,6 @@ export default function ServiceColumn({
   index: number;
   register: (node: Element, onVisible: () => void) => void;
 }) {
-  const { t } = useTranslation();
   const { ref, isVisible } = useReveal<HTMLDivElement>(register);
   const Icon = category.icon;
 
@@ -45,28 +43,28 @@ export default function ServiceColumn({
 
       <div className={styles.serviceCardBody}>
         <h3 className={styles.serviceCardTitle}>
-          {t(`services.${category.id}.title`, category.title)}
+          {category.title}
         </h3>
         <p className={styles.serviceCardDesc}>
-          {t(`services.${category.id}.desc`, category.description)}
+          {category.description}
         </p>
 
         <div className={styles.serviceCardLinks} data-cols={category.subServices.length > 3 ? 2 : 1}>
           {category.subServices.map((sub, i) => (
             <Link
-              key={sub.slug}
+              key={`${sub.href}-${i}`}
               href={sub.href}
               className={styles.serviceSubLink}
               style={{ transitionDelay: `${index * 80 + i * 40}ms` }}
             >
-              <span>{t(`services.${category.id}.sub.${sub.slug}`, sub.label)}</span>
+              <span>{sub.label}</span>
               <ArrowIcon className={styles.serviceSubLinkIcon} />
             </Link>
           ))}
         </div>
 
         <Link href={category.path} className={styles.serviceCardCta}>
-          <span>{t(`services.${category.id}.cta`, category.ctaLabel)}</span>
+          <span>{category.ctaLabel}</span>
           <div className={styles.serviceCardCtaCircle}>
             <ArrowIcon className={styles.serviceCardCtaIcon} />
           </div>

@@ -139,3 +139,6 @@ export const PROJECTS: Project[] = [
     alt: 'Wrapped yacht secured on a trailer for transport',
   },
 ];
+
+/** The projects list as one CMS section (Projects page); the home page shows the first three. */
+export const PROJECT_LIST = { projects: PROJECTS };

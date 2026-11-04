@@ -1,11 +1,12 @@
 "use client";
 
 import { useSharedRevealObserver, useReveal } from "@/lib/useReveal";
-import { BRAND, STEP_IMAGE_CONFIG, howItWorksContent as content } from "@/data/howItWorks";
+import { BRAND, STEP_IMAGE_CONFIG, howItWorksContent } from "@/data/howItWorks";
+import { cmsSection } from "@/components/cms/CmsProvider";
 import StepImage from "./StepImage";
 import "./HowItWorks.css";
 
-export default function HowItWorks() {
+function HowItWorks({ content }: { content: typeof howItWorksContent }) {
   const { register } = useSharedRevealObserver();
   const { ref: sectionRef, isVisible } = useReveal<HTMLElement>(register);
 
@@ -47,3 +48,4 @@ export default function HowItWorks() {
     </section>
   );
 }
+export default cmsSection('home.how-it-works', howItWorksContent, HowItWorks);

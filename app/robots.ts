@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/'],
+      disallow: ['/api/', '/admin', '/cms/'],
     },
     // All crawlers, AI ones included (GPTBot, ClaudeBot, PerplexityBot, Google-Extended), are
     // allowed. No `host` line: Google ignores it and it only ever echoed the build's site URL.

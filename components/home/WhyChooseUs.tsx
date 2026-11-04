@@ -2,12 +2,13 @@
 
 import Image from "next/image";
 import { useSharedRevealObserver, useReveal } from "@/lib/useReveal";
-import { whyChooseUsContent as content } from "@/data/whyChooseUs";
+import { whyChooseUsContent } from "@/data/whyChooseUs";
+import { cmsSection } from "@/components/cms/CmsProvider";
 import "./WhyChooseUs.css";
 
 const cx = (...classes: Array<string | false | undefined>) => classes.filter(Boolean).join(" ");
 
-export default function WhyChooseUs() {
+function WhyChooseUs({ content }: { content: typeof whyChooseUsContent }) {
   const { register } = useSharedRevealObserver();
   const { ref: sectionRef, isVisible } = useReveal<HTMLElement>(register);
 
@@ -193,3 +194,5 @@ export default function WhyChooseUs() {
     </section>
   );
 }
+
+export default cmsSection('home.why-choose-us', whyChooseUsContent, WhyChooseUs);

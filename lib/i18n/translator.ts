@@ -12,7 +12,8 @@
 // The choice is remembered in localStorage("lang"); an inline script in the
 // layout applies it before first paint (see I18N_BOOT_SCRIPT).
 //
-// To translate new copy: add "English text": "Arabic text" to locales/ar.json.
+// To translate new copy: add "English text": "Arabic text" to locales/ar.json, or edit the
+// section in the CMS (/admin), whose Arabic is loaded from /cms/ar.
 // To keep something in English, put data-no-translate on it.
 // ===========================================================================
 
@@ -172,6 +173,17 @@ function applyDocument(l: Lang) {
   html.dir = l === "ar" ? "rtl" : "ltr";
 }
 
+/** The site's Arabic (locales/ar.json) plus Arabic for text edited in the CMS (app/cms/ar). */
+async function loadDict(): Promise<Dict> {
+  const [base, cms] = await Promise.all([
+    import("@/locales/ar.json").then((m) => m.default as Dict),
+    fetch("/cms/ar")
+      .then((r) => (r.ok ? (r.json() as Promise<Dict>) : {}))
+      .catch(() => ({})),
+  ]);
+  return { ...base, ...cms };
+}
+
 export async function setLang(next: Lang) {
   try {
     localStorage.setItem("lang", next);
@@ -179,7 +191,7 @@ export async function setLang(next: Lang) {
   lang = next;
   applyDocument(next);
   if (next === "ar") {
-    dict ??= (await import("@/locales/ar.json")).default as Dict;
+    dict ??= await loadDict();
     if (lang !== "ar") return; // switched back while loading
     walk(document.body);
     doTitle();

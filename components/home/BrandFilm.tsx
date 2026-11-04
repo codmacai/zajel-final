@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { useTranslation } from "react-i18next";
+import { cmsSection } from "@/components/cms/CmsProvider";
+import { HOME_FILM, type HomeFilmContent } from "./content";
 
 /**
  * BRAND FILM — the Zajel film on the home page.
@@ -13,16 +14,11 @@ import { useTranslation } from "react-i18next";
  * near the screen (preload="none"), so the home page stays fast.
  */
 
-const FILM = {
-  desktop: "/Homepage/film/zajel-film-1080.mp4",
-  mobile: "/Homepage/film/zajel-film-720.mp4",
-  poster: "/Homepage/film/zajel-film-poster.webp",
-};
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-export default function BrandFilm() {
-  const { t } = useTranslation();
+function BrandFilm({ content }: { content: HomeFilmContent }) {
+  const FILM = { desktop: content.videoDesktop, mobile: content.videoMobile, poster: content.poster };
   const reduce = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -94,7 +90,7 @@ export default function BrandFilm() {
       ref={sectionRef}
       className="w-full overflow-hidden bg-white px-4 py-14 sm:px-6 sm:py-20 md:px-10 lg:px-20 lg:py-24"
       style={{ fontFamily: "'Manrope', sans-serif" }}
-      aria-label={t("film.videoLabel", "Zajel brand film")}
+      aria-label={content.videoLabel}
     >
       <div className="mx-auto w-full max-w-[1200px]">
         {/* The film */}
@@ -116,7 +112,7 @@ export default function BrandFilm() {
             onPlay={() => setPlaying(true)}
             onPause={() => setPlaying(false)}
             onClick={togglePlay}
-            aria-label={t("film.videoLabel", "Zajel brand film")}
+            aria-label={content.videoLabel}
           >
             <source src={FILM.mobile} type="video/mp4" media="(max-width: 767px)" />
             <source src={FILM.desktop} type="video/mp4" />
@@ -130,7 +126,7 @@ export default function BrandFilm() {
             <button
               type="button"
               onClick={togglePlay}
-              aria-label={t("film.play", "Play film")}
+              aria-label={content.playLabel}
               className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#0A4D26] shadow-[0_12px_40px_rgba(0,0,0,0.3)] transition-transform duration-300 hover:scale-105 sm:h-20 sm:w-20"
             >
               <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden className="ml-1">
@@ -159,13 +155,13 @@ export default function BrandFilm() {
                   <path d="m23 9-6 6M17 9l6 6" />
                 </svg>
               )}
-              {muted ? t("film.soundOn", "Watch with sound") : t("film.soundOff", "Mute")}
+              {muted ? content.soundOnLabel : content.soundOffLabel}
             </button>
 
             <button
               type="button"
               onClick={togglePlay}
-              aria-label={playing ? t("film.pause", "Pause film") : t("film.play", "Play film")}
+              aria-label={playing ? content.pauseLabel : content.playLabel}
               className="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#0A4D26] shadow-sm backdrop-blur transition-colors hover:bg-white sm:h-11 sm:w-11"
             >
               {playing ? (
@@ -190,3 +186,5 @@ export default function BrandFilm() {
     </section>
   );
 }
+
+export default cmsSection('home.film', HOME_FILM, BrandFilm);

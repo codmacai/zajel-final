@@ -4,13 +4,16 @@ import type { FC } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import { PROJECTS } from '../project-logistics/data';
+import { PROJECT_LIST } from '../project-logistics/data';
+import { cmsSection, useSection } from '@/components/cms/CmsProvider';
+import { HOME_PROJECTS, type HomeProjectsContent } from './content';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const FeaturedProjects: FC = () => {
+const FeaturedProjects: FC<{ content: HomeProjectsContent }> = ({ content }) => {
+  const list = useSection('projects.list', PROJECT_LIST) ?? PROJECT_LIST;
   // Take the first 3 projects to display 3 in a row on desktop
-  const featured = PROJECTS.slice(0, 3);
+  const featured = list.projects.slice(0, 3);
 
   return (
     <section className="w-full py-16 sm:py-20 lg:py-24 bg-[#F9FAFB] font-sans overflow-hidden">
@@ -25,13 +28,13 @@ const FeaturedProjects: FC = () => {
           className="text-center max-w-[640px] mx-auto mb-12 sm:mb-16"
         >
           <span className="text-[#36B936] text-xs sm:text-sm font-medium tracking-widest uppercase block mb-2 sm:mb-3">
-            Selected Work
+            {content.eyebrow}
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium text-[#0A4D26] leading-[1.15] tracking-tight mb-3">
-            Projects we&apos;ve moved
+            {content.heading}
           </h2>
           <p className="text-[#0A4D26]/70 text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed">
-            A running record of the loads we&apos;ve planned and carried through, across air, sea, and land.
+            {content.description}
           </p>
         </motion.div>
 
@@ -39,7 +42,7 @@ const FeaturedProjects: FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16">
           {featured.map((project, index) => (
             <motion.div
-              key={project.title}
+              key={`${project.title}-${index}`}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
@@ -79,10 +82,10 @@ const FeaturedProjects: FC = () => {
 
                   <div className="mt-5 sm:mt-6 pt-3 sm:pt-4 border-t border-[#F3F4F6] flex items-center justify-between">
                     <span className="text-[10px] sm:text-[11px] font-medium tracking-wider uppercase text-[#9CA3AF]">
-                      Case Study
+                      {content.caseStudyLabel}
                     </span>
                     <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[#0A4D26] group-hover:text-[#36B936] transition-colors">
-                      View details
+                      {content.viewDetailsLabel}
                       <ArrowUpRight size={14} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </span>
                   </div>
@@ -104,7 +107,7 @@ const FeaturedProjects: FC = () => {
             href="/projects"
             className="group inline-flex items-center gap-2 text-sm font-medium text-[#0A4D26] relative pb-1"
           >
-            <span>Explore all projects</span>
+            <span>{content.buttonLabel}</span>
             <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             <span className="absolute bottom-0 left-0 w-full h-[1px] bg-current scale-x-100 origin-left transition-transform duration-300 group-hover:scale-x-50" />
           </Link>
@@ -115,4 +118,4 @@ const FeaturedProjects: FC = () => {
   );
 };
 
-export default FeaturedProjects;
+export default cmsSection('home.projects', HOME_PROJECTS, FeaturedProjects);

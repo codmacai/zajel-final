@@ -60,6 +60,10 @@ const LEGACY_SERVICES = [
   ['land|road|truck', '/land-freight'],
 ];
 
+const SUPABASE_MEDIA = process.env.NEXT_PUBLIC_SUPABASE_URL
+  ? `${process.env.NEXT_PUBLIC_SUPABASE_URL.replace(/\/+$/, '')}/storage/v1/object/public/cms-media`
+  : '';
+
 const nextConfig = {
   // Deployed as a Node standalone server (server.js + https-server.js on the Windows hosts).
   output: 'standalone',
@@ -68,6 +72,11 @@ const nextConfig = {
   },
 
   allowedDevOrigins: ['172.20.10.3:3000', '172.20.10.3'],
+
+  // Images uploaded in the CMS are served from Supabase Storage.
+  images: {
+    remotePatterns: SUPABASE_MEDIA ? [new URL(`${SUPABASE_MEDIA}/**`)] : [],
+  },
 
   async redirects() {
     const permanent = { statusCode: 301 };

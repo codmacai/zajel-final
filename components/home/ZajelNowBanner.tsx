@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import { cmsSection } from "@/components/cms/CmsProvider";
+import { HOME_ZAJEL_NOW, type HomeZajelNowContent } from "./content";
 
 /**
  * ZAJEL NOW / Logistics promo banner with Pixel-Perfect Pop-Out
@@ -28,7 +30,7 @@ const DARK_PANEL_BG = `
 
 const FONT_LINK = "https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&display=swap";
 
-export default function EmxBanner() {
+function EmxBanner({ content }: { content: HomeZajelNowContent }) {
   return (
     <div
       className="flex w-full items-center justify-center bg-white p-4 sm:p-6 md:p-8"
@@ -111,8 +113,8 @@ export default function EmxBanner() {
               style={{ top: "0.5rem" }}
             >
               <img
-                src="/zajel-now-dubai-skyline-road.webp"
-                alt="Zajel Now on-demand delivery in the city"
+                src={content.backgroundImage}
+                alt={content.backgroundImageAlt}
                 className="absolute inset-0 h-full w-full object-cover object-[66%_bottom] sm:object-[63%_bottom] md:object-center"
               />
               <div
@@ -136,14 +138,14 @@ export default function EmxBanner() {
               }}
             >
               <div className="rtl-copy relative z-10 w-full pt-12 pl-6 pr-4 xs:pt-16 xs:pl-8 sm:pt-7 md:pt-0 md:pl-8 lg:pl-10 max-w-[95%] xs:max-w-[88%] sm:max-w-[75%] md:max-w-sm">
-                <TextBlock />
+                <TextBlock content={content} />
               </div>
             </div>
 
             {/* LAYER 3: Overlay Cutout */}
             <div className="emx-cutout-wrap absolute inset-x-0 bottom-0 z-20 top-2 md:-top-64 overflow-visible">
               <img
-                src="/zajel-now-motorbike-courier.webp"
+                src={content.courierImage}
                 alt=""
                 aria-hidden="true"
                 className="emx-cutout absolute inset-0 h-full w-full object-cover object-[66%_bottom] sm:object-[63%_bottom] md:object-center"
@@ -156,14 +158,14 @@ export default function EmxBanner() {
   );
 }
 
-function TextBlock() {
+function TextBlock({ content }: { content: HomeZajelNowContent }) {
   return (
     <>
       <h2
         className="emx-rise font-light leading-[0.9] text-white text-4xl xs:text-5xl sm:text-4xl lg:text-[2.6rem] tracking-[-0.035em] lowercase"
         style={{ fontWeight: 300 }}
       >
-        zajel
+        {content.titleLine1}
         <br />
         <span
           style={{
@@ -175,7 +177,7 @@ function TextBlock() {
             color: ACCENT,
           }}
         >
-          now
+          {content.titleLine2}
         </span>
       </h2>
 
@@ -183,9 +185,11 @@ function TextBlock() {
         className="emx-rise emx-rise-delay mt-4 xs:mt-5 sm:mt-3 lg:mt-4 font-light leading-[1.45] tracking-[-0.005em] text-white/80 text-base xs:text-lg sm:text-base max-w-[92%] lowercase"
         style={{ fontWeight: 300 }}
       >
-        instant city-wide pickups and deliveries,{" "}
-        <span style={{ color: ACCENT_LIGHT, fontWeight: 400 }}>on demand</span>.
+        {content.text}{" "}
+        <span style={{ color: ACCENT_LIGHT, fontWeight: 400 }}>{content.highlight}</span>.
       </p>
     </>
   );
 }
+
+export default cmsSection('home.zajel-now', HOME_ZAJEL_NOW, EmxBanner);
