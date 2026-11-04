@@ -3,76 +3,12 @@ import Link from 'next/link';
 // Move the <Logo /> component out of Navbar.tsx into components/Logo.tsx
 // (export default Logo) and import it in both Navbar and Footer.
 import Logo from '@/components/Logo';
+import { getSection } from '@/lib/cms/server';
+import { FOOTER } from '@/components/footer-content';
 
 /* -------------------------------------------------------------------------- */
 /*  Content — names and routes taken from the navbar                          */
 /* -------------------------------------------------------------------------- */
-
-type FooterLink = { label: string; href: string; external?: boolean };
-
-// Dubai Customs / customer portal used for customs submissions. Paste the portal
-// address here; the footer link is hidden while it is empty.
-const CUSTOMS_PORTAL_URL = '';
-type FooterColumn = { title: string; links: FooterLink[] };
-
-const COLUMNS: FooterColumn[] = [
-  {
-    title: 'Solutions',
-    links: [
-      { label: 'On Demand Express', href: '/domestic-courier' },
-      { label: 'International Shipping', href: '/international-courier' },
-      { label: 'Ecommerce', href: '/ecommerce' },
-      { label: 'Air Freight', href: '/air-freight' },
-      { label: 'Land Freight', href: '/land-freight' },
-      { label: 'Sea Freight', href: '/sea-freight' },
-      { label: 'Customs Clearance', href: '/customs-clearance' },
-      { label: 'Warehousing', href: '/warehouse' },
-    ],
-  },
-  {
-    title: 'Secure Solutions',
-    links: [
-      { label: 'Gov & Institutional', href: '/secure-gov' },
-      { label: 'Secure ID', href: '/secure-id' },
-      { label: 'Secure Docs', href: '/secure-docs' },
-      { label: 'Secure Mail', href: '/secure-mail' },
-    ],
-  },
-  {
-    title: 'Company',
-    links: [
-      { label: 'About Zajel', href: '/about' },
-      { label: 'Industries We Serve', href: '/industry' },
-      { label: 'Our Network', href: '/network' },
-      { label: 'Projects', href: '/projects' },
-      { label: 'Careers', href: '/careers' },
-    ],
-  },
-  {
-    title: 'Resources',
-    links: [
-      { label: 'Download the App', href: '/#download-app' },
-      { label: 'Help Center', href: '/support' },
-      { label: 'FAQ', href: '/faq' },
-      { label: 'Blog', href: '/#news' },
-      { label: 'Events', href: '/events' },
-      ...(CUSTOMS_PORTAL_URL
-        ? [{ label: 'Customs Submission', href: CUSTOMS_PORTAL_URL, external: true }]
-        : []),
-    ],
-  },
-];
-
-// Not in the navbar, so routes are unchanged from the old footer.
-const LEGAL_LINKS: FooterLink[] = [
-  { label: 'Claims', href: '/support' },
-  // Hidden for now:
-  // { label: 'Service Alerts', href: '/help' },
-  // { label: 'PDPL', href: '/legal#pdpl' },
-  { label: 'Terms & Conditions', href: '/legal#terms' },
-  { label: 'Privacy Policy', href: '/legal#privacy' },
-  // { label: 'Accessibility', href: '/legal#accessibility' },
-];
 
 /* -------------------------------------------------------------------------- */
 /*  Social icons — solid brand glyphs on a 24×24 grid                         */
@@ -140,7 +76,9 @@ const linkClass = `text-body-inverse block w-fit rounded py-0.5 transition-color
 /*  Footer                                                                    */
 /* -------------------------------------------------------------------------- */
 
-export default function Footer() {
+export default async function Footer() {
+  const content = (await getSection('global.footer', FOOTER)) ?? FOOTER;
+  const socials = content.socials.map((s, i) => ({ ...s, icon: SOCIALS.find((x) => x.label === s.label)?.icon ?? SOCIALS[i]?.icon }));
   return (
     <footer
       className="relative w-full overflow-hidden font-sans text-white"
@@ -161,11 +99,11 @@ export default function Footer() {
             </Link>
 
             <p className="text-body-inverse mb-6 max-w-[300px] leading-relaxed">
-              Fast, reliable courier and logistics services across the UAE and to 195 countries worldwide.
+              {content.tagline}
             </p>
 
             <ul className="flex items-center gap-2.5">
-              {SOCIALS.map(({ label, href, icon }) => (
+              {socials.map(({ label, href, icon }) => (
                 <li key={label}>
                   <a
                     href={href}
@@ -186,7 +124,7 @@ export default function Footer() {
             aria-label="Footer"
             className="grid grid-cols-2 gap-x-6 gap-y-10 border-t border-white/20 pt-10 md:grid-cols-4 lg:border-t-0 lg:pt-0"
           >
-            {COLUMNS.map((col) => (
+            {content.columns.map((col) => (
               <div key={col.title} className="flex min-w-0 flex-col">
                 {/* Highlighted heading: bold title + short accent bar */}
                 <h4 className="text-h4-inverse mb-5 font-semibold">
@@ -217,7 +155,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-10 flex flex-col gap-2 border-t border-white/15 pt-4 text-xs text-white/70 lg:mt-12 lg:flex-row lg:items-center lg:justify-between">
           <p>
-            © {new Date().getFullYear()} ZAJEL Courier Services
+            © {new Date().getFullYear()} {content.companyName}
             <span aria-hidden="true" className="mx-2">·</span>
             Website by{' '}
             <a
@@ -231,8 +169,8 @@ export default function Footer() {
           </p>
 
           <ul className="flex flex-wrap gap-x-4 gap-y-1">
-            {LEGAL_LINKS.map((link) => (
-              <li key={link.href}>
+            {content.legalLinks.map((link) => (
+              <li key={link.href + link.label}>
                 <Link
                   href={link.href}
                   className={`rounded transition-colors hover:text-white ${focusRing}`}

@@ -4,7 +4,9 @@
 
 import type { Hints } from './fields';
 import { PAGE_SEO, type PageSeoContent } from './seo';
+import { GLOBAL } from './pages/global';
 import { HOME } from './pages/home';
+import { SEA_FREIGHT } from './pages/sea-freight';
 
 export type PageGroup = 'Site-wide' | 'Main' | 'Solutions' | 'Services' | 'Secure' | 'Company' | 'Help';
 
@@ -46,7 +48,7 @@ function withSeo(page: PageDef): PageDef {
   };
 }
 
-export const PAGES: PageDef[] = [HOME].map(withSeo);
+export const PAGES: PageDef[] = [GLOBAL, HOME, SEA_FREIGHT].map(withSeo);
 
 export const sectionKey = (page: string, section: string) => `${page}.${section}`;
 

@@ -1,5 +1,4 @@
-import type { Metadata } from 'next';
-import { pageMetadata } from '@/lib/seo';
+import { cmsMetadata } from '@/lib/cms/server';
 // Drop this in at app/business-solutions/page.tsx (or wherever this route
 // lives). HowBusinessOnboardingWorks wasn't sent over as source (only
 // imported by name, like ZajelProcess was on the Individual Solutions
@@ -17,12 +16,7 @@ import {
 } from '@/components/business-solutions';
 import CTABanner from '@/components/shared/CTABanner';
 
-export const metadata: Metadata = pageMetadata({
-  title: "Business Solutions",
-  description:
-    "Whether you're fulfilling online orders or moving freight across borders, Zajel supports the operation — not just the shipment.",
-  path: '/business-solutions',
-});
+export const generateMetadata = cmsMetadata('business-solutions', '/business-solutions');
 
 export default function BusinessSolutionsPage() {
   return (

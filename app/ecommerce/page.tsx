@@ -1,5 +1,4 @@
-import type { Metadata } from 'next';
-import { pageMetadata } from '@/lib/seo';
+import { cmsMetadata } from '@/lib/cms/server';
 import {
   BusinessGetsSection,
   PlatformIntegrations,
@@ -13,12 +12,7 @@ import EcommerceFaqSection from '@/components/ecommerce/ecommerce-faq';
 import CTABanner from '@/components/shared/CTABanner';
 import EcommerceHero from '@/components/ecommerce/hero';
 
-export const metadata: Metadata = pageMetadata({
-  title: "Ecommerce Fulfillment",
-  description:
-    "Connect your store to Zajel for order fulfillment, nationwide delivery, COD collection, and merchant reporting.",
-  path: '/ecommerce',
-});
+export const generateMetadata = cmsMetadata('ecommerce', '/ecommerce');
 
 export default function EcommercePage() {
   return (

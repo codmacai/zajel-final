@@ -2,6 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { FC } from "react";
+import { serverSection } from '@/lib/cms/server';
+import { ECOMMERCE_HERO } from './content';
 
 export interface EcommerceHeroContent {
   eyebrow?: string;
@@ -12,22 +14,13 @@ export interface EcommerceHeroContent {
   image_url: string;
 }
 
-// Fallback until the CMS entry is ready.
-const defaultContent: EcommerceHeroContent = {
-  eyebrow: "E-commerce Logistics",
-  title: "E-commerce Logistics Solutions: Delivery Built for Online Sellers",
-  description:
-    "Cash on Delivery collection, a dedicated account manager, and nationwide delivery: everything an online seller needs from a logistics partner, in one place.",
-  image_url: "/ecommerce/ecommerce-hero.webp",
-};
-
 interface EcommerceHeroProps {
-  content?: EcommerceHeroContent;
+  content: EcommerceHeroContent;
   isRtl?: boolean;
 }
 
 const EcommerceHero: FC<EcommerceHeroProps> = ({
-  content = defaultContent,
+  content,
   isRtl = false,
 }) => {
   const { eyebrow, title, description, button, ctaLink, image_url } = content;
@@ -103,4 +96,4 @@ const EcommerceHero: FC<EcommerceHeroProps> = ({
   );
 };
 
-export default EcommerceHero;
+export default serverSection('ecommerce.hero', ECOMMERCE_HERO, EcommerceHero);

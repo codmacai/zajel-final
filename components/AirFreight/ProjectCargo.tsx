@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { cmsSection } from '@/components/cms/CmsProvider';
+import { AIR_BANNER, type AIR_BANNERContent } from './content';
 
 interface ProjectCargoBannerProps {
-  imageSrc: string;
-  imageAlt: string;
+  imageSrc?: string;
+  imageAlt?: string;
   heading?: string;
   description?: string;
   projectLabel?: string;
@@ -12,15 +14,8 @@ interface ProjectCargoBannerProps {
   ctaHref?: string;
 }
 
-const ProjectCargoBanner = ({
-  imageSrc,
-  imageAlt,
-  heading = "Oversized & project cargo, handled by specialists",
-  description = "When standard freight solutions won't cut it, our project logistics team steps in, planning, permitting, and moving cargo too large, heavy, or complex for conventional shipping.",
-  projectLabel = 'Wind Turbine Blade Transport',
-  ctaLabel = 'Explore project',
-  ctaHref = '/projects',
-}: ProjectCargoBannerProps) => {
+const ProjectCargoBanner = ({ content }: ProjectCargoBannerProps & { content: AIR_BANNERContent }) => {
+  const { imageSrc, imageAlt, heading, description, projectLabel, ctaLabel, ctaHref } = content;
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -66,7 +61,7 @@ const ProjectCargoBanner = ({
               className="font-medium text-xs sm:text-sm tracking-wider uppercase"
               style={{ color: '#36B936' }}
             >
-              Project Logistics
+              {content.eyebrow}
             </h3>
           </div>
 
@@ -133,4 +128,4 @@ const ProjectCargoBanner = ({
   );
 };
 
-export default ProjectCargoBanner;
+export default cmsSection('air-freight.banner', AIR_BANNER, ProjectCargoBanner);

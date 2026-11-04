@@ -1,7 +1,6 @@
-import type { Metadata } from 'next';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { pageMetadata } from '@/lib/seo';
+import { cmsMetadata } from '@/lib/cms/server';
 import {
   AboutHero,
   OurStory,
@@ -21,12 +20,7 @@ const DOCUMENTS_READY = ['company-profile.pdf', 'ims-policy.pdf'].filter((f) =>
   existsSync(join(process.cwd(), 'public', 'documents', f))
 );
 
-export const metadata: Metadata = pageMetadata({
-  title: "About Us",
-  description:
-    "Zajel Logistic Services — founded in Dubai in 2008, now a full logistics partner across express delivery, e-commerce, fulfillment, and freight forwarding.",
-  path: '/about',
-});
+export const generateMetadata = cmsMetadata('about', '/about');
 
 export default function AboutPage() {
   return (

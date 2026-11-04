@@ -1,13 +1,7 @@
-import type { Metadata } from 'next';
-import { pageMetadata } from '@/lib/seo';
+import { cmsMetadata } from '@/lib/cms/server';
 import EventsPage from '@/components/events';
 
-export const metadata: Metadata = pageMetadata({
-  title: 'Logistics Events UAE | Exhibitions, Conferences & Webinars',
-  description:
-    'Meet Zajel at logistics exhibitions, conferences, webinars and workshops across the UAE. See upcoming events and where our team has been.',
-  path: '/events',
-});
+export const generateMetadata = cmsMetadata('events', '/events');
 
 export default function Page() {
   return (

@@ -1,14 +1,8 @@
-import type { Metadata } from 'next';
-import { pageMetadata } from '@/lib/seo';
+import { cmsMetadata } from '@/lib/cms/server';
 import FaqPage from '@/components/faq';
 import { FAQ_CATEGORIES } from '@/components/faq/data';
 
-export const metadata: Metadata = pageMetadata({
-  title: "Shipping FAQ UAE | Freight & Logistics Questions",
-  description:
-    "Answers to common shipping questions in the UAE: courier, air, sea and land freight, customs clearance, warehousing and e-commerce fulfillment.",
-  path: '/faq',
-});
+export const generateMetadata = cmsMetadata('faq', '/faq');
 
 // FAQPage structured data (helps Google show rich results)
 const jsonLd = {

@@ -1,29 +1,15 @@
 import ProcessStepsSection from '../shared/Steps';
+import { SEA_QUOTE_STEPS, type SEA_QUOTE_STEPSContent } from './content';
+import { serverSection } from '@/lib/cms/server';
 
-const HowFreightQuoteWorks = () => (
+const HowFreightQuoteWorks = ({ content }: { content: SEA_QUOTE_STEPSContent }) => (
   <ProcessStepsSection
-    eyebrow="Freight Quote"
-    heading={<>How a Freight<br />Quote Works</>}
-    description="A simple, three-step process — from inquiry to a quote tailored precisely to your shipment."
-    footnote="Est. response within 24 hours"
-    steps={[
-      {
-        number: '01',
-        title: 'Submit an Inquiry',
-        description: 'Tell us your cargo, route, and preferred delivery arrangement.',
-      },
-      {
-        number: '02',
-        title: 'We Review Your Shipment',
-        description: 'Our team assesses cargo type, route, and compliance needs.',
-      },
-      {
-        number: '03',
-        title: 'Get Your Quote',
-        description: 'Receive a tailored quote for your shipment.',
-      },
-    ]}
+    eyebrow={content.eyebrow}
+    heading={<>{content.headingLine1}<br />{content.headingLine2}</>}
+    description={content.description}
+    footnote={content.footnote}
+    steps={content.steps}
   />
 );
 
-export default HowFreightQuoteWorks;
+export default serverSection('sea-freight.quote-steps', SEA_QUOTE_STEPS, HowFreightQuoteWorks);

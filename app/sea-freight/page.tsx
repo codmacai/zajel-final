@@ -1,5 +1,4 @@
-import type { Metadata } from 'next';
-import { pageMetadata } from '@/lib/seo';
+import { cmsMetadata } from '@/lib/cms/server';
 import WhenToChooseSeaFreight from "@/components/sea-freight/when-to-choose-sea-freight";
 import SeaWhatWeMove from "@/components/sea-freight/sea-what-we-move";
 import OceanCargoVessels from "@/components/sea-freight/ocean-cargo-vessels";
@@ -16,16 +15,13 @@ import SeaFreightFAQS from "@/components/sea-freight/faq";
 import SeaFreightHero from "@/components/sea-freight/hero";
 import ContactSection from "@/components/shared/contact";
 import { seaFreightContent } from "@/data/contact-content";
+import CmsScope from '@/components/cms/CmsScope';
 
-export const metadata: Metadata = pageMetadata({
-  title: "Sea Freight Shipping in the UAE",
-  description:
-    "FCL and LCL sea freight from UAE ports to destinations worldwide, with clear pricing, container guidance, bonded storage, marine insurance and customs clearance.",
-  path: '/sea-freight',
-});
+export const generateMetadata = cmsMetadata('sea-freight', '/sea-freight');
 
 export default function SeaFreightPage() {
   return (
+    <CmsScope page="sea-freight">
     <main>
       <SeaFreightHero/>
         <SeaFreightSolutions/>
@@ -34,8 +30,6 @@ export default function SeaFreightPage() {
 
       <SeaWhatWeMove />
       <SeaFreightBanner
-        imageSrc="/sea-freight/breakbulk-shipment.webp"
-        imageAlt="Container ship at port"
       />
 
       <OceanCargoVessels />
@@ -48,5 +42,6 @@ export default function SeaFreightPage() {
 
       <SeaFreightFAQS/>
     </main>
+    </CmsScope>
   );
 }

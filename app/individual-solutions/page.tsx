@@ -1,5 +1,4 @@
-import type { Metadata } from 'next';
-import { pageMetadata } from '@/lib/seo';
+import { cmsMetadata } from '@/lib/cms/server';
 import {
   BookNow,
   IndividualHero,
@@ -11,12 +10,7 @@ import WhatCanYouSend from '@/components/individual-solutions/book-now/what-can-
 import DomesticVsInternational from '@/components/individual-solutions/book-now/domestic-vs-international';
 import CTABanner from '@/components/shared/CTABanner';
 
-export const metadata: Metadata = pageMetadata({
-  title: "Individual Solutions",
-  description:
-    "Whatever you're sending, wherever it's going — same day across the UAE, or international to 195 countries.",
-  path: '/individual-solutions',
-});
+export const generateMetadata = cmsMetadata('individual-solutions', '/individual-solutions');
 
 export default function IndividualSolutionsPage() {
   return (

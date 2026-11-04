@@ -1,5 +1,4 @@
-import type { Metadata } from 'next';
-import { pageMetadata } from '@/lib/seo';
+import { cmsMetadata } from '@/lib/cms/server';
 import ChooseDeliveryAndCompliance from "@/components/AirFreight/Delivery/DeiveryCompliance";
 import AirFreightFaq from "@/components/AirFreight/faq";
 import AirFreightGuide from "@/components/AirFreight/Global/AirFreightGuide";
@@ -15,12 +14,7 @@ import WhenToChooseAirFreight from "@/components/AirFreight/WhenToChoose/Choose"
 import ContactSection from "@/components/shared/contact";
 import { airFreightContent } from "@/data/contact-content";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Air Freight Forwarding in the UAE",
-  description:
-    "Fast, secure air freight from the UAE to worldwide destinations: express and consolidated cargo, dangerous goods handling, customs clearance and door-to-door delivery.",
-  path: '/air-freight',
-});
+export const generateMetadata = cmsMetadata('air-freight', '/air-freight');
 
 export default function Home() {
   return (
@@ -32,8 +26,6 @@ export default function Home() {
       <ChooseDeliveryAndCompliance/>
       <WhatWeMove/>
       <StoreToDoorBanner
-        imageSrc="/airfreight/wind-turbine-blade-transport.webp"
-        imageAlt="Oversized project cargo being loaded"
       />
       <IndustriesWeServe/>
       <HowFreightQuoteWorks/>

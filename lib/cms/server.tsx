@@ -19,7 +19,7 @@ export async function getSection<T>(key: string, defaults: T): Promise<T | null>
  * Connects a server component to the CMS (the server twin of cmsSection in CmsProvider).
  * The component receives its content as `content`; a page can pass `cmsKey` and `content`.
  */
-export function serverSection<T, P extends { content: T }>(
+export function serverSection<T, P extends { content?: T }>(
   key: string | null,
   defaults: T | null,
   Inner: (props: P) => React.ReactNode | Promise<React.ReactNode>,

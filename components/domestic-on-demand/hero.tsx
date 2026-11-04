@@ -2,6 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { FC } from "react";
+import { serverSection } from '@/lib/cms/server';
+import { DOMESTIC_HERO } from './content';
 
 export interface DomesticHeroContent {
   eyebrow?: string;
@@ -12,21 +14,13 @@ export interface DomesticHeroContent {
   image_url: string;
 }
 
-const defaultContent: DomesticHeroContent = {
-  eyebrow: "Domestic On Demand",
-  title: "Same Day Delivery Across the UAE",
-  description:
-    "Schedule your pickup, by day or by time — arriving within 1 hour, delivered within 2. Same-city or city-to-city, straight to the door.",
-  image_url: "/domestic/same-day-delivery-hero.webp",
-};
-
 interface DomesticHeroProps {
-  content?: DomesticHeroContent;
+  content: DomesticHeroContent;
   isRtl?: boolean;
 }
 
 const DomesticHero: FC<DomesticHeroProps> = ({
-  content = defaultContent,
+  content,
   isRtl = false,
 }) => {
   const { eyebrow, title, description, button, ctaLink, image_url } = content;
@@ -102,4 +96,4 @@ const DomesticHero: FC<DomesticHeroProps> = ({
   );
 };
 
-export default DomesticHero;
+export default serverSection('domestic-courier.hero', DOMESTIC_HERO, DomesticHero);

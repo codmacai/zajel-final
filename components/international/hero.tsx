@@ -2,6 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { FC } from "react";
+import { serverSection } from '@/lib/cms/server';
+import { INTERNATIONAL_HERO } from './content';
 
 export interface InternationalHeroContent {
   eyebrow?: string;
@@ -12,22 +14,13 @@ export interface InternationalHeroContent {
   image_url: string;
 }
 
-// Fallback until the CMS entry is ready.
-const defaultContent: InternationalHeroContent = {
-  eyebrow: "International Shipping",
-  title: "International Shipping UAE: Doorstep Delivery to 195 Countries",
-  description:
-    "Documents or packages, delivered in 3–5 days. Customs handled end to end, with tracking and a delivery arrangement that fits your shipment.",
-  image_url: "/international/international-air-cargo-hero.webp",
-};
-
 interface InternationalHeroProps {
-  content?: InternationalHeroContent;
+  content: InternationalHeroContent;
   isRtl?: boolean;
 }
 
 const InternationalHero: FC<InternationalHeroProps> = ({
-  content = defaultContent,
+  content,
   isRtl = false,
 }) => {
   const { eyebrow, title, description, button, ctaLink, image_url } = content;
@@ -103,4 +96,4 @@ const InternationalHero: FC<InternationalHeroProps> = ({
   );
 };
 
-export default InternationalHero;
+export default serverSection('international-courier.hero', INTERNATIONAL_HERO, InternationalHero);

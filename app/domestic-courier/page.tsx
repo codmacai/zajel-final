@@ -1,5 +1,4 @@
-import type { Metadata } from 'next';
-import { pageMetadata } from '@/lib/seo';
+import { cmsMetadata } from '@/lib/cms/server';
 import {
   DeliverySpeedAndDoorstep,
   WhyChooseZajel,
@@ -13,12 +12,7 @@ import DomesticFaqSection from '@/components/domestic-on-demand/domestic-faq';
 import CTABanner from '@/components/shared/CTABanner';
 import DomesticHero from '@/components/domestic-on-demand/hero';
 
-export const metadata: Metadata = pageMetadata({
-  title: "Domestic On-Demand Delivery",
-  description:
-    "Same-day and next-day doorstep delivery across the UAE. Choose your vehicle, check transit times, and book on-demand delivery with Zajel.",
-  path: '/domestic-courier',
-});
+export const generateMetadata = cmsMetadata('domestic-courier', '/domestic-courier');
 
 export default function DomesticOnDemandPage() {
   return (

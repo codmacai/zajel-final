@@ -2,39 +2,10 @@
 
 import { ArrowRight, type LucideIcon, Warehouse, CheckCircle2, Clock, Repeat } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { type StorageRowItem, SEA_BONDED, type SEA_BONDEDContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
-
-type StorageRowItem = {
-  icon: LucideIcon;
-  title: string;
-  description: string;
-};
-
-const ITEMS: StorageRowItem[] = [
-  {
-    icon: Warehouse,
-    title: 'What Is Bonded Storage',
-    description:
-      'Customs-approved storage for imported goods, held under supervision before duties and taxes are paid.',
-  },
-  {
-    icon: CheckCircle2,
-    title: "What's Included",
-    description:
-      'Secure storage, inventory reporting, inspection access, and coordination on clearance documentation.',
-  },
-  {
-    icon: Clock,
-    title: 'After the Free Period',
-    description: 'Per-CBM, per-day rates apply after the first 14 days, based on cargo type and volume.',
-  },
-  {
-    icon: Repeat,
-    title: 'Re-Export Option',
-    description: 'Move bonded goods on to another country without paying UAE import duties.',
-  },
-];
 
 // ---------------------------------------------------------------------------
 // Row — full-bleed, border-separated, on a white field. A brand-green sweep
@@ -95,13 +66,13 @@ function StorageRow({ item, index }: { item: StorageRowItem; index: number }) {
 
 interface BondedWarehouseStorageProps {
   onLearnMore?: () => void;
-  contactHref?: string;
 }
 
-export default function BondedWarehouseStorage({
+function BondedWarehouseStorage({
   onLearnMore,
-  contactHref = '/support',
-}: BondedWarehouseStorageProps) {
+  content,
+}: BondedWarehouseStorageProps & { content: SEA_BONDEDContent }) {
+  const contactHref = content.contactHref;
   return (
     <section
       id="bonded-storage"
@@ -117,22 +88,20 @@ export default function BondedWarehouseStorage({
       >
         <div className="flex items-center justify-center gap-3 mb-4">
           <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
-            Storage Solutions
+            {content.eyebrow}
           </span>
         </div>
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-[#0A4D26] leading-[1.15] max-w-[720px] mx-auto">
-          Bonded Warehouse Storage
+          {content.heading}
         </h2>
         <p className="mt-4 sm:mt-5 text-[#0A4D26]/75 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[560px]">
-          Every sea freight shipment through Zajel includes 14 days of complimentary bonded storage at our
-          warehouse facility — time to arrange customs clearance, coordinate onward distribution, or
-          consolidate incoming shipments before final delivery.
+          {content.description}
         </p>
       </motion.div>
 
       <div className="mx-auto flex w-full max-w-6xl flex-col border-t border-[#0A4D26]/10">
-        {ITEMS.map((item, index) => (
-          <StorageRow key={item.title} item={item} index={index} />
+        {content.items.map((item, index) => (
+          <StorageRow key={`${item.title}-${index}`} item={item} index={index} />
         ))}
       </div>
 
@@ -144,7 +113,7 @@ export default function BondedWarehouseStorage({
           onClick={onLearnMore}
           className="bg-[#36B936] hover:bg-[#31a631] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 text-[#0B140F] rounded-full inline-flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 text-xs sm:text-[13px] shadow-sm font-medium tracking-wide"
         >
-          <span>Learn More About Our Warehousing</span>
+          <span>{content.learnMoreLabel}</span>
           <span aria-hidden="true">→</span>
         </button>
 
@@ -152,9 +121,11 @@ export default function BondedWarehouseStorage({
           href={contactHref}
           className="text-sm text-[#0A4D26]/60 underline decoration-[#0A4D26]/20 underline-offset-4 transition-colors duration-300 hover:text-[#0A4D26] hover:decoration-[#36B936]"
         >
-          Contact Us for Storage Rates
+          {content.contactLabel}
         </a>
       </div>
     </section>
   );
 }
+
+export default cmsSection('sea-freight.bonded-storage', SEA_BONDED, BondedWarehouseStorage);

@@ -1,41 +1,13 @@
 // components/SeaFreight/ChooseDeliveryAndComplianceSea/ChooseDeliveryAndComplianceSea.tsx
 import DynamicDelivery from "@/components/DynamicDelivery/DeliveryDelivery";
+import { SEA_DELIVERY, type SEA_DELIVERYContent } from '../content';
+import { serverSection } from '@/lib/cms/server';
 
-const BASE_IMAGE_SRC = "/choose/door-to-door-courier-base.webp";
-const CUTOUT_IMAGE_SRC = "/choose/door-to-door-courier-cutout.png";
-
-const OTHER_ARRANGEMENTS_LINE =
-  "Also available on request: Door-to-Port, Port-to-Door, and Port-to-Port arrangements — for businesses managing part of the logistics themselves.";
-
-const COMPLIANCE_HEADING = "Compliance & Customs Expertise";
-
-const COMPLIANCE_BODY_SENTENCES = [
-  "Moving cargo by sea involves documentation, duty, and port clearance requirements that vary by cargo and destination.",
-  "Zajel manages customs clearance and compliance on your behalf, so your shipment moves through port without unnecessary delays.",
-];
-
-const ChooseDeliveryAndComplianceSea = () => (
+const ChooseDeliveryAndComplianceSea = ({ content }: { content: SEA_DELIVERYContent }) => (
   <DynamicDelivery
-    delivery={{
-      eyebrow: "Delivery Arrangements",
-      heading: "Choose Your Delivery Arrangement",
-      description: "Select the ideal transport flow tailored to your supply chain requirements.",
-      title: "Door-to-Door",
-      body: "Pickup at your origin address, delivered straight to the final destination — no extra coordination required on your end. This is how most Zajel sea freight shipments move, start to finish.",
-      ctaLabel: "Request Door-to-Door Quote",
-      ctaUrl: "/support",
-      baseImage: BASE_IMAGE_SRC,
-      cutoutImage: CUTOUT_IMAGE_SRC,
-      baseAlt: "Door-to-Door sea freight background",
-      cutoutAlt: "Door-to-Door pop-out graphic",
-      note: OTHER_ARRANGEMENTS_LINE,
-    }}
-    compliance={{
-      eyebrow: "Compliance & Customs",
-      heading: COMPLIANCE_HEADING,
-      sentences: COMPLIANCE_BODY_SENTENCES,
-    }}
+    delivery={content.delivery}
+    compliance={content.compliance}
   />
 );
 
-export default ChooseDeliveryAndComplianceSea;
+export default serverSection('sea-freight.delivery-compliance', SEA_DELIVERY, ChooseDeliveryAndComplianceSea);

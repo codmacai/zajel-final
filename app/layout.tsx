@@ -6,6 +6,7 @@ import { I18N_BOOT_SCRIPT } from "@/lib/i18n/translator";
 import Navbar from "@/components/layout/Navbar/Navbar";
 import Footer from "@/components/Footer"; // Adjust the import path based on where your Footer component is located
 import { SITE } from "@/lib/seo";
+import CmsScope from "@/components/cms/CmsScope";
 import { AuthProvider } from "@/components/providers/AuthProvider";
 import SiteChrome from "@/components/layout/SiteChrome";
 import "./globals.css";
@@ -107,6 +108,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify([organizationJsonLd, websiteJsonLd]).replace(/</g, "\\u003c") }}
         />
         <AuthProvider>
+          <CmsScope page="global">
           <SiteChrome>
             <Navbar />
           </SiteChrome>
@@ -114,6 +116,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <SiteChrome>
             <Footer />
           </SiteChrome>
+          </CmsScope>
         </AuthProvider>
       </body>
     </html>

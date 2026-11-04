@@ -3,21 +3,10 @@ import type { FC } from "react";
 import DynamicHero, {
   type DynamicHeroContent,
 } from "@/components/FreightHero/dynamic-hero";
+import { serverSection } from '@/lib/cms/server';
+import { LAND_HERO } from './content';
 
 export type LandFreightHeroContent = DynamicHeroContent;
-
-// Fallback default content
-const defaultContent: LandFreightHeroContent = {
-  badge: "Land Freight, FTL & LTL",
-  titleLine1: "Full loads,",
-  titleLine2: "borders handled.",
-  description:
-    "FTL and LTL across the Emirates and into Saudi, Oman and Kuwait, one waybill, one contact, manifests filed before you reach the border.",
-  primaryCta: { label: "Book a truck", url: "/support" },
-  secondaryCta: { label: "View coverage", url: "/network" },
-  image_url: "/land-freight/hero/land-freight-hero.webp",
-  imageAlt: "Land Freight Trucking",
-};
 
 const icon = (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -29,12 +18,12 @@ const icon = (
 );
 
 interface Props {
-  content?: LandFreightHeroContent;
+  content: LandFreightHeroContent;
   isRtl?: boolean;
 }
 
-const LandFreightHero: FC<Props> = ({ content = defaultContent, isRtl }) => (
+const LandFreightHero: FC<Props> = ({ content, isRtl }) => (
   <DynamicHero id="land-freight-hero" content={content} icon={icon} isRtl={isRtl} />
 );
 
-export default LandFreightHero;
+export default serverSection('land-freight.hero', LAND_HERO, LandFreightHero);

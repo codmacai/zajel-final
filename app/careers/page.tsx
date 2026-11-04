@@ -1,13 +1,7 @@
-import type { Metadata } from 'next';
-import { pageMetadata } from '@/lib/seo';
+import { cmsMetadata } from '@/lib/cms/server';
 import { CareerHero, CareerValues, JobOpenings, LifeAtZajel, CareerBenefits } from '@/components/career';
 
-export const metadata: Metadata = pageMetadata({
-  title: "Careers",
-  description:
-    "Explore careers at Zajel. Join a UAE logistics team transforming how the country moves, powered by technology and trust.",
-  path: '/careers',
-});
+export const generateMetadata = cmsMetadata('careers', '/careers');
 
 export default function CareersPage() {
   return (

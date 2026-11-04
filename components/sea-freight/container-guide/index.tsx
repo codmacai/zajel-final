@@ -4,6 +4,8 @@ import { useState, useEffect, type ComponentType } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Box, PackageOpen, Layers, Snowflake, Droplet, Check, Maximize2 } from 'lucide-react';
+import { type ContainerEntry, type Category, SEA_CONTAINERS, type SEA_CONTAINERSContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const BRAND = {
   deepA: '#0A5A2E',
@@ -18,194 +20,7 @@ const BRAND = {
 const EASE = [0.22, 1, 0.36, 1] as const;
 const smoothTransition = { duration: 0.5, ease: EASE };
 
-type ContainerEntry = {
-  size: string;
-  name: string;
-  dims: string;
-  door: string;
-  capacity: string;
-  tare: string;
-  maxCargo: string;
-  description: string;
-  image: string;
-};
-
-type Category = {
-  id: 'dry' | 'open-top' | 'flat-rack' | 'reefer' | 'tank';
-  label: string;
-  icon: ComponentType<{ size?: number; strokeWidth?: number }>;
-  entries: ContainerEntry[];
-};
-
-const CATEGORIES: Category[] = [
-  {
-    id: 'dry',
-    label: 'Dry Container',
-    icon: Box,
-    entries: [
-      {
-        size: "20'",
-        name: "20' Standard",
-        dims: '5.895 × 2.350 × 2.392 m',
-        door: '2.340 × 2.292 m',
-        capacity: '33 CBM',
-        tare: '2,230 kg',
-        maxCargo: '28,230 kg',
-        description:
-          'Standard, weatherproof container for general dry cargo — furniture, clothing, electronics, packaged goods. Fully enclosed with end doors for loading/unloading.',
-        image: '/sea-freight/container/standard-container.webp',
-      },
-      {
-        size: "40'",
-        name: "40' Standard",
-        dims: '12.029 × 2.350 × 2.392 m',
-        door: '2.340 × 2.292 m',
-        capacity: '67 CBM',
-        tare: '3,780 kg',
-        maxCargo: '26,700 kg',
-        description:
-          "Same general-purpose use as the 20' Standard, with double the length for cargo where space matters more than weight.",
-        image: '/sea-freight/container/standard-container.webp',
-      },
-      {
-        size: "40' HC",
-        name: "40' High Cube",
-        dims: '12.024 × 2.350 × 2.697 m',
-        door: '2.340 × 2.597 m',
-        capacity: '76 CBM',
-        tare: '4,020 kg',
-        maxCargo: '26,460 kg',
-        description: "Same footprint as the 40' Standard but taller, for cargo that needs extra headroom.",
-        image: '/sea-freight/container/standard-container.webp',
-      },
-      {
-        size: "45' HC",
-        name: "45' High Cube",
-        dims: '13.556 × 2.352 × 2.700 m',
-        door: '2.340 × 2.597 m',
-        capacity: '86 CBM',
-        tare: '4,800 kg',
-        maxCargo: '27,700 kg',
-        description: "Extra length and height beyond the 40' HC — maximum volume for larger shipments.",
-        image: '/sea-freight/container/standard-container.webp',
-      },
-    ],
-  },
-  {
-    id: 'open-top',
-    label: 'Open-Top',
-    icon: PackageOpen,
-    entries: [
-      {
-        size: "20'",
-        name: "20' Open-Top",
-        dims: '5.888 × 2.345 × 2.315 m',
-        door: '2.286 × 2.184 m',
-        capacity: '32 CBM',
-        tare: '2,250 kg',
-        maxCargo: '30,480 kg',
-        description:
-          "For over-height or awkward dry cargo that won't fit through standard doors. Removable roof bows and tarpaulin allow top-loading of machinery, pipes, timber, and construction equipment.",
-        image: '/sea-freight/container/open-top-container.webp',
-      },
-      {
-        size: "40'",
-        name: "40' Open-Top",
-        dims: '12.029 × 2.342 × 2.326 m',
-        door: '2.341 × 2.274 m',
-        capacity: '65 CBM',
-        tare: '3,810 kg',
-        maxCargo: '26,670 kg',
-        description: "Same top-loading design as the 20' Open-Top, with extra length for bulkier oversized cargo.",
-        image: '/sea-freight/container/open-top-container.webp',
-      },
-    ],
-  },
-  {
-    id: 'flat-rack',
-    label: 'Flat-Rack',
-    icon: Layers,
-    entries: [
-      {
-        size: "20'",
-        name: "20' Flat-Rack",
-        dims: '5.698 × 2.230 × 2.255 m',
-        door: 'N/A',
-        capacity: '—',
-        tare: '2,500 kg',
-        maxCargo: '21,500 kg',
-        description:
-          'Open-sided flat platform with fixed or collapsible end walls, for heavy or irregularly shaped cargo — machinery, yachts, vehicles, industrial equipment.',
-        image: '/sea-freight/container/flat-rack-container.webp',
-      },
-      {
-        size: "40'",
-        name: "40' Flat-Rack",
-        dims: '11.832 × 2.228 × 1.981 m',
-        door: 'N/A',
-        capacity: '—',
-        tare: '4,200 kg',
-        maxCargo: '40,800 kg',
-        description:
-          'Longer platform version of the Flat-Rack, for larger, heavier shipments that exceed standard container dimensions.',
-        image: '/sea-freight/container/flat-rack-container.webp',
-      },
-    ],
-  },
-  {
-    id: 'reefer',
-    label: 'Reefer',
-    icon: Snowflake,
-    entries: [
-      {
-        size: "20'",
-        name: "20' Reefer",
-        dims: '5.724 × 2.286 × 2.014 m',
-        door: '2.286 × 2.067 m',
-        capacity: '26 CBM',
-        tare: '2,550 kg',
-        maxCargo: '21,450 kg',
-        description:
-          'Temperature-controlled container with an integrated refrigeration unit, for perishable and sensitive goods — food, pharmaceuticals, meat, seafood, chemicals.',
-        image: '/sea-freight/container/reefer-container.webp',
-      },
-      {
-        size: "40'",
-        name: "40' Reefer",
-        dims: '11.840 × 2.286 × 2.120 m',
-        door: '2.286 × 2.195 m',
-        capacity: '60 CBM',
-        tare: '3,850 kg',
-        maxCargo: '26,630 kg',
-        description:
-          "Same temperature-controlled function as the 20' Reefer, sized for larger volumes of perishable cargo.",
-        image: '/sea-freight/container/reefer-container.webp',
-      },
-    ],
-  },
-  {
-    id: 'tank',
-    label: 'ISO Tank',
-    icon: Droplet,
-    entries: [
-      {
-        size: "20'",
-        name: "20' ISO Tank",
-        dims: '6.058 × 2.438 × 2.438 m',
-        door: 'N/A',
-        capacity: '24,000–26,000 L',
-        tare: '4,190 kg',
-        maxCargo: '26,290 kg',
-        description:
-          'For safe transport of bulk liquids — chemicals, food-grade products, fuel, gases — under regulated pressure. Available in classifications (T11, T14, T50, T75) for hazardous and non-hazardous substances; can include insulation or heating for temperature-sensitive liquids.',
-        image: '/sea-freight/container/iso-tank-container.webp',
-      },
-    ],
-  },
-];
-
 // Every distinct image, rendered up front so switching is instant (no load flash)
-const UNIQUE_IMAGES = Array.from(new Set(CATEGORIES.flatMap((c) => c.entries.map((e) => e.image))));
 
 function specHighlights(entry: ContainerEntry): string[] {
   const lines: string[] = [];
@@ -218,7 +33,7 @@ function specHighlights(entry: ContainerEntry): string[] {
 // Hides the scrollbar on horizontally scrollable rows
 const NO_SCROLLBAR = '[scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden';
 
-function EntryPanel({ category, entry }: { category: Category; entry: ContainerEntry }) {
+function EntryPanel({ category, entry, images }: { category: Category; entry: ContainerEntry; images: string[] }) {
   const highlights = specHighlights(entry);
 
   return (
@@ -288,7 +103,7 @@ function EntryPanel({ category, entry }: { category: Category; entry: ContainerE
         )}
 
         {/* All images are mounted; only the active one is visible. No transition, so the swap is instant. */}
-        {UNIQUE_IMAGES.map((src) => {
+        {images.map((src) => {
           const isActive = src === entry.image;
           return (
             <Image
@@ -316,9 +131,12 @@ function EntryPanel({ category, entry }: { category: Category; entry: ContainerE
   );
 }
 
-export default function ContainerGuide() {
+function ContainerGuide({ content }: { content: SEA_CONTAINERSContent }) {
+  const CATEGORIES = content.categories;
+  // Every distinct image, rendered up front so switching is instant (no load flash)
+  const images = Array.from(new Set(CATEGORIES.flatMap((c) => c.entries.map((e) => e.image))));
   const [activeCatId, setActiveCatId] = useState<Category['id']>(CATEGORIES[0].id);
-  const activeCategory = CATEGORIES.find((c) => c.id === activeCatId)!;
+  const activeCategory = CATEGORIES.find((c) => c.id === activeCatId) ?? CATEGORIES[0];
   const [activeSize, setActiveSize] = useState<string>(activeCategory.entries[0].size);
 
   useEffect(() => {
@@ -343,16 +161,16 @@ export default function ContainerGuide() {
         >
           <div className="flex items-center justify-center gap-2.5 sm:gap-3 mb-3 sm:mb-4">
             <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
-              Container Guide
+              {content.eyebrow}
             </span>
           </div>
 
           <h2 className="text-balance text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white leading-[1.15] max-w-[720px] mx-auto px-2">
-            Containers used in sea freight
+            {content.heading}
           </h2>
 
           <p className="mt-3 sm:mt-4 text-white/75 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto px-2">
-            Types, specification, purpose and feature.
+            {content.description}
           </p>
         </motion.div>
 
@@ -417,8 +235,10 @@ export default function ContainerGuide() {
         )}
 
         {/* No animation wrapper: content and image swap instantly */}
-        <EntryPanel category={activeCategory} entry={entry} />
+        <EntryPanel category={activeCategory} entry={entry} images={images} />
       </div>
     </section>
   );
 }
+
+export default cmsSection('sea-freight.containers', SEA_CONTAINERS, ContainerGuide);

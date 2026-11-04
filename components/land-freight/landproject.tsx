@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { cmsSection } from '@/components/cms/CmsProvider';
+import { LAND_BANNER, type LAND_BANNERContent } from './content';
 
 interface LandFreightBannerProps {
-  imageSrc: string;
-  imageAlt: string;
+  imageSrc?: string;
+  imageAlt?: string;
   heading?: string;
   description?: string;
   projectLabel?: string;
@@ -12,15 +14,8 @@ interface LandFreightBannerProps {
   ctaHref?: string;
 }
 
-const LandFreightBanner = ({
-  imageSrc,
-  imageAlt,
-  heading = 'Cross-border trucking and rail, delivered on schedule',
-  description = "From full truckload (FTL) and less-than-truckload (LTL) services to heavy haulage and intermodal rail, our extensive land network connects regional hubs seamlessly, backed by real-time tracking and dedicated dispatch support.",
-  projectLabel = 'Oil & Gas Equipment',
-  ctaLabel = 'Explore Land Freight',
-  ctaHref = '/land-freight',
-}: LandFreightBannerProps) => {
+const LandFreightBanner = ({ content }: LandFreightBannerProps & { content: LAND_BANNERContent }) => {
+  const { imageSrc, imageAlt, heading, description, projectLabel, ctaLabel, ctaHref } = content;
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -66,7 +61,7 @@ const LandFreightBanner = ({
               className="font-medium text-xs sm:text-sm tracking-wider uppercase"
               style={{ color: '#36B936' }}
             >
-              Land Freight
+              {content.eyebrow}
             </h3>
           </div>
 
@@ -133,4 +128,4 @@ const LandFreightBanner = ({
   );
 };
 
-export default LandFreightBanner;
+export default cmsSection('land-freight.banner', LAND_BANNER, LandFreightBanner);

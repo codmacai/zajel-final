@@ -1,5 +1,4 @@
-import type { Metadata } from 'next';
-import { pageMetadata } from '@/lib/seo';
+import { cmsMetadata } from '@/lib/cms/server';
 import {
   WhyShipInternationally,
   InternationalShippingTimes,
@@ -10,12 +9,7 @@ import TwoWaysToShipAndJourney from '@/components/international/twowaysship';
 import InternationalHero from '@/components/international/hero';
 import CTABanner from '@/components/shared/CTABanner';
 
-export const metadata: Metadata = pageMetadata({
-  title: "International Shipping",
-  description:
-    "Ship internationally from the UAE to 195 countries with reliable express and standard delivery, real-time tracking, and full customs clearance support.",
-  path: '/international-courier',
-});
+export const generateMetadata = cmsMetadata('international-courier', '/international-courier');
 
 export default function InternationalPage() {
   return (

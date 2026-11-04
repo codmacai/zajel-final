@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { solutionsCategories } from "@/data/navigation";
+import { useNavigation } from "./useNavigation";
 import Badge from "./Badge";
 import IconPlaceholder from "./IconPlaceholder";
 
@@ -14,6 +14,7 @@ export default function SolutionsMegaMenu({
   onClose: () => void;
   onMouseEnter?: () => void;
 }) {
+  const { solutions: solutionsCategories } = useNavigation();
   return (
     <>
       <div

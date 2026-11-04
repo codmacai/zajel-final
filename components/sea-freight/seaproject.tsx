@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { cmsSection } from '@/components/cms/CmsProvider';
+import { SEA_BANNER, type SEA_BANNERContent } from './content';
 
 interface SeaFreightBannerProps {
-  imageSrc: string;
-  imageAlt: string;
+  imageSrc?: string;
+  imageAlt?: string;
   heading?: string;
   description?: string;
   projectLabel?: string;
@@ -12,15 +14,8 @@ interface SeaFreightBannerProps {
   ctaHref?: string;
 }
 
-const SeaFreightBanner = ({
-  imageSrc,
-  imageAlt,
-  heading = 'Full container loads, moved with precision',
-  description = "From FCL and LCL shipments to breakbulk and roll-on roll-off cargo, our sea freight network connects major ports worldwide, backed by reliable schedules and end-to-end documentation support.",
-  projectLabel = 'Jebel Ali to Rotterdam Route',
-  ctaLabel = 'Explore project',
-  ctaHref = '/sea-freight',
-}: SeaFreightBannerProps) => {
+const SeaFreightBanner = ({ content }: SeaFreightBannerProps & { content: SEA_BANNERContent }) => {
+  const { imageSrc, imageAlt, heading, description, projectLabel, ctaLabel, ctaHref } = content;
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -66,7 +61,7 @@ const SeaFreightBanner = ({
               className="font-medium text-xs sm:text-sm tracking-wider uppercase"
               style={{ color: '#36B936' }}
             >
-              Sea Freight
+              {content.eyebrow}
             </h3>
           </div>
 
@@ -133,4 +128,4 @@ const SeaFreightBanner = ({
   );
 };
 
-export default SeaFreightBanner;
+export default cmsSection('sea-freight.banner', SEA_BANNER, SeaFreightBanner);

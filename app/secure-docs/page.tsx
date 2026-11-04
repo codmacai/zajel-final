@@ -1,13 +1,7 @@
-import type { Metadata } from 'next';
-import { pageMetadata } from '@/lib/seo';
+import { cmsMetadata } from '@/lib/cms/server';
 import { SecureDocsHero, SecureDocsProtocol, SecureDocsComplianceDetails } from '@/components/services/secure-docs';
 
-export const metadata: Metadata = pageMetadata({
-  title: "Secure Document Courier in the UAE",
-  description:
-    "Legal and official documents moved across the UAE with strict chain-of-custody controls, tamper-evident packaging and confirmed delivery.",
-  path: '/secure-docs',
-});
+export const generateMetadata = cmsMetadata('secure-docs', '/secure-docs');
 
 export default function SecureDocsPage() {
   return (

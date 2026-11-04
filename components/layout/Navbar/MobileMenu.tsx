@@ -2,10 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useNavigation } from "./useNavigation";
 import {
-  solutionsCategories,
-  aboutItems,
-  resourcesItems,
   type NavItem,
 } from "@/data/navigation";
 
@@ -47,30 +45,32 @@ export default function MobileMenu({
     };
   }, [isOpen]);
 
+  const nav = useNavigation();
+  const { solutions: solutionsCategories, about: aboutItems, resources: resourcesItems } = nav;
   const menuItems = [
-    { label: "Home", path: "/" },
-    { label: "Track", path: "/track" },
+    { label: nav.labels.home, path: "/" },
+    { label: nav.labels.track, path: "/track" },
   ];
 
   const megaItems: {
     key: string;
     label: string;
-    categories?: typeof solutionsCategories;
+    categories?: typeof nav.solutions;
     items?: NavItem[];
   }[] = [
     {
       key: "solutions",
-      label: "Solutions",
+      label: nav.labels.solutions,
       categories: solutionsCategories,
     },
     {
       key: "about",
-      label: "About Us",
+      label: nav.labels.about,
       items: aboutItems,
     },
     {
       key: "resources",
-      label: "Resources",
+      label: nav.labels.resources,
       items: resourcesItems,
     },
   ];
@@ -386,7 +386,7 @@ export default function MobileMenu({
                 "1px solid rgba(0,0,0,0.03)",
             }}
           >
-            Support Center
+            {nav.labels.support}
           </Link>
 
           {/* Language */}
@@ -430,7 +430,7 @@ export default function MobileMenu({
               display: "flex",
             }}
           >
-            Get a Quote
+            {nav.labels.quote}
           </Link>
         </div>
       </div>

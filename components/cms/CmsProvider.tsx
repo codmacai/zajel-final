@@ -43,7 +43,7 @@ export function useSection<T>(key: string, defaults: T): T | null {
  * A component used on several pages takes its key and built-in content from the page instead:
  *   <ContactSection cmsKey="sea-freight.contact" content={seaFreightContent} />
  */
-export function cmsSection<T, P extends { content: T }>(
+export function cmsSection<T, P extends { content?: T }>(
   key: string | null,
   defaults: T | null,
   Inner: ComponentType<P>,

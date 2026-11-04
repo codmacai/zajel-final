@@ -4,70 +4,10 @@ import type { ComponentType } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Box, Package, Truck, Layers, Flame, Wind } from 'lucide-react';
+import { type Vessel, SEA_VESSELS, type SEA_VESSELSContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-
-type VesselType = 'container' | 'general' | 'roro' | 'bulk' | 'gas' | 'livestock';
-
-type Vessel = {
-  type: VesselType;
-  name: string;
-  purpose: string;
-  feature: string;
-  icon: ComponentType<{ size?: number; strokeWidth?: number }>;
-  image: string;
-};
-
-const VESSELS: Vessel[] = [
-  {
-    type: 'container',
-    name: 'Container Vessel',
-    purpose: 'Transports standard ISO containers (20ft/40ft)',
-    feature: 'Fast loading and unloading at container terminals with gantry cranes',
-    icon: Box,
-    image: '/sea-freight/oceancargo/container-vessel.webp',
-  },
-  {
-    type: 'general',
-    name: 'General Cargo Vessel',
-    purpose: 'Transports loose, non-containerized, non-bulk cargo — oversized loads, machines, equipment',
-    feature: 'Flexible space for different cargo types, using its own cranes to load and unload',
-    icon: Package,
-    image: '/sea-freight/oceancargo/general-cargo-vessel.webp',
-  },
-  {
-    type: 'roro',
-    name: 'RORO Vessel',
-    purpose: 'Transports wheeled cargo like cars, trucks and trailers',
-    feature: 'Cargo is driven on and off via built-in ramps — no crane needed',
-    icon: Truck,
-    image: '/sea-freight/oceancargo/roro-vessel.webp',
-  },
-  {
-    type: 'bulk',
-    name: 'Bulk Carrier Vessel',
-    purpose: 'Carries unpackaged bulk cargo like coal, grain and iron ore',
-    feature: 'Large cargo holds, sometimes with onboard cranes for self-loading',
-    icon: Layers,
-    image: '/sea-freight/oceancargo/bulk-carrier-vessel.webp',
-  },
-  {
-    type: 'gas',
-    name: 'Gas Carrier Vessel',
-    purpose: 'Transports liquefied gases like LNG and LPG',
-    feature: 'Highly specialized tanks with temperature and pressure control systems',
-    icon: Flame,
-    image: '/sea-freight/oceancargo/gas-carrier-vessel.webp',
-  },
-  {
-    type: 'livestock',
-    name: 'Livestock Carrier Vessel',
-    purpose: 'Transports live animals, such as cattle and sheep, over sea routes',
-    feature: 'Modified decks with ventilation, feeding and waste systems for animal welfare',
-    icon: Wind,
-    image: '/sea-freight/oceancargo/livestock-carrier-vessel.webp',
-  },
-];
 
 function VesselCard({ vessel, index }: { vessel: Vessel; index: number }) {
   const Icon = vessel.icon;
@@ -120,7 +60,7 @@ function VesselCard({ vessel, index }: { vessel: Vessel; index: number }) {
   );
 }
 
-export default function OceanCargoVessels() {
+function OceanCargoVessels({ content }: { content: SEA_VESSELSContent }) {
   return (
     <section className="w-full py-10 sm:py-20 lg:py-24 bg-white font-sans">
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6">
@@ -133,21 +73,21 @@ export default function OceanCargoVessels() {
         >
           <div className="flex items-center justify-center gap-3 mb-4">
             <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
-              Fleet Guide
+              {content.eyebrow}
             </span>
           </div>
 
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-[#1b4332] leading-[1.15] max-w-[720px] mx-auto">
-            Ocean cargo vessels
+            {content.heading}
           </h2>
 
           <p className="mt-4 sm:mt-5 text-[#2d6a4f] font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto">
-            Types, purpose and key feature.
+            {content.description}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-          {VESSELS.map((vessel, i) => (
+          {content.vessels.map((vessel, i) => (
             <VesselCard key={vessel.type} vessel={vessel} index={i} />
           ))}
         </div>
@@ -155,3 +95,5 @@ export default function OceanCargoVessels() {
     </section>
   );
 }
+
+export default cmsSection('sea-freight.vessels', SEA_VESSELS, OceanCargoVessels);

@@ -1,5 +1,4 @@
-import type { Metadata } from 'next';
-import { pageMetadata } from '@/lib/seo';
+import { cmsMetadata } from '@/lib/cms/server';
 import {
   LandFreightSolutions,
   WhenToChooseLandFreight,
@@ -18,12 +17,7 @@ import HowFreightQuoteWorks from '@/components/land-freight/HowItworks';
 import LandFreightHero from '@/components/land-freight/hero';
 import LandFreightFAQS from '@/components/land-freight/faq';
 
-export const metadata: Metadata = pageMetadata({
-  title: "Land Freight Services",
-  description:
-    "Full truckload and less-than-truckload road freight across the UAE, GCC, and cross-border routes to Jordan, Turkey, and Europe — with TIR customs transit, cold chain, and dedicated fleet coverage.",
-  path: '/land-freight',
-});
+export const generateMetadata = cmsMetadata('land-freight', '/land-freight');
 
 export default function LandFreightPage() {
   return (
@@ -38,8 +32,6 @@ export default function LandFreightPage() {
 
       <WhatWeMove />
       <LandFreightBanner
-      imageSrc="/Homepage/projects/oil-gas-process-equipment.jpg"
-      imageAlt="Container ship at port"
     />
       
       <IndustriesWeServe/>

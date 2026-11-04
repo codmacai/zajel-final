@@ -3,21 +3,10 @@ import type { FC } from "react";
 import DynamicHero, {
   type DynamicHeroContent,
 } from "@/components/FreightHero/dynamic-hero";
+import { serverSection } from '@/lib/cms/server';
+import { SEA_HERO } from './content';
 
 export type SeaFreightHeroContent = DynamicHeroContent;
-
-// Fallback until the CMS entry is ready.
-const defaultContent: SeaFreightHeroContent = {
-  badge: "Sea Freight, FCL & LCL",
-  titleLine1: "Port to port,",
-  titleLine2: "priced plainly.",
-  description:
-    "Flexible sea freight solutions connecting global ports with dependable transit, smooth customs clearance, and end-to-end logistics tailored to your business needs.",
-  primaryCta: { label: "Book space", url: "/support" },
-  // secondaryCta: { label: "Ask for the schedule", url: "/support" },
-  image_url: "/sea-freight/sea-freight-hero.webp",
-  imageAlt: "Container ship loaded with cargo containers at sea",
-};
 
 const icon = (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
@@ -29,11 +18,11 @@ const icon = (
 );
 
 interface Props {
-  content?: SeaFreightHeroContent;
+  content: SeaFreightHeroContent;
   isRtl?: boolean;
 }
 
-const SeaFreightHero: FC<Props> = ({ content = defaultContent, isRtl }) => (
+const SeaFreightHero: FC<Props> = ({ content, isRtl }) => (
   <DynamicHero
     id="sea-freight-hero"
     content={content}
@@ -43,4 +32,4 @@ const SeaFreightHero: FC<Props> = ({ content = defaultContent, isRtl }) => (
   />
 );
 
-export default SeaFreightHero;
+export default serverSection('sea-freight.hero', SEA_HERO, SeaFreightHero);

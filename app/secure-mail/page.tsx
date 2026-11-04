@@ -1,13 +1,7 @@
-import type { Metadata } from 'next';
-import { pageMetadata } from '@/lib/seo';
+import { cmsMetadata } from '@/lib/cms/server';
 import { SecureMailHero, SecureMailProtocol, SecureMailDetails } from '@/components/services/secure-mail';
 
-export const metadata: Metadata = pageMetadata({
-  title: "Secure Mail Service in the UAE",
-  description:
-    "Confidential correspondence sealed, tracked and delivered by hand to the named recipient anywhere in the UAE.",
-  path: '/secure-mail',
-});
+export const generateMetadata = cmsMetadata('secure-mail', '/secure-mail');
 
 export default function SecureMailPage() {
   return (

@@ -307,3 +307,20 @@ export interface NavItem {
       ),
     },
   ];
+
+/** The whole menu as one CMS section (Site-wide → Navigation menu). Icons stay as designed. */
+export const NAVIGATION = {
+  labels: {
+    home: "Home",
+    track: "Track",
+    solutions: "Solutions",
+    about: "About Us",
+    resources: "Resources",
+    support: "Support Center",
+    quote: "Get a Quote",
+  },
+  solutions: solutionsCategories,
+  about: aboutItems,
+  resources: resourcesItems,
+};
+export type NavigationContent = typeof NAVIGATION;

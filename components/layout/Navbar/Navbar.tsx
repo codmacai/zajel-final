@@ -9,7 +9,7 @@ import Chevron from "./Chevron";
 import SolutionsMegaMenu from "./SolutionsMegaMenu";
 import FlatMegaMenu from "./FlatMegaMenu";
 import MobileMenu from "./MobileMenu";
-import { aboutItems, resourcesItems } from "@/data/navigation";
+import { useNavigation } from "./useNavigation";
 import "./Navbar.css";
 
 // Ignore tiny scroll movements so the bar doesn't flicker.
@@ -87,9 +87,11 @@ export default function Navbar() {
 
   const toggleMenu = (key: string) => setActiveMenu((p) => (p === key ? null : key));
 
-  const navLinks = [{ label: "Track", path: "/track" }];
+  const nav = useNavigation();
+  const { about: aboutItems, resources: resourcesItems } = nav;
+  const navLinks = [{ label: nav.labels.track, path: "/track" }];
   // Rendered after the dropdowns so it's the last item in the menu.
-  const trailingLinks = [{ label: "Support Center", path: "/support" }];
+  const trailingLinks = [{ label: nav.labels.support, path: "/support" }];
 
   // Keep the bar visible whenever a menu is open.
   const isHidden = hidden && !activeMenu && !mobileOpen;
@@ -123,9 +125,9 @@ export default function Navbar() {
               ))}
 
               {[
-                { key: "solutions", label: "Solutions" },
-                { key: "about", label: "About Us" },
-                { key: "resources", label: "Resources" },
+                { key: "solutions", label: nav.labels.solutions },
+                { key: "about", label: nav.labels.about },
+                { key: "resources", label: nav.labels.resources },
               ].map(({ key, label }) => (
                 <button
                   key={key}
@@ -191,8 +193,8 @@ export default function Navbar() {
       </nav>
 
       <SolutionsMegaMenu isOpen={activeMenu === "solutions"} onClose={closeMenu} onMouseEnter={() => openMenu("solutions")} />
-      <FlatMegaMenu title="About Us" items={aboutItems} columns={3} isOpen={activeMenu === "about"} onClose={closeMenu} onMouseEnter={() => openMenu("about")} />
-      <FlatMegaMenu title="Resources" items={resourcesItems} columns={2} isOpen={activeMenu === "resources"} onClose={closeMenu} onMouseEnter={() => openMenu("resources")} />
+      <FlatMegaMenu title={nav.labels.about} items={aboutItems} columns={3} isOpen={activeMenu === "about"} onClose={closeMenu} onMouseEnter={() => openMenu("about")} />
+      <FlatMegaMenu title={nav.labels.resources} items={resourcesItems} columns={2} isOpen={activeMenu === "resources"} onClose={closeMenu} onMouseEnter={() => openMenu("resources")} />
 
       <MobileMenu isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
     </>
