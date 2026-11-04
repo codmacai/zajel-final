@@ -85,3 +85,12 @@ export const SERVICE_HERO_HINTS: Hints = {
   showGlowOrbs: { hidden: true },
   stats: { itemLabel: 'Number' },
 };
+
+export const CONTACT_BAND_HINTS: Hints = {
+  badgeText: { label: 'Badge' },
+  descriptionLead: { label: 'Intro', kind: 'textarea' },
+  descriptionDetail: { label: 'Details' },
+  contactInfo: { label: 'Contact details' },
+  primaryCta: { label: 'Button' },
+  'primaryCta.url': { label: 'Link' },
+};

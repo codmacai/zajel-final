@@ -1,4 +1,5 @@
-import { cmsMetadata } from '@/lib/cms/server';
+import { cmsMetadata, getSection } from '@/lib/cms/server';
+import { NETWORK_CONTACT } from '@/components/logistics-network/content';
 import ServiceHero from "@/components/sections/ServiceHero/ServiceHero";
 import LogisticsNetworkSection from "@/components/logistics-network/logistics-network";
 import RegionalCoverageSection from "@/components/logistics-network/regional-coverage-section";
@@ -8,11 +9,14 @@ import LogisticsInfrastructureSection from "@/components/logistics-infrastructur
 import ReachInNumbersSection from "@/components/reach-in-numbers/reach-in-numbers-section";
 import NetworkFaq from "@/components/logistics-infrastructure/faq";
 import ContactBand from "@/components/dynamic-contact";
+import CmsScope from '@/components/cms/CmsScope';
 
 export const generateMetadata = cmsMetadata('network', '/network');
 
-export default function NetworkPage() {
+export default async function NetworkPage() {
+  const contact = await getSection("network.contact", NETWORK_CONTACT);
   return (
+    <CmsScope page="network">
     <main>
       <ServiceHero variant="network" />
       <div id="explore-network" className="scroll-mt-24">
@@ -24,10 +28,11 @@ export default function NetworkPage() {
       <LogisticsInfrastructureSection/>
       <ReachInNumbersSection/>
       <NetworkFaq/>
-      <ContactBand />
+      {contact && <ContactBand {...contact} />}
       
 
       {/* Rest of the Network page content goes below. */}
     </main>
+    </CmsScope>
   );
 }

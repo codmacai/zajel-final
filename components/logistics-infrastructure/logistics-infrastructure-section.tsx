@@ -1,11 +1,8 @@
 "use client";
 
 import { useInView } from "@/hooks/useInView";
-import {
-  LOGISTICS_INFRASTRUCTURE_CARDS,
-  LOGISTICS_INFRASTRUCTURE_EYEBROW,
-  LOGISTICS_INFRASTRUCTURE_HEADING,
-} from "@/data/logistics-infrastructure";
+import { NETWORK_INFRASTRUCTURE, type NETWORK_INFRASTRUCTUREContent } from '../logistics-network/content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const LIME = "#36B936";
 
@@ -13,7 +10,7 @@ const cx = (...classes: Array<string | false | undefined>) => classes.filter(Boo
 const ANIMATE_BASE = "transition-all duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)]";
 const fadeIn = (isVisible: boolean) => (isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8");
 
-export default function LogisticsInfrastructureSection() {
+function LogisticsInfrastructureSection({ content }: { content: NETWORK_INFRASTRUCTUREContent }) {
   const { ref: sectionRef, isVisible } = useInView<HTMLElement>();
 
   return (
@@ -22,12 +19,12 @@ export default function LogisticsInfrastructureSection() {
         <div className={cx("mb-10 sm:mb-12 md:mb-16 text-center", ANIMATE_BASE, fadeIn(isVisible))}>
           <div className="mb-2 flex items-center justify-center gap-3">
             <span className="text-xs sm:text-sm font-medium uppercase tracking-[0.22em]" style={{ color: LIME }}>
-              {LOGISTICS_INFRASTRUCTURE_EYEBROW}
+              {content.eyebrow}
             </span>
           </div>
 
           <h2 className="mx-auto max-w-[720px] text-2xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight text-[#1b4332]">
-            {LOGISTICS_INFRASTRUCTURE_HEADING}
+            {content.heading}
           </h2>
         </div>
 
@@ -39,7 +36,7 @@ export default function LogisticsInfrastructureSection() {
           )}
           style={{ transitionDelay: "150ms" }}
         >
-          {LOGISTICS_INFRASTRUCTURE_CARDS.map((card, index) => {
+          {content.cards.map((card, index) => {
             const Icon = card.icon;
             return (
               <div
@@ -47,7 +44,7 @@ export default function LogisticsInfrastructureSection() {
                 className={cx(
                   "group flex min-h-[340px] sm:min-h-[380px] flex-col justify-between bg-white p-6 sm:p-8 transition-colors duration-300 hover:bg-[#36B936]",
                   // Add bottom border for mobile stacked cards except the last one
-                  index !== LOGISTICS_INFRASTRUCTURE_CARDS.length - 1 && "border-b border-[#1b4332]/15 md:border-b-0",
+                  index !== content.cards.length - 1 && "border-b border-[#1b4332]/15 md:border-b-0",
                   // Add right border for desktop grid columns
                   "md:border-r md:last:border-r-0"
                 )}
@@ -78,3 +75,5 @@ export default function LogisticsInfrastructureSection() {
     </section>
   );
 }
+
+export default cmsSection('network.infrastructure', NETWORK_INFRASTRUCTURE, LogisticsInfrastructureSection);

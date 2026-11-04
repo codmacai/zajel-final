@@ -1,14 +1,17 @@
 "use client";
 
 import FaqSection from "@/components/shared/faq-section";
-import { Industry_Faqs } from "@/data/industry-faqs";
+import { INDUSTRY_FAQ, type INDUSTRY_FAQContent } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
-export default function IndustryFaq() {
+function IndustryFaq({ content }: { content: INDUSTRY_FAQContent }) {
   return (
     <FaqSection
-      eyebrow="FAQ"
-      heading="Frequently Asked Questions"
-      items={Industry_Faqs}
+      eyebrow={content.eyebrow}
+      heading={content.heading}
+      items={content.items}
     />
   );
 }
+
+export default cmsSection('industry.faq', INDUSTRY_FAQ, IndustryFaq);

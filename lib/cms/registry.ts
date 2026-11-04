@@ -14,6 +14,8 @@ import { INTERNATIONAL_COURIER } from './pages/international-courier';
 import { ECOMMERCE } from './pages/ecommerce';
 import { CUSTOMS_CLEARANCE } from './pages/customs-clearance';
 import { WAREHOUSE } from './pages/warehouse';
+import { NETWORK } from './pages/network';
+import { INDUSTRY } from './pages/industry';
 
 export type PageGroup = 'Site-wide' | 'Main' | 'Solutions' | 'Services' | 'Secure' | 'Company' | 'Help';
 
@@ -55,7 +57,7 @@ function withSeo(page: PageDef): PageDef {
   };
 }
 
-export const PAGES: PageDef[] = [GLOBAL, HOME, DOMESTIC_COURIER, INTERNATIONAL_COURIER, ECOMMERCE, AIR_FREIGHT, SEA_FREIGHT, LAND_FREIGHT, CUSTOMS_CLEARANCE, WAREHOUSE].map(withSeo);
+export const PAGES: PageDef[] = [GLOBAL, HOME, DOMESTIC_COURIER, INTERNATIONAL_COURIER, ECOMMERCE, AIR_FREIGHT, SEA_FREIGHT, LAND_FREIGHT, CUSTOMS_CLEARANCE, WAREHOUSE, NETWORK, INDUSTRY].map(withSeo);
 
 export const sectionKey = (page: string, section: string) => `${page}.${section}`;
 

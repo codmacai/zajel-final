@@ -1,12 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import {
-  FREIGHT_SERVICES,
-  FREIGHT_SERVICES_EYEBROW,
-  FREIGHT_SERVICES_HEADING,
-  type FreightCardData,
-} from "@/data/freight-services";
+import { type FreightCardData } from "@/data/freight-services";
+import { NETWORK_FREIGHT, type NETWORK_FREIGHTContent } from '../logistics-network/content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const BRAND = {
   green: "#36b936",
@@ -50,7 +47,7 @@ function FreightCard({ card }: FreightCardProps) {
   );
 }
 
-export default function FreightServicesSection() {
+function FreightServicesSection({ content }: { content: NETWORK_FREIGHTContent }) {
   return (
     <section
       className="w-full px-4 py-12 sm:px-6 sm:py-16 font-['Manrope',sans-serif] md:px-12 lg:px-20 lg:py-24"
@@ -63,16 +60,16 @@ export default function FreightServicesSection() {
             className="mb-2 block text-xs sm:text-sm font-medium uppercase tracking-widest"
             style={{ color: BRAND.green }}
           >
-            {FREIGHT_SERVICES_EYEBROW}
+            {content.eyebrow}
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-[#0D2A22]">
-            {FREIGHT_SERVICES_HEADING}
+            {content.heading}
           </h2>
         </div>
 
         {/* Card Grid */}
         <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-3">
-          {FREIGHT_SERVICES.map((card) => (
+          {content.cards.map((card) => (
             <FreightCard key={card.title} card={card} />
           ))}
         </div>
@@ -80,3 +77,5 @@ export default function FreightServicesSection() {
     </section>
   );
 }
+
+export default cmsSection('network.freight-services', NETWORK_FREIGHT, FreightServicesSection);

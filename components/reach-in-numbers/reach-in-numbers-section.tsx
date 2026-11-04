@@ -1,8 +1,10 @@
 "use client";
 
 import { useInView } from "@/hooks/useInView";
-import { REACH_IN_NUMBERS_EYEBROW, REACH_IN_NUMBERS_HEADING, REACH_IN_NUMBERS_STATS } from "@/data/reach-in-numbers";
+
 import CountUp from "@/components/reach-in-numbers/count-up";
+import { NETWORK_NUMBERS, type NETWORK_NUMBERSContent } from '../logistics-network/content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const LIME = "#36B936";
 
@@ -19,7 +21,7 @@ const GLOSSY_DIVIDER_V =
 const GLOSSY_DIVIDER_V_MOBILE = "linear-gradient(180deg, transparent 0%, rgba(54,185,54,0.4) 50%, transparent 100%)";
 const GLOSSY_DIVIDER_H_MOBILE = "linear-gradient(90deg, transparent 0%, rgba(54,185,54,0.4) 50%, transparent 100%)";
 
-export default function ReachInNumbersSection() {
+function ReachInNumbersSection({ content }: { content: NETWORK_NUMBERSContent }) {
   const { ref: sectionRef, isVisible } = useInView<HTMLElement>();
 
   return (
@@ -28,12 +30,12 @@ export default function ReachInNumbersSection() {
         <div className={cx("mb-10 sm:mb-12 md:mb-16 text-center", ANIMATE_BASE, fadeIn(isVisible))}>
           <div className="mb-2 flex items-center justify-center gap-3">
             <span className="text-xs sm:text-sm font-medium uppercase tracking-[0.22em]" style={{ color: LIME }}>
-              {REACH_IN_NUMBERS_EYEBROW}
+              {content.eyebrow}
             </span>
           </div>
 
           <h2 className="mx-auto max-w-[720px] text-2xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight text-[#1b4332]">
-            {REACH_IN_NUMBERS_HEADING}
+            {content.heading}
           </h2>
         </div>
 
@@ -46,7 +48,7 @@ export default function ReachInNumbersSection() {
               style={{ background: GLOSSY_DIVIDER_MID }}
             />
 
-            {REACH_IN_NUMBERS_STATS.map((stat, index) => {
+            {content.stats.map((stat, index) => {
               const isRightColMobile = index % 2 !== 0;
               const isMiddleColDesktop = index % 3 === 1;
               const isRightColDesktop = index % 3 === 2;
@@ -96,3 +98,5 @@ export default function ReachInNumbersSection() {
     </section>
   );
 }
+
+export default cmsSection('network.numbers', NETWORK_NUMBERS, ReachInNumbersSection);

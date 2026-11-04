@@ -2,6 +2,8 @@
 
 import React from "react";
 import Image from "next/image";
+import { NETWORK_HUB, type NETWORK_HUBContent } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 interface LogisticsNetworkSectionProps {
   imageSrc?: string;
@@ -14,10 +16,9 @@ const BRAND = {
   dark: "#111827",
 } as const;
 
-export default function LogisticsNetworkSection({
-  imageSrc = "/network/jebel-ali-port-dubai-air-cargo.webp",
-  imageAlt = "Jebel Ali Port and Dubai Air Cargo Infrastructure",
-}: LogisticsNetworkSectionProps) {
+function LogisticsNetworkSection({ content,
+}: LogisticsNetworkSectionProps & { content: NETWORK_HUBContent }) {
+  const { imageSrc, imageAlt } = content;
   return (
     <section
       className="w-full py-12 sm:py-16 lg:py-24 flex flex-col justify-center overflow-hidden font-['Manrope',sans-serif]"
@@ -33,30 +34,18 @@ export default function LogisticsNetworkSection({
             <div className="lg:pr-6">
               {/* Eyebrow Label */}
               <span className="inline-block text-xs sm:text-sm font-medium tracking-wider uppercase text-white/80 mb-3">
-                Global Logistics Hub
+                {content.eyebrow}
               </span>
 
               {/* Header */}
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight text-white mb-4 sm:mb-6">
-                A Logistics Network Built from the UAE
+                {content.heading}
               </h2>
 
               {/* Body */}
               <div className="space-y-3 sm:space-y-4 text-white/90 text-xs sm:text-sm lg:text-base font-normal leading-relaxed max-w-xl">
-                <p>
-                  Situated at the crossroads of Asia, Europe, and Africa, the UAE is one of the
-                  world&apos;s most connected logistics hubs. Dubai serves as a primary gateway for
-                  global air cargo and maritime container traffic through Jebel Ali Port and its
-                  international airports.
-                </p>
-                <p>
-                  Headquartered at the center of this infrastructure, Zajel leverages the
-                  UAE&rsquo;s established trade facilities and efficient customs systems for air,
-                  sea, and land shipments. This geographic advantage delivers shorter transit times
-                  to key markets across the GCC, Indian subcontinent, East Africa, and
-                  Europe&mdash;connecting your cargo onward without unnecessary repositioning or
-                  transshipment delays.
-                </p>
+                <p>{content.paragraph1}</p>
+                <p>{content.paragraph2}</p>
               </div>
             </div>
           </div>
@@ -88,3 +77,5 @@ export default function LogisticsNetworkSection({
     </section>
   );
 }
+
+export default cmsSection('network.hub', NETWORK_HUB, LogisticsNetworkSection);

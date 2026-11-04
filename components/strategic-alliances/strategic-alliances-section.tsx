@@ -2,13 +2,9 @@
 
 import Image from "next/image";
 import { useInView } from "@/hooks/useInView";
-import {
-  STRATEGIC_ALLIANCES,
-  STRATEGIC_ALLIANCES_EYEBROW,
-  STRATEGIC_ALLIANCES_HEADING,
-  STRATEGIC_ALLIANCES_INTRO,
-  type AllianceCardData,
-} from "@/data/strategic-alliances";
+import { type AllianceCardData } from "@/data/strategic-alliances";
+import { NETWORK_ALLIANCES, type NETWORK_ALLIANCESContent } from '../logistics-network/content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const LIME = "#36B936";
 
@@ -56,7 +52,7 @@ function AllianceCard({ card, isVisible, delayMs }: AllianceCardProps) {
   );
 }
 
-export default function StrategicAlliancesSection() {
+function StrategicAlliancesSection({ content }: { content: NETWORK_ALLIANCESContent }) {
   const { ref: sectionRef, isVisible } = useInView<HTMLElement>();
 
   return (
@@ -83,20 +79,20 @@ export default function StrategicAlliancesSection() {
     <div className="relative z-10 mx-auto flex h-full w-full max-w-[1240px] flex-col justify-center px-4 sm:px-6 md:px-12 lg:px-20">
       <div className={cx("mx-auto mb-10 sm:mb-12 max-w-[850px] shrink-0 text-center lg:mb-16", ANIMATE_BASE, fadeIn(isVisible))}>
         <span className="mb-2 block text-xs sm:text-sm font-medium uppercase tracking-widest" style={{ color: LIME }}>
-          {STRATEGIC_ALLIANCES_EYEBROW}
+          {content.eyebrow}
         </span>
 
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white leading-tight">
-          {STRATEGIC_ALLIANCES_HEADING}
+          {content.heading}
         </h2>
 
         <p className="mx-auto mt-3 max-w-[65ch] text-[13px] sm:text-[13.5px] lg:text-[14px] font-normal leading-relaxed text-white/70">
-          {STRATEGIC_ALLIANCES_INTRO}
+          {content.intro}
         </p>
       </div>
 
       <div className="mx-auto grid w-full max-w-[900px] grid-cols-1 items-stretch gap-5 sm:gap-6 md:grid-cols-2">
-        {STRATEGIC_ALLIANCES.map((card, index) => (
+        {content.cards.map((card, index) => (
           <AllianceCard key={card.title} card={card} isVisible={isVisible} delayMs={index * 150} />
         ))}
       </div>
@@ -104,3 +100,5 @@ export default function StrategicAlliancesSection() {
   </section>
 );
 }
+
+export default cmsSection('network.alliances', NETWORK_ALLIANCES, StrategicAlliancesSection);

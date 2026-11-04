@@ -1,13 +1,9 @@
 "use client";
 
 import { useInView } from "@/hooks/useInView";
-import {
-  REGIONAL_COVERAGE_COLUMNS,
-  REGIONAL_COVERAGE_HEADING,
-  REGIONAL_COVERAGE_INTRO,
-  type CoverageColumn,
-  type CoverageTone,
-} from "@/data/regional-coverage";
+import { type CoverageColumn, type CoverageTone } from "@/data/regional-coverage";
+import { NETWORK_REGIONAL, type NETWORK_REGIONALContent } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 // ---------------------------------------------------------------------------
 // Style constants
@@ -150,7 +146,7 @@ function StatColumn({ value, suffix, label, tag, tone, text, isVisible, delayMs 
 // Section
 // ---------------------------------------------------------------------------
 
-export default function RegionalCoverageSection() {
+function RegionalCoverageSection({ content }: { content: NETWORK_REGIONALContent }) {
   const { ref: sectionRef, isVisible } = useInView<HTMLElement>();
 
   return (
@@ -161,19 +157,19 @@ export default function RegionalCoverageSection() {
       <div className="mx-auto max-w-7xl">
         <div className={cx("mb-3 sm:mb-4 text-center sm:mb-6", ANIMATE_BASE, fadeIn(isVisible))}>
           <h2 className="whitespace-pre-line text-2xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight text-[#0D2A22] px-2">
-            {REGIONAL_COVERAGE_HEADING}
+            {content.heading}
           </h2>
         </div>
 
         <div className={cx("mx-auto mb-10 sm:mb-12 max-w-3xl text-center sm:mb-16 px-2", ANIMATE_BASE, fadeIn(isVisible))}>
           <p className="text-sm sm:text-base font-normal leading-relaxed text-[#2d6a4f] md:text-lg">
-            {REGIONAL_COVERAGE_INTRO}
+            {content.intro}
           </p>
         </div>
 
         <div className="relative rounded-2xl border border-[#e2ece9] shadow-sm">
           <div className="flex flex-col lg:flex-row rounded-2xl overflow-hidden">
-            {REGIONAL_COVERAGE_COLUMNS.map((column, index) => (
+            {content.columns.map((column, index) => (
               <StatColumn key={column.id} {...column} isVisible={isVisible} delayMs={index * 150} />
             ))}
           </div>
@@ -182,3 +178,5 @@ export default function RegionalCoverageSection() {
     </section>
   );
 }
+
+export default cmsSection('network.regional-coverage', NETWORK_REGIONAL, RegionalCoverageSection);
