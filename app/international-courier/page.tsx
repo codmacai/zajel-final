@@ -1,4 +1,4 @@
-import { cmsMetadata } from '@/lib/cms/server';
+import { cmsMetadata, getSection } from '@/lib/cms/server';
 import {
   WhyShipInternationally,
   InternationalShippingTimes,
@@ -8,10 +8,12 @@ import InternationalFaq from '@/components/international/faq';
 import TwoWaysToShipAndJourney from '@/components/international/twowaysship';
 import InternationalHero from '@/components/international/hero';
 import CTABanner from '@/components/shared/CTABanner';
+import { INTERNATIONAL_CTA } from '@/components/international/content';
 
 export const generateMetadata = cmsMetadata('international-courier', '/international-courier');
 
-export default function InternationalPage() {
+export default async function InternationalPage() {
+  const cta = await getSection("international-courier.cta", INTERNATIONAL_CTA);
   return (
     <main>
       <InternationalHero/>
@@ -23,16 +25,7 @@ export default function InternationalPage() {
       />
       <CustomsDutyGuide />
       <InternationalFaq/>
-      <CTABanner
-        image="/zajel-courier-hero.webp"
-        imageAlt="Zajel courier handing over an international shipment"
-  title="Book International Shipping in Minutes"
-  description="Declare your document's weight and pay instantly, or request a quote for your package, book on zajel.com, or download the app for booking on the go."
-  buttons={[
-    { label: "Ship Internationally", href: "/send-shipment", variant: "primary" },
-    { label: "Download the Zajel App", href: "/#download-app", variant: "secondary" },
-  ]}
-/>
+      {cta && <CTABanner {...cta} />}
     </main>
   );
 }

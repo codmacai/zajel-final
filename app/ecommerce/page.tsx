@@ -1,4 +1,4 @@
-import { cmsMetadata } from '@/lib/cms/server';
+import { cmsMetadata, getSection } from '@/lib/cms/server';
 import {
   BusinessGetsSection,
   PlatformIntegrations,
@@ -11,10 +11,12 @@ import HowItWorks from '@/components/ecommerce/Howitworks';
 import EcommerceFaqSection from '@/components/ecommerce/ecommerce-faq';
 import CTABanner from '@/components/shared/CTABanner';
 import EcommerceHero from '@/components/ecommerce/hero';
+import { ECOMMERCE_CTA } from '@/components/ecommerce/content';
 
 export const generateMetadata = cmsMetadata('ecommerce', '/ecommerce');
 
-export default function EcommercePage() {
+export default async function EcommercePage() {
+  const cta = await getSection("ecommerce.cta", ECOMMERCE_CTA);
   return (
     <main>
       <EcommerceHero/>
@@ -28,18 +30,7 @@ export default function EcommercePage() {
       <ShippingTiers />
       <HowItWorks/>
       <EcommerceFaqSection/>
-      <CTABanner
-        image="/zajel-courier-hero.webp"
-        imageAlt="Courier delivering a package doorstep to doorstep in the UAE"
-              title="Ecommerce Logistics."
-              description="Built for how online sellers in UAE actually operate."
-              priority
-              buttons={[
-                { label: "Get a Quote", href: "/support", variant: "primary" },
-                { label: "Talk to our team", href: "/support", variant: "secondary" },
-                
-              ]}
-            />
+      {cta && <CTABanner {...cta} priority />}
     </main>
   );
 }

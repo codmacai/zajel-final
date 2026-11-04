@@ -3,34 +3,11 @@
 import type { FC } from 'react';
 import { ArrowRight, PhoneCall, Package, Bike, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { DOMESTIC_LIMITS, type DOMESTIC_LIMITSContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const smoothTransition = { duration: 0.7, ease: EASE };
-
-interface ShippingTierRow {
-  vehicleType: string;
-  maxWeight: string;
-  maxDimensions: string;
-  bestFor: string;
-  icon: React.ReactNode;
-}
-
-const SHIPPING_TIERS: ShippingTierRow[] = [
-  {
-    vehicleType: 'Motorbike',
-    maxWeight: 'Up to 10 kg',
-    maxDimensions: '45 x 45 x 45 cm',
-    bestFor: 'Documents, small parcels, envelopes',
-    icon: <Bike className="w-4 h-4 sm:w-5 sm:h-5 text-[#7BE07B]" />,
-  },
-  {
-    vehicleType: 'Van',
-    maxWeight: 'Up to 30 kg',
-    maxDimensions: '200 x 150 x 130 cm',
-    bestFor: 'Large boxes, multiple packages',
-    icon: <Package className="w-4 h-4 sm:w-5 sm:h-5 text-[#7BE07B]" />,
-  },
-];
 
 interface WhatYouCanShipProps {
   onBookShipment?: () => void;
@@ -38,7 +15,7 @@ interface WhatYouCanShipProps {
   contactHref?: string;
 }
 
-const WhatYouCanShip: FC<WhatYouCanShipProps> = ({
+const WhatYouCanShip: FC<WhatYouCanShipProps & { content: DOMESTIC_LIMITSContent }> = ({ content,
   onBookShipment,
   onContactTeam,
   contactHref = '/support',
@@ -68,7 +45,7 @@ const WhatYouCanShip: FC<WhatYouCanShipProps> = ({
             className="flex items-center justify-center gap-3 sm:gap-4 mb-4"
           >
             <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
-              Package Specifications & Limits
+              {content.eyebrow}
             </span>
           </motion.div>
 
@@ -79,7 +56,7 @@ const WhatYouCanShip: FC<WhatYouCanShipProps> = ({
             transition={{ ...smoothTransition, delay: 0.05 }}
             className="text-2xl sm:text-3xl md:text-4xl text-white font-medium tracking-tight leading-[1.15] mb-4"
           >
-            What You Can Ship
+            {content.heading}
           </motion.h2>
 
           <motion.p
@@ -89,7 +66,7 @@ const WhatYouCanShip: FC<WhatYouCanShipProps> = ({
             transition={{ ...smoothTransition, delay: 0.1 }}
             className="text-white/70 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto px-2"
           >
-            Choose the ideal vehicle class for your packages. Review our approximate maximum weights, dimensions, and best-fit use cases below.
+            {content.description}
           </motion.p>
         </div>
 
@@ -106,21 +83,21 @@ const WhatYouCanShip: FC<WhatYouCanShipProps> = ({
               <thead>
                 <tr className="border-b border-white/10 bg-white/[0.04]">
                   <th className="py-4 px-2.5 sm:p-6 lg:p-8 text-[10px] sm:text-[12px] font-medium text-white/50 tracking-[0.08em] sm:tracking-[0.14em] uppercase w-[27%] sm:w-[24%]">
-                    Vehicle
+                    {content.columnVehicle}
                   </th>
                   <th className="py-4 px-2 sm:p-6 lg:p-8 text-[10px] sm:text-[12px] font-medium text-[#7BE07B] tracking-[0.08em] sm:tracking-[0.14em] uppercase w-[24%] sm:w-[22%] border-x border-white/[0.06]">
-                    Max Weight
+                    {content.columnWeight}
                   </th>
                   <th className="py-4 px-2 sm:p-6 lg:p-8 text-[10px] sm:text-[12px] font-medium text-white/80 tracking-[0.08em] sm:tracking-[0.14em] uppercase w-[25%] sm:w-[28%]">
-                    Dimensions
+                    {content.columnDimensions}
                   </th>
                   <th className="py-4 px-2.5 sm:p-6 lg:p-8 text-[10px] sm:text-[12px] font-medium text-white/50 tracking-[0.08em] sm:tracking-[0.14em] uppercase w-[24%]">
-                    Best For
+                    {content.columnBestFor}
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/[0.06]">
-                {SHIPPING_TIERS.map((tier) => (
+                {content.tiers.map((tier) => (
                   <tr key={tier.vehicleType} className="group transition-colors duration-300 hover:bg-white/[0.06]">
                     <td className="py-3.5 px-2.5 sm:p-6 lg:p-8 align-middle sm:align-top">
                       <div className="flex items-center gap-2 sm:gap-3.5">
@@ -160,9 +137,9 @@ const WhatYouCanShip: FC<WhatYouCanShipProps> = ({
             <Info className="w-4 h-4" />
           </div>
           <div>
-            <span className="text-white font-medium block mb-1">Important Note</span>
+            <span className="text-white font-medium block mb-1">{content.noteTitle}</span>
             <p>
-              Dimensions are approximate maximums. Items exceeding standard limits can be accommodated with advance booking. Contact our team for oversized or heavy shipments.
+              {content.noteText}
             </p>
           </div>
         </motion.div>
@@ -180,7 +157,7 @@ const WhatYouCanShip: FC<WhatYouCanShipProps> = ({
             onClick={onBookShipment}
             className="group inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/20 text-white font-medium rounded-full px-6 py-3 text-xs sm:text-sm tracking-wide transition-all duration-200 backdrop-blur-md shadow-lg shadow-black/10"
           >
-            <span>Book a Shipment</span>
+            <span>{content.bookLabel}</span>
             <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 ease-out group-hover:translate-x-0.5 text-[#7BE07B]" />
           </button>
 
@@ -194,7 +171,7 @@ const WhatYouCanShip: FC<WhatYouCanShipProps> = ({
             }}
             className="group inline-flex items-center gap-2 bg-transparent hover:bg-white/5 border border-white/10 text-white/80 hover:text-white font-medium rounded-full px-6 py-3 text-xs sm:text-sm tracking-wide transition-all duration-200"
           >
-            <span>Contact Our Team</span>
+            <span>{content.contactLabel}</span>
             <PhoneCall className="w-3.5 h-3.5 text-white/50 group-hover:text-white transition-colors" />
           </a>
         </motion.div>
@@ -203,4 +180,4 @@ const WhatYouCanShip: FC<WhatYouCanShipProps> = ({
   );
 };
 
-export default WhatYouCanShip;
+export default cmsSection('domestic-courier.what-you-can-ship', DOMESTIC_LIMITS, WhatYouCanShip);

@@ -1,14 +1,17 @@
 "use client";
 
 import FaqSection from "@/components/shared/faq-section";
-import { Domestc_FAQS } from "@/data/domestic-faqs";
+import { DOMESTIC_FAQ, type DOMESTIC_FAQContent } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
-export default function DomesticFaqSection() {
+function DomesticFaqSection({ content }: { content: DOMESTIC_FAQContent }) {
   return (
     <FaqSection
-      eyebrow="FAQ"
-      heading="Frequently Asked Questions"
-      items={Domestc_FAQS}
+      eyebrow={content.eyebrow}
+      heading={content.heading}
+      items={content.items}
     />
   );
 }
+
+export default cmsSection('domestic-courier.faq', DOMESTIC_FAQ, DomesticFaqSection);

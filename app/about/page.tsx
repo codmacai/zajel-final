@@ -1,6 +1,6 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { cmsMetadata } from '@/lib/cms/server';
+import { cmsMetadata, getSection } from '@/lib/cms/server';
 import {
   AboutHero,
   OurStory,
@@ -14,6 +14,7 @@ import {
 import CompanyDocuments from '@/components/about/doc';
 import CTABanner from '@/components/shared/CTABanner';
 import CompactSaaSBanner from '@/components/home/appdownload';
+import { ABOUT_CTA } from '@/components/about/content';
 
 // which company documents have been uploaded to /public/documents/
 const DOCUMENTS_READY = ['company-profile.pdf', 'ims-policy.pdf'].filter((f) =>
@@ -22,7 +23,8 @@ const DOCUMENTS_READY = ['company-profile.pdf', 'ims-policy.pdf'].filter((f) =>
 
 export const generateMetadata = cmsMetadata('about', '/about');
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const cta = await getSection("about.cta", ABOUT_CTA);
   return (
     <main>
       <AboutHero />
@@ -36,18 +38,7 @@ export default function AboutPage() {
       <CompactSaaSBanner/>
       {/* a card downloads its PDF once it's in /public/documents/, and asks for a copy by email until then */}
       <CompanyDocuments available={DOCUMENTS_READY} />
-      <CTABanner
-              image="/zajel-courier-hero.webp"
-              imageAlt="Courier delivering a package doorstep to doorstep in the UAE"
-              title="Zajel — intelligent movement,"
-              description="For everyone who needs something moved.."
-              priority
-              buttons={[
-                { label: "Explore Our Solutions", href: "/#solutions", variant: "primary" },
-                { label: "Careers at Zajel", href: "/careers", variant: "secondary" },
-                { label: "Get in Touch", href: "/support", variant: "secondary" },
-              ]}
-            />
+      {cta && <CTABanner {...cta} priority />}
     </main>
   );
 }

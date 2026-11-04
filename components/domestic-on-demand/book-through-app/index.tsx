@@ -4,52 +4,13 @@ import type { FC } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Smartphone } from 'lucide-react';
+import { DOMESTIC_APP_STEPS, type DOMESTIC_APP_STEPSContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const smoothTransition = { duration: 0.7, ease: EASE };
 
-interface AppStep {
-  number: string;
-  title: string;
-  description: string;
-  /** Mobile UI screenshot shown in the top of the card. Leave unset to show a placeholder. */
-  image?: string;
-  imageAlt: string;
-}
-
-// App screenshots live in public/domestic/app/.
-const APP_STEPS: AppStep[] = [
-  {
-    number: '01',
-    title: 'Download the Zajel App',
-    description: 'Get Zajel Logistics Services from the App Store, then sign in to start a new booking.',
-    image: '/domestic/app/step-1.webp',
-    imageAlt: 'Zajel Logistics Services app on the App Store',
-  },
-  {
-    number: '02',
-    title: 'Add Pickup & Drop-off',
-    description: 'Enter the pickup and delivery locations anywhere across the UAE.',
-    image: '/domestic/app/step-2.webp',
-    imageAlt: 'Zajel app home screen with From and To fields for the sender and receiver',
-  },
-  {
-    number: '03',
-    title: 'Add Shipment Details',
-    description: 'Pick a motorbike or van for your parcel size, tell us what you are sending and choose delivery now or next day.',
-    image: '/domestic/app/step-3.webp',
-    imageAlt: 'Book Shipment screen in the Zajel app with motorbike or van, item details and delivery options',
-  },
-  {
-    number: '04',
-    title: 'Pay Your Way',
-    description: 'Review your order summary with VAT included, then check out with cash on delivery, Careem Pay or Tabby.',
-    image: '/domestic/app/step-4.webp',
-    imageAlt: 'Order summary screen in the Zajel app showing the total with VAT and a Checkout button',
-  },
-];
-
-const BookThroughApp: FC = () => {
+const BookThroughApp = ({ content }: { content: DOMESTIC_APP_STEPSContent }) => {
   return (
     <section className="w-full relative overflow-hidden bg-white py-16 sm:py-24 lg:py-32 font-sans">
       <div className="max-w-[1200px] mx-auto px-3 sm:px-6 lg:px-10">
@@ -63,7 +24,7 @@ const BookThroughApp: FC = () => {
             className="flex items-center justify-center gap-3 sm:gap-4 mb-4"
           >
             <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
-              Zajel App
+              {content.eyebrow}
             </span>
           </motion.div>
 
@@ -74,7 +35,7 @@ const BookThroughApp: FC = () => {
             transition={{ ...smoothTransition, delay: 0.05 }}
             className="text-2xl sm:text-3xl md:text-4xl text-[#0D2A22] font-medium tracking-tight leading-[1.15] mb-4"
           >
-            How to Book Through the App
+            {content.heading}
           </motion.h2>
 
           <motion.p
@@ -84,13 +45,13 @@ const BookThroughApp: FC = () => {
             transition={{ ...smoothTransition, delay: 0.1 }}
             className="text-[#0D2A22]/65 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto px-2"
           >
-            Book a same-day or next-day delivery from your phone in four quick steps.
+            {content.description}
           </motion.p>
         </div>
 
         {/* Cards: 2 per row on mobile, 4 per row on desktop */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-6">
-          {APP_STEPS.map((step, i) => (
+          {content.steps.map((step, i) => (
             <motion.article
               key={step.number}
               initial={{ opacity: 0, y: 24 }}
@@ -136,4 +97,4 @@ const BookThroughApp: FC = () => {
   );
 };
 
-export default BookThroughApp;
+export default cmsSection('domestic-courier.app-steps', DOMESTIC_APP_STEPS, BookThroughApp);

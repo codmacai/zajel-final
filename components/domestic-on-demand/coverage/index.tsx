@@ -3,9 +3,8 @@
 import type { FC } from 'react';
 import Image from 'next/image';
 import { motion, type Variants } from 'framer-motion';
-
-const ROW_1 = ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman'];
-const ROW_2 = ['Fujairah', 'Ras Al Khaimah', 'Umm Al Quwain'];
+import { DOMESTIC_COVERAGE, type DOMESTIC_COVERAGEContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 16 },
@@ -22,7 +21,7 @@ const listItem: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } },
 };
 
-const CoverageMap: FC = () => {
+const CoverageMap = ({ content }: { content: DOMESTIC_COVERAGEContent }) => {
   return (
     <section
       className="relative w-full bg-white overflow-hidden py-16 sm:py-20 lg:py-28 font-sans"
@@ -38,14 +37,14 @@ const CoverageMap: FC = () => {
       >
         <div className="flex items-center justify-center gap-3 mb-3 sm:mb-4">
           <span className="text-[#36B936] text-xs sm:text-sm font-medium tracking-wider uppercase">
-            Our Coverage
+            {content.eyebrow}
           </span>
         </div>
         <h2
           id="coverage-heading"
           className="text-[#0A4D26] text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight leading-[1.15]"
         >
-          We deliver across the UAE
+          {content.heading}
         </h2>
       </motion.div>
 
@@ -61,7 +60,7 @@ const CoverageMap: FC = () => {
           <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] min-h-[300px] sm:min-h-[400px]">
             <Image
               src="/uae-delivery-coverage-map.webp"
-              alt="Map of the UAE showing Zajel's delivery coverage"
+              alt={content.mapAlt}
               fill
               priority
               sizes="(min-width: 1024px) 896px, 100vw"
@@ -80,7 +79,7 @@ const CoverageMap: FC = () => {
             <div className="w-full max-w-2xl lg:max-w-3xl flex flex-col items-center gap-2 sm:gap-3 bg-white/60 sm:bg-transparent backdrop-blur-[2px] sm:backdrop-blur-none p-3.5 sm:p-0 rounded-2xl">
               {/* Row 1: exactly 4 items in a horizontal line */}
               <div className="flex flex-wrap sm:flex-nowrap items-center justify-center gap-x-6 sm:gap-x-10 lg:gap-x-14 gap-y-2 pointer-events-auto w-full">
-                {ROW_1.map((city) => (
+                {content.citiesRow1.map((city) => (
                   <motion.div
                     key={city}
                     variants={listItem}
@@ -96,7 +95,7 @@ const CoverageMap: FC = () => {
 
               {/* Row 2: exactly 3 items in a horizontal line */}
               <div className="flex flex-wrap sm:flex-nowrap items-center justify-center gap-x-6 sm:gap-x-10 lg:gap-x-14 gap-y-2 pointer-events-auto w-full">
-                {ROW_2.map((city) => (
+                {content.citiesRow2.map((city) => (
                   <motion.div
                     key={city}
                     variants={listItem}
@@ -117,4 +116,4 @@ const CoverageMap: FC = () => {
   );
 };
 
-export default CoverageMap;
+export default cmsSection('domestic-courier.coverage', DOMESTIC_COVERAGE, CoverageMap);

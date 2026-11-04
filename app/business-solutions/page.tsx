@@ -1,4 +1,4 @@
-import { cmsMetadata } from '@/lib/cms/server';
+import { cmsMetadata, getSection } from '@/lib/cms/server';
 // Drop this in at app/business-solutions/page.tsx (or wherever this route
 // lives). HowBusinessOnboardingWorks wasn't sent over as source (only
 // imported by name, like ZajelProcess was on the Individual Solutions
@@ -15,10 +15,12 @@ import {
   ConversionBand,
 } from '@/components/business-solutions';
 import CTABanner from '@/components/shared/CTABanner';
+import { BUSINESS_CTA } from '@/components/business-solutions/content';
 
 export const generateMetadata = cmsMetadata('business-solutions', '/business-solutions');
 
-export default function BusinessSolutionsPage() {
+export default async function BusinessSolutionsPage() {
+  const cta = await getSection("business-solutions.cta", BUSINESS_CTA);
   return (
     <main className="min-h-screen overflow-hidden bg-[#FAFCFA]">
       <BusinessHero />
@@ -27,17 +29,7 @@ export default function BusinessSolutionsPage() {
       <BuiltForBusiness />
       <TechnologyVisibility />
       <WhyBusinessesChoose />
-      <CTABanner
-        image="/zajel-courier-hero.webp"
-        imageAlt="Courier delivering a package doorstep to doorstep in the UAE"
-              title="Ready to Scale"
-              description="Get a quote, talk to our logistics team or calculate your shipping rate, however you want to start.We're ready"
-              priority
-              buttons={[
-                { label: "Get a quote", href: "/support", variant: "primary" },
-                { label: "Talk to our team", href: "/support", variant: "secondary" },
-              ]}
-            />
+      {cta && <CTABanner {...cta} priority />}
     </main>
   );
 }

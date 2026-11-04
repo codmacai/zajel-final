@@ -62,3 +62,9 @@ export const SOLUTIONS_HINTS: Hints = {
 export const MARQUEE_HINTS: Hints = {
   items: { label: 'Industries', itemLabel: 'Industry' },
 };
+
+export const CTA_HINTS: Hints = {
+  image: { kind: 'image', label: 'Background image' },
+  buttons: { itemLabel: 'Button' },
+  'buttons.*.external': { label: 'Opens in a new tab' },
+};

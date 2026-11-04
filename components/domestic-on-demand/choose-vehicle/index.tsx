@@ -3,27 +3,11 @@
 import type { FC } from 'react';
 import Image from 'next/image';
 import { motion, type Variants } from 'framer-motion';
+import { DOMESTIC_VEHICLES, type DOMESTIC_VEHICLESContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const smoothTransition = { duration: 0.6, ease: EASE };
-
-const CONTENT = {
-  eyebrow: 'Fleet Flexibility',
-  heading: 'The Right Vehicle for Every Package',
-  description: 'Designed to handle everything from urgent document delivery to large, bulky cargo with absolute reliability and care.',
-  motorbike: {
-    label: 'Motorbike Delivery',
-    image: '/domestic/zajel-delivery-motorbike.png',
-    text: 'Built for speed. Ideal for documents, small parcels, and anything that needs to move quickly through city traffic.',
-    features: ['Fast through traffic', 'Best for documents & small parcels', 'Same day and next day delivery'],
-  },
-  van: {
-    label: 'Van Delivery',
-    image: '/domestic/zajel-delivery-van.png',
-    text: 'Built for size. Ideal for bulky items, multiple parcels, and shipments too large for a motorbike.',
-    features: ['Handles bulky or heavy packages', 'Room for multiple items', 'Same day and next day delivery'],
-  },
-};
 
 const CheckIcon: FC<{ className?: string }> = ({ className = 'text-[#36B936]' }) => (
   <svg
@@ -115,8 +99,8 @@ const VehicleCard: FC<VehicleCardProps> = ({ label, image, text, features, delay
   );
 };
 
-const ChooseVehicle: FC = () => {
-  const data = CONTENT;
+const ChooseVehicle = ({ content }: { content: DOMESTIC_VEHICLESContent }) => {
+  const data = content.data;
 
   return (
     <section
@@ -170,4 +154,4 @@ const ChooseVehicle: FC = () => {
   );
 };
 
-export default ChooseVehicle;
+export default cmsSection('domestic-courier.vehicles', DOMESTIC_VEHICLES, ChooseVehicle);

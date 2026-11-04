@@ -2,38 +2,10 @@
 
 import { type FC } from 'react';
 import { motion } from 'framer-motion';
+import { DOMESTIC_SPEED, type DOMESTIC_SPEEDContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
-
-// ---------------------------------------------------------------------------
-// Content
-// ---------------------------------------------------------------------------
-const CONTENT = {
-  eyebrow: 'Seamless Execution',
-  heading: 'Choose Your Delivery Speed',
-  sameDay: {
-    label: 'Same Day Delivery',
-    text: 'Schedule your pickup for today, at a time that suits you. Same city or city-to-city.',
-    features: [
-      'Pickup within 1 hour of your scheduled time',
-      'Delivered within 1 hour of pickup',
-      'Same-city or city-to-city',
-    ],
-  },
-  nextDay: {
-    label: 'Next Day Delivery',
-    text: 'Scheduled for the next day, when speed matters less than certainty. Same city or city-to-city.',
-    features: [
-      'Book today, delivered tomorrow',
-      'Choose your preferred pickup day and time',
-      'Same-city or city-to-city',
-    ],
-  },
-  doorstep: {
-    heading: 'Doorstep Pickup, Doorstep Delivery',
-    text: 'No drop-off points. No waiting in line. We collect from your door and deliver straight to theirs — wherever in the UAE that door happens to be.',
-  },
-};
 
 // ---------------------------------------------------------------------------
 // Static, high-end minimalist vector icons (no motion / no complex HUD)
@@ -79,8 +51,8 @@ const PrecisionCheckIconLine: FC<{ className?: string }> = ({ className = '' }) 
 // ---------------------------------------------------------------------------
 // Section
 // ---------------------------------------------------------------------------
-const DeliverySpeedAndDoorstep: FC = () => {
-  const data = CONTENT;
+const DeliverySpeedAndDoorstep = ({ content }: { content: DOMESTIC_SPEEDContent }) => {
+  const data = content.data;
 
   return (
     <section
@@ -218,4 +190,4 @@ const DeliverySpeedAndDoorstep: FC = () => {
   );
 };
 
-export default DeliverySpeedAndDoorstep;
+export default cmsSection('domestic-courier.delivery-speed', DOMESTIC_SPEED, DeliverySpeedAndDoorstep);

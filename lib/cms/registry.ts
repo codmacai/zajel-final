@@ -9,6 +9,7 @@ import { HOME } from './pages/home';
 import { SEA_FREIGHT } from './pages/sea-freight';
 import { AIR_FREIGHT } from './pages/air-freight';
 import { LAND_FREIGHT } from './pages/land-freight';
+import { DOMESTIC_COURIER } from './pages/domestic-courier';
 
 export type PageGroup = 'Site-wide' | 'Main' | 'Solutions' | 'Services' | 'Secure' | 'Company' | 'Help';
 
@@ -50,7 +51,7 @@ function withSeo(page: PageDef): PageDef {
   };
 }
 
-export const PAGES: PageDef[] = [GLOBAL, HOME, AIR_FREIGHT, SEA_FREIGHT, LAND_FREIGHT].map(withSeo);
+export const PAGES: PageDef[] = [GLOBAL, HOME, DOMESTIC_COURIER, AIR_FREIGHT, SEA_FREIGHT, LAND_FREIGHT].map(withSeo);
 
 export const sectionKey = (page: string, section: string) => `${page}.${section}`;
 
