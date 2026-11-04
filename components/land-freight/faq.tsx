@@ -1,14 +1,17 @@
 "use client";
 
 import FaqSection from "@/components/shared/faq-section";
-import { LandFreight_FAQS } from "@/data/land-freight-faq";
+import { LAND_FAQ, type LAND_FAQContent } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
-export default function LandFreightFAQS() {
+function LandFreightFAQS({ content }: { content: LAND_FAQContent }) {
   return (
     <FaqSection
-      eyebrow="FAQ"
-      heading="Frequently Asked Questions"
-      items={LandFreight_FAQS}
+      eyebrow={content.eyebrow}
+      heading={content.heading}
+      items={content.items}
     />
   );
 }
+
+export default cmsSection('land-freight.faq', LAND_FAQ, LandFreightFAQS);

@@ -2,10 +2,9 @@
 
 import { useSupportAction } from '@/hooks/useSupportAction';
 import { motion } from "framer-motion";
-import {
-  WEIGHT_DIMENSION_NOTES,
-  WEIGHT_DIMENSION_ROWS,
-} from "@/data/air-freight/weightanddimensions";
+import { WEIGHT_DIMENSION_ROWS } from "@/data/air-freight/weightanddimensions";
+import { AIR_WEIGHTS, type AIR_WEIGHTSContent } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
@@ -14,10 +13,10 @@ interface WeightDimensionGuidelinesProps {
   contactHref?: string;
 }
 
-export default function WeightDimensionGuidelines({
+function WeightDimensionGuidelines({ content,
   onGetQuote: onGetQuoteProp,
   contactHref = "/support",
-}: WeightDimensionGuidelinesProps) {
+}: WeightDimensionGuidelinesProps & { content: AIR_WEIGHTSContent }) {
   const onGetQuote = useSupportAction(onGetQuoteProp);
   return (
     <section
@@ -53,17 +52,16 @@ export default function WeightDimensionGuidelines({
         >
           <div className="mb-3 xs:mb-4 flex items-center justify-center gap-3 sm:gap-4">
             <span className="text-xs sm:text-sm font-medium tracking-wider uppercase" style={{ color: "#36B936" }}>
-              Cargo Parameters
+              {content.eyebrow}
             </span>
           </div>
 
           <h2 className="mx-auto max-w-[720px] text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.15] tracking-tight text-white px-2">
-            Air Freight Weight &amp; Dimension Guidelines
+            {content.heading}
           </h2>
 
           <p className="mx-auto mt-3 xs:mt-4 sm:mt-5 max-w-[520px] text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed text-white/70 px-2">
-            Understanding air freight weight and size limits helps you plan shipments and choose
-            the right service configuration through Zajel.
+            {content.description}
           </p>
         </motion.div>
 
@@ -117,9 +115,9 @@ export default function WeightDimensionGuidelines({
           transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
           className="mt-8 xs:mt-10 sm:mt-12 grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2"
         >
-          {WEIGHT_DIMENSION_NOTES.map(({ icon: Icon, title, description }, i) => (
+          {content.notes.map(({ icon: Icon, title, description }, i) => (
             <div
-              key={title}
+              key={`${title}-${i}`}
               className="group relative flex flex-col justify-between rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.05] via-white/[0.02] to-transparent p-5 xs:p-6 sm:p-8 shadow-[0_10px_30px_rgba(0,0,0,0.12)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-[#36B936]/40 hover:from-white/[0.08] hover:via-[#36B936]/10 hover:to-white/[0.02]"
             >
               <div>
@@ -157,7 +155,7 @@ export default function WeightDimensionGuidelines({
             onClick={onGetQuote}
             className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-[#36B936] px-6 py-3 xs:px-7 xs:py-3.5 text-xs xs:text-sm font-medium tracking-tight text-white shadow-[0_10px_28px_rgba(54,185,54,0.25)] transition-all duration-200 hover:scale-[1.02] hover:bg-[#2fa32f] active:scale-100"
           >
-            <span>Get an Air Freight Quote</span>
+            <span>{content.buttonLabel}</span>
             <span className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">
               →
             </span>
@@ -167,10 +165,12 @@ export default function WeightDimensionGuidelines({
             href={contactHref}
             className="text-xs xs:text-sm font-medium text-white/60 underline decoration-white/20 underline-offset-4 transition-colors duration-300 hover:text-white hover:decoration-[#36B936]"
           >
-            Contact Us for Heavy or Oversized Cargo
+            {content.contactLabel}
           </a>
         </motion.div>
       </div>
     </section>
   );
 }
+
+export default cmsSection('air-freight.weight-dimensions', AIR_WEIGHTS, WeightDimensionGuidelines);

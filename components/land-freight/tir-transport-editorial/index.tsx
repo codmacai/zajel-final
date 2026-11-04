@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { motion, type MotionProps } from 'framer-motion';
 import { ChevronDown, DollarSign, Globe, Layers, ShieldCheck, Zap } from 'lucide-react';
+import { type TirItem, LAND_TIR, type LAND_TIRContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 /*
   Palette (same as the rest of the site, used consistently):
@@ -30,53 +32,6 @@ const reveal = (delay = 0): MotionProps => ({
   viewport: { once: true, amount: 0.15 },
   transition: { duration: 0.7, ease: EASE, delay },
 });
-
-type TirItem = {
-  id: string;
-  title: string;
-  description: string;
-  icon: typeof Zap;
-};
-
-const TIR_BENEFITS: TirItem[] = [
-  {
-    id: '01',
-    title: 'Faster border crossings',
-    description:
-      'TIR-covered shipments pass through customs with reduced inspections and paperwork at each border, saving hours or even days on multi-country routes.',
-    icon: Zap,
-  },
-  {
-    id: '02',
-    title: 'Single guarantee system',
-    description:
-      'The TIR Carnet serves as an internationally recognized customs guarantee, eliminating the need for separate bonds or deposits at each country of transit.',
-    icon: ShieldCheck,
-  },
-  {
-    id: '03',
-    title: 'Sealed container integrity',
-    description:
-      'Goods travel in sealed vehicles from origin to destination. The seal is verified at borders without unloading, reducing handling risk and transit time.',
-    icon: Layers,
-  },
-  {
-    id: '04',
-    title: 'Multi-country coverage',
-    description:
-      'TIR is recognized in over 77 countries across Europe, the Middle East, Central Asia, and North Africa, making it the standard for overland trade on routes from the UAE through the GCC, Jordan, Turkey, and into Europe.',
-    icon: Globe,
-  },
-  {
-    id: '05',
-    title: 'Cost efficiency',
-    description:
-      'By reducing border delays and eliminating the need for multiple transit guarantees, TIR lowers the overall cost of multi-border land freight operations.',
-    icon: DollarSign,
-  },
-];
-
-const HERO_CHIPS = ['Administered by the IRU', '77+ countries', 'Sealed vehicles'];
 
 /* Primary button: same recipe as the site's main CTA (min-h keeps a comfortable touch target) */
 const PRIMARY_BTN =
@@ -164,21 +119,21 @@ interface TirTransportEditorialProps {
   customsHref?: string;
 }
 
-const TirTransportEditorial = ({
+const TirTransportEditorial = ({ content,
   heroImageSrc = '/landfreight/tir-transport.png',
   heroImageAlt = 'International Logistics and TIR Transport',
   onRequestQuote,
   quoteHref = '/support',
   onLearnMoreCustoms,
   customsHref = '/customs-clearance',
-}: TirTransportEditorialProps) => {
+}: TirTransportEditorialProps & { content: LAND_TIRContent }) => {
   const [openId, setOpenId] = useState<string | null>('01');
 
   const toggleItem = (id: string) => setOpenId((prev) => (prev === id ? null : id));
 
   const quoteLabel = (
     <>
-      <span>Request a Land Freight Quote</span>
+      <span>{content.quoteLabel}</span>
       <span aria-hidden="true">→</span>
     </>
   );
@@ -190,16 +145,14 @@ const TirTransportEditorial = ({
         <motion.div {...reveal()} className="max-w-[760px] text-left 2xl:max-w-[880px]">
           <div className="mb-3 flex items-center gap-3 sm:mb-4">
             <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">
-              Global Customs Transit
+              {content.eyebrow}
             </span>
           </div>
           <h2 className="text-balance text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.15] tracking-tight text-[#064423]">
-            TIR: Simplified International Road Transport
+            {content.heading}
           </h2>
           <p className="mt-3 max-w-[62ch] text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed text-[#064423]/70 sm:mt-4 2xl:max-w-[70ch]">
-            Zajel utilizes the TIR (Transports Internationaux Routiers) system for international road freight shipments,
-            enabling faster border crossings and simplified customs procedures across multiple countries in a single
-            journey.
+            {content.description}
           </p>
         </motion.div>
 
@@ -223,24 +176,21 @@ const TirTransportEditorial = ({
           <div className="relative p-[clamp(1.5rem,4vw,3.5rem)] text-left text-white 2xl:p-16">
             <div className="max-w-3xl 2xl:max-w-4xl">
               <span className="mb-2.5 block text-[11px] font-medium uppercase tracking-wider text-[#36B936] sm:mb-3 sm:text-xs">
-                Core Foundation
+                {content.whatEyebrow}
               </span>
               <h3 className="mb-3 text-[1.375rem] font-medium tracking-tight text-white sm:mb-4 sm:text-[1.75rem] 2xl:text-[2rem]">
-                What is TIR?
+                {content.whatTitle}
               </h3>
               <p className="text-[0.875rem] font-light leading-[1.7] text-white/75 sm:text-base 2xl:text-[1.0625rem]">
-                The TIR Convention is an international customs transit system administered by the International Road
-                Transport Union (IRU). It allows goods to move across international borders in sealed vehicles or
-                containers with minimal customs intervention at each crossing point. Instead of inspecting and
-                processing cargo at every border, customs authorities accept the{' '}
+                {content.whatTextBefore}{' '}
                 <strong className="font-medium text-white underline decoration-[#36B936] decoration-2 underline-offset-4">
-                  TIR Carnet
+                  {content.whatHighlight}
                 </strong>{' '}
-                as a guarantee, significantly reducing clearance times.
+                {content.whatTextAfter}
               </p>
 
               <ul className="mt-5 flex flex-wrap gap-2 sm:mt-6">
-                {HERO_CHIPS.map((chip) => (
+                {content.chips.map((chip) => (
                   <li
                     key={chip}
                     className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[11px] font-medium text-white/85 backdrop-blur-sm sm:px-3.5 sm:text-xs"
@@ -260,12 +210,12 @@ const TirTransportEditorial = ({
             className="min-w-0 text-left lg:sticky lg:top-28 lg:col-span-5 lg:self-start xl:col-span-4"
           >
             <span className="mb-2.5 block text-[11px] font-medium uppercase tracking-wider text-[#36B936] sm:mb-3 sm:text-xs md:text-sm">
-              Advantages
+              {content.advantagesEyebrow}
             </span>
             <h3 className="text-balance text-[1.375rem] font-medium leading-[1.2] tracking-tight text-[#064423] sm:text-[1.75rem] 2xl:text-[2rem]">
-              How TIR benefits your shipment
+              {content.advantagesTitle}
             </h3>
-            <p className="mt-2 text-sm font-light text-[#064423]/60 sm:mt-3">{TIR_BENEFITS.length} key advantages</p>
+            <p className="mt-2 text-sm font-light text-[#064423]/60 sm:mt-3">{content.benefits.length} key advantages</p>
           </motion.div>
 
           <motion.div
@@ -273,7 +223,7 @@ const TirTransportEditorial = ({
             className="min-w-0 overflow-hidden rounded-[1.25rem] border border-[#064423]/10 bg-white shadow-[0_1px_2px_rgba(6,68,35,0.04),0_16px_40px_-20px_rgba(6,68,35,0.12)] sm:rounded-[1.5rem] lg:col-span-7 xl:col-span-8"
           >
             <div className="divide-y divide-[#064423]/10">
-              {TIR_BENEFITS.map((item) => (
+              {content.benefits.map((item) => (
                 <TirAccordionRow
                   key={item.id}
                   item={item}
@@ -293,15 +243,13 @@ const TirTransportEditorial = ({
           <div className="grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-12">
             <div className="min-w-0 lg:col-span-8">
               <span className="mb-2 block text-[11px] font-medium uppercase tracking-wider text-[#36B936] sm:text-xs">
-                Operational Scope
+                {content.scopeEyebrow}
               </span>
               <h4 className="mb-2 text-lg font-medium tracking-tight text-[#064423] sm:mb-2.5 sm:text-2xl 2xl:text-[1.75rem]">
-                When Zajel uses TIR
+                {content.scopeTitle}
               </h4>
               <p className="max-w-[68ch] text-sm font-light leading-[1.7] text-[#064423]/70 sm:text-[0.9375rem] 2xl:max-w-[76ch] 2xl:text-base">
-                TIR is applied on international land freight routes that cross two or more borders, particularly on
-                corridors from the UAE through Saudi Arabia, Jordan, and Turkey into European destinations. Our team
-                determines the optimal customs transit method for each shipment based on the route and cargo type.
+                {content.scopeText}
               </p>
             </div>
 
@@ -326,7 +274,7 @@ const TirTransportEditorial = ({
                 }}
                 className="text-center text-sm font-medium tracking-tight text-[#064423]/80 underline decoration-[#36B936]/60 underline-offset-4 transition-colors duration-200 hover:text-[#36B936] sm:text-left lg:text-right"
               >
-                Learn more about our customs clearance services
+                {content.customsLinkLabel}
               </a>
             </div>
           </div>
@@ -336,4 +284,4 @@ const TirTransportEditorial = ({
   );
 };
 
-export default TirTransportEditorial;
+export default cmsSection('land-freight.tir', LAND_TIR, TirTransportEditorial);

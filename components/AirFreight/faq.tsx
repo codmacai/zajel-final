@@ -1,14 +1,17 @@
 "use client";
 
 import FaqSection from "@/components/shared/faq-section";
-import { Air_Freight_Faq } from "@/data/air-freight-faqs";
+import { AIR_FAQ, type AIR_FAQContent } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
-export default function AirFreightFaq() {
+function AirFreightFaq({ content }: { content: AIR_FAQContent }) {
   return (
     <FaqSection
-      eyebrow="FAQ"
-      heading="Frequently Asked Questions"
-      items={Air_Freight_Faq}
+      eyebrow={content.eyebrow}
+      heading={content.heading}
+      items={content.items}
     />
   );
 }
+
+export default cmsSection('air-freight.faq', AIR_FAQ, AirFreightFaq);

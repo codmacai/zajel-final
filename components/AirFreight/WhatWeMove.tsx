@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { CARGO_ITEMS, SMOOTH_TRANSITION, type CargoItem } from "@/data/air-freight/Whatwemove";
+import { SMOOTH_TRANSITION, type CargoItem } from "@/data/air-freight/Whatwemove";
+import { AIR_WHAT_WE_MOVE, type AIR_WHAT_WE_MOVEContent } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
@@ -43,7 +45,7 @@ function CargoCard({ label, description, image, delayOffset }: CargoItem & { del
 // Section
 // ---------------------------------------------------------------------------
 
-export default function WhatWeMove() {
+function WhatWeMove({ content }: { content: AIR_WHAT_WE_MOVEContent }) {
   return (
     <section className="w-full overflow-hidden bg-white px-4 py-12 xs:px-6 sm:py-16 lg:px-12 lg:py-24">
       <div className="mx-auto max-w-[1320px]">
@@ -57,22 +59,22 @@ export default function WhatWeMove() {
         >
           <div className="mb-3 xs:mb-4 flex items-center justify-center gap-3">
             <span className="text-xs sm:text-sm font-medium tracking-wider uppercase" style={{ color: "#36B936" }}>
-              Cargo Capability
+              {content.eyebrow}
             </span>
           </div>
 
           <h2 className="mx-auto max-w-[720px] text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.15] tracking-tight text-[#0A4D26] px-2">
-            What We Move
+            {content.heading}
           </h2>
 
           <p className="mx-auto mt-3 xs:mt-4 sm:mt-5 max-w-[520px] text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed text-[#2D6A4F] px-2">
-            Specialized air freight capabilities designed for diverse cargo requirements across industries.
+            {content.description}
           </p>
         </motion.div>
 
         {/* 2 columns on mobile, 4 from `lg:` up */}
         <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4 lg:gap-8">
-          {CARGO_ITEMS.map((item, i) => (
+          {content.items.map((item, i) => (
             <CargoCard key={item.id} {...item} delayOffset={i * 90} />
           ))}
         </div>
@@ -80,3 +82,5 @@ export default function WhatWeMove() {
     </section>
   );
 }
+
+export default cmsSection('air-freight.what-we-move', AIR_WHAT_WE_MOVE, WhatWeMove);

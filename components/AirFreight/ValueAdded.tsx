@@ -2,7 +2,9 @@
 
 import { useSupportAction } from '@/hooks/useSupportAction';
 import { motion } from "framer-motion";
-import { LIGHT_GREEN, VALUE_ADDED_SERVICES } from "@/data/air-freight/valueadded";
+import { LIGHT_GREEN } from "@/data/air-freight/valueadded";
+import { AIR_VALUE_ADDED, type AIR_VALUE_ADDEDContent } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
@@ -11,10 +13,10 @@ interface ValueAddedServicesProps {
   contactHref?: string;
 }
 
-export default function ValueAddedServices({
+function ValueAddedServices({ content,
   onRequestQuote: onRequestQuoteProp,
   contactHref = "/support",
-}: ValueAddedServicesProps) {
+}: ValueAddedServicesProps & { content: AIR_VALUE_ADDEDContent }) {
   const onRequestQuote = useSupportAction(onRequestQuoteProp);
   return (
     <section className="w-full overflow-hidden bg-white px-4 py-12 xs:px-6 sm:py-16 lg:px-12 lg:py-24">
@@ -29,18 +31,16 @@ export default function ValueAddedServices({
         >
           <div className="mb-3 xs:mb-4 flex items-center justify-center gap-3 sm:gap-4">
             <span className="text-xs sm:text-sm font-medium tracking-wider uppercase" style={{ color: LIGHT_GREEN }}>
-              Value Added Services
+              {content.eyebrow}
             </span>
           </div>
 
           <h2 className="mx-auto max-w-[720px] text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.15] tracking-tight text-[#0A4D26] px-2">
-            Air Freight Value Added Services
+            {content.heading}
           </h2>
 
           <p className="mx-auto mt-3 xs:mt-4 sm:mt-5 max-w-[520px] text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed text-[#2D6A4F] px-2">
-            Beyond standard air cargo transport, Zajel provides a full range of supporting
-            services to ensure your shipment is prepared, protected, and compliant from origin
-            to destination.
+            {content.description}
           </p>
         </motion.div>
 
@@ -52,9 +52,9 @@ export default function ValueAddedServices({
           transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
           className="grid grid-cols-2 overflow-hidden rounded-2xl border-l border-t border-[#0A4D26]/15 shadow-sm lg:grid-cols-4"
         >
-          {VALUE_ADDED_SERVICES.map(({ icon: Icon, title, description }, i) => (
+          {content.items.map(({ icon: Icon, title, description }, i) => (
             <div
-              key={title}
+              key={`${title}-${i}`}
               className="group flex flex-col justify-between border-b border-r border-[#0A4D26]/15 bg-white p-5 xs:p-6 sm:p-8 transition-colors duration-300 hover:bg-[#0A4D26]"
             >
               <div>
@@ -92,7 +92,7 @@ export default function ValueAddedServices({
             onClick={onRequestQuote}
             className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-[#36B936] px-6 py-3 xs:px-7 xs:py-3.5 text-xs xs:text-sm font-medium tracking-tight text-white shadow-[0_10px_28px_rgba(54,185,54,0.25)] transition-all duration-200 hover:scale-[1.02] hover:bg-[#2fa32f] active:scale-100"
           >
-            <span>Request a Quote</span>
+            <span>{content.buttonLabel}</span>
             <span className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">
               →
             </span>
@@ -102,10 +102,12 @@ export default function ValueAddedServices({
             href={contactHref}
             className="text-xs xs:text-sm font-medium text-[#0A4D26]/60 underline decoration-[#0A4D26]/25 underline-offset-4 transition-colors duration-300 hover:text-[#0A4D26] hover:decoration-[#36B936]"
           >
-            Contact Us for Special Cargo Requirements
+            {content.contactLabel}
           </a>
         </motion.div>
       </div>
     </section>
   );
 }
+
+export default cmsSection('air-freight.value-added', AIR_VALUE_ADDED, ValueAddedServices);

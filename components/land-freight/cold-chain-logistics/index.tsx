@@ -5,55 +5,10 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, CheckCircle2, Snowflake, Thermometer, Wifi, ShieldCheck } from 'lucide-react';
+import { LAND_COLD_CHAIN, type LAND_COLD_CHAINContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
-
-type ColdChainCard = {
-  id: string;
-  number: string;
-  title: string;
-  description: string;
-  tag: string;
-  icon: typeof Thermometer;
-};
-
-const COLD_CHAIN_CARDS: ColdChainCard[] = [
-  {
-    id: 'range',
-    number: '01',
-    title: 'Temperature range',
-    tag: '-25°C to +25°C',
-    description:
-      'Our refrigerated fleet supports a range from minus 25 degrees Celsius to plus 25 degrees Celsius, covering frozen, chilled, and ambient-controlled requirements.',
-    icon: Thermometer,
-  },
-  {
-    id: 'monitoring',
-    number: '02',
-    title: 'Real-time monitoring',
-    tag: 'Live Data Logs',
-    description:
-      'Every temperature-controlled shipment is equipped with monitoring devices that record temperature readings throughout the journey.',
-    icon: Wifi,
-  },
-  {
-    id: 'compliance',
-    number: '03',
-    title: 'GDP compliance',
-    tag: 'Pharmaceutical Grade',
-    description:
-      'For pharmaceutical shipments, our cold chain processes align with Good Distribution Practice (GDP) requirements, ensuring that medicines and healthcare products maintain their required temperature conditions from pickup to delivery.',
-    icon: ShieldCheck,
-  },
-];
-
-const SUITABLE_FOR_ITEMS = [
-  'Pharmaceutical products and healthcare supplies',
-  'Fresh and frozen food products',
-  'Beverages',
-  'Chemical products requiring temperature stability',
-  'Biological samples and laboratory materials',
-];
 
 interface ColdChainGridSectionProps {
   heroImageSrc?: string;
@@ -63,13 +18,13 @@ interface ColdChainGridSectionProps {
   contactHref?: string;
 }
 
-export default function ColdChainGridSection({
+function ColdChainGridSection({ content,
   heroImageSrc = '/cold-chain-warehouse.png',
   heroImageAlt = 'Temperature Controlled Cold Chain Logistics',
   onRequestQuote: onRequestQuoteProp,
   onContactTeam,
   contactHref = '/support',
-}: ColdChainGridSectionProps) {
+}: ColdChainGridSectionProps & { content: LAND_COLD_CHAINContent }) {
   const router = useRouter();
   // Quote requests go to the support center unless a page passes its own handler.
   const onRequestQuote = onRequestQuoteProp ?? (() => router.push('/support'));
@@ -110,13 +65,13 @@ export default function ColdChainGridSection({
               style={{ color: '#36B936' }}
             >
               <Snowflake className="w-3 h-3" style={{ color: '#36B936' }} />
-              Cold Chain Logistics
+              {content.eyebrow}
             </span>
             <h2 className="font-medium leading-[1.12] text-2xl sm:text-3xl md:text-4xl tracking-tight text-white">
-              Temperature Controlled Land Freight
+              {content.heading}
             </h2>
             <p className="mt-4 text-white/70 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-[1.65]">
-              For pharmaceutical, food and beverage, chemical, and other temperature-sensitive cargo, Zajel provides dedicated cold chain land freight services across the UAE and GCC.
+              {content.description}
             </p>
 
             <div className="mt-8">
@@ -125,7 +80,7 @@ export default function ColdChainGridSection({
                 onClick={onRequestQuote}
                 className="group inline-flex items-center gap-2 rounded-full bg-[#36B936] px-[clamp(1.25rem,2vw,1.75rem)] py-[clamp(0.55rem,1vw,0.85rem)] text-[clamp(0.8rem,1.4vw,0.9rem)] font-medium text-[#0B140F] transition-transform hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 md:focus-visible:outline-white cursor-pointer"
               >
-                <span>Request a Cold Chain Quote</span>
+                <span>{content.buttonLabel}</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2} />
               </button>
             </div>
@@ -154,19 +109,19 @@ export default function ColdChainGridSection({
             <div className="relative z-10">
               <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/15 px-3.5 py-1.5 rounded-full text-xs font-light text-white mb-4">
                 <Thermometer className="w-3.5 h-3.5" style={{ color: '#36B936' }} />
-                <span>Precision Range: -25°C to +25°C</span>
+                <span>{content.rangeBadge}</span>
               </div>
               <h3 className="text-lg sm:text-xl font-medium tracking-tight text-white mb-2">
-                Uncompromising Thermal Integrity
+                {content.integrityTitle}
               </h3>
               <p className="text-white/70 font-light text-sm leading-relaxed max-w-xl">
-                Engineered for maximum reliability across long-haul regional corridors, protecting sensitive goods under strict environmental controls.
+                {content.integrityText}
               </p>
             </div>
           </div>
 
           <div className="lg:col-span-5 flex flex-col gap-4">
-            {COLD_CHAIN_CARDS.map((card) => {
+            {content.cards.map((card) => {
               const Icon = card.icon;
               const isActive = activeCard === card.id;
 
@@ -225,12 +180,12 @@ export default function ColdChainGridSection({
         >
           <div className="lg:col-span-7 rounded-[2rem] border border-white/15 bg-gradient-to-b from-white/[0.08] to-white/[0.02] backdrop-blur-2xl p-8 sm:p-10 shadow-[0_30px_70px_-15px_rgba(4,32,15,0.5)]">
             <span className="text-xs font-normal tracking-wider uppercase block mb-2" style={{ color: '#36B936' }}>
-              Suitable for
+              {content.suitableTitle}
             </span>
-            <h3 className="text-lg sm:text-xl font-medium tracking-tight mb-6 text-white">Cargo Applications:</h3>
+            <h3 className="text-lg sm:text-xl font-medium tracking-tight mb-6 text-white">{content.suitableLabel}</h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {SUITABLE_FOR_ITEMS.map((text, idx) => (
+              {content.suitable.map((text, idx) => (
                 <div key={idx} className="flex items-start gap-3 bg-white/[0.04] border border-white/10 rounded-xl p-3.5">
                   <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" style={{ color: '#36B936' }} strokeWidth={1.75} />
                   <span className="text-white/85 text-sm font-light leading-snug">{text}</span>
@@ -242,13 +197,13 @@ export default function ColdChainGridSection({
           <div className="lg:col-span-5 rounded-[2rem] border border-white/15 bg-gradient-to-br from-white/[0.1] to-white/[0.03] backdrop-blur-2xl p-8 sm:p-10 flex flex-col justify-between shadow-[0_30px_70px_-15px_rgba(4,32,15,0.5)]">
             <div>
               <span className="text-xs font-normal tracking-wider uppercase block mb-2" style={{ color: '#36B936' }}>
-                Inquiries
+                {content.inquiriesEyebrow}
               </span>
               <h3 className="text-lg sm:text-xl font-medium tracking-tight mb-3 text-white">
-                Need expert logistics assistance?
+                {content.inquiriesTitle}
               </h3>
               <p className="text-white/70 font-light text-sm leading-relaxed mb-6">
-                Connect directly with our logistics team to discuss your temperature-controlled transit requirements across the UAE and GCC.
+                {content.inquiriesText}
               </p>
             </div>
 
@@ -263,7 +218,7 @@ export default function ColdChainGridSection({
                 }}
                 className="inline-flex items-center gap-2 rounded-full border border-white/35 px-[clamp(1.25rem,2vw,1.75rem)] py-[clamp(0.55rem,1vw,0.85rem)] text-[clamp(0.8rem,1.4vw,0.9rem)] font-medium text-white/90 transition-colors hover:border-white/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 md:focus-visible:outline-white"
               >
-                <span>Contact Our Logistics Team</span>
+                <span>{content.contactLabel}</span>
                 <ArrowRight className="w-4 h-4" strokeWidth={2} />
               </a>
             </div>
@@ -273,3 +228,5 @@ export default function ColdChainGridSection({
     </section>
   );
 }
+
+export default cmsSection('land-freight.cold-chain', LAND_COLD_CHAIN, ColdChainGridSection);

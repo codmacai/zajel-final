@@ -1,17 +1,15 @@
 // components/freight-quote/HowItWorks.tsx
 import ProcessStepsSection from '../shared/Steps';
+import { AIR_QUOTE_STEPS, type AIR_QUOTE_STEPSContent } from './content';
+import { serverSection } from '@/lib/cms/server';
 
-const HowFreightQuoteWorks = () => (
+const HowFreightQuoteWorks = ({ content }: { content: AIR_QUOTE_STEPSContent }) => (
   <ProcessStepsSection
-    eyebrow="Freight Quote"
+    eyebrow={content.eyebrow}
     heading={<>How a Freight<br />Quote Works</>}
-    description="A simple, three-step process — from inquiry to a quote tailored precisely to your shipment."
-    steps={[
-      { number: '01', title: 'Submit an Inquiry', description: 'Tell us your cargo, route, and preferred delivery arrangement.' },
-      { number: '02', title: 'We Review Your Shipment', description: 'Our team assesses cargo type, route, and compliance needs.' },
-      { number: '03', title: 'Get Your Quote', description: 'Receive a tailored quote for your shipment.' },
-    ]}
+    description={content.description}
+    steps={content.steps}
   />
 );
 
-export default HowFreightQuoteWorks;
+export default serverSection('air-freight.quote-steps', AIR_QUOTE_STEPS, HowFreightQuoteWorks);

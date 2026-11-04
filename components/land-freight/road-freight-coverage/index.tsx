@@ -2,33 +2,12 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { LAND_COVERAGE, type LAND_COVERAGEContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const ANIMATION_EASE = [0.2, 0.8, 0.2, 1] as const;
 
-const coverageStops = [
-  {
-    label: 'Domestic',
-    blurb: 'Distribution within the UAE, city to city.',
-    iconSrc: '/customs_icon/domestic-icon.png',
-  },
-  {
-    label: 'Import',
-    blurb: 'Bringing cargo into the UAE by road from regional origins.',
-    iconSrc: '/customs_icon/import-icon.png',
-  },
-  {
-    label: 'Export',
-    blurb: 'Sending cargo out of the UAE to regional and cross-border destinations.',
-    iconSrc: '/customs_icon/export-icon.png',
-  },
-  {
-    label: 'Cross-Border',
-    blurb: 'Coverage across the GCC, Turkey, Jordan, Syria, and Europe.',
-    iconSrc: '/customs_icon/cross-border-icon.png',
-  },
-];
-
-export default function RoadFreightCoverage() {
+function RoadFreightCoverage({ content }: { content: LAND_COVERAGEContent }) {
   return (
     <section className="w-full py-12 sm:py-16 lg:py-14 px-4 sm:px-6 lg:px-8 bg-slate-50/50 font-sans">
       {/* Rectangular Banner Container */}
@@ -38,7 +17,7 @@ export default function RoadFreightCoverage() {
         <div className="absolute inset-0 z-0 lg:hidden">
           <Image
             src="/roadcustoms/road-customs-inspection.jpg"
-            alt="Land Freight Coverage Background"
+            alt={content.backgroundAlt}
             fill
             className="object-cover object-center"
             priority
@@ -59,16 +38,16 @@ export default function RoadFreightCoverage() {
             className="flex flex-col justify-center py-12 sm:py-16 lg:py-14 px-6 sm:px-12 lg:px-14 z-10 bg-transparent lg:bg-[#132219]"
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl text-white font-medium leading-[1.12] tracking-tight mb-4 lg:mb-4">
-              Land Freight <br className="hidden sm:block" />
-              <span className="text-white sm:text-[#36B936]">Coverage</span>
+              {content.headingLine1} <br className="hidden sm:block" />
+              <span className="text-white sm:text-[#36B936]">{content.headingLine2}</span>
             </h2>
 
             <p className="text-white/70 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed mb-8 lg:mb-7 max-w-[480px] lg:max-w-[420px]">
-              Complete the information and documentation needed for a successful import and export of your products and materials.
+              {content.description}
             </p>
 
             <div className="flex flex-col">
-              {coverageStops.map((stop, index) => (
+              {content.stops.map((stop, index) => (
                 <div key={stop.label}>
                   <div className="flex items-center justify-between py-3.5 sm:py-4 lg:py-4 pr-2">
                     <div>
@@ -84,7 +63,7 @@ export default function RoadFreightCoverage() {
                       />
                     </div>
                   </div>
-                  {index < coverageStops.length - 1 && (
+                  {index < content.stops.length - 1 && (
                     <div className="w-full h-px bg-white/10" aria-hidden="true" />
                   )}
                 </div>
@@ -102,7 +81,7 @@ export default function RoadFreightCoverage() {
           >
             <Image
               src="/roadcustoms/road-customs-inspection.jpg"
-              alt="Land Freight Coverage"
+              alt={content.imageAlt}
               fill
               className="object-cover object-center"
               priority
@@ -116,3 +95,5 @@ export default function RoadFreightCoverage() {
     </section>
   );
 }
+
+export default cmsSection('land-freight.coverage', LAND_COVERAGE, RoadFreightCoverage);

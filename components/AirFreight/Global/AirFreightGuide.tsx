@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 import { SMOOTH_TRANSITION } from "@/data/global";
 import MapPanel from "./MapPanel";
+import { AIR_NETWORK, type AIR_NETWORKContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
-export default function AirFreightGuide() {
+function AirFreightGuide({ content }: { content: AIR_NETWORKContent }) {
   return (
     <section className="relative flex w-full flex-col justify-between overflow-hidden bg-white px-4 xs:px-6 md:px-12 lg:px-20 py-[clamp(2.5rem,6vw,6rem)]">
       <div className="relative z-10 mx-auto flex max-w-3xl flex-shrink-0 flex-col items-center gap-3 text-center sm:gap-4">
@@ -16,7 +18,7 @@ export default function AirFreightGuide() {
           className="flex items-center justify-center gap-3 sm:gap-4"
         >
           <span className="text-xs sm:text-sm font-medium tracking-wider uppercase text-[#36B936]">
-            Global Network
+            {content.eyebrow}
           </span>
         </motion.div>
 
@@ -27,13 +29,11 @@ export default function AirFreightGuide() {
           transition={SMOOTH_TRANSITION}
           className="mx-auto max-w-[720px] text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.15] tracking-tight text-[#0A4D26] px-2"
         >
-          Speed, when the calendar won&apos;t wait.
+          {content.heading}
         </motion.h2>
 
         <p className="mx-auto max-w-[580px] text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed text-[#2D6A4F] px-2">
-          Our air network gets the cargo there in days, not weeks. We route
-          time-critical parts, perishables, and high-value shipments through
-          the fastest available lane, door to door.
+          {content.description}
         </p>
       </div>
 
@@ -43,3 +43,5 @@ export default function AirFreightGuide() {
     </section>
   );
 }
+
+export default cmsSection('air-freight.network', AIR_NETWORK, AirFreightGuide);

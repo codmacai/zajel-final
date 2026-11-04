@@ -4,66 +4,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { type TruckType, LAND_FLEET, type LAND_FLEETContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
-
-interface TruckType {
-  id: string;
-  title: string;
-  description: string;
-  features?: string[];
-  imageUrl: string;
-}
-
-const TRUCK_TYPES: TruckType[] = [
-  {
-    id: '40-foot-box-truck',
-    title: '40-Foot Box Truck',
-    description:
-      'Full-size enclosed box trucks built for high-volume, full truckload (FTL) shipments. The standard choice for long-haul and cross-border moves where maximum cargo capacity is the priority.',
-    imageUrl: '/land-freight/vehicle/box-truck-40ft.png',
-  },
-  {
-    id: 'flatbed',
-    title: 'Flatbed Trailers',
-    description:
-      'Open platform trailers for oversized cargo, construction materials, machinery, and equipment that cannot fit in enclosed containers. Available with securing equipment including straps, chains, and dunnage for safe transport.',
-    imageUrl: '/land-freight/vehicle/flatbed-trailer.png',
-  },
-  {
-    id: 'standard-dry',
-    title: 'Standard Dry Trucks',
-    description:
-      'Enclosed dry freight trucks for general cargo, packaged goods, and palletized shipments. Available in multiple sizes from 3-ton pickup trucks for local deliveries to 40-foot trailers for full truckload (FTL) shipments across the GCC and beyond.',
-    imageUrl: '/land-freight/vehicle/standard-dry-truck.png',
-  },
-  {
-    id: 'reefer',
-    title: 'Refrigerated Trucks (Reefer)',
-    description:
-      'Temperature-controlled vehicles for pharmaceutical products, perishable goods, food and beverage, and any cargo requiring a maintained temperature range during transit. Temperature monitoring throughout the journey with documentation provided for compliance and cold chain verification.',
-    features: [
-      'Temperature range: -25°C to +25°C',
-      'Real-time temperature monitoring',
-      'Cold chain compliance documentation',
-    ],
-    imageUrl: '/land-freight/vehicle/refrigerated-truck.png',
-  },
-  {
-    id: 'curtain-side',
-    title: 'Curtain-side Trailers',
-    description:
-      'Side-loading trailers that allow quick loading and unloading from the side without specialized dock equipment. Suitable for oversized pallets, building materials, and shipments that require crane or forklift loading from the side.',
-    imageUrl: '/land-freight/vehicle/curtain-side-trailer.png',
-  },
-  {
-    id: 'low-loader',
-    title: 'Low Loader Trailers',
-    description:
-      'Heavy-duty trailers designed for transporting heavy machinery, industrial equipment, and project cargo that exceeds standard height and weight limits. Used for construction equipment, generators, and large industrial components.',
-    imageUrl: '/land-freight/vehicle/low-loader-trailer.png',
-  },
-];
 
 interface TruckTypeCardProps extends TruckType {
   index: number;
@@ -124,7 +68,7 @@ const TruckTypeCard = ({ title, description, features, imageUrl, index }: TruckT
   );
 };
 
-const OurFleetSection = () => {
+const OurFleetSection = ({ content }: { content: LAND_FLEETContent }) => {
   return (
     <section className="w-full bg-white font-sans py-[clamp(3rem,6vw,5.5rem)] px-[clamp(1rem,4vw,3.5rem)] overflow-hidden">
       <div className="mx-auto max-w-[1200px]">
@@ -139,22 +83,22 @@ const OurFleetSection = () => {
         >
           <div className="mb-3 flex items-center justify-center gap-2.5 sm:gap-3">
             <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">
-              Our Fleet
+              {content.eyebrow}
             </span>
           </div>
 
           <h2 className="text-balance text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.2] tracking-tight text-[#0A4D26]">
-            Available Truck Types
+            {content.heading}
           </h2>
 
           <p className="mx-auto mt-3.5 max-w-[660px] text-balance font-light leading-relaxed text-[#0A4D26]/80 text-[13px] sm:text-[13.5px] lg:text-[14px]">
-            Zajel operates a fleet of owned and partner vehicles covering the full range of land freight requirements, from small consignments within the UAE to heavy cargo moving across borders to Europe.
+            {content.description}
           </p>
         </motion.div>
 
         {/* Fleet Grid: tighter gaps */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
-          {TRUCK_TYPES.map((truck, i) => (
+          {content.trucks.map((truck, i) => (
             <TruckTypeCard key={truck.id} {...truck} index={i} />
           ))}
         </div>
@@ -169,10 +113,10 @@ const OurFleetSection = () => {
         >
           <div className="max-w-[680px] text-center lg:text-left">
             <h3 className="mb-2.5 text-lg sm:text-xl font-medium tracking-tight text-white">
-              Fleet Capacity &amp; Scale
+              {content.capacityTitle}
             </h3>
             <p className="text-xs sm:text-sm md:text-base font-light leading-relaxed text-white/80">
-              Zajel&apos;s combined fleet of owned and partner vehicles ensures availability for scheduled, on-demand, and project-based land freight requirements across all routes.
+              {content.capacityText}
             </p>
           </div>
 
@@ -181,14 +125,14 @@ const OurFleetSection = () => {
               href="/support"
               className="inline-flex w-full sm:w-auto items-center justify-center rounded-full bg-[#36B936] px-6 py-3 text-xs sm:text-sm font-medium text-[#05361A] transition-all duration-200 hover:scale-[1.03] hover:bg-[#2fa32f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#36B936]"
             >
-              Get a Land Freight Quote
+              {content.buttonLabel}
             </Link>
 
             <Link
               href="/support?type=project-cargo"
               className="group inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-xs sm:text-sm font-medium text-white backdrop-blur-sm transition-all duration-200 hover:bg-white hover:text-[#0A4D26] hover:scale-[1.02]"
             >
-              <span>Contact Us for Project Cargo</span>
+              <span>{content.contactLabel}</span>
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2} />
             </Link>
           </div>
@@ -199,4 +143,4 @@ const OurFleetSection = () => {
   );
 };
 
-export default OurFleetSection;
+export default cmsSection('land-freight.fleet', LAND_FLEET, OurFleetSection);

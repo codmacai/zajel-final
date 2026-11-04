@@ -3,12 +3,10 @@
 import type { SVGProps } from "react";
 import DynamicSolutions from "@/components/freightsolutions/DynamicSolutions";
 import type { SolutionCard } from "@/components/freightsolutions/types";
-import { FREIGHT_CARDS } from "@/data/air-freight/solutions";
-import type { FreightCard } from "@/data/air-freight/solutions";
 
-const HEADING = "Our Air Freight Solutions";
-const SUBHEADING =
-  "Reliable, high-speed air cargo charters and scheduled network routing designed to keep your supply chain moving globally without interruption.";
+import type { FreightCard } from "@/data/air-freight/solutions";
+import { AIR_SOLUTIONS, type AIR_SOLUTIONSContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const iconBase: SVGProps<SVGSVGElement> = {
   width: 20,
@@ -53,19 +51,20 @@ const ICONS_BY_ID: Record<FreightCard["id"], SolutionCard["Icon"]> = {
   aog: AogIcon,
 };
 
-const CARDS: SolutionCard[] = FREIGHT_CARDS.map((card) => ({
-  ...card,
-  Icon: ICONS_BY_ID[card.id] ?? PlaneIcon,
-}));
-
-export default function AirFreightSolutions() {
+function AirFreightSolutions({ content }: { content: AIR_SOLUTIONSContent }) {
+  const CARDS: SolutionCard[] = content.cards.map((card) => ({
+    ...card,
+    Icon: ICONS_BY_ID[card.id] ?? PlaneIcon,
+  }));
   return (
     <DynamicSolutions
-      heading={HEADING}
-      subheading={SUBHEADING}
+      heading={content.heading}
+      subheading={content.subheading}
       cards={CARDS}
       columns={3}
       bgClassName="bg-white"
     />
   );
 }
+
+export default cmsSection('air-freight.solutions', AIR_SOLUTIONS, AirFreightSolutions);

@@ -3,28 +3,10 @@
 import Link from 'next/link';
 import { MapPin, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { LAND_BORDERS, type LAND_BORDERSContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
-
-interface BorderCrossingRow {
-  crossing: string;
-  countries: string;
-}
-
-const heading = 'Border Crossings & Customs Clearance';
-
-const intro =
-  'Cross-border land freight requires customs clearance at each border point along the route. We manage all documentation and coordination so your cargo moves without unnecessary delays.';
-
-const BORDER_CROSSING_ROWS: BorderCrossingRow[] = [
-  { crossing: 'Al Ghuwaifat', countries: 'UAE to Saudi' },
-  { crossing: 'Hatta / Al Ain', countries: 'UAE to Oman' },
-  { crossing: 'Al Batha', countries: 'Saudi to UAE' },
-  { crossing: 'Sila (Abu Samra)', countries: 'Saudi to Qatar' },
-  { crossing: 'King Fahad Causeway', countries: 'Saudi to Bahrain' },
-  { crossing: 'Al Haditha / Karameh', countries: 'Saudi to Jordan' },
-  { crossing: 'Habur / Cilvegozu', countries: 'Turkey to Europe' },
-];
 
 export interface CtaItem {
   label: string;
@@ -39,15 +21,15 @@ interface BorderCrossingsProps {
   isRtl?: boolean;
 }
 
-const BorderCrossings = ({
+const BorderCrossings = ({ content,
   onContactRoutePlanning,
   contactHref = '/support',
   primaryCta,
   secondaryCta,
   isRtl = false,
-}: BorderCrossingsProps) => {
+}: BorderCrossingsProps & { content: LAND_BORDERSContent }) => {
   const activePrimaryCta: CtaItem = primaryCta || {
-    label: 'Contact Us for Route Planning',
+    label: content.contactLabel,
     url: contactHref,
   };
 
@@ -64,14 +46,14 @@ const BorderCrossings = ({
         >
           <div className="flex items-center justify-center gap-3 mb-3 sm:mb-4">
             <span className="text-[#36B936] font-medium text-xs sm:text-sm tracking-wider uppercase">
-              Cross-Border Logistics
+              {content.eyebrow}
             </span>
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-[#0A4D26] leading-[1.15] max-w-[720px] mx-auto">
-            {heading}
+            {content.heading}
           </h2>
           <p className="mt-3 sm:mt-5 text-[#0A4D26]/75 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[560px]">
-            {intro}
+            {content.intro}
           </p>
         </motion.div>
 
@@ -87,15 +69,15 @@ const BorderCrossings = ({
             <thead>
               <tr className="border-b border-white/10 bg-white/[0.04]">
                 <th className="w-[52%] xs:w-[55%] p-3 sm:p-5 lg:p-6 text-[0.7rem] xs:text-xs sm:text-sm font-medium text-white/50 tracking-wider uppercase">
-                  Border Crossing
+                  {content.columnCrossing}
                 </th>
                 <th className="w-[48%] xs:w-[45%] p-3 sm:p-5 lg:p-6 text-[0.7rem] xs:text-xs sm:text-sm font-medium text-white/90 tracking-wider uppercase border-l border-white/[0.06]">
-                  Countries
+                  {content.columnCountries}
                 </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/[0.06]">
-              {BORDER_CROSSING_ROWS.map((row) => (
+              {content.rows.map((row) => (
                 <tr key={row.crossing} className="group transition-colors duration-300 hover:bg-white/[0.06]">
                   <td className="p-3 sm:p-5 lg:p-6 align-top">
                     <div className="flex items-start xs:items-center gap-1.5 sm:gap-2.5">
@@ -125,29 +107,29 @@ const BorderCrossings = ({
           <div className="grid grid-cols-1 md:grid-cols-2 md:divide-x md:divide-[#0A4D26]/10 bg-white">
             <div className="p-5 sm:p-8 lg:p-10">
               <h3 className="mb-2 sm:mb-2.5 text-base sm:text-lg font-medium tracking-tight text-[#0A4D26]">
-                What We Handle at Every Border
+                {content.handleTitle}
               </h3>
               <p className="text-xs sm:text-sm leading-relaxed text-[#0A4D26]/60 font-light mb-4">
-                Pre-filed customs manifests, direct coordination with certified brokers, and real-time tracking updates as your shipment clears each border.
+                {content.handleText}
               </p>
               <ul className="space-y-2 text-xs sm:text-sm text-[#0A4D26]/70 font-light">
                 <li className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#36B936] shrink-0" />
-                  <span>Manifest submission prior to arrival</span>
+                  <span>{content.handlePoint1}</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#36B936] shrink-0" />
-                  <span>Active resolution of inspection holds</span>
+                  <span>{content.handlePoint2}</span>
                 </li>
               </ul>
             </div>
 
             <div className="p-5 sm:p-8 lg:p-10 border-t border-[#0A4D26]/10 md:border-t-0">
               <h3 className="mb-2 sm:mb-2.5 text-base sm:text-lg font-medium tracking-tight text-[#0A4D26]">
-                Clearance Guidelines &amp; Estimates
+                {content.guidelinesTitle}
               </h3>
               <p className="text-xs sm:text-sm leading-relaxed text-[#0A4D26]/60 font-light">
-                Clearance times are estimates and vary depending on cargo type, time of day, and border traffic volume. Special cargo types like hazardous or oversized freight may require additional inspection time.
+                {content.guidelinesText}
               </p>
             </div>
           </div>
@@ -157,7 +139,7 @@ const BorderCrossings = ({
               <ShieldCheck className="h-4 w-4 sm:h-5 sm:w-5 text-[#36B936]" strokeWidth={1.75} />
             </div>
             <p className="text-xs sm:text-sm leading-relaxed text-white/70 font-light">
-              <span className="font-medium text-white">Seamless border coordination</span> ensures your cross-border land shipments experience minimal dwell times and smooth regulatory compliance across all transit corridors.
+              <span className="font-medium text-white">{content.coordinationHighlight}</span> {content.coordinationText}
             </p>
           </div>
         </motion.div>
@@ -201,4 +183,4 @@ const BorderCrossings = ({
   );
 };
 
-export default BorderCrossings;
+export default cmsSection('land-freight.border-crossings', LAND_BORDERS, BorderCrossings);

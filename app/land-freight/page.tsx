@@ -16,11 +16,13 @@ import IndustriesWeServe from '@/components/land-freight/industry';
 import HowFreightQuoteWorks from '@/components/land-freight/HowItworks';
 import LandFreightHero from '@/components/land-freight/hero';
 import LandFreightFAQS from '@/components/land-freight/faq';
+import CmsScope from '@/components/cms/CmsScope';
 
 export const generateMetadata = cmsMetadata('land-freight', '/land-freight');
 
 export default function LandFreightPage() {
   return (
+    <CmsScope page="land-freight">
     <main>
       <LandFreightHero/>
       <LandFreightSolutions />
@@ -45,5 +47,6 @@ export default function LandFreightPage() {
 
       <LandFreightFAQS />
     </main>
+    </CmsScope>
   );
 }

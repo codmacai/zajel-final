@@ -1,20 +1,12 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { LAND_COMPLIANCE, type LAND_COMPLIANCEContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
-const eyebrow = 'Compliance & Customs';
-const heading = 'Compliance & Customs Expertise';
-
-const bodySentences = [
-  'Cross-border road freight involves documentation, duty, and border',
-  'clearance requirements that vary by route and destination. Zajel manages',
-  'customs clearance and compliance on your behalf, so your shipment moves',
-  'across borders without unnecessary delays.',
-];
-
-const ComplianceCustomsExpertise = () => {
+const ComplianceCustomsExpertise = ({ content }: { content: LAND_COMPLIANCEContent }) => {
   return (
     <section className="w-full py-[clamp(3rem,8vw,7rem)] px-[clamp(1rem,4vw,1.5rem)] bg-white font-sans overflow-hidden">
       <div className="max-w-[860px] mx-auto text-center">
@@ -26,7 +18,7 @@ const ComplianceCustomsExpertise = () => {
           className="flex items-center justify-center gap-3 mb-4 sm:mb-5"
         >
           <span style={{ color: '#36B936' }} className="font-medium text-xs sm:text-sm tracking-wider uppercase">
-            {eyebrow}
+            {content.eyebrow}
           </span>
         </motion.div>
 
@@ -37,11 +29,11 @@ const ComplianceCustomsExpertise = () => {
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
           className="text-2xl sm:text-3xl md:text-4xl text-[#1b4332] font-medium tracking-tight leading-[1.15] mb-6 sm:mb-8 max-w-[720px] mx-auto"
         >
-          {heading}
+          {content.heading}
         </motion.h2>
 
         <p className="max-w-[46rem] mx-auto text-[#2d6a4f] font-light leading-[1.7] text-[13px] sm:text-[13.5px] lg:text-[14px] tracking-tight">
-          {bodySentences.map((sentence, i) => (
+          {content.sentences.map((sentence, i) => (
             <motion.span
               key={i}
               initial={{ opacity: 0, y: 8 }}
@@ -51,7 +43,7 @@ const ComplianceCustomsExpertise = () => {
               className="inline"
             >
               {sentence}
-              {i < bodySentences.length - 1 ? ' ' : ''}
+              {i < content.sentences.length - 1 ? ' ' : ''}
             </motion.span>
           ))}
         </p>
@@ -60,4 +52,4 @@ const ComplianceCustomsExpertise = () => {
   );
 };
 
-export default ComplianceCustomsExpertise;
+export default cmsSection('land-freight.compliance', LAND_COMPLIANCE, ComplianceCustomsExpertise);

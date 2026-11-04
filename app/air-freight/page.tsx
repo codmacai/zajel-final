@@ -13,11 +13,13 @@ import WhatWeMove from "@/components/AirFreight/WhatWeMove";
 import WhenToChooseAirFreight from "@/components/AirFreight/WhenToChoose/Choose";
 import ContactSection from "@/components/shared/contact";
 import { airFreightContent } from "@/data/contact-content";
+import CmsScope from '@/components/cms/CmsScope';
 
 export const generateMetadata = cmsMetadata('air-freight', '/air-freight');
 
 export default function Home() {
   return (
+    <CmsScope page="air-freight">
     <main>
       <AirFreightHero/>
       <AirFreightGuide />
@@ -35,5 +37,6 @@ export default function Home() {
 
       <AirFreightFaq/>
     </main>
+    </CmsScope>
   );
 }
