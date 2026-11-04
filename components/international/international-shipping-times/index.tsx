@@ -4,6 +4,8 @@ import { useSupportAction } from '@/hooks/useSupportAction';
 import { ArrowRight, Clock, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { INTERNATIONAL_TIMES, type INTERNATIONAL_TIMESContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const SMOOTH_TRANSITION = {
   type: 'spring' as const,
@@ -13,11 +15,6 @@ const SMOOTH_TRANSITION = {
 
 const LIGHT_GREEN = '#36B936';
 
-const EYEBROW = 'Global Transit Routes';
-const HEADING = 'International Shipping Times from the UAE';
-const DESCRIPTION =
-  'Zajel connects the UAE to major global destinations with reliable delivery timelines tailored to your schedule and urgency.';
-
 interface InternationalShippingTimesProps {
   onGetQuote?: () => void;
   onContactSupport?: () => void;
@@ -26,14 +23,13 @@ interface InternationalShippingTimesProps {
   bannerImageAlt?: string;
 }
 
-const InternationalShippingTimes = ({
+const InternationalShippingTimes = ({ content,
   onGetQuote: onGetQuoteProp,
   onContactSupport: onContactSupportProp,
-  bannerImageSrc,
-  bannerImageAlt = 'Zajel courier delivering an international shipment',
-}: InternationalShippingTimesProps) => {
+}: InternationalShippingTimesProps & { content: INTERNATIONAL_TIMESContent }) => {
   const onGetQuote = useSupportAction(onGetQuoteProp);
   const onContactSupport = useSupportAction(onContactSupportProp);
+  const { bannerImageSrc, bannerImageAlt } = content;
   return (
     <section className="w-full relative overflow-hidden py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-10 bg-white font-['Manrope',sans-serif]">
       <div className="max-w-[1100px] mx-auto relative z-10">
@@ -47,16 +43,16 @@ const InternationalShippingTimes = ({
         >
           <div className="mb-2.5 flex items-center justify-center gap-2.5">
             <span className="text-xs sm:text-sm font-medium tracking-widest uppercase" style={{ color: LIGHT_GREEN }}>
-              {EYEBROW}
+              {content.eyebrow}
             </span>
           </div>
 
           <h2 className="text-2xl sm:text-3xl md:text-4xl text-[#0A4D26] font-medium tracking-tight leading-[1.2] max-w-[820px] mx-auto px-2">
-            {HEADING}
+            {content.heading}
           </h2>
 
           <p className="mt-3 text-[#2D6A4F] font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto px-2">
-            {DESCRIPTION}
+            {content.description}
           </p>
         </motion.div>
 
@@ -90,19 +86,19 @@ const InternationalShippingTimes = ({
           <div className="absolute left-5 bottom-5 sm:left-8 sm:bottom-8 max-w-[90%]">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white/90 text-[10px] font-normal tracking-wider uppercase mb-2">
               <span className="w-1 h-1 rounded-full bg-[#36B936]" />
-              <span>Express Transit</span>
+              <span>{content.badge}</span>
             </div>
 
             <div className="flex items-baseline gap-2.5">
               <span className="text-white font-normal tracking-tight leading-none text-[clamp(2rem,5vw,3.25rem)]">
-                3 - 5
+                {content.days}
               </span>
               <div className="flex flex-col">
                 <span className="text-white/90 font-medium text-[clamp(0.85rem,1.6vw,1.1rem)] tracking-tight leading-none mb-0.5">
-                  Business Days
+                  {content.daysLabel}
                 </span>
                 <span className="text-white/60 font-light text-[11px] tracking-wide">
-                  Global Door-to-Door Delivery
+                  {content.daysNote}
                 </span>
               </div>
             </div>
@@ -122,10 +118,9 @@ const InternationalShippingTimes = ({
               <Clock className="h-5 w-5" strokeWidth={1.75} />
             </div>
             <div>
-              <h4 className="text-sm font-medium text-[#0F1A14] mb-1.5 tracking-tight">Important Transit Note</h4>
+              <h4 className="text-sm font-medium text-[#0F1A14] mb-1.5 tracking-tight">{content.noteTitle}</h4>
               <p className="text-[#4b5a52] font-light text-[13px] sm:text-[14px] leading-[1.7]">
-                Transit times are estimated from the date of shipment confirmation and may vary depending on customs clearance at the destination
-                country. Express delivery includes priority handling and expedited customs processing.
+                {content.noteText}
               </p>
             </div>
           </motion.div>
@@ -141,9 +136,9 @@ const InternationalShippingTimes = ({
               <ShieldCheck className="h-5 w-5" strokeWidth={1.75} />
             </div>
             <div>
-              <h4 className="text-sm font-medium text-[#0F1A14] mb-1.5 tracking-tight">Real-Time Visibility</h4>
+              <h4 className="text-sm font-medium text-[#0F1A14] mb-1.5 tracking-tight">{content.trackingTitle}</h4>
               <p className="text-[#4b5a52] font-light text-[13px] sm:text-[14px] leading-[1.7]">
-                All international shipments include real-time tracking through the Zajel app and portal from pickup to final delivery.
+                {content.trackingText}
               </p>
             </div>
           </motion.div>
@@ -162,7 +157,7 @@ const InternationalShippingTimes = ({
             onClick={onGetQuote}
             className="inline-flex items-center gap-2 rounded-full bg-[#36B936] px-[clamp(1.25rem,2vw,1.75rem)] py-[clamp(0.55rem,1vw,0.85rem)] text-xs sm:text-sm font-medium text-[#0B140F] shadow-md transition-transform hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0A4D26] whitespace-nowrap"
           >
-            <span>Get a Shipping Quote</span>
+            <span>{content.quoteLabel}</span>
             <span aria-hidden="true">→</span>
           </button>
 
@@ -172,7 +167,7 @@ const InternationalShippingTimes = ({
             className="group inline-flex items-center gap-1.5 text-[#0A4D26] font-medium text-xs sm:text-sm tracking-tight transition-all duration-200 hover:text-[#36B936] bg-transparent border-none p-0 cursor-pointer whitespace-nowrap"
           >
             <span className="relative pb-0.5 border-b border-[#0A4D26]/30 group-hover:border-[#36B936] transition-colors">
-              Contact Us for Transit Advice
+              {content.contactLabel}
             </span>
             <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 ease-out group-hover:translate-x-0.5" strokeWidth={1.75} />
           </button>
@@ -182,4 +177,4 @@ const InternationalShippingTimes = ({
   );
 };
 
-export default InternationalShippingTimes;
+export default cmsSection('international-courier.shipping-times', INTERNATIONAL_TIMES, InternationalShippingTimes);

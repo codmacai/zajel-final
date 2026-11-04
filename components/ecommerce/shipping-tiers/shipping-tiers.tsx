@@ -2,13 +2,15 @@
 
 import type { FC } from 'react';
 import { motion } from 'framer-motion';
-import { EYEBROW, FOOTNOTE, HEADING_LINE_1, HEADING_LINE_2, INTRO, TIERS } from './data';
+
 import TierCard from './tier-card';
+import { ECOMMERCE_PRICING, type ECOMMERCE_PRICINGContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const smoothTransition = { duration: 0.7, ease: EASE };
 
-const ShippingTiers: FC = () => {
+const ShippingTiers = ({ content }: { content: ECOMMERCE_PRICINGContent }) => {
   return (
     <section
       className="w-full overflow-hidden relative py-16 sm:py-24 lg:py-32 bg-white font-sans"
@@ -29,7 +31,7 @@ const ShippingTiers: FC = () => {
             className="flex items-center justify-center gap-3 sm:gap-4 mb-4"
           >
             <span style={{ color: '#36B936' }} className="font-medium text-xs sm:text-sm tracking-wider uppercase">
-              {EYEBROW}
+              {content.eyebrow}
             </span>
           </motion.div>
 
@@ -41,7 +43,7 @@ const ShippingTiers: FC = () => {
             transition={{ ...smoothTransition, delay: 0.05 }}
             className="text-2xl sm:text-3xl md:text-4xl text-[#0A4D26] font-medium tracking-tight leading-[1.15] max-w-[720px] mx-auto mb-4"
           >
-            {HEADING_LINE_1} {HEADING_LINE_2}
+            {content.headingLine1} {content.headingLine2}
           </motion.h2>
 
           <motion.p
@@ -51,13 +53,13 @@ const ShippingTiers: FC = () => {
             transition={{ ...smoothTransition, delay: 0.1 }}
             className="text-[#2d6a4f] font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto px-2"
           >
-            {INTRO}
+            {content.intro}
           </motion.p>
         </div>
 
         {/* Tier cards */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-          {TIERS.map((tier, i) => (
+          {content.tiers.map((tier, i) => (
             <TierCard key={tier.id} {...tier} position={i} />
           ))}
         </div>
@@ -70,11 +72,11 @@ const ShippingTiers: FC = () => {
           transition={{ ...smoothTransition, delay: 0.35 }}
           className="text-[#2d6a4f]/70 text-[0.75rem] sm:text-[0.82rem] font-light text-center mt-10 sm:mt-12 lg:mt-14 px-4"
         >
-          {FOOTNOTE}
+          {content.footnote}
         </motion.p>
       </div>
     </section>
   );
 };
 
-export default ShippingTiers;
+export default cmsSection('ecommerce.pricing', ECOMMERCE_PRICING, ShippingTiers);

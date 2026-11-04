@@ -4,12 +4,13 @@ import type { FC } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { CheckIcon } from './icons';
-import { DASHBOARD_IMAGE, EYEBROW, FEATURES, HEADING, INTRO } from './data';
+import { ECOMMERCE_DASHBOARD, type ECOMMERCE_DASHBOARDContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const smoothTransition = { duration: 0.6, ease: EASE };
 
-const DashboardReporting: FC = () => {
+const DashboardReporting = ({ content }: { content: ECOMMERCE_DASHBOARDContent }) => {
   return (
     <section
       className="w-full relative flex flex-col justify-center bg-gradient-to-br from-[#0D2A22] via-[#0A4D26] to-[#042B18] text-white py-16 sm:py-24 lg:py-32 overflow-hidden font-sans"
@@ -30,7 +31,7 @@ const DashboardReporting: FC = () => {
             className="flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-4"
           >
             <span style={{ color: '#36B936' }} className="font-medium text-xs sm:text-sm tracking-wider uppercase">
-              {EYEBROW}
+              {content.eyebrow}
             </span>
           </motion.div>
 
@@ -42,7 +43,7 @@ const DashboardReporting: FC = () => {
             transition={{ ...smoothTransition, delay: 0.05 }}
             className="text-2xl sm:text-3xl md:text-4xl text-white font-medium tracking-tight leading-[1.2] max-w-[720px] mx-auto mb-3 sm:mb-4"
           >
-            {HEADING}
+            {content.heading}
           </motion.h2>
 
           <motion.p
@@ -52,7 +53,7 @@ const DashboardReporting: FC = () => {
             transition={{ ...smoothTransition, delay: 0.1 }}
             className="text-white/70 font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[540px] mx-auto px-2"
           >
-            {INTRO}
+            {content.intro}
           </motion.p>
         </div>
 
@@ -69,8 +70,8 @@ const DashboardReporting: FC = () => {
             {/* Full coverage background image */}
             <div className="absolute inset-0 w-full h-full z-0">
               <Image
-                src={DASHBOARD_IMAGE}
-                alt="Zajel Merchant Dashboard Preview"
+                src={content.image}
+                alt={content.imageAlt}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover object-top"
@@ -100,7 +101,7 @@ const DashboardReporting: FC = () => {
             transition={{ ...smoothTransition, delay: 0.2 }}
             className="lg:col-span-6 flex flex-col justify-between gap-3 sm:gap-3.5"
           >
-            {FEATURES.map((feature, index) => (
+            {content.features.map((feature, index) => (
               <motion.div
                 key={feature.title}
                 initial={{ opacity: 0, y: 12 }}
@@ -131,4 +132,4 @@ const DashboardReporting: FC = () => {
   );
 };
 
-export default DashboardReporting;
+export default cmsSection('ecommerce.dashboard', ECOMMERCE_DASHBOARD, DashboardReporting);

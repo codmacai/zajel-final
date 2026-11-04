@@ -12,12 +12,14 @@ import EcommerceFaqSection from '@/components/ecommerce/ecommerce-faq';
 import CTABanner from '@/components/shared/CTABanner';
 import EcommerceHero from '@/components/ecommerce/hero';
 import { ECOMMERCE_CTA } from '@/components/ecommerce/content';
+import CmsScope from '@/components/cms/CmsScope';
 
 export const generateMetadata = cmsMetadata('ecommerce', '/ecommerce');
 
 export default async function EcommercePage() {
   const cta = await getSection("ecommerce.cta", ECOMMERCE_CTA);
   return (
+    <CmsScope page="ecommerce">
     <main>
       <EcommerceHero/>
       <BusinessGetsSection />
@@ -32,5 +34,6 @@ export default async function EcommercePage() {
       <EcommerceFaqSection/>
       {cta && <CTABanner {...cta} priority />}
     </main>
+    </CmsScope>
   );
 }

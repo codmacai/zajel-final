@@ -1,14 +1,17 @@
 "use client";
 
 import FaqSection from "@/components/shared/faq-section";
-import { International_FAQS } from "@/data/International-faqs";
+import { INTERNATIONAL_FAQ, type INTERNATIONAL_FAQContent } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
-export default function InternationalFaq() {
+function InternationalFaq({ content }: { content: INTERNATIONAL_FAQContent }) {
   return (
     <FaqSection
-      eyebrow="FAQ"
-      heading="Frequently Asked Questions"
-      items={International_FAQS}
+      eyebrow={content.eyebrow}
+      heading={content.heading}
+      items={content.items}
     />
   );
 }
+
+export default cmsSection('international-courier.faq', INTERNATIONAL_FAQ, InternationalFaq);

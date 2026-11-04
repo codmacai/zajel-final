@@ -1,8 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { HEADING, BUSINESS_CARDS } from './data';
+
 import BusinessGetsCard from './business-gets-card';
+import { ECOMMERCE_BENEFITS, type ECOMMERCE_BENEFITSContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const LIGHT_GREEN = '#36B936';
 
@@ -13,7 +15,7 @@ const fade = (delay = 0) => ({
   transition: { duration: 0.5, ease: 'easeOut' as const, delay },
 });
 
-const BusinessGetsSection = () => {
+const BusinessGetsSection = ({ content }: { content: ECOMMERCE_BENEFITSContent }) => {
   return (
     <section className="relative w-full overflow-hidden bg-white py-12 font-sans sm:py-20 lg:py-28 xl:py-32">
       <div className="relative z-10 mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-10">
@@ -24,7 +26,7 @@ const BusinessGetsSection = () => {
               className="text-xs sm:text-sm font-medium uppercase tracking-wider"
               style={{ color: LIGHT_GREEN }}
             >
-              Core Benefits
+              {content.eyebrow}
             </span>
           </motion.div>
 
@@ -32,7 +34,7 @@ const BusinessGetsSection = () => {
             {...fade(0.1)}
             className="whitespace-pre-line text-2xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight text-[#0A4D26]"
           >
-            {HEADING}
+            {content.heading}
           </motion.h2>
         </div>
 
@@ -44,7 +46,7 @@ const BusinessGetsSection = () => {
           {...fade(0.3)}
           className="grid w-full grid-cols-2 items-stretch gap-px overflow-hidden rounded-2xl border border-gray-200/80 bg-gray-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.02)] sm:rounded-[2rem] lg:grid-cols-3"
         >
-          {BUSINESS_CARDS.map((card, i) => (
+          {content.cards.map((card, i) => (
             <BusinessGetsCard key={card.title} {...card} index={i} />
           ))}
         </motion.div>
@@ -53,4 +55,4 @@ const BusinessGetsSection = () => {
   );
 };
 
-export default BusinessGetsSection;
+export default cmsSection('ecommerce.benefits', ECOMMERCE_BENEFITS, BusinessGetsSection);

@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { EYEBROW, ROWS } from './data';
+import { ECOMMERCE_COD, type ECOMMERCE_CODContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const SMOOTH_TRANSITION = {
   type: "spring" as const,
@@ -11,7 +12,7 @@ const SMOOTH_TRANSITION = {
 
 const LIGHT_GREEN = "#36B936";
 
-const CodSection = () => {
+const CodSection = ({ content }: { content: ECOMMERCE_CODContent }) => {
   return (
     <section className="w-full py-16 sm:py-28 lg:py-40 px-4 sm:px-6 lg:px-12 bg-white overflow-hidden font-sans">
       <div className="max-w-[1200px] mx-auto">
@@ -39,19 +40,19 @@ const CodSection = () => {
             {/* Eyebrow with side lines */}
             <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 sm:mb-6">
               <span className="font-medium text-xs sm:text-sm tracking-widest uppercase" style={{ color: LIGHT_GREEN }}>
-                {EYEBROW}
+                {content.eyebrow}
               </span>
             </div>
 
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.3] sm:leading-[1.25] text-white tracking-tight">
-              Cash on Delivery remains a core preference in the UAE — Zajel{' '}
-              <span className="text-[#36B936] font-light">collects and remits funds seamlessly</span> so your business avoids all cash handling friction.
+              {content.headingBefore}{' '}
+              <span className="text-[#36B936] font-light">{content.headingHighlight}</span> {content.headingAfter}
             </h2>
           </div>
 
           {/* Minimalist Advantages Grid Built Directly Inside the Card */}
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 pt-8 sm:pt-10 border-t border-white/10">
-            {ROWS.slice(0, 3).map((item, index) => (
+            {content.rows.slice(0, 3).map((item, index) => (
               <div key={item.number} className="flex flex-col group">
                 <div className="flex items-center gap-2 mb-2 sm:mb-3">
                   <span className="text-xs font-medium text-[#36B936] uppercase tracking-wider">
@@ -75,4 +76,4 @@ const CodSection = () => {
   );
 };
 
-export default CodSection;
+export default cmsSection('ecommerce.cod', ECOMMERCE_COD, CodSection);

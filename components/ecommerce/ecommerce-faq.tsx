@@ -1,14 +1,17 @@
 "use client";
 
 import FaqSection from "@/components/shared/faq-section";
-import { Ecommerce_Faqs } from "@/data/ecommerce-faqs";
+import { ECOMMERCE_FAQ, type ECOMMERCE_FAQContent } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
-export default function EcommerceFaqSection() {
+function EcommerceFaqSection({ content }: { content: ECOMMERCE_FAQContent }) {
   return (
     <FaqSection
-      eyebrow="FAQ"
-      heading="Frequently Asked Questions"
-      items={Ecommerce_Faqs}
+      eyebrow={content.eyebrow}
+      heading={content.heading}
+      items={content.items}
     />
   );
 }
+
+export default cmsSection('ecommerce.faq', ECOMMERCE_FAQ, EcommerceFaqSection);

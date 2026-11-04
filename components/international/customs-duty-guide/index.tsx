@@ -3,39 +3,14 @@
 import { useSupportAction } from '@/hooks/useSupportAction';
 import { ArrowRight, ShieldAlert } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { type DeliveryTerm, INTERNATIONAL_CUSTOMS, type INTERNATIONAL_CUSTOMSContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
 // Shared brand palette constants
 const FOREST = '#0A4D26';
 const LIME = '#36B936';
-
-// ---------------------------------------------------------------------------
-// Content
-// ---------------------------------------------------------------------------
-const EYEBROW = 'Customs Guide';
-const HEADING = 'Understanding Customs Duties: Who Pays?';
-const INTRO =
-  'When shipping internationally, customs duties and import taxes may apply depending on the destination country and the value of the shipment. Zajel ships on Delivered Duty Unpaid (DDU) terms, so you always know how charges are handled before you book.';
-
-interface DeliveryTerm {
-  code: string;
-  title: string;
-  tagline: string;
-  features: string[];
-}
-
-const TERM: DeliveryTerm = {
-  code: 'DDU',
-  title: 'Delivered Duty Unpaid',
-  tagline:
-    'The sender pays for shipping to the destination country. Customs duties, taxes, and import charges are paid by the recipient upon delivery or during customs clearance.',
-  features: [
-    'Business to business shipments where the importer handles their own customs charges',
-    'Shipments where the recipient has an established import account or customs broker',
-    'Situations where duty rates vary and the recipient prefers to manage clearance directly',
-  ],
-};
 
 // ---------------------------------------------------------------------------
 // Single term card
@@ -45,7 +20,7 @@ interface TermCardProps {
   onSelect?: () => void;
 }
 
-const TermCard = ({ term, onSelect }: TermCardProps) => {
+const TermCard = ({ term, onSelect, bestForLabel }: TermCardProps & { bestForLabel: string }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 28 }}
@@ -85,7 +60,7 @@ const TermCard = ({ term, onSelect }: TermCardProps) => {
 
         <div className="w-full">
           <span className="block mb-2.5 text-[10px] font-medium tracking-[0.08em] uppercase" style={{ color: 'rgba(10,77,38,0.45)' }}>
-            Best for:
+            {bestForLabel}
           </span>
           <ul className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-3 w-full">
             {term.features.map((feature) => (
@@ -116,7 +91,7 @@ interface CustomsDutyGuideProps {
   onContactSupport?: () => void;
 }
 
-const CustomsDutyGuide = ({ onGetQuote: onGetQuoteProp, onContactSupport: onContactSupportProp }: CustomsDutyGuideProps) => {
+const CustomsDutyGuide = ({ content, onGetQuote: onGetQuoteProp, onContactSupport: onContactSupportProp }: CustomsDutyGuideProps & { content: INTERNATIONAL_CUSTOMSContent }) => {
   const onGetQuote = useSupportAction(onGetQuoteProp);
   const onContactSupport = useSupportAction(onContactSupportProp);
   return (
@@ -131,21 +106,21 @@ const CustomsDutyGuide = ({ onGetQuote: onGetQuoteProp, onContactSupport: onCont
         >
           <div className="mb-3 sm:mb-4 flex items-center justify-center gap-3">
             <span className="text-xs sm:text-sm font-medium tracking-widest uppercase" style={{ color: LIME }}>
-              {EYEBROW}
+              {content.eyebrow}
             </span>
           </div>
 
           <h2 className="text-2xl sm:text-3xl md:text-4xl text-[#0A4D26] font-medium tracking-tight leading-[1.2] max-w-[820px] mx-auto px-2">
-            {HEADING}
+            {content.heading}
           </h2>
 
           <p className="mt-5 text-[#2D6A4F] font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[560px] mx-auto px-2">
-            {INTRO}
+            {content.intro}
           </p>
         </motion.div>
 
         <div className="relative rounded-2xl overflow-hidden shadow-sm border border-[#e2ece9] max-w-5xl mx-auto">
-          <TermCard term={TERM} onSelect={onGetQuote} />
+          <TermCard term={content.term} onSelect={onGetQuote} bestForLabel={content.bestForLabel} />
         </div>
 
         {/* Note / Disclaimer Box */}
@@ -161,9 +136,7 @@ const CustomsDutyGuide = ({ onGetQuote: onGetQuoteProp, onContactSupport: onCont
               <ShieldAlert className="h-4 w-4 text-[#36B936]" strokeWidth={1.75} />
             </div>
             <p className="text-[13px] sm:text-[14px] leading-relaxed text-white/70 font-light">
-              <span className="font-medium text-white">Note:</span> Customs duties vary by country, item type, and declared value. Our team can
-              advise on estimated duty rates for your destination when you book. For commercial shipments, Zajel handles all customs
-              documentation on your behalf.
+              <span className="font-medium text-white">{content.noteLabel}</span> {content.noteText}
             </p>
           </div>
         </motion.div>
@@ -181,7 +154,7 @@ const CustomsDutyGuide = ({ onGetQuote: onGetQuoteProp, onContactSupport: onCont
             onClick={onGetQuote}
             className="inline-flex items-center gap-2 rounded-full bg-[#36B936] px-[clamp(1.25rem,2vw,1.75rem)] py-[clamp(0.55rem,1vw,0.85rem)] text-xs sm:text-sm font-medium text-[#0B140F] shadow-md transition-transform hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0A4D26] whitespace-nowrap"
           >
-            <span>Get a Shipping Quote</span>
+            <span>{content.quoteLabel}</span>
             <span aria-hidden="true">→</span>
           </button>
 
@@ -191,7 +164,7 @@ const CustomsDutyGuide = ({ onGetQuote: onGetQuoteProp, onContactSupport: onCont
             className="group inline-flex items-center gap-1.5 text-[#0A4D26] font-medium text-xs sm:text-sm tracking-tight transition-all duration-200 hover:text-[#36B936] bg-transparent border-none p-0 cursor-pointer whitespace-nowrap"
           >
             <span className="relative pb-0.5 border-b border-[#0A4D26]/30 group-hover:border-[#36B936] transition-colors">
-              Contact Us for Customs Advice
+              {content.contactLabel}
             </span>
             <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 ease-out group-hover:translate-x-0.5" strokeWidth={1.75} />
           </button>
@@ -201,4 +174,4 @@ const CustomsDutyGuide = ({ onGetQuote: onGetQuoteProp, onContactSupport: onCont
   );
 };
 
-export default CustomsDutyGuide;
+export default cmsSection('international-courier.customs-guide', INTERNATIONAL_CUSTOMS, CustomsDutyGuide);

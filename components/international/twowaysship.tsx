@@ -4,38 +4,8 @@
 import type { FC } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-
-// ---------------------------------------------------------------------------
-// Content
-// ---------------------------------------------------------------------------
-const defaultContent = {
-  eyebrow: 'Shipping Options',
-  twoWays: {
-    heading: 'Two Ways to Ship',
-    documents: {
-      label: 'Documents',
-      text: 'Get an instant rate and book in minutes.',
-      steps: ['Declare the weight', 'Choose your pickup date', "Pay and you're booked"],
-      buttonLabel: 'Ship Documents Now',
-      buttonUrl: '/quotation?type=documents',
-    },
-    packages: {
-      label: 'Packages',
-      text: 'Get accurate pricing after your package is verified.',
-      steps: [
-        'Choose your pickup date',
-        'We collect and verify the weight',
-        'We send you a secure payment link to confirm',
-      ],
-      buttonLabel: 'Request a Package Quote',
-      buttonUrl: '/support',
-    },
-  },
-  journey: {
-    heading: 'One Simple Journey, Either Way',
-    text: "Whether you're sending a document or a package, the rest of the journey looks the same: add the receiver's details and location, declare the value, and you're set. Track it from pickup to delivery, wherever in the world it's headed.",
-  },
-};
+import { INTERNATIONAL_TWO_WAYS, type INTERNATIONAL_TWO_WAYSContent } from './content';
+import { serverSection } from '@/lib/cms/server';
 
 const smoothTransition = { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const };
 
@@ -154,8 +124,8 @@ const StepItem: FC<{ index: number; text: string; badgeClassName: string; textCl
 // ---------------------------------------------------------------------------
 // Main Component
 // ---------------------------------------------------------------------------
-const TwoWaysToShipAndJourney: FC = () => {
-  const data = defaultContent;
+const TwoWaysToShipAndJourney = ({ content }: { content: INTERNATIONAL_TWO_WAYSContent }) => {
+  const data = content.data;
 
   return (
     <section
@@ -338,4 +308,4 @@ const TwoWaysToShipAndJourney: FC = () => {
   );
 };
 
-export default TwoWaysToShipAndJourney;
+export default serverSection('international-courier.two-ways', INTERNATIONAL_TWO_WAYS, TwoWaysToShipAndJourney);

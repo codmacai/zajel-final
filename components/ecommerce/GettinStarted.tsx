@@ -1,29 +1,15 @@
 import ProcessStepsSection from '../shared/Steps';
+import { ECOMMERCE_GETTING_STARTED, type ECOMMERCE_GETTING_STARTEDContent } from './content';
+import { serverSection } from '@/lib/cms/server';
 
-const GettingStartedSection = () => (
+const GettingStartedSection = ({ content }: { content: ECOMMERCE_GETTING_STARTEDContent }) => (
   <ProcessStepsSection
-    eyebrow="Onboarding"
-    heading={<>Getting Started<br />Is Simple</>}
-    description="From setup to delivery — a straightforward path to shipping with us."
-    footnote="Dedicated support at every step"
-    steps={[
-      {
-        number: '01',
-        title: 'Get Onboarded',
-        description: 'Set up with your dedicated account manager.',
-      },
-      {
-        number: '02',
-        title: 'Submit Orders',
-        description: 'Book and manage orders through the Zajel portal.',
-      },
-      {
-        number: '03',
-        title: 'We Deliver',
-        description: 'Orders are delivered, COD is collected, and remitted to you.',
-      },
-    ]}
+    eyebrow={content.eyebrow}
+    heading={<>{content.headingLine1}<br />{content.headingLine2}</>}
+    description={content.description}
+    footnote={content.footnote}
+    steps={content.steps}
   />
 );
 
-export default GettingStartedSection;
+export default serverSection('ecommerce.getting-started', ECOMMERCE_GETTING_STARTED, GettingStartedSection);

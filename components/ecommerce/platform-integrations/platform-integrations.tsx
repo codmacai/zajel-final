@@ -3,13 +3,15 @@
 import type { FC } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { API_ACCESS, EYEBROW, HEADING, INTEGRATIONS, INTRO } from './data';
+
 import IntegrationCardTile from './integration-card';
+import { ECOMMERCE_INTEGRATIONS, type ECOMMERCE_INTEGRATIONSContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const smoothTransition = { duration: 0.7, ease: EASE };
 
-const PlatformIntegrations: FC = () => {
+const PlatformIntegrations = ({ content }: { content: ECOMMERCE_INTEGRATIONSContent }) => {
   return (
     <section
       className="w-full overflow-hidden relative py-16 sm:py-24 lg:py-32 bg-white font-sans"
@@ -30,7 +32,7 @@ const PlatformIntegrations: FC = () => {
             className="flex items-center justify-center gap-3 sm:gap-4 mb-4"
           >
             <span style={{ color: '#36B936' }} className="font-medium text-xs sm:text-sm tracking-wider uppercase">
-              {EYEBROW}
+              {content.eyebrow}
             </span>
           </motion.div>
 
@@ -42,7 +44,7 @@ const PlatformIntegrations: FC = () => {
             transition={{ ...smoothTransition, delay: 0.05 }}
             className="text-2xl sm:text-3xl md:text-4xl text-[#1b4332] font-medium tracking-tight leading-[1.2] max-w-[720px] mx-auto mb-4"
           >
-            {HEADING}
+            {content.heading}
           </motion.h2>
 
           <motion.p
@@ -52,13 +54,13 @@ const PlatformIntegrations: FC = () => {
             transition={{ ...smoothTransition, delay: 0.1 }}
             className="text-[#2d6a4f] font-light text-[13px] sm:text-[13.5px] lg:text-[14px] leading-relaxed max-w-[520px] mx-auto px-2"
           >
-            {INTRO}
+            {content.intro}
           </motion.p>
         </div>
 
         {/* Integration cards — stacks gracefully on foldables / phones, dual-column on tablets & desktop */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 items-stretch mb-5 sm:mb-6">
-          {INTEGRATIONS.map((card, i) => (
+          {content.integrations.map((card, i) => (
             <IntegrationCardTile key={card.id} {...card} index={i} />
           ))}
         </div>
@@ -75,28 +77,28 @@ const PlatformIntegrations: FC = () => {
             <span className="inline-flex w-fit items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0D2A22] mb-4 sm:mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#36B936]" />
               <span className="text-[#36B936] text-[0.65rem] sm:text-[0.7rem] font-medium tracking-[0.08em] uppercase">
-                {API_ACCESS.label}
+                {content.api.label}
               </span>
             </span>
 
             <p className="text-[#2d6a4f] font-light text-[13px] sm:text-[14px] leading-relaxed max-w-[560px]">
-              {API_ACCESS.text}
+              {content.api.text}
             </p>
           </div>
 
           <div className="relative z-10 flex flex-col sm:flex-row lg:flex-col gap-3 w-full lg:w-auto shrink-0">
             <Link
-              href={API_ACCESS.primaryUrl}
+              href={content.api.primaryUrl}
               className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 bg-[#0A4D26] text-[#36B936] text-[0.75rem] sm:text-[0.8rem] font-medium tracking-[0.01em] hover:bg-[#0A4D26]/90 hover:scale-[1.02] transition-all duration-200 whitespace-nowrap text-center"
             >
-              <span>{API_ACCESS.primaryCta}</span>
+              <span>{content.api.primaryCta}</span>
               <span aria-hidden="true">→</span>
             </Link>
             <Link
-              href={API_ACCESS.secondaryUrl}
+              href={content.api.secondaryUrl}
               className="inline-flex items-center justify-center rounded-full px-6 py-3 bg-transparent border border-[#0A4D26]/25 text-[#0A4D26] text-[0.75rem] sm:text-[0.8rem] font-medium tracking-[0.01em] hover:bg-[#0A4D26]/5 transition-colors whitespace-nowrap text-center"
             >
-              {API_ACCESS.secondaryCta}
+              {content.api.secondaryCta}
             </Link>
           </div>
         </motion.div>
@@ -105,4 +107,4 @@ const PlatformIntegrations: FC = () => {
   );
 };
 
-export default PlatformIntegrations;
+export default cmsSection('ecommerce.integrations', ECOMMERCE_INTEGRATIONS, PlatformIntegrations);
