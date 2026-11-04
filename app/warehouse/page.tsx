@@ -8,11 +8,13 @@ import IndustriesWeServe from "@/components/warehouse/industry";
 import { Warehouse_FAQS } from "@/data/warehouse-faq";
 import WarehouseFaqSection from "@/components/warehouse/faq";
 import ContactBand from "@/components/dynamic-contact";
+import CmsScope from '@/components/cms/CmsScope';
 
 export const generateMetadata = cmsMetadata('warehouse', '/warehouse');
 
 export default function WarehousePage() {
   return (
+    <CmsScope page="warehouse">
     <main>
       <ServiceHero variant="warehouse" />
       <SupplyChainWarehousingSection/>
@@ -39,5 +41,6 @@ export default function WarehousePage() {
 
       {/* Rest of the Warehousing page content goes below. */}
     </main>
+    </CmsScope>
   );
 }

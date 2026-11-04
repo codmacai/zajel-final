@@ -1,7 +1,8 @@
 import Image from "next/image";
-import { SUPPLY_CHAIN_WAREHOUSING_CONTENT as content } from "@/data/supply-chain-warehousing";
+import { WAREHOUSE_SUPPLY_CHAIN, type WAREHOUSE_SUPPLY_CHAINContent } from './content';
+import { serverSection } from '@/lib/cms/server';
 
-export default function SupplyChainWarehousingSection() {
+function SupplyChainWarehousingSection({ content }: { content: WAREHOUSE_SUPPLY_CHAINContent }) {
   const { eyebrow, heading, paragraphs, highlightLine, image } = content;
 
   return (
@@ -46,3 +47,5 @@ export default function SupplyChainWarehousingSection() {
     </section>
   );
 }
+
+export default serverSection('warehouse.supply-chain', WAREHOUSE_SUPPLY_CHAIN, SupplyChainWarehousingSection);

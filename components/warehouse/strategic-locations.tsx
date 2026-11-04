@@ -2,12 +2,8 @@
 
 import { useInView } from "@/hooks/useInView";
 import LocationImageCard from "@/components/warehouse/location-image-card";
-import {
-  STRATEGIC_LOCATIONS_EYEBROW,
-  STRATEGIC_LOCATIONS_HEADING,
-  STRATEGIC_LOCATIONS_INTRO,
-  STRATEGIC_LOCATIONS_CARDS,
-} from "@/data/strategic-locations";
+import { WAREHOUSE_LOCATIONS, type WAREHOUSE_LOCATIONSContent } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const cx = (...classes: Array<string | false | undefined>) => classes.filter(Boolean).join(" ");
 const ANIMATE_BASE = "transition-all duration-800 ease-[cubic-bezier(0.2,0.8,0.2,1)]";
@@ -16,7 +12,7 @@ const fade = (isVisible: boolean) => (isVisible ? "opacity-100 translate-y-0" : 
 const DARK = "#1b4332";
 const LIME = "#36B936";
 
-export default function StrategicLocations() {
+function StrategicLocations({ content }: { content: WAREHOUSE_LOCATIONSContent }) {
   const { ref: sectionRef, isVisible } = useInView<HTMLElement>();
 
   return (
@@ -28,7 +24,7 @@ export default function StrategicLocations() {
         {/* Section Header Tag */}
         <div className={cx("flex items-center justify-center gap-3 mb-3", ANIMATE_BASE, fade(isVisible))}>
           <h2 style={{ color: LIME }} className="font-medium text-xs sm:text-sm tracking-wider uppercase">
-            {STRATEGIC_LOCATIONS_EYEBROW}
+            {content.eyebrow}
           </h2>
         </div>
 
@@ -37,7 +33,7 @@ export default function StrategicLocations() {
             className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight"
             style={{ color: DARK, lineHeight: 1.15 }}
           >
-            {STRATEGIC_LOCATIONS_HEADING}
+            {content.heading}
           </h2>
         </div>
 
@@ -46,7 +42,7 @@ export default function StrategicLocations() {
           style={{ transitionDelay: "160ms" }}
         >
           <p className="text-[13px] sm:text-[13.5px] lg:text-[14px] font-normal text-[#2d6a4f] max-w-xl mx-auto">
-            {STRATEGIC_LOCATIONS_INTRO}
+            {content.intro}
           </p>
         </div>
 
@@ -55,7 +51,7 @@ export default function StrategicLocations() {
           className="grid grid-cols-2 lg:grid-cols-4 gap-0 rounded-2xl overflow-hidden shadow-sm border"
           style={{ borderColor: `${DARK}1F` }}
         >
-          {STRATEGIC_LOCATIONS_CARDS.map((card, i) => (
+          {content.cards.map((card, i) => (
             <LocationImageCard key={card.id} {...card} isVisible={isVisible} delay={240 + i * 120} />
           ))}
         </div>
@@ -63,3 +59,5 @@ export default function StrategicLocations() {
     </section>
   );
 }
+
+export default cmsSection('warehouse.locations', WAREHOUSE_LOCATIONS, StrategicLocations);

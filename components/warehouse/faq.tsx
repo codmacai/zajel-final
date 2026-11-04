@@ -1,14 +1,17 @@
 "use client";
 
 import FaqSection from "@/components/shared/faq-section";
-import { Warehouse_FAQS } from "@/data/warehouse-faq";
+import { WAREHOUSE_FAQ, type WAREHOUSE_FAQContent } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
-export default function WarehouseFaqSection() {
+function WarehouseFaqSection({ content }: { content: WAREHOUSE_FAQContent }) {
   return (
     <FaqSection
-      eyebrow="FAQ"
-      heading="Frequently Asked Questions"
-      items={Warehouse_FAQS}
+      eyebrow={content.eyebrow}
+      heading={content.heading}
+      items={content.items}
     />
   );
 }
+
+export default cmsSection('warehouse.faq', WAREHOUSE_FAQ, WarehouseFaqSection);

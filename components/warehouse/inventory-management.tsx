@@ -2,13 +2,8 @@
 
 import { useInView } from "@/hooks/useInView";
 import InventoryTileCard from "@/components/warehouse/inventory-tile-card";
-import {
-  INVENTORY_MANAGEMENT_EYEBROW,
-  INVENTORY_MANAGEMENT_HEADING,
-  INVENTORY_MANAGEMENT_INTRO,
-  INVENTORY_MANAGEMENT_CLOSING,
-  INVENTORY_MANAGEMENT_TILES,
-} from "@/data/inventory-management";
+import { WAREHOUSE_INVENTORY, type WAREHOUSE_INVENTORYContent } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const cx = (...classes: Array<string | false | undefined>) => classes.filter(Boolean).join(" ");
 const ANIMATE_BASE = "transition-all duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)]";
@@ -16,10 +11,10 @@ const fade = (isVisible: boolean) => (isVisible ? "opacity-100 translate-y-0" : 
 
 const DARK = "#1b4332";
 
-export default function InventoryManagement() {
+function InventoryManagement({ content }: { content: WAREHOUSE_INVENTORYContent }) {
   const { ref: sectionRef, isVisible } = useInView<HTMLElement>();
 
-  const [topLeft, topRight, hub, bottomLeft, bottomRight] = INVENTORY_MANAGEMENT_TILES;
+  const [topLeft, topRight, hub, bottomLeft, bottomRight] = content.tiles;
 
   return (
     <section
@@ -32,7 +27,7 @@ export default function InventoryManagement() {
           <div className="lg:w-[38%] flex flex-col justify-center text-center">
             <div className="flex items-center justify-center gap-3 mb-3 sm:mb-4">
               <h2 className="text-[#36b936] font-medium text-xs sm:text-sm tracking-wider uppercase">
-                {INVENTORY_MANAGEMENT_EYEBROW}
+                {content.eyebrow}
               </h2>
             </div>
 
@@ -44,7 +39,7 @@ export default function InventoryManagement() {
               )}
               style={{ color: DARK, lineHeight: 1.15 }}
             >
-              {INVENTORY_MANAGEMENT_HEADING}
+              {content.heading}
             </h3>
             <p
               className={cx(
@@ -54,7 +49,7 @@ export default function InventoryManagement() {
               )}
               style={{ transitionDelay: "80ms" }}
             >
-              {INVENTORY_MANAGEMENT_INTRO}
+              {content.intro}
             </p>
             <p
               className={cx(
@@ -64,7 +59,7 @@ export default function InventoryManagement() {
               )}
               style={{ transitionDelay: "160ms" }}
             >
-              {INVENTORY_MANAGEMENT_CLOSING}
+              {content.closing}
             </p>
           </div>
 
@@ -93,3 +88,5 @@ export default function InventoryManagement() {
     </section>
   );
 }
+
+export default cmsSection('warehouse.inventory', WAREHOUSE_INVENTORY, InventoryManagement);
