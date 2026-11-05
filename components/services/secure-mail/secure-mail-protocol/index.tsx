@@ -2,7 +2,8 @@
 
 import { ProtocolCardsSection } from '../../shared';
 import { SECURE_MAIL_PROTOCOL } from '../data';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
-const SecureMailProtocol = () => <ProtocolCardsSection {...SECURE_MAIL_PROTOCOL} />;
+const SecureMailProtocol = ({ content }: { content: typeof SECURE_MAIL_PROTOCOL }) => <ProtocolCardsSection {...content} />;
 
-export default SecureMailProtocol;
+export default cmsSection('secure-mail.protocol', SECURE_MAIL_PROTOCOL, SecureMailProtocol);

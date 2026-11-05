@@ -2,7 +2,8 @@
 
 import { ProtocolCardsSection } from '../../shared';
 import { SECURE_DOCS_PROTOCOL } from '../data';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
-const SecureDocsProtocol = () => <ProtocolCardsSection {...SECURE_DOCS_PROTOCOL} />;
+const SecureDocsProtocol = ({ content }: { content: typeof SECURE_DOCS_PROTOCOL }) => <ProtocolCardsSection {...content} />;
 
-export default SecureDocsProtocol;
+export default cmsSection('secure-docs.protocol', SECURE_DOCS_PROTOCOL, SecureDocsProtocol);

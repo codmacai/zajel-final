@@ -2,7 +2,8 @@
 
 import { ServiceHero } from '../../shared';
 import { GOV_HERO } from '../data';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
-const GovHero = () => <ServiceHero {...GOV_HERO} />;
+const GovHero = ({ content }: { content: typeof GOV_HERO }) => <ServiceHero {...content} />;
 
-export default GovHero;
+export default cmsSection('secure-gov.hero', GOV_HERO, GovHero);

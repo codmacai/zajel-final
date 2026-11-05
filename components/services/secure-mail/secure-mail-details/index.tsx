@@ -2,7 +2,8 @@
 
 import { FeatureListSection } from '../../shared';
 import { SECURE_MAIL_DETAILS } from '../data';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
-const SecureMailDetails = () => <FeatureListSection {...SECURE_MAIL_DETAILS} />;
+const SecureMailDetails = ({ content }: { content: typeof SECURE_MAIL_DETAILS }) => <FeatureListSection {...content} />;
 
-export default SecureMailDetails;
+export default cmsSection('secure-mail.details', SECURE_MAIL_DETAILS, SecureMailDetails);

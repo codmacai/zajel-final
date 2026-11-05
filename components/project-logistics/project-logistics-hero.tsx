@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import DynamicHero, { type DynamicHeroContent } from "@/components/FreightHero/dynamic-hero";
 import { HERO } from "./data";
+import { serverSection } from "@/lib/cms/server";
 
 // Optional fields: add them to HERO in ./data to control the highlight line and CTA.
 const hero = HERO as typeof HERO & {
@@ -9,7 +10,7 @@ const hero = HERO as typeof HERO & {
   ctaHref?: string;
 };
 
-const content: DynamicHeroContent = {
+export const PROJECTS_HERO: DynamicHeroContent = {
   badge: hero.eyebrow,
   titleLine1: hero.title,
   titleLine2: hero.titleHighlight,
@@ -22,8 +23,8 @@ const content: DynamicHeroContent = {
   imageAlt: hero.title,
 };
 
-const ProjectLogisticsHero: FC = () => (
+const ProjectLogisticsHero: FC<{ content: DynamicHeroContent }> = ({ content }) => (
   <DynamicHero id="project-logistics-hero" content={content} />
 );
 
-export default ProjectLogisticsHero;
+export default serverSection('projects.hero', PROJECTS_HERO, ProjectLogisticsHero);

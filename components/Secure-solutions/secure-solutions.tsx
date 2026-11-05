@@ -21,23 +21,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Manrope } from 'next/font/google';
+import { type ServiceCard, SECURE_PAGE, SECURE_PAGE_SVGBASE, type SECURE_PAGEContent } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const manrope = Manrope({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700'],
   display: 'swap',
 });
-
-const HERO_IMAGE = '/images/secure-hero.png';
-
-const heroData = {
-  eyebrow: 'Government & High-Security',
-  title: 'Secure Solutions',
-  description:
-    'When trust is non-negotiable. We provide dedicated, highly secure courier services relied upon by leading UAE government entities and institutions.',
-  buttonLabel: 'Contact Secure Team',
-  buttonUrl: '/support',
-};
 
 const isRtl = false;
 
@@ -105,39 +96,6 @@ const Reveal: React.FC<{ children: React.ReactNode; delay?: number; className?: 
 /* Icons                                                                      */
 /* -------------------------------------------------------------------------- */
 
-const svgBase = {
-  fill: 'none',
-  stroke: 'currentColor',
-  xmlns: 'http://www.w3.org/2000/svg',
-  'aria-hidden': true,
-} as const;
-
-const GovIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" strokeWidth="1.5" {...svgBase}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M3 9.5 12 4l9 5.5" />
-    <path strokeLinecap="round" strokeLinejoin="round" d="M5 9.5V19M9 9.5V19M12 9.5V19M15 9.5V19M19 9.5V19" />
-    <path strokeLinecap="round" strokeLinejoin="round" d="M3 19h18M2.5 21.5h19" />
-  </svg>
-);
-
-const IdIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" strokeWidth="1.5" {...svgBase}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
-  </svg>
-);
-
-const DocsIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" strokeWidth="1.5" {...svgBase}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-  </svg>
-);
-
-const MailIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" strokeWidth="1.5" {...svgBase}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-  </svg>
-);
-
 const CheckIcon: React.FC<{ className?: string }> = ({ className = '' }) => (
   <svg
     width="15"
@@ -147,26 +105,9 @@ const CheckIcon: React.FC<{ className?: string }> = ({ className = '' }) => (
     strokeLinecap="round"
     strokeLinejoin="round"
     className={`shrink-0 mt-[3px] ${className}`}
-    {...svgBase}
+    {...SECURE_PAGE_SVGBASE}
   >
     <path d="M20 6L9 17l-5-5" />
-  </svg>
-);
-
-const ContactIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" {...svgBase}>
-    <path d="M3.5 8.5 12 4l8.5 4.5v7L12 20l-8.5-4.5v-7Z" />
-    <path d="M3.8 8.3 12 12.7l8.2-4.4" />
-    <path d="M12 12.7V20" />
-  </svg>
-);
-
-const NetworkIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" {...svgBase}>
-    <circle cx="12" cy="5" r="2.4" />
-    <circle cx="5" cy="19" r="2.4" />
-    <circle cx="19" cy="19" r="2.4" />
-    <path d="M12 7.4V13m0 0-5.4 4M12 13l5.4 4" />
   </svg>
 );
 
@@ -245,87 +186,12 @@ const CleanEnvelopeSealIcon: React.FC<{ className?: string }> = ({ className = '
 /* Content                                                                    */
 /* -------------------------------------------------------------------------- */
 
-interface ServiceCard {
-  id: 'gov' | 'id' | 'docs' | 'mail';
-  Icon: React.ComponentType;
-  title: string;
-  description: string;
-  features: string[];
-  buttonLabel: string;
-  buttonUrl: string;
-}
-
-const serviceCards: ServiceCard[] = [
-  {
-    id: 'gov',
-    Icon: GovIcon,
-    title: 'Gov & Institutional',
-    description: 'Compliant document handling for official and institutional paperwork.',
-    features: ['Government & ministry document transport', 'Full audit trail on every handoff', 'Compliant with institutional protocols'],
-    buttonLabel: 'Read More',
-    buttonUrl: '/secure-gov',
-  },
-  {
-    id: 'id',
-    Icon: IdIcon,
-    title: 'Secure ID',
-    description: 'Your most sensitive personal identification, handled with specialized protocols.',
-    features: ['Passport & Emirates ID handling', 'Tamper-evident secure packaging', 'Verified recipient signature'],
-    buttonLabel: 'Read More',
-    buttonUrl: '/secure-id',
-  },
-  {
-    id: 'docs',
-    Icon: DocsIcon,
-    title: 'Secure Docs',
-    description: 'Courts, MOFA and Customs — critical legal filings handled with discretion.',
-    features: ['Courts, MOFA & Customs filings', 'Documented chain-of-custody', 'Discreet, time-sensitive routing'],
-    buttonLabel: 'Read More',
-    buttonUrl: '/secure-docs',
-  },
-  {
-    id: 'mail',
-    Icon: MailIcon,
-    title: 'Secure Mail',
-    description: 'Confidential corporate mail routing, fully protected end to end.',
-    features: ['Confidential inter-office routing', 'GPS-monitored secure vehicles', 'Vetted courier personnel only'],
-    buttonLabel: 'Read More',
-    buttonUrl: '/secure-mail',
-  },
-];
-
 const cleanIconMap: Record<ServiceCard['id'], React.ComponentType<{ className?: string }>> = {
   gov: CleanGovBuildingIcon,
   id: CleanIdCardIcon,
   docs: CleanDocSealIcon,
   mail: CleanEnvelopeSealIcon,
 };
-
-const standards = {
-  eyebrow: 'Our Commitment',
-  heading: 'Uncompromising Standards',
-  intro:
-    "We don't just deliver; we protect. Our Secure Solutions are built on a foundation of rigorous auditing, specialized personnel, and advanced technology.",
-  points: [
-    {
-      title: 'Vetted Personnel Only',
-      text: 'Every courier assigned to our secure network undergoes extensive background checks and specialized compliance training.',
-    },
-    {
-      title: 'Strict Chain of Custody',
-      text: 'Documented physical handoffs and digital signature verifications ensure you know exactly who handled your item at every step.',
-    },
-    {
-      title: 'GPS Monitored Transit',
-      text: 'Dedicated secure vehicles are actively tracked via GPS from the moment of collection to the final proof of delivery.',
-    },
-  ],
-};
-
-const ctaButtons = [
-  { label: 'Contact Secure Team', url: '/support', Icon: ContactIcon, variant: 'primary' as const },
-  { label: 'Explore Secure Networks', url: '#secure-networks', Icon: NetworkIcon, variant: 'secondary' as const },
-];
 
 /* -------------------------------------------------------------------------- */
 /* Styles (rendered once with the page — no runtime DOM injection, so no      */
@@ -516,23 +382,23 @@ const pageStyles = `
 /* Sections                                                                   */
 /* -------------------------------------------------------------------------- */
 
-const SecureHero: React.FC = () => (
+const SecureHero = ({ content }: { content: SECURE_PAGEContent }) => (
   <section dir={isRtl ? 'rtl' : 'ltr'} className="sh-root sh-section">
     <div className="sh-wrap">
       <div className="sh-content">
-        <p className="sh-eyebrow">{heroData.eyebrow}</p>
-        <h1 className="sh-title">{heroData.title}</h1>
-        <p className="sh-description">{heroData.description}</p>
-        <Link href={heroData.buttonUrl} className="sh-btn">
+        <p className="sh-eyebrow">{content.hero.eyebrow}</p>
+        <h1 className="sh-title">{content.hero.title}</h1>
+        <p className="sh-description">{content.hero.description}</p>
+        <Link href={content.hero.buttonUrl} className="sh-btn">
           <span aria-hidden="true">+</span>
-          <span>{heroData.buttonLabel}</span>
+          <span>{content.hero.buttonLabel}</span>
         </Link>
       </div>
 
       <div className="sh-media">
         <Image
-          src={HERO_IMAGE}
-          alt={heroData.title}
+          src={content.heroImage}
+          alt={content.hero.title}
           fill
           priority
           sizes="(max-width: 860px) 100vw, 50vw"
@@ -544,7 +410,7 @@ const SecureHero: React.FC = () => (
   </section>
 );
 
-const ServiceCardsSection: React.FC = () => (
+const ServiceCardsSection = ({ content }: { content: SECURE_PAGEContent }) => (
   <section
     id="secure-networks"
     className="relative w-full overflow-hidden scroll-mt-4"
@@ -559,12 +425,12 @@ const ServiceCardsSection: React.FC = () => (
     <div className="relative z-10 mx-auto max-w-[1080px] px-4 py-14 sm:px-6 sm:py-20 lg:px-10 lg:py-24">
       <Reveal>
         <h2 className={`${T.h2} mb-8 text-center font-light leading-[1.15] tracking-[-0.01em] text-white sm:mb-14 lg:mb-16`}>
-          Specialized Classified Networks
+          {content.cardsEyebrow}
         </h2>
       </Reveal>
 
       <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 sm:gap-6 sm:auto-rows-fr">
-        {serviceCards.map((card, i) => {
+        {content.cards.map((card, i) => {
           const CardCleanIcon = cleanIconMap[card.id];
           const isGreen = (Math.floor(i / 2) + (i % 2)) % 2 === 0;
 
@@ -648,7 +514,7 @@ const ServiceCardsSection: React.FC = () => (
   </section>
 );
 
-const StandardsSection: React.FC = () => (
+const StandardsSection = ({ content }: { content: SECURE_PAGEContent }) => (
   <section className="w-full overflow-hidden bg-[#FAFCFA] px-4 py-14 sm:px-6 sm:py-20 lg:px-10 lg:py-24">
     <div className="mx-auto max-w-[1080px]">
       <Reveal>
@@ -656,16 +522,16 @@ const StandardsSection: React.FC = () => (
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-5 lg:gap-14">
             <div className="flex flex-col justify-center lg:col-span-2">
               <p className={`${T.label} mb-3 font-semibold uppercase tracking-[0.16em] text-[#36B936]`}>
-                {standards.eyebrow}
+                {content.standards.eyebrow}
               </p>
               <h2 className={`${T.h2} mb-4 font-light leading-[1.15] tracking-[-0.01em] text-[#0a2e1c]`}>
-                {standards.heading}
+                {content.standards.heading}
               </h2>
-              <p className={`${T.body} leading-relaxed text-[#4b5a52]`}>{standards.intro}</p>
+              <p className={`${T.body} leading-relaxed text-[#4b5a52]`}>{content.standards.intro}</p>
             </div>
 
             <div className="flex flex-col gap-3 sm:gap-4 lg:col-span-3">
-              {standards.points.map((point) => (
+              {content.standards.points.map((point) => (
                 <div
                   key={point.title}
                   className="flex items-start gap-4 rounded-2xl border border-[#0a2e1c]/[0.06] bg-[#FAFCFA] px-4 py-4 sm:px-5"
@@ -687,7 +553,7 @@ const StandardsSection: React.FC = () => (
   </section>
 );
 
-const ConversionBandSection: React.FC = () => (
+const ConversionBandSection = ({ content }: { content: SECURE_PAGEContent }) => (
   <section className="w-full bg-[#FAFCFA] py-10 sm:py-16">
     <div className="mx-auto w-full px-4 sm:px-6" style={{ maxWidth: 'min(1440px, 100%)' }}>
       <div className="mx-auto max-w-[1240px]">
@@ -723,15 +589,15 @@ const ConversionBandSection: React.FC = () => (
               </div>
 
               <p className={`${T.label} mb-4 text-center font-medium uppercase tracking-[0.2em] text-[#36B936]`}>
-                Need Highly Secure Logistics?
+                {content.ctaTitle}
               </p>
 
               <p className="scta-heading">
-                Speak directly with our Secure Solutions compliance team about your government or institutional shipment.
+                {content.ctaText}
               </p>
 
               <div className="scta-btn-row">
-                {ctaButtons.map((btn) => {
+                {content.buttons.map((btn) => {
                   const cls = `scta-btn ${btn.variant === 'primary' ? 'scta-btn-primary' : 'scta-btn-secondary'}`;
                   const inner = (
                     <>
@@ -749,7 +615,7 @@ const ConversionBandSection: React.FC = () => (
               </div>
 
               <p className={`${T.small} mt-8 text-center text-white/60`}>
-                Secure Solutions from Zajel — trusted logistics for government and institutional partners.
+                {content.footerNote}
               </p>
             </div>
           </div>
@@ -763,14 +629,16 @@ const ConversionBandSection: React.FC = () => (
 /* Page                                                                       */
 /* -------------------------------------------------------------------------- */
 
-export default function SecureSolutions() {
+function SecureSolutions({ content }: { content: SECURE_PAGEContent }) {
   return (
     <main className={`${manrope.className} min-h-screen overflow-x-hidden bg-[#FAFCFA]`}>
       <style>{pageStyles}</style>
-      <SecureHero />
-      <ServiceCardsSection />
-      <StandardsSection />
-      <ConversionBandSection />
+      <SecureHero content={content} />
+      <ServiceCardsSection content={content} />
+      <StandardsSection content={content} />
+      <ConversionBandSection content={content} />
     </main>
   );
 }
+
+export default cmsSection('secure-solutions.page', SECURE_PAGE, SecureSolutions);

@@ -2,7 +2,8 @@
 
 import { FeatureListSection } from '../../shared';
 import { SECURE_ID_DETAILS } from '../data';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
-const SecureIdVerificationDetails = () => <FeatureListSection {...SECURE_ID_DETAILS} />;
+const SecureIdVerificationDetails = ({ content }: { content: typeof SECURE_ID_DETAILS }) => <FeatureListSection {...content} />;
 
-export default SecureIdVerificationDetails;
+export default cmsSection('secure-id.details', SECURE_ID_DETAILS, SecureIdVerificationDetails);

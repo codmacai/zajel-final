@@ -2,7 +2,8 @@
 
 import { ProtocolCardsSection } from '../../shared';
 import { GOV_PROTOCOL } from '../data';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
-const GovInstitutionalProtocol = () => <ProtocolCardsSection {...GOV_PROTOCOL} />;
+const GovInstitutionalProtocol = ({ content }: { content: typeof GOV_PROTOCOL }) => <ProtocolCardsSection {...content} />;
 
-export default GovInstitutionalProtocol;
+export default cmsSection('secure-gov.protocol', GOV_PROTOCOL, GovInstitutionalProtocol);

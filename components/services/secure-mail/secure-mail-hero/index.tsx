@@ -2,7 +2,8 @@
 
 import { ServiceHero } from '../../shared';
 import { SECURE_MAIL_HERO } from '../data';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
-const SecureMailHero = () => <ServiceHero {...SECURE_MAIL_HERO} />;
+const SecureMailHero = ({ content }: { content: typeof SECURE_MAIL_HERO }) => <ServiceHero {...content} />;
 
-export default SecureMailHero;
+export default cmsSection('secure-mail.hero', SECURE_MAIL_HERO, SecureMailHero);
