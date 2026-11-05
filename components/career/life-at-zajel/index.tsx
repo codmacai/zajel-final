@@ -1,15 +1,22 @@
 import Image from 'next/image';
+import { serverSection } from '@/lib/cms/server';
 import { typo } from '@/components/ui copy/typography';
 import { Reveal, Stagger, StaggerItem } from '../shared/motion';
 
 // Below the fold -> Next lazy-loads these by default. `sizes` tells the browser
 // the rendered width at each breakpoint so phones never download desktop images.
-const PHOTOS = {
-  exhibition: { src: '/career/life-at-zajel-exhibition.webp', alt: 'Zajel Exhibition' },
-  team: { src: '/career/life-at-zajel-team.webp', alt: 'Team' },
-  award: { src: '/career/life-at-zajel-employee-award.png', alt: 'Employee Award' },
-  operations: { src: '/career/life-at-zajel-operations.webp', alt: 'Operations' },
-} as const;
+export const CAREERS_LIFE = {
+  headingLine1: 'Life at Zajel — More',
+  headingLine2: 'Than Just Work',
+  description:
+    "We're building a culture where collaboration, curiosity, and care meet every day. Our people are our greatest delivery — and their growth is our priority.",
+  photos: {
+    exhibition: { src: '/career/life-at-zajel-exhibition.webp', alt: 'Zajel Exhibition' },
+    team: { src: '/career/life-at-zajel-team.webp', alt: 'Team' },
+    award: { src: '/career/life-at-zajel-employee-award.png', alt: 'Employee Award' },
+    operations: { src: '/career/life-at-zajel-operations.webp', alt: 'Operations' },
+  },
+};
 
 interface PhotoProps {
   src: string;
@@ -27,7 +34,8 @@ const Photo = ({ src, alt, sizes }: PhotoProps) => (
   />
 );
 
-const LifeAtZajel = () => {
+const LifeAtZajel = ({ content }: { content: typeof CAREERS_LIFE }) => {
+  const PHOTOS = content.photos;
   return (
     <section className="w-full overflow-hidden bg-[#FDFDFD] px-4 py-10 sm:px-6 sm:py-16 lg:px-24 lg:py-24">
       <div className="mx-auto max-w-[1300px]">
@@ -35,11 +43,10 @@ const LifeAtZajel = () => {
         <div className="rtl-keep-split mb-6 grid grid-cols-1 items-start gap-6 md:mb-10 lg:grid-cols-12 lg:gap-12">
           <Reveal x={-30} y={0} className="pt-1 lg:col-span-5">
             <h2 className={`${typo.h2} mb-4 text-[#1b4332] sm:mb-5 lg:mb-6`}>
-              Life at Zajel — More <br /> Than Just Work
+              {content.headingLine1} <br /> {content.headingLine2}
             </h2>
             <p className={`${typo.body} max-w-[400px] text-[#2d6a4f]`}>
-              We&apos;re building a culture where collaboration, curiosity, and care meet every day. Our people are our
-              greatest delivery — and their growth is our priority.
+              {content.description}
             </p>
           </Reveal>
 
@@ -79,4 +86,4 @@ const LifeAtZajel = () => {
   );
 };
 
-export default LifeAtZajel;
+export default serverSection('careers.life', CAREERS_LIFE, LifeAtZajel);

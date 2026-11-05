@@ -36,3 +36,12 @@ export const JOBS: Job[] = [
     href: 'mailto:info@zajel.ae?subject=Application%3A%20Operations%20Executive',
   },
 ];
+
+/** The job openings section as one CMS section (Careers → Job openings). */
+export const CAREERS_JOBS = {
+  headingLine1: 'Opportunities That',
+  headingLine2: 'Move You Forward',
+  description: "Explore our current openings and become part of one of the UAE's most trusted courier brands.",
+  buttonLabel: 'Join our Team',
+  jobs: JOBS,
+};

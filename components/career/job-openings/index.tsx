@@ -3,13 +3,11 @@ import { ArrowUpRight } from 'lucide-react';
 import { Stagger, StaggerItem } from '../shared/motion';
 import { typo } from '@/components/ui copy/typography';
 import SectionHeading from '../shared/section-heading';
-import { JOBS, type Job } from './data';
+import { CAREERS_JOBS } from './data';
+import { serverSection } from '@/lib/cms/server';
 
-interface JobOpeningsProps {
-  jobs?: Job[];
-}
-
-const JobOpenings = ({ jobs = JOBS }: JobOpeningsProps) => {
+const JobOpenings = ({ content }: { content: typeof CAREERS_JOBS }) => {
+  const jobs = content.jobs;
   if (jobs.length === 0) return null;
 
   return (
@@ -22,10 +20,10 @@ const JobOpenings = ({ jobs = JOBS }: JobOpeningsProps) => {
         <SectionHeading
           title={
             <>
-              Opportunities That <br /> Move You Forward
+              {content.headingLine1} <br /> {content.headingLine2}
             </>
           }
-          description="Explore our current openings and become part of one of the UAE's most trusted courier brands."
+          description={content.description}
         />
 
         <Stagger stagger={0.15} margin="-100px" className="grid w-full grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
@@ -52,7 +50,7 @@ const JobOpenings = ({ jobs = JOBS }: JobOpeningsProps) => {
                 className="mt-8 flex w-fit items-center gap-3 rounded-xl border border-[#1b4332]/20 px-6 py-3 text-[13px] font-medium tracking-tight text-[#1b4332] transition-all duration-300 hover:bg-[#1b4332] hover:text-white active:scale-95 md:mt-12 md:px-8 md:py-3.5 md:text-[14px]"
               >
                 <span>
-                  Join our Team<span className="sr-only"> — {job.title}</span>
+                  {content.buttonLabel}<span className="sr-only"> — {job.title}</span>
                 </span>
                 <ArrowUpRight
                   className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
@@ -67,4 +65,4 @@ const JobOpenings = ({ jobs = JOBS }: JobOpeningsProps) => {
   );
 };
 
-export default JobOpenings;
+export default serverSection('careers.jobs', CAREERS_JOBS, JobOpenings);
