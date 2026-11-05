@@ -513,3 +513,17 @@ textarea.c-input { min-height: 96px; resize: vertical; line-height: 1.55; displa
 .c-login-box label { font-weight: 500; }
 .c-login-box .c-btn.primary { font-weight: 500; }
 .c-login-box .foot { font-weight: 300; }
+
+/* ---- sign-in: logo top, headline high, bird anchored bottom-right ---- */
+.c-login-art .c-login-copy { margin-top: clamp(56px, 13vh, 150px); }
+.c-login-foot { margin-top: auto; border-top: 0; padding-top: 0; position: relative; z-index: 1; }
+.c-login-bird { top: auto; bottom: -9%; right: -10%; width: min(74%, 640px); transform: rotate(-4deg); }
+.c-login-glow { top: auto; bottom: 6%; right: 10%; width: min(44%, 380px); }
+@media (max-width: 900px) {
+  .c-login-art .c-login-copy { margin-top: 28px; }
+  .c-login-foot { display: none; }
+  .c-login-bird { bottom: -30%; right: -18%; width: 64%; }
+}
+.c-login-bird { bottom: -17%; right: -7%; width: min(66%, 560px); }
+.c-login-glow { bottom: 2%; right: 12%; width: min(40%, 340px); }
+@media (max-width: 900px) { .c-login-bird { bottom: -38%; right: -16%; width: 58%; } }
