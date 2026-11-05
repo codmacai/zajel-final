@@ -470,3 +470,32 @@ textarea.c-input { min-height: 96px; resize: vertical; line-height: 1.55; displa
 .c-login-art::before { opacity: 0.22; }
 .c-login-copy { margin-top: auto; }
 .c-login-art h2 { max-width: 18ch; }
+
+/* ---- sign-in brand panel, refined ---- */
+.c-login-art {
+  background:
+    radial-gradient(120% 90% at 0% 0%, #1c7a36 0%, transparent 55%),
+    linear-gradient(165deg, #0a3f21 0%, #052814 50%, #021309 100%);
+}
+.c-login-art::before { opacity: 0.09; background-size: 64px 64px; mask-image: radial-gradient(ellipse 70% 55% at 20% 15%, #000 0%, transparent 70%); }
+.c-login-art::after {
+  opacity: 0.09; mix-blend-mode: overlay; background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.c-login-aurora { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+.c-login-aurora i { position: absolute; border-radius: 50%; filter: blur(70px); opacity: 0.55; animation: c-drift 18s ease-in-out infinite alternate; }
+.c-login-aurora i:nth-child(1) { width: 60%; height: 55%; left: -12%; top: -14%; background: #38c043; }
+.c-login-aurora i:nth-child(2) { width: 50%; height: 45%; right: -10%; top: 30%; background: #0f6b33; opacity: 0.7; animation-duration: 24s; }
+.c-login-aurora i:nth-child(3) { width: 45%; height: 40%; left: 20%; bottom: -18%; background: #7fe08a; opacity: 0.18; animation-duration: 30s; }
+@keyframes c-drift { to { transform: translate3d(4%, 3%, 0) scale(1.08); } }
+.c-login-glow { position: absolute; z-index: -1; right: 2%; top: 22%; width: min(46%, 420px); filter: blur(60px); opacity: 0.35; }
+.c-login-bird { position: absolute; z-index: -1; right: -8%; top: 9%; width: min(60%, 560px); height: auto; transform: rotate(-6deg); }
+.c-login-watermark { display: none; }
+.c-login-frame { position: absolute; inset: 14px; z-index: -1; border-radius: 30px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1); pointer-events: none; }
+.c-login-art h2 { font-weight: 700; max-width: 15ch; }
+.c-login-art h2 span { display: block; margin-top: 4px; font-weight: 400; letter-spacing: -0.035em; background: linear-gradient(90deg, #b8f5bf, #5fd86a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.c-login-rule { width: 56px; height: 2px; margin-top: 26px; border-radius: 2px; background: linear-gradient(90deg, #5fd86a, transparent); }
+.c-login-art .c-login-rule + p { margin-top: 16px; letter-spacing: 0.01em; }
+.c-login-foot { padding-top: 22px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+@media (max-width: 900px) { .c-login-frame, .c-login-glow { display: none; } .c-login-bird { width: 70%; top: 0; right: -20%; } }
+@media (prefers-reduced-motion: reduce) { .c-login-aurora i { animation: none; } }
