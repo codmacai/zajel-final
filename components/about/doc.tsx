@@ -3,6 +3,8 @@
 import type { FC } from "react";
 import { Manrope } from "next/font/google";
 import { motion, type Variants } from "framer-motion";
+import { ABOUT_DOCUMENTS } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 // Next.js font optimisation: self-hosted, no layout shift
 const manrope = Manrope({
@@ -10,32 +12,6 @@ const manrope = Manrope({
   weight: ["300", "400", "500", "600"],
   display: "swap",
 });
-
-// ---------------------------------------------------------------------------
-// Content
-// Put your PDFs in /public/documents/ and the paths below resolve as-is.
-// ---------------------------------------------------------------------------
-const content = {
-  eyebrow: "Our Documents",
-  heading: "Company Documents",
-  description:
-    "Download our company profile and IMS policy to learn more about our services, standards, and capabilities.",
-  documents: [
-    {
-      title: "Company Profile",
-      description: "An overview of our services, network, and capabilities.",
-      fileUrl: "/documents/company-profile.pdf",
-      theme: "light" as const,
-    },
-    {
-      title: "IMS Policy",
-      description:
-        "Our Integrated Management System policy, covering quality, environmental, and health & safety standards.",
-      fileUrl: "/documents/ims-policy.pdf",
-      theme: "dark" as const,
-    },
-  ],
-};
 
 // ---------------------------------------------------------------------------
 // Card shape
@@ -105,7 +81,7 @@ const ArrowUpRightIcon: FC = () => (
 // Component
 // ---------------------------------------------------------------------------
 /** `available`: file names in /public/documents that exist (checked on the server). */
-const CompanyDocuments: FC<{ available?: string[] }> = ({ available = [] }) => {
+const CompanyDocuments: FC<{ available?: string[]; content: typeof ABOUT_DOCUMENTS }> = ({ available = [], content }) => {
   return (
     <section
       className={`${manrope.className} w-full overflow-hidden bg-white px-4 py-16 sm:px-8 sm:py-28 md:py-32 lg:px-20 lg:py-40`}
@@ -205,4 +181,4 @@ const CompanyDocuments: FC<{ available?: string[] }> = ({ available = [] }) => {
   );
 };
 
-export default CompanyDocuments;
+export default cmsSection('about.documents', ABOUT_DOCUMENTS, CompanyDocuments);

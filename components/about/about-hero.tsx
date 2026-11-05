@@ -3,18 +3,8 @@
 import type { FC } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-
-// ---------------------------------------------------------------------------
-// Content — swap `defaultContent` for a CMS/API response later if you
-// reconnect data-fetching; the JSX below doesn't care where `data` comes from.
-// ---------------------------------------------------------------------------
-const defaultContent = {
-  heading: 'About Zajel Logistic Services, Since 2008',
-  intro:
-    "We don't just move parcels, goods, and shipments. We move businesses, relationships, and markets forward — with the intelligence, precision, and care of a trusted logistics partner.",
-  heroImageUrl: '/about/gallery/port-worker-sunset.webp',
-  heroImageAlt: 'Zajel fleet and warehouse operations',
-};
+import { ABOUT_HERO } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -29,8 +19,8 @@ const TOP_SPACING =
   'sm:pt-[calc(var(--navbar-height,4.5rem)+2.5rem)] ' +
   'lg:pt-[calc(var(--navbar-height,5rem)+3.5rem)]';
 
-const AboutHero: FC = () => {
-  const data = defaultContent;
+const AboutHero: FC<{ content: typeof ABOUT_HERO }> = ({ content }) => {
+  const data = content;
 
   return (
     <section
@@ -81,4 +71,4 @@ const AboutHero: FC = () => {
   );
 };
 
-export default AboutHero;
+export default cmsSection('about.hero', ABOUT_HERO, AboutHero);

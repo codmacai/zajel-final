@@ -3,28 +3,16 @@
 import type { FC } from 'react';
 import Image from 'next/image';
 import { motion, type Variants } from 'framer-motion';
-
-// ---------------------------------------------------------------------------
-// Content
-// ---------------------------------------------------------------------------
-const defaultContent = {
-  eyebrow: 'Sustainability & Commitment',
-  heading: 'Environmental Responsibility',
-  badge: 'ISO 14001 Certified',
-  paragraph1:
-    'Zajel holds ISO 14001 certification for environmental management, which means sustainability is built into how we plan routes, manage facilities, and operate our fleet. This is not a statement of intent. It is an audited standard that governs our operations.',
-  paragraph2:
-    "In practice, ISO 14001 drives route optimization to reduce fuel consumption and emissions across our delivery and freight operations. It governs waste management at our warehouse facilities and sets targets for energy efficiency across our offices and logistics infrastructure. As the UAE's logistics sector continues to grow, operating within a certified environmental framework ensures that growth does not come at the expense of responsibility.",
-  backgroundImage: '/about/facility-aerial-solar-panels.webp', // 👈 Update with your image path
-};
+import { ABOUT_ENVIRONMENT } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const fadeUpVariants: Variants = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
-const EnvironmentalResponsibility: FC = () => {
-  const data = defaultContent;
+const EnvironmentalResponsibility: FC<{ content: typeof ABOUT_ENVIRONMENT }> = ({ content }) => {
+  const data = content;
 
   return (
     <section
@@ -84,4 +72,4 @@ const EnvironmentalResponsibility: FC = () => {
   );
 };
 
-export default EnvironmentalResponsibility;
+export default cmsSection('about.environment', ABOUT_ENVIRONMENT, EnvironmentalResponsibility);

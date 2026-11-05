@@ -2,6 +2,8 @@
 
 import type { FC } from 'react';
 import { motion, type Variants } from 'framer-motion';
+import { ABOUT_STORY } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 // ---------------------------------------------------------------------------
 // Constants & Brand Palette
@@ -10,32 +12,6 @@ const FOREST = '#0A4D26';
 const LIME = '#36B936';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
-
-// ---------------------------------------------------------------------------
-// Content — verbatim copy
-// ---------------------------------------------------------------------------
-const defaultContent = {
-  eyebrow: 'Our Story',
-  paragraphFounding:
-    'We were founded in Dubai in 2008, starting with a specific and demanding mandate: delivering Emirates IDs and passports on behalf of UAE government entities. That work required precision, security, and consistency from day one, standards that still shape how we operate today.',
-  paragraphGrowth:
-    "Since then, we've grown from a single government logistics service into a full logistics company in the UAE, supporting individuals, businesses, and government entities alike:",
-  solutions: [
-    {
-      title: 'Individual Solutions',
-      description: 'Same day and next day delivery, domestic and international',
-    },
-    {
-      title: 'Business Solutions',
-      description: 'E-commerce fulfillment and freight forwarding by air, sea, and land',
-    },
-    {
-      title: 'Secure Solutions',
-      description:
-        'The government logistics work we were built on, still trusted by entities like MOFA, Dubai Courts, and Dubai Customs',
-    },
-  ],
-};
 
 // ---------------------------------------------------------------------------
 // Animation variants
@@ -50,8 +26,8 @@ const itemVariants: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE } },
 };
 
-const OurStory: FC = () => {
-  const data = defaultContent;
+const OurStory: FC<{ content: typeof ABOUT_STORY }> = ({ content }) => {
+  const data = content;
 
   return (
     <section className="w-full overflow-hidden bg-white px-4 py-14 font-['Manrope',sans-serif] sm:px-6 sm:py-20 lg:px-12 lg:py-28">
@@ -132,4 +108,4 @@ const OurStory: FC = () => {
   );
 };
 
-export default OurStory;
+export default cmsSection('about.story', ABOUT_STORY, OurStory);

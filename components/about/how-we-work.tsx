@@ -2,22 +2,8 @@
 
 import type { FC, ReactNode } from 'react';
 import { motion, type Variants } from 'framer-motion';
-
-// ---------------------------------------------------------------------------
-// Content — verbatim from brand guide
-// ---------------------------------------------------------------------------
-const defaultContent = {
-  heading: 'How We Work',
-  philosophy:
-    'We combine technology, expertise, and human judgment to move shipments with control — not just speed. Every decision, from route planning to customer support, is built on that same principle: intelligent movement, not just movement.',
-  certIntro: 'That discipline is independently certified:',
-  certifications: [
-    { code: 'ISO 9001', name: 'Quality Management' },
-    { code: 'ISO 14001', name: 'Environmental Management' },
-    { code: 'ISO 45001', name: 'Occupational Health & Safety' },
-    { code: 'ISO 27001', name: 'Information Security Management' },
-  ],
-};
+import { ABOUT_HOW_WE_WORK } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const staggerContainerVariants: Variants = {
   hidden: {},
@@ -63,8 +49,8 @@ const SecurityMark: FC = () => (
 
 const certMarks = [QualityMark, LeafMark, SafetyMark, SecurityMark];
 
-const HowWeWork: FC = () => {
-  const data = defaultContent;
+const HowWeWork: FC<{ content: typeof ABOUT_HOW_WE_WORK }> = ({ content }) => {
+  const data = content;
 
   return (
     <section className="relative w-full select-none overflow-hidden bg-[#042B18] px-4 py-14 font-['Manrope',sans-serif] sm:px-6 sm:py-20 lg:px-12 lg:py-28">
@@ -137,4 +123,4 @@ const HowWeWork: FC = () => {
   );
 };
 
-export default HowWeWork;
+export default cmsSection('about.how-we-work', ABOUT_HOW_WE_WORK, HowWeWork);

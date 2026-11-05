@@ -3,44 +3,10 @@
 import { useEffect, useState, type FC } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
+import { ABOUT_GALLERY } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
-// ---------------------------------------------------------------------------
-// Content & data structure
-// ---------------------------------------------------------------------------
-const defaultContent = {
-  eyebrow: 'Our Infrastructure',
-  heading: 'Facilities & Fleet',
-  description:
-    'Real scale, owned assets, and dedicated teams across the UAE. Built to deliver operational excellence and supply chain security.',
-  photos: [
-    {
-      id: 1,
-      title: 'Dubai Headquarters',
-      caption: 'Zajel headquarters, Al Rostamani Building, Dubai',
-      image: '/about/gallery/zajel-headquarters.webp', // 👈 Replace with real Zajel asset
-    },
-    {
-      id: 2,
-      title: 'Warehouse Operations',
-      caption: 'Warehouse facility, Dubai',
-      image: '/about/gallery/warehouse-aisle.webp', // 👈 Replace with real Zajel asset
-    },
-    {
-      id: 3,
-      title: 'Fleet Vehicles',
-      caption: 'Zajel delivery fleet',
-      image: '/about/gallery/zajel-van-fleet.jpg', // 👈 Replace with real Zajel asset
-    },
-    {
-      id: 4,
-      title: 'Team at Work',
-      caption: 'Our operations team',
-      image: '/about/gallery/team-meeting.jpg', // 👈 Replace with real Zajel asset
-    },
-  ],
-};
-
-type Photo = (typeof defaultContent.photos)[number];
+type Photo = (typeof ABOUT_GALLERY.photos)[number];
 
 const staggerContainerVariants: Variants = {
   hidden: {},
@@ -52,8 +18,8 @@ const fadeUpVariants: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
 
-const FacilityGallery: FC = () => {
-  const data = defaultContent;
+const FacilityGallery: FC<{ content: typeof ABOUT_GALLERY }> = ({ content }) => {
+  const data = content;
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
 
   // Close the lightbox with Escape
@@ -192,4 +158,4 @@ const FacilityGallery: FC = () => {
   );
 };
 
-export default FacilityGallery;
+export default cmsSection('about.gallery', ABOUT_GALLERY, FacilityGallery);

@@ -2,106 +2,8 @@
 
 import { useRef, useState, type FC } from 'react';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
-
-// ---------------------------------------------------------------------------
-// Content
-// ---------------------------------------------------------------------------
-const sectionHeading = 'Our Journey';
-
-type Stop = {
-  year: string;
-  eyebrow: string;
-  beats: string[];
-  caption: string;
-  isPresent?: boolean;
-};
-
-const stops: Stop[] = [
-  {
-    year: '2008',
-    eyebrow: 'The beginning.',
-    beats: [
-      'Zajel is founded in Dubai, starting with Emirates ID and passport delivery for UAE government entities.',
-      'Zajel partners with the General Directorate of Residency and Foreigners Affairs (GDRFA), becoming the official courier service for passport and Emirates ID deliveries.',
-    ],
-    caption: 'Emirates ID and passport delivery, Dubai',
-  },
-  {
-    year: '2009',
-    eyebrow: 'A new partnership.',
-    beats: [
-      "Zajel partners with Dubai Courts, enabling customers to complete document accreditation through Zajel's courier services.",
-    ],
-    caption: 'Document accreditation with Dubai Courts',
-  },
-  {
-    year: '2012',
-    eyebrow: 'Growing footprint.',
-    beats: [
-      "Zajel opens its first office in Jebel Ali Free Zone (JAFZA), strengthening its presence in Dubai's business and logistics hub.",
-    ],
-    caption: 'First office opens in JAFZA',
-  },
-  {
-    year: '2018',
-    eyebrow: 'Expanding to the capital.',
-    beats: ['Zajel expands its UAE footprint with the opening of its first office in Abu Dhabi.'],
-    caption: 'First office opens in Abu Dhabi',
-  },
-  {
-    year: '2022',
-    eyebrow: 'A national partnership.',
-    beats: [
-      'Zajel becomes an official courier service for the Ministry of Foreign Affairs (MOFA), supporting customers with pickup and delivery of documents for official attestation and accreditation.',
-    ],
-    caption: 'Official courier for MOFA',
-  },
-  {
-    year: '2023',
-    eyebrow: 'A new chapter.',
-    beats: [
-      'Nabeel AlKharabsheh joins as General Manager, opening a chapter focused on growth, operational excellence, and transformation.',
-      'Zajel begins its shift from a traditional courier business into a full logistics and supply-chain company.',
-    ],
-    caption: 'New leadership, new direction',
-  },
-  {
-    year: '2024',
-    eyebrow: 'Building momentum.',
-    beats: [
-      'An operational efficiency program strengthens internal delivery capabilities and reduces reliance on third-party resources.',
-      'ZajelNOW launches — on-demand, point-to-point and same-day delivery across the UAE.',
-      'GDRFA Dubai recognizes Zajel as a Strategic Partner; freight forwarding expands across air, sea, and land.',
-    ],
-    caption: 'ZajelNOW launches across the UAE',
-  },
-  {
-    year: '2025',
-    eyebrow: 'Recognition and reach.',
-    beats: [
-      'Investment increases in technology, automation, business intelligence, and route optimization.',
-      'Zajel is named Freight Forwarder of the Year; Nabeel AlKharabsheh receives Logistics Executive of the Year.',
-      'A five-year growth strategy is set — diversification, technology, expansion into Abu Dhabi and Al Ain, e-commerce, fulfillment, and freight.',
-      'Zajel further expands its UAE network with the opening of its first office in Al Ain.',
-    ],
-    caption: 'Freight Forwarder of the Year',
-  },
-  {
-    year: '2026',
-    eyebrow: 'Excellence, recognized.',
-    beats: ["Zajel receives the Delivery Sector Excellence Award, with recognition involving Dubai's RTA and Dubai Police."],
-    caption: 'Delivery Sector Excellence Award',
-  },
-  {
-    year: 'Present',
-    eyebrow: 'The journey continues.',
-    beats: [
-      'Zajel is evolving from a courier company into an integrated, technology-enabled logistics partner — connecting businesses and communities through express delivery, e-commerce, fulfillment, freight forwarding, and cross-border logistics.',
-    ],
-    caption: 'An integrated logistics partner',
-    isPresent: true,
-  },
-];
+import { ABOUT_JOURNEY_STOPS as stops, ABOUT_JOURNEY, type ABOUT_JOURNEYContent } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 // ---------------------------------------------------------------------------
 // Motion
@@ -127,7 +29,7 @@ const STEP_VH = 75;
 
 const pad = (n: number) => String(n).padStart(2, '0');
 
-const OurJourney: FC = () => {
+const OurJourney = ({ content }: { content: ABOUT_JOURNEYContent }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -136,10 +38,10 @@ const OurJourney: FC = () => {
     offset: ['start start', 'end end'],
   });
 
-  const rawIndex = useTransform(scrollYProgress, [0, 1], [0, stops.length - 1]);
+  const rawIndex = useTransform(scrollYProgress, [0, 1], [0, content.stops.length - 1]);
 
   useMotionValueEvent(rawIndex, 'change', (v) => {
-    const idx = Math.min(stops.length - 1, Math.max(0, Math.round(v)));
+    const idx = Math.min(content.stops.length - 1, Math.max(0, Math.round(v)));
     setActiveIndex((prev) => (prev === idx ? prev : idx));
   });
 
@@ -150,7 +52,7 @@ const OurJourney: FC = () => {
       className="relative w-full select-none font-['Manrope',sans-serif]"
       aria-labelledby="our-journey-heading"
     >
-      <div ref={containerRef} style={{ height: `${STEP_VH * stops.length}vh` }} className="relative">
+      <div ref={containerRef} style={{ height: `${STEP_VH * content.stops.length}vh` }} className="relative">
         {/* svh keeps the pinned frame stable as mobile browser bars show/hide */}
         <div className="sticky top-0 h-[100svh] overflow-hidden">
           {/* Background */}
@@ -185,7 +87,7 @@ const OurJourney: FC = () => {
                   id="our-journey-heading"
                   className="mb-3 text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.15] tracking-tight text-white sm:mb-4"
                 >
-                  {sectionHeading}
+                  {content.heading}
                 </h2>
                 <span className="inline-block h-px w-14 bg-white/30" aria-hidden="true" />
               </motion.div>
@@ -221,7 +123,7 @@ const OurJourney: FC = () => {
                     <div className="flex items-baseline gap-3 md:block">
                       <span className="block text-2xl font-light leading-none tracking-tight text-white sm:text-3xl md:mb-3 md:text-5xl">
                         {pad(activeIndex + 1)}
-                        <span className="text-[0.55em] text-white/40"> / {pad(stops.length)}</span>
+                        <span className="text-[0.55em] text-white/40"> / {pad(content.stops.length)}</span>
                       </span>
                       <p className="max-w-[240px] text-[0.8125rem] font-light leading-snug text-white/60 sm:text-sm">
                         {stop.caption}
@@ -256,4 +158,4 @@ const OurJourney: FC = () => {
   );
 };
 
-export default OurJourney;
+export default cmsSection('about.journey', ABOUT_JOURNEY, OurJourney);

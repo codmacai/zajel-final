@@ -3,37 +3,13 @@
 import type { FC } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-
-// ---------------------------------------------------------------------------
-// Content
-// ---------------------------------------------------------------------------
-const defaultContent = {
-  tagline: 'Who We Are',
-  heading: 'Moving Goods, Businesses, & Communities',
-  description:
-    'We are dedicated to setting the standard for logistics across the region. Combining human expertise with advanced intelligence, we provide seamless movement, reliability, and care for every journey.',
-  mission: {
-    label: 'Our Mission',
-    text: 'To move goods, businesses, and communities with intelligence, reliability, and care, by combining human judgment with advanced systems across the logistics spectrum.',
-    image: '/about/mission/warehouse-packing-team.webp',
-  },
-  vision: {
-    label: 'Our Vision',
-    text: "To become the region's most trusted and intelligently connected logistics partner, setting the standard for how movement works across the Middle East and beyond.",
-    image: '/about/dubai-port-aerial.webp',
-  },
-  stats: [
-    { value: '17', label: 'Years of Success' },
-    { value: '60M+', label: 'Shipments Delivered' },
-    { value: '195', label: 'Countries Covered' },
-    { value: '500k+', label: 'Items Handled Daily' },
-  ],
-};
+import { ABOUT_MISSION } from './content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const smoothTransition = { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const };
 
-const MissionVision: FC = () => {
-  const data = defaultContent;
+const MissionVision: FC<{ content: typeof ABOUT_MISSION }> = ({ content }) => {
+  const data = content;
 
   return (
     <section
@@ -117,4 +93,4 @@ const MissionVision: FC = () => {
   );
 };
 
-export default MissionVision;
+export default cmsSection('about.mission-vision', ABOUT_MISSION, MissionVision);
