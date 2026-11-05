@@ -13,7 +13,6 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   return (
     <div className="c-login">
       <aside className="c-login-art">
-        <div className="c-login-photo" aria-hidden="true" />
         <ZajelBird className="c-login-watermark" size={720} color="currentColor" />
         <div className="c-login-top">
           <ZajelLogotype height={44} inverse />
