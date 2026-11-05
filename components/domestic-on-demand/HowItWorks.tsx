@@ -6,7 +6,7 @@
 
 import ProcessStepsSection, { type ProcessStep } from '../shared/Steps';
 import { DOMESTIC_STEPS, type DOMESTIC_STEPSContent } from './content';
-import { cmsSection } from '@/components/cms/CmsProvider';
+import { serverSection } from '@/lib/cms/server';
 
 const HowItWorks = ({ content }: { content: DOMESTIC_STEPSContent }) => (
   <ProcessStepsSection
@@ -17,4 +17,4 @@ const HowItWorks = ({ content }: { content: DOMESTIC_STEPSContent }) => (
   />
 );
 
-export default cmsSection('domestic-courier.how-it-works', DOMESTIC_STEPS, HowItWorks);
+export default serverSection('domestic-courier.how-it-works', DOMESTIC_STEPS, HowItWorks);
