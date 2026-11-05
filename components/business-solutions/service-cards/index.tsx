@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { CheckIcon, CleanBoxIcon, CleanPlaneIcon, CleanShipIcon, CleanTruckIcon } from '../icons';
-import { serviceCards } from '../data';
+import { BUSINESS_SERVICES, type BUSINESS_SERVICESContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
@@ -14,7 +15,7 @@ const cleanIconMap = {
   'land-freight': CleanTruckIcon,
 } as const;
 
-export default function ServiceCards() {
+function ServiceCards({ content }: { content: BUSINESS_SERVICESContent }) {
   return (
     <section
       id="services"
@@ -32,11 +33,11 @@ export default function ServiceCards() {
           transition={{ duration: 0.8, ease: EASE }}
           className="mx-auto mb-10 sm:mb-14 max-w-[800px] text-center text-2xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight text-white lg:mb-16"
         >
-          Built to Move Every Kind of Business
+          {content.heading}
         </motion.h2>
 
         <div className="grid grid-cols-1 gap-5 sm:gap-6 lg:gap-8 md:grid-cols-2">
-          {serviceCards.map((card, i) => {
+          {content.cards.map((card, i) => {
             const DecorativeIcon = cleanIconMap[card.id];
             // Alternates strictly based on index: 0=Green, 1=White, 2=Green, 3=White
             const isGreen = i % 2 === 0;
@@ -107,3 +108,5 @@ export default function ServiceCards() {
     </section>
   );
 }
+
+export default cmsSection('business-solutions.services', BUSINESS_SERVICES, ServiceCards);

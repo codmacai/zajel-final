@@ -16,12 +16,14 @@ import {
 } from '@/components/business-solutions';
 import CTABanner from '@/components/shared/CTABanner';
 import { BUSINESS_CTA } from '@/components/business-solutions/content';
+import CmsScope from '@/components/cms/CmsScope';
 
 export const generateMetadata = cmsMetadata('business-solutions', '/business-solutions');
 
 export default async function BusinessSolutionsPage() {
   const cta = await getSection("business-solutions.cta", BUSINESS_CTA);
   return (
+    <CmsScope page="business-solutions">
     <main className="min-h-screen overflow-hidden bg-[#FAFCFA]">
       <BusinessHero />
       <ServiceCards />
@@ -31,5 +33,6 @@ export default async function BusinessSolutionsPage() {
       <WhyBusinessesChoose />
       {cta && <CTABanner {...cta} priority />}
     </main>
+    </CmsScope>
   );
 }

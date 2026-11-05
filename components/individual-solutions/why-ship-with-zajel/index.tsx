@@ -2,18 +2,18 @@
 
 import { motion } from 'framer-motion';
 import { BoltIcon, CoverageIcon, ExperienceIcon, GlobeIcon, TrackingIcon } from '../icons';
-import { backedByPoints, whyShipCards } from '../data';
+import { INDIVIDUAL_WHY, type INDIVIDUAL_WHYContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
-const CARDS = [
-  { ...whyShipCards.domestic, Icon: BoltIcon, id: 'domestic' },
-  { ...whyShipCards.international, Icon: GlobeIcon, id: 'international' },
-];
-
 const BACKED_BY_ICONS = [TrackingIcon, CoverageIcon, ExperienceIcon];
 
-export default function WhyShipWithZajel() {
+function WhyShipWithZajel({ content }: { content: INDIVIDUAL_WHYContent }) {
+  const CARDS = [
+    { ...content.cards.domestic, Icon: BoltIcon, id: 'domestic' },
+    { ...content.cards.international, Icon: GlobeIcon, id: 'international' },
+  ];
   return (
     <section className="w-full overflow-hidden bg-white px-4 py-16 font-sans sm:px-6 sm:py-20 md:px-12 lg:px-20 lg:py-24">
       <div className="mx-auto max-w-[1320px]">
@@ -27,15 +27,14 @@ export default function WhyShipWithZajel() {
         >
           <div className="mb-4 flex items-center justify-center gap-3">
             <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">
-              Core Advantages
+              {content.eyebrow}
             </span>
           </div>
           <h2 className="mx-auto max-w-[720px] text-2xl sm:text-3xl md:text-4xl font-medium leading-[1.15] tracking-tight text-[#0A4D26]">
-            Why Ship With Zajel
+            {content.heading}
           </h2>
           <p className="mt-4 sm:mt-5 max-w-[560px] text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed text-[#0A4D26]/75">
-            Engineered for speed, reliability, and global reach—built on decades of trusted logistics
-            excellence across the UAE and worldwide.
+            {content.description}
           </p>
         </motion.div>
 
@@ -78,12 +77,12 @@ export default function WhyShipWithZajel() {
         >
           <div className="mb-6 flex items-center justify-center gap-3 sm:mb-8">
             <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#0A4D26]/50">
-              Backed By
+              {content.backedByTitle}
             </span>
           </div>
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
-            {backedByPoints.map((point, i) => {
+            {content.backedBy.map((point, i) => {
               const PointIcon = BACKED_BY_ICONS[i];
               return (
                 <div
@@ -105,3 +104,5 @@ export default function WhyShipWithZajel() {
     </section>
   );
 }
+
+export default cmsSection('individual-solutions.why', INDIVIDUAL_WHY, WhyShipWithZajel);

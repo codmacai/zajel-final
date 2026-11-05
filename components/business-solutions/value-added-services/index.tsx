@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { FileCheck2, Warehouse, PackageOpen, ShieldPlus, ArrowRight, type LucideIcon } from 'lucide-react';
-import { valueAddedServices } from '../data';
+import { BUSINESS_VALUE_ADDED, type BUSINESS_VALUE_ADDEDContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
@@ -27,7 +28,7 @@ interface ValueAddedServicesProps {
   contactHref?: string;
 }
 
-export default function ValueAddedServices({ quoteHref = '/support', contactHref = '/support' }: ValueAddedServicesProps) {
+function ValueAddedServices({ content, quoteHref = '/support', contactHref = '/support' }: ValueAddedServicesProps & { content: BUSINESS_VALUE_ADDEDContent }) {
   return (
     <section className="w-full bg-white px-4 py-12 font-['Manrope',sans-serif] sm:px-6 sm:py-16 md:px-12 md:py-20 lg:px-20 lg:py-24">
       <div className="mx-auto max-w-[1320px]">
@@ -39,7 +40,7 @@ export default function ValueAddedServices({ quoteHref = '/support', contactHref
           className="mx-auto mb-10 max-w-[640px] text-center sm:mb-12 md:mb-16"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight text-[#0A4D26]">
-            More Ways We Support Your Business
+            {content.heading}
           </h2>
         </motion.div>
 
@@ -52,7 +53,7 @@ export default function ValueAddedServices({ quoteHref = '/support', contactHref
           transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
           className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[#0A4D26]/15 bg-[#0A4D26]/15 shadow-sm lg:grid-cols-4"
         >
-          {valueAddedServices.map(({ id, title, description, href }, i) => {
+          {content.services.map(({ id, title, description, href }, i) => {
             const Icon = iconMap[id];
             return (
               <div
@@ -84,7 +85,7 @@ export default function ValueAddedServices({ quoteHref = '/support', contactHref
                       href={href}
                       className="inline-flex items-center gap-1.5 text-[11px] font-medium text-[#0A4D26] transition-colors duration-300 group-hover:text-white group-active:text-white sm:text-xs md:text-sm"
                     >
-                      Learn More
+                      {content.learnMoreLabel}
                       <ArrowRight
                         className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5 sm:h-3.5 sm:w-3.5"
                         strokeWidth={2}
@@ -105,7 +106,7 @@ export default function ValueAddedServices({ quoteHref = '/support', contactHref
           className="mt-10 flex flex-col items-center gap-4 text-center sm:mt-12 sm:gap-5 md:mt-16"
         >
           <Link href={quoteHref} className={primaryButton}>
-            <span>Request a Quote</span>
+            <span>{content.quoteLabel}</span>
             <span aria-hidden="true">→</span>
           </Link>
 
@@ -113,10 +114,12 @@ export default function ValueAddedServices({ quoteHref = '/support', contactHref
             href={contactHref}
             className="px-2 text-xs font-medium text-[#0A4D26]/60 underline decoration-[#0A4D26]/20 underline-offset-4 transition-colors duration-300 hover:text-[#0A4D26] hover:decoration-[#36B936] sm:text-sm"
           >
-            Contact Us for Special Cargo Requirements
+            {content.contactLabel}
           </Link>
         </motion.div>
       </div>
     </section>
   );
 }
+
+export default cmsSection('business-solutions.value-added', BUSINESS_VALUE_ADDED, ValueAddedServices);

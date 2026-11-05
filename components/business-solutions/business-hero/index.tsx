@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { heroData } from '../data';
+import { BUSINESS_HERO, type BUSINESS_HEROContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
@@ -20,10 +21,10 @@ interface BusinessHeroProps {
   primaryHref?: string;
 }
 
-export default function BusinessHero({
+function BusinessHero({ content,
   onPrimaryClick,
-  primaryHref = heroData.buttonUrl,
-}: BusinessHeroProps) {
+  primaryHref = content.hero.buttonUrl,
+}: BusinessHeroProps & { content: BUSINESS_HEROContent }) {
   return (
     <section className="w-full bg-white px-4 py-12 font-sans sm:px-6 sm:py-20 md:px-12 lg:px-20 lg:py-24">
       <div className="mx-auto flex max-w-[1320px] flex-col items-center text-center">
@@ -36,16 +37,16 @@ export default function BusinessHero({
         >
           <div className="mb-3 flex items-center justify-center gap-3 sm:mb-4">
             <span className="text-xs font-medium uppercase tracking-wider text-[#36B936] sm:text-sm">
-              {heroData.eyebrow}
+              {content.hero.eyebrow}
             </span>
           </div>
 
           <h1 className="mx-auto max-w-[800px] text-2xl font-medium leading-[1.18] tracking-tight text-[#0A4D26] sm:text-3xl md:text-4xl lg:text-[2.75rem]">
-            {heroData.title}
+            {content.hero.title}
           </h1>
 
           <p className="mt-4 max-w-[580px] text-sm font-light leading-relaxed text-[#0A4D26]/75 sm:mt-5 md:text-base">
-            {heroData.description}
+            {content.hero.description}
           </p>
         </motion.div>
 
@@ -57,8 +58,8 @@ export default function BusinessHero({
           className="relative mt-8 h-[220px] w-full max-w-[1200px] overflow-hidden rounded-2xl border border-[#0A3D2D]/20 shadow-[0_25px_60px_-15px_rgba(5,36,26,0.3)] min-[400px]:h-[280px] sm:mt-12 sm:h-[380px] sm:rounded-[1.75rem] md:h-[420px] lg:h-[480px]"
         >
           <Image
-            src={heroData.heroImage}
-            alt={heroData.title}
+            src={content.hero.heroImage}
+            alt={content.hero.title}
             fill
             priority
             sizes="(max-width: 1280px) 100vw, 1200px"
@@ -79,7 +80,7 @@ export default function BusinessHero({
             onClick={onPrimaryClick ? (e) => { e.preventDefault(); onPrimaryClick(); } : undefined}
             className={primaryButton}
           >
-            <span>{heroData.buttonLabel}</span>
+            <span>{content.hero.buttonLabel}</span>
             <span aria-hidden="true">→</span>
           </Link>
         </motion.div>
@@ -87,3 +88,5 @@ export default function BusinessHero({
     </section>
   );
 }
+
+export default cmsSection('business-solutions.hero', BUSINESS_HERO, BusinessHero);

@@ -2,11 +2,12 @@
 
 import { motion } from 'framer-motion';
 import { CheckIcon } from '../icons';
-import { builtForBlocks } from '../data';
+import { BUSINESS_BUILT_FOR, type BUSINESS_BUILT_FORContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
-export default function BuiltForBusiness() {
+function BuiltForBusiness({ content }: { content: BUSINESS_BUILT_FORContent }) {
   return (
     <section className="w-full overflow-hidden bg-[#FAFCFA] px-4 py-16 sm:px-6 sm:py-20 md:px-12 md:py-24 lg:px-20 lg:py-32 font-['Manrope',sans-serif]">
       <div className="mx-auto max-w-[1320px]">
@@ -19,17 +20,17 @@ export default function BuiltForBusiness() {
           className="mx-auto mb-12 sm:mb-16 md:mb-20 max-w-[720px] text-center"
         >
           <div className="mb-4 flex items-center justify-center gap-3">
-            <h2 className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">Enterprise Solutions</h2>
+            <h2 className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">{content.eyebrow}</h2>
           </div>
 
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight text-[#0A4D26]">
-            Built for the Way You Do Business
+            {content.heading}
           </h2>
         </motion.div>
 
         {/* Grid Cards */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
-          {builtForBlocks.map((block, blockIndex) => (
+          {content.blocks.map((block, blockIndex) => (
             <motion.div
               key={block.id}
               initial={{ opacity: 0, y: 32 }}
@@ -79,3 +80,5 @@ export default function BuiltForBusiness() {
     </section>
   );
 }
+
+export default cmsSection('business-solutions.built-for', BUSINESS_BUILT_FOR, BuiltForBusiness);

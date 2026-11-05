@@ -3,11 +3,12 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { CheckIcon, CleanBoltIcon, CleanGlobeIcon } from '../icons';
-import { serviceCards } from '../data';
+import { INDIVIDUAL_SERVICES, type INDIVIDUAL_SERVICESContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
-export default function ServiceCards() {
+function ServiceCards({ content }: { content: INDIVIDUAL_SERVICESContent }) {
   return (
     <section className="relative w-full overflow-hidden bg-white font-sans">
       {/* Background Decorative Blur Elements */}
@@ -23,7 +24,7 @@ export default function ServiceCards() {
       <div className="relative z-10 mx-auto max-w-[1080px] px-4 py-12 sm:px-6 sm:py-20 lg:px-10 lg:py-24">
         {/* Grid Layout: 1 column on mobile, 2 columns on tablet and up */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:gap-8">
-          {serviceCards.map((card, i) => {
+          {content.cards.map((card, i) => {
             const isGradientCard = card.id === 'domestic';
             const DecorativeIcon = isGradientCard ? CleanBoltIcon : CleanGlobeIcon;
 
@@ -111,3 +112,5 @@ export default function ServiceCards() {
     </section>
   );
 }
+
+export default cmsSection('individual-solutions.services', INDIVIDUAL_SERVICES, ServiceCards);

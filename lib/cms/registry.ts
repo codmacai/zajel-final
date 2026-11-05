@@ -6,6 +6,7 @@ import type { Hints } from './fields';
 import { PAGE_SEO, type PageSeoContent } from './seo';
 import { GLOBAL } from './pages/global';
 import { HOME } from './pages/home';
+import { BUSINESS_SOLUTIONS, INDIVIDUAL_SOLUTIONS } from './pages/solutions';
 import { SEA_FREIGHT } from './pages/sea-freight';
 import { AIR_FREIGHT } from './pages/air-freight';
 import { LAND_FREIGHT } from './pages/land-freight';
@@ -57,7 +58,7 @@ function withSeo(page: PageDef): PageDef {
   };
 }
 
-export const PAGES: PageDef[] = [GLOBAL, HOME, DOMESTIC_COURIER, INTERNATIONAL_COURIER, ECOMMERCE, AIR_FREIGHT, SEA_FREIGHT, LAND_FREIGHT, CUSTOMS_CLEARANCE, WAREHOUSE, NETWORK, INDUSTRY].map(withSeo);
+export const PAGES: PageDef[] = [GLOBAL, HOME, INDIVIDUAL_SOLUTIONS, BUSINESS_SOLUTIONS, DOMESTIC_COURIER, INTERNATIONAL_COURIER, ECOMMERCE, AIR_FREIGHT, SEA_FREIGHT, LAND_FREIGHT, CUSTOMS_CLEARANCE, WAREHOUSE, NETWORK, INDUSTRY].map(withSeo);
 
 export const sectionKey = (page: string, section: string) => `${page}.${section}`;
 

@@ -3,7 +3,8 @@
 import { motion } from 'framer-motion';
 import { ShieldCheck, Layers, MapPin, TrendingUp, ArrowRight, type LucideIcon } from 'lucide-react';
 import Link from 'next/link';
-import { choiceItems, whyChooseHeader } from '../data';
+import { BUSINESS_WHY, type BUSINESS_WHYContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 const GRID_COLUMNS_MOBILE = 2;
@@ -20,11 +21,11 @@ interface WhyBusinessesChooseProps {
   ctaHref?: string;
 }
 
-export default function WhyBusinessesChoose({ ctaHref }: WhyBusinessesChooseProps) {
-  const remainderMobile = choiceItems.length % GRID_COLUMNS_MOBILE;
+function WhyBusinessesChoose({ content, ctaHref }: WhyBusinessesChooseProps & { content: BUSINESS_WHYContent }) {
+  const remainderMobile = content.items.length % GRID_COLUMNS_MOBILE;
   const emptyCellsMobile = remainderMobile === 0 ? 0 : GRID_COLUMNS_MOBILE - remainderMobile;
 
-  const remainderDesktop = choiceItems.length % GRID_COLUMNS_DESKTOP;
+  const remainderDesktop = content.items.length % GRID_COLUMNS_DESKTOP;
   const emptyCellsDesktop = remainderDesktop === 0 ? 0 : GRID_COLUMNS_DESKTOP - remainderDesktop;
 
   const ctaContent = (
@@ -35,11 +36,11 @@ export default function WhyBusinessesChoose({ ctaHref }: WhyBusinessesChooseProp
           strokeWidth={1.25}
         />
         <h3 className="mb-1.5 sm:mb-2 text-sm sm:text-base md:text-xl font-medium tracking-tight text-[#36B936] transition-colors duration-300 group-hover:text-white">
-          {whyChooseHeader.ctaLabel}
+          {content.header.ctaLabel}
         </h3>
       </div>
       <p className="mt-2 text-[11px] sm:text-xs md:text-sm font-light leading-relaxed text-[#36B936]/80 transition-colors duration-300 group-hover:text-white/80">
-        {whyChooseHeader.ctaDescription}
+        {content.header.ctaDescription}
       </p>
     </div>
   );
@@ -69,15 +70,15 @@ export default function WhyBusinessesChoose({ ctaHref }: WhyBusinessesChooseProp
           className="mb-10 sm:mb-12 md:mb-16 text-center"
         >
           <div className="mb-4 flex items-center justify-center gap-3">
-            <h2 className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">{whyChooseHeader.eyebrow}</h2>
+            <h2 className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#36B936]">{content.header.eyebrow}</h2>
           </div>
 
           <h2 className="mx-auto max-w-[720px] text-2xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight text-[#1b4332]">
-            {whyChooseHeader.heading}
+            {content.header.heading}
           </h2>
 
           <p className="mx-auto mt-4 sm:mt-5 max-w-[520px] text-[13px] sm:text-[13.5px] lg:text-[14px] font-light leading-relaxed text-[#2d6a4f]">
-            {whyChooseHeader.description}
+            {content.header.description}
           </p>
         </motion.div>
 
@@ -88,7 +89,7 @@ export default function WhyBusinessesChoose({ ctaHref }: WhyBusinessesChooseProp
           transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
           className="grid grid-cols-2 overflow-hidden rounded-2xl border border-[#1b4332]/15 shadow-sm lg:grid-cols-4"
         >
-          {choiceItems.map((item, i) => {
+          {content.items.map((item, i) => {
             const Icon = iconMap[item.id];
             return (
               <div
@@ -124,3 +125,5 @@ export default function WhyBusinessesChoose({ ctaHref }: WhyBusinessesChooseProp
     </section>
   );
 }
+
+export default cmsSection('business-solutions.why', BUSINESS_WHY, WhyBusinessesChoose);

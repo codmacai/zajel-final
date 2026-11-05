@@ -4,7 +4,8 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Radar, Wallet, BellRing, BarChart3, Plug, type LucideIcon } from 'lucide-react';
 import Link from 'next/link';
-import { technologyFeatures, technologyContent } from '../data';
+import { BUSINESS_TECHNOLOGY, type BUSINESS_TECHNOLOGYContent } from '../content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
@@ -28,7 +29,7 @@ interface TechnologyVisibilityProps {
   quoteHref?: string;
 }
 
-export default function TechnologyVisibility({ quoteHref = '/support' }: TechnologyVisibilityProps) {
+function TechnologyVisibility({ content, quoteHref = '/support' }: TechnologyVisibilityProps & { content: BUSINESS_TECHNOLOGYContent }) {
   return (
     <section className="flex w-full items-center bg-white px-4 py-12 font-['Manrope',sans-serif] sm:px-6 sm:py-16 md:px-12 md:py-20 lg:px-20 lg:py-24">
       <div className="mx-auto w-full max-w-[1320px]">
@@ -41,7 +42,7 @@ export default function TechnologyVisibility({ quoteHref = '/support' }: Technol
           className="mb-8 flex items-center gap-4 border-b border-[#0A4D26]/10 pb-4 sm:mb-10"
         >
           <span className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-[#0A4D26]/60">
-            {technologyContent.eyebrow}
+            {content.text.eyebrow}
           </span>
         </motion.div>
 
@@ -56,11 +57,11 @@ export default function TechnologyVisibility({ quoteHref = '/support' }: Technol
             className="flex w-full min-w-0 max-w-[620px] flex-col"
           >
             <h2 className="mb-3 text-2xl sm:text-3xl md:text-4xl font-medium leading-tight tracking-tight text-[#0A4D26] sm:mb-4">
-              {technologyContent.heading}
+              {content.text.heading}
             </h2>
 
             <p className="mb-6 text-[13px] sm:text-[13.5px] lg:text-[14px] font-normal leading-relaxed text-[#2d6a4f] sm:mb-8">
-              {technologyContent.description}
+              {content.text.description}
             </p>
 
             {/* Image shown inline on phones and tablets */}
@@ -72,8 +73,8 @@ export default function TechnologyVisibility({ quoteHref = '/support' }: Technol
               className="relative mx-auto mb-8 flex w-full max-w-[480px] items-center justify-center lg:hidden"
             >
               <Image
-                src={technologyContent.image}
-                alt={technologyContent.imageAlt}
+                src={content.text.image}
+                alt={content.text.imageAlt}
                 width={640}
                 height={640}
                 sizes="(max-width: 640px) 90vw, 480px"
@@ -83,7 +84,7 @@ export default function TechnologyVisibility({ quoteHref = '/support' }: Technol
 
             {/* Features: 2-column grid */}
             <div className="mb-8 grid grid-cols-2 gap-x-4 gap-y-5 sm:gap-x-6 sm:gap-y-6">
-              {technologyFeatures.map(({ id, title, description }) => {
+              {content.features.map(({ id, title, description }) => {
                 const Icon = iconMap[id];
                 return (
                   <div key={id} className="flex min-w-0 flex-col items-start gap-2.5 sm:flex-row sm:gap-3">
@@ -102,7 +103,7 @@ export default function TechnologyVisibility({ quoteHref = '/support' }: Technol
             {/* CTA: centered on phones/tablets, left-aligned on desktop */}
             <div className="flex justify-center lg:justify-start">
               <Link href={quoteHref} className={primaryButton}>
-                <span>{technologyContent.ctaLabel}</span>
+                <span>{content.text.ctaLabel}</span>
                 <span aria-hidden="true">→</span>
               </Link>
             </div>
@@ -117,8 +118,8 @@ export default function TechnologyVisibility({ quoteHref = '/support' }: Technol
             className="relative hidden max-h-[60vh] w-full items-center justify-center lg:flex"
           >
             <Image
-              src={technologyContent.image}
-              alt={technologyContent.imageAlt}
+              src={content.text.image}
+              alt={content.text.imageAlt}
               width={640}
               height={640}
               sizes="45vw"
@@ -130,3 +131,5 @@ export default function TechnologyVisibility({ quoteHref = '/support' }: Technol
     </section>
   );
 }
+
+export default cmsSection('business-solutions.technology', BUSINESS_TECHNOLOGY, TechnologyVisibility);
