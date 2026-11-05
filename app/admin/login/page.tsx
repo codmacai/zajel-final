@@ -32,17 +32,14 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           <path d={BIRD} fill="url(#loginBird)" stroke="url(#loginBirdEdge)" strokeWidth="0.6" />
         </svg>
         <div className="c-login-frame" aria-hidden="true" />
-        <div className="c-login-top">
-          <ZajelLogotype height={44} inverse />
-        </div>
         <div className="c-login-copy">
           <h2>Intelligent Movement,<span>Nationwide and Beyond</span></h2>
           <div className="c-login-rule" aria-hidden="true" />
           <p>Across the UAE and to 195 countries, since 2008.</p>
         </div>
         <div className="c-login-foot">
-          <span>© {new Date().getFullYear()} ZAJEL Courier Services</span>
-          <span>Dubai · Abu Dhabi</span>
+          <ZajelLogotype height={34} inverse />
+          <span>© {new Date().getFullYear()} ZAJEL Courier Services · Dubai · Abu Dhabi</span>
         </div>
       </aside>
       <main className="c-login-form">

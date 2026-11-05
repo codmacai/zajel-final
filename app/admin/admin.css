@@ -499,3 +499,17 @@ textarea.c-input { min-height: 96px; resize: vertical; line-height: 1.55; displa
 .c-login-foot { padding-top: 22px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
 @media (max-width: 900px) { .c-login-frame, .c-login-glow { display: none; } .c-login-bird { width: 70%; top: 0; right: -20%; } }
 @media (prefers-reduced-motion: reduce) { .c-login-aurora i { animation: none; } }
+
+/* ---- sign-in: logo at the foot, light type ---- */
+.c-login-art .c-login-copy { margin-top: auto; }
+.c-login-art h2 { font-weight: 300; font-size: clamp(36px, 4vw, 58px); line-height: 1.06; letter-spacing: -0.035em; max-width: 14ch; color: rgba(255, 255, 255, 0.96); }
+.c-login-art h2 span { font-weight: 300; margin-top: 2px; }
+.c-login-art p { font-weight: 300; font-size: 16px; color: rgba(255, 255, 255, 0.66); }
+.c-login-foot { align-items: center; margin-top: 44px; font-weight: 300; font-size: 12px; letter-spacing: 0.02em; color: rgba(255, 255, 255, 0.45); }
+@media (max-width: 900px) { .c-login-foot { display: flex; margin-top: 24px; padding-top: 16px; } .c-login-foot span { display: none; } .c-login-art h2 { font-size: 32px; } }
+.c-login-art h2 { max-width: 19ch; }
+.c-login-box h1 { font-weight: 400; letter-spacing: -0.03em; font-size: 32px; }
+.c-login-box > p { font-weight: 300; }
+.c-login-box label { font-weight: 500; }
+.c-login-box .c-btn.primary { font-weight: 500; }
+.c-login-box .foot { font-weight: 300; }
