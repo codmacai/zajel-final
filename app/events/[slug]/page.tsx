@@ -2,23 +2,21 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { pageMetadata, SITE } from '@/lib/seo';
 import EventDetail from '@/components/events/event-detail';
-import { EVENTS, getEvent } from '@/components/events/data';
+import { findEvent, getEvents } from '@/components/events/cms';
 
-// Every event page is built ahead of time; unknown slugs are a 404.
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return EVENTS.map(({ slug }) => ({ slug }));
+// Every event page is built ahead of time; events added later in the CMS are built on first visit.
+export async function generateStaticParams() {
+  return (await getEvents()).map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const event = getEvent((await params).slug);
+  const event = await findEvent((await params).slug);
   if (!event) return {};
   return pageMetadata({ title: event.title, description: event.summary, path: `/events/${event.slug}` });
 }
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
-  const event = getEvent((await params).slug);
+  const event = await findEvent((await params).slug);
   if (!event) notFound();
 
   // Event structured data (lets Google show the date and venue in results)

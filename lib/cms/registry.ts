@@ -11,6 +11,7 @@ import { SECURE_DOCS, SECURE_GOV, SECURE_ID, SECURE_MAIL, SECURE_SOLUTIONS } fro
 import { PROJECTS } from './pages/projects';
 import { ABOUT } from './pages/about';
 import { CAREERS } from './pages/careers';
+import { CONTACT, EVENTS, FAQ, LEGAL, SUPPORT, TOOL_PAGES } from './pages/help';
 import { SEA_FREIGHT } from './pages/sea-freight';
 import { AIR_FREIGHT } from './pages/air-freight';
 import { LAND_FREIGHT } from './pages/land-freight';
@@ -62,7 +63,7 @@ function withSeo(page: PageDef): PageDef {
   };
 }
 
-export const PAGES: PageDef[] = [GLOBAL, HOME, INDIVIDUAL_SOLUTIONS, BUSINESS_SOLUTIONS, SECURE_SOLUTIONS, DOMESTIC_COURIER, INTERNATIONAL_COURIER, ECOMMERCE, AIR_FREIGHT, SEA_FREIGHT, LAND_FREIGHT, CUSTOMS_CLEARANCE, WAREHOUSE, SECURE_GOV, SECURE_ID, SECURE_DOCS, SECURE_MAIL, ABOUT, CAREERS, PROJECTS, NETWORK, INDUSTRY].map(withSeo);
+export const PAGES: PageDef[] = [GLOBAL, HOME, INDIVIDUAL_SOLUTIONS, BUSINESS_SOLUTIONS, SECURE_SOLUTIONS, DOMESTIC_COURIER, INTERNATIONAL_COURIER, ECOMMERCE, AIR_FREIGHT, SEA_FREIGHT, LAND_FREIGHT, CUSTOMS_CLEARANCE, WAREHOUSE, SECURE_GOV, SECURE_ID, SECURE_DOCS, SECURE_MAIL, ABOUT, CAREERS, PROJECTS, NETWORK, INDUSTRY, EVENTS, FAQ, SUPPORT, CONTACT, LEGAL, ...TOOL_PAGES].map(withSeo);
 
 export const sectionKey = (page: string, section: string) => `${page}.${section}`;
 

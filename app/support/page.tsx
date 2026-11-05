@@ -14,24 +14,12 @@ import {
   Clock,
   type LucideIcon,
 } from 'lucide-react';
+import { SUPPORT_PAGE, type SUPPORT_PAGEContent } from '../../components/Support/content';
+import { cmsSection } from '@/components/cms/CmsProvider';
 
 /* -------------------------------------------------------------------------- */
 /*  Static content                                                            */
 /* -------------------------------------------------------------------------- */
-
-const ACTIONS: { href: string; icon: LucideIcon; title: string; text: string }[] = [
-  { href: '/track', icon: Search, title: 'Track your shipment', text: 'Enter your tracking number to see real-time status updates.' },
-  { href: '/send-shipment', icon: CalendarCheck, title: 'Schedule a pickup', text: 'Choose a location, time and details for your next shipment.' },
-  { href: '/quotation', icon: Calculator, title: 'Get a quote', text: 'Calculate domestic and international shipping rates instantly.' },
-  { href: '#contact', icon: MessageSquare, title: 'Contact our team', text: 'Reach support by phone, email or through the portal.' },
-  { href: '/#download-app', icon: Smartphone, title: 'Download the app', text: 'Track, book and get support from your mobile device.' },
-];
-
-const QUICK_LINKS: { href: string; icon: LucideIcon; label: string }[] = [
-  { href: '/track', icon: Box, label: 'Track your shipment' },
-  { href: '/faq', icon: FileText, label: 'View FAQs' },
-  { href: '#contact', icon: Phone, label: 'Contact support' },
-];
 
 /* -------------------------------------------------------------------------- */
 /*  Shared style tokens                                                       */
@@ -43,23 +31,23 @@ const card = 'rounded-[1.75rem] border border-[#E5EBE7] bg-white';
 /*  Page                                                                      */
 /* -------------------------------------------------------------------------- */
 
-export default function SupportTicketPage() {
+function SupportTicketPage({ content }: { content: SUPPORT_PAGEContent }) {
   return (
     <section className="min-h-[100svh] w-full bg-[#F7FAF8] px-4 pb-16 pt-28 sm:px-6 sm:pb-20 md:pt-36 lg:px-10 xl:px-16">
       <div className="mx-auto w-full max-w-[1240px]">
         {/* ------------------------------ Heading ------------------------------ */}
         <header className="mx-auto mb-10 max-w-[620px] text-center sm:mb-12">
           <h1 className="text-[1.75rem] font-semibold leading-tight tracking-tight text-[#064423] sm:text-[2.25rem]">
-            How can we help?
+            {content.heading}
           </h1>
           <p className="mt-3 text-[14px] leading-relaxed text-[#064423]/60 sm:text-[15px]">
-            Try a self-service option first. If you still need us, raise a ticket below.
+            {content.description}
           </p>
         </header>
 
         {/* --------------------------- Self-service grid ----------------------- */}
         <ul className="mb-12 flex flex-wrap justify-center gap-4 sm:mb-16 sm:gap-5">
-          {ACTIONS.map(({ href, icon: Icon, title, text }) => (
+          {content.actions.map(({ href, icon: Icon, title, text }) => (
             <li key={title} className="w-full sm:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.875rem)]">
               <Link
                 href={href}
@@ -82,9 +70,9 @@ export default function SupportTicketPage() {
           {/* ------------------------------ Form ------------------------------- */}
           <div id="raise-ticket" className={`${card} w-full min-w-0 flex-1 scroll-mt-28 p-5 shadow-[0_8px_30px_rgba(6,68,35,0.04)] sm:p-8 lg:p-10`}>
             <div className="mb-7 border-b border-[#E5EBE7] pb-4">
-              <h2 className="text-[17px] font-semibold tracking-tight text-[#064423]">Raise a support ticket</h2>
+              <h2 className="text-[17px] font-semibold tracking-tight text-[#064423]">{content.ticketTitle}</h2>
               <p className="mt-1 text-[13px] text-[#064423]/55">
-                Signed-in customers can raise a ticket here or from their account. We&apos;ll reply by email or phone.
+                {content.ticketText}
               </p>
             </div>
             <RaiseTicketForm returnTo="/support#raise-ticket" />
@@ -100,12 +88,12 @@ export default function SupportTicketPage() {
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#EAF6EA] text-[#064423]">
                   <MessageSquare className="h-4 w-4" aria-hidden="true" />
                 </span>
-                <h2 className="text-[17px] font-semibold tracking-tight text-[#064423]">Need quick help?</h2>
+                <h2 className="text-[17px] font-semibold tracking-tight text-[#064423]">{content.quickTitle}</h2>
               </div>
-              <p className="mb-5 mt-2 text-[13px] text-[#064423]/55">Before raising a ticket, you may try:</p>
+              <p className="mb-5 mt-2 text-[13px] text-[#064423]/55">{content.quickText}</p>
 
               <ul className="space-y-2.5">
-                {QUICK_LINKS.map(({ href, icon: Icon, label }) => (
+                {content.quickLinks.map(({ href, icon: Icon, label }) => (
                   <li key={label}>
                     <Link
                       href={href}
@@ -125,16 +113,16 @@ export default function SupportTicketPage() {
                 <div>
                   <h3 className="mb-3 flex items-center gap-2 text-[14px] font-medium text-[#064423]">
                     <Clock className="h-4 w-4 text-[#36B936]" aria-hidden="true" />
-                    Support hours
+                    {content.hoursTitle}
                   </h3>
                   <dl className="space-y-2 text-[13px]">
                     <div className="flex justify-between gap-4">
-                      <dt className="text-[#064423]/60">Monday – Saturday</dt>
-                      <dd className="text-right text-[#064423]">8:00 AM – 5:00 PM</dd>
+                      <dt className="text-[#064423]/60">{content.weekdays}</dt>
+                      <dd className="text-right text-[#064423]">{content.weekdayHours}</dd>
                     </div>
                     <div className="flex justify-between gap-4">
-                      <dt className="text-[#064423]/60">Sunday</dt>
-                      <dd className="text-right text-[#064423]/45">Closed</dd>
+                      <dt className="text-[#064423]/60">{content.sunday}</dt>
+                      <dd className="text-right text-[#064423]/45">{content.sundayHours}</dd>
                     </div>
                   </dl>
                 </div>
@@ -142,13 +130,13 @@ export default function SupportTicketPage() {
                 <div className="rounded-2xl bg-[#064423] p-5">
                   <h3 className="flex items-center gap-2 text-[13px] font-medium text-white/80">
                     <Phone className="h-4 w-4 text-[#36B936]" aria-hidden="true" />
-                    Emergency support
+                    {content.emergencyTitle}
                   </h3>
                   <a
                     href="tel:+97160053111"
                     className="mt-1.5 inline-block text-[20px] font-semibold tracking-tight text-[#36B936] focus-visible:outline-none focus-visible:underline"
                   >
-                    600 53 11 11
+                    {content.emergencyPhone}
                   </a>
                 </div>
               </div>
@@ -159,3 +147,5 @@ export default function SupportTicketPage() {
     </section>
   );
 }
+
+export default cmsSection('support.page', SUPPORT_PAGE, SupportTicketPage);

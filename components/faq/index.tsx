@@ -1,7 +1,8 @@
 import Eyebrow from '@/components/ui copy/eyebrow';
 import { typo } from '@/components/ui copy/typography';
 // Adjust this import path to wherever ContactBand lives in your project.
-import { CONTACT, FAQ_CATEGORIES } from './data';
+import { FAQ_PAGE } from './data';
+import { getSection } from '@/lib/cms/server';
 import FaqExplorer from './faq-explorer';
 import ContactBand from '../dynamic-contact';
 
@@ -11,7 +12,8 @@ interface FaqPageProps {
 }
 
 /** Pure server component: only <FaqExplorer /> ships client JS. */
-export default function FaqPage({ quoteHref = '/support' }: FaqPageProps) {
+export default async function FaqPage({ quoteHref = '/support' }: FaqPageProps) {
+  const page = (await getSection('faq.page', FAQ_PAGE)) ?? FAQ_PAGE;
   return (
     <div className="w-full bg-white font-sans text-[#1b4332]">
       {/* Hero */}
@@ -22,17 +24,11 @@ export default function FaqPage({ quoteHref = '/support' }: FaqPageProps) {
         />
         <div className="relative mx-auto max-w-[1100px] px-5 sm:px-8">
           <div className="mx-auto max-w-[760px] text-center">
-            <Eyebrow className="mb-4">FAQ / Knowledge Base</Eyebrow>
+            <Eyebrow className="mb-4">{page.eyebrow}</Eyebrow>
 
-            <h1 className={`${typo.h1Long} mb-4 text-[#1b4332] sm:mb-5`}>
-              Shipping FAQ UAE: Frequently Asked Questions on Freight and Logistics
-            </h1>
+            <h1 className={`${typo.h1Long} mb-4 text-[#1b4332] sm:mb-5`}>{page.heading}</h1>
 
-            <p className={`${typo.lead} mx-auto max-w-[58ch] text-[#2d6a4f]`}>
-              Find answers to the most common shipping and logistics questions in the UAE, from courier delivery and
-              freight forwarding to customs clearance, warehousing, and e-commerce fulfillment. Select a category below
-              to explore specific topics.
-            </p>
+            <p className={`${typo.lead} mx-auto max-w-[58ch] text-[#2d6a4f]`}>{page.description}</p>
           </div>
         </div>
       </section>
@@ -40,24 +36,18 @@ export default function FaqPage({ quoteHref = '/support' }: FaqPageProps) {
       {/* Questions */}
       <section className="w-full py-10 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-[1100px] px-5 sm:px-8">
-          <FaqExplorer categories={FAQ_CATEGORIES} />
+          <FaqExplorer categories={page.categories} />
         </div>
       </section>
 
       {/* Contact band */}
       <ContactBand
-        badgeText="Need Personal Assistance?"
-        title="Still Have Questions?"
-        descriptionLead="Our support team and dedicated logistics account managers are ready to help you navigate your shipping requirements across the UAE and worldwide."
-        descriptionDetail="Reach out by email or phone, or request a quote and we'll get back to you."
-        contactInfo={{
-          phone: CONTACT.phone,
-          address: CONTACT.office,
-        }}
-        primaryCta={{
-          label: 'Request a Quote',
-          url: quoteHref,
-        }}
+        badgeText={page.contact.badgeText}
+        title={page.contact.title}
+        descriptionLead={page.contact.descriptionLead}
+        descriptionDetail={page.contact.descriptionDetail}
+        contactInfo={{ phone: page.contact.phone, address: page.contact.address }}
+        primaryCta={{ label: page.contact.buttonLabel, url: quoteHref }}
       />
     </div>
   );

@@ -169,3 +169,22 @@ export const getEvent = (slug: string) => EVENTS.find((e) => e.slug === slug);
 
 /** Last day of the event (end date, or start date for one-day events). */
 export const lastDay = (e: ZajelEvent) => e.endDate ?? e.startDate;
+
+/** Every event as one CMS section (Events → Events list). */
+export const EVENTS_LIST = { events: EVENTS };
+
+/** The text of the events page (Events → Page text). */
+export const EVENTS_PAGE = {
+  eyebrow: 'Events',
+  heading: 'Where Logistics Leaders Meet',
+  description:
+    'Join Zajel at the exhibitions, conferences and workshops shaping logistics across the UAE and the region. Meet our specialists, explore new solutions and see where we have been.',
+  contact: {
+    badgeText: 'Book a Meeting',
+    title: 'Planning to Attend?',
+    descriptionLead:
+      'Schedule time with our team at any upcoming event to discuss your courier, freight, customs or warehousing requirements.',
+    descriptionDetail: "Reach out by email or phone and we'll arrange a meeting at the venue or at one of our offices.",
+    primaryCta: { label: 'Contact Our Team', url: '/support' },
+  },
+};

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { SITE } from '@/lib/seo';
-import { EVENTS } from '@/components/events/data';
+import { getEvents } from '@/components/events/cms';
 
 type Entry = { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] };
 
@@ -45,8 +45,8 @@ const ROUTES: Entry[] = [
 
 // No lastModified: it was always the build time, which search engines learn to ignore. Add a
 // real per-page date here only if one is tracked.
-export default function sitemap(): MetadataRoute.Sitemap {
-  const events: Entry[] = EVENTS.map(({ slug }) => ({ path: `/events/${slug}`, priority: 0.4, changeFrequency: 'monthly' }));
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const events: Entry[] = (await getEvents()).map(({ slug }) => ({ path: `/events/${slug}`, priority: 0.4, changeFrequency: 'monthly' }));
   return [...ROUTES, ...events].map(({ path, priority, changeFrequency }) => ({
     url: `${SITE.url}${path}`,
     changeFrequency,

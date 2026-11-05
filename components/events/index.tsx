@@ -1,11 +1,15 @@
 import Eyebrow from '@/components/ui copy/eyebrow';
 import { typo } from '@/components/ui copy/typography';
 import ContactBand from '../dynamic-contact';
-import { EVENTS } from './data';
+import { EVENTS_PAGE } from './data';
+import { getEvents } from './cms';
+import { getSection } from '@/lib/cms/server';
 import EventsExplorer from './events-explorer';
 
 /** Pure server component: only <EventsExplorer /> ships client JS. */
-export default function EventsPage() {
+export default async function EventsPage() {
+  const [content, events] = await Promise.all([getSection('events.page', EVENTS_PAGE), getEvents()]);
+  const page = content ?? EVENTS_PAGE;
   return (
     <div className="w-full bg-white font-sans text-[#1b4332]">
       {/* Hero */}
@@ -16,14 +20,11 @@ export default function EventsPage() {
         />
         <div className="relative mx-auto max-w-[1100px] px-5 sm:px-8">
           <div className="mx-auto max-w-[760px] text-center">
-            <Eyebrow className="mb-4">Events</Eyebrow>
+            <Eyebrow className="mb-4">{page.eyebrow}</Eyebrow>
 
-            <h1 className={`${typo.h1} mb-4 text-[#1b4332] sm:mb-5`}>Where Logistics Leaders Meet</h1>
+            <h1 className={`${typo.h1} mb-4 text-[#1b4332] sm:mb-5`}>{page.heading}</h1>
 
-            <p className={`${typo.lead} mx-auto max-w-[58ch] text-[#2d6a4f]`}>
-              Join Zajel at the exhibitions, conferences and workshops shaping logistics across the UAE and the
-              region. Meet our specialists, explore new solutions and see where we have been.
-            </p>
+            <p className={`${typo.lead} mx-auto max-w-[58ch] text-[#2d6a4f]`}>{page.description}</p>
           </div>
         </div>
       </section>
@@ -31,17 +32,11 @@ export default function EventsPage() {
       {/* Events */}
       <section className="w-full py-10 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-[1100px] px-5 sm:px-8">
-          <EventsExplorer events={EVENTS} />
+          <EventsExplorer events={events} />
         </div>
       </section>
 
-      <ContactBand
-        badgeText="Book a Meeting"
-        title="Planning to Attend?"
-        descriptionLead="Schedule time with our team at any upcoming event to discuss your courier, freight, customs or warehousing requirements."
-        descriptionDetail="Reach out by email or phone and we'll arrange a meeting at the venue or at one of our offices."
-        primaryCta={{ label: 'Contact Our Team', url: '/support' }}
-      />
+      <ContactBand {...page.contact} />
     </div>
   );
 }

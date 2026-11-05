@@ -157,4 +157,8 @@ export const PAGE_SEO: Record<string, PageSeoContent> = {
     description:
       "Get an instant courier quote for domestic and international shipments from the UAE. Enter weight and destination to compare delivery options.",
   },
+  legal: {
+    title: 'Legal',
+    description: 'Zajel privacy, PDPL, terms and accessibility information.',
+  },
 };

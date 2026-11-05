@@ -314,3 +314,22 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
     ],
   },
 ];
+
+/** The FAQ page as one CMS section (FAQ → Page content). */
+export const FAQ_PAGE = {
+  eyebrow: 'FAQ / Knowledge Base',
+  heading: 'Shipping FAQ UAE: Frequently Asked Questions on Freight and Logistics',
+  description:
+    'Find answers to the most common shipping and logistics questions in the UAE, from courier delivery and freight forwarding to customs clearance, warehousing, and e-commerce fulfillment. Select a category below to explore specific topics.',
+  categories: FAQ_CATEGORIES,
+  contact: {
+    badgeText: 'Need Personal Assistance?',
+    title: 'Still Have Questions?',
+    descriptionLead:
+      'Our support team and dedicated logistics account managers are ready to help you navigate your shipping requirements across the UAE and worldwide.',
+    descriptionDetail: "Reach out by email or phone, or request a quote and we'll get back to you.",
+    phone: CONTACT.phone,
+    address: CONTACT.office,
+    buttonLabel: 'Request a Quote',
+  },
+};
