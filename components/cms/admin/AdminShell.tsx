@@ -8,6 +8,7 @@ import { logoutAction } from '@/app/admin/actions';
 import type { NavPage } from '@/lib/cms/admin';
 import { pageIcon } from './icons';
 import { ToastProvider } from './Toast';
+import { ZajelBird } from './Brand';
 
 
 
@@ -59,7 +60,7 @@ export default function AdminShell({ nav, email, children }: { nav: NavPage[]; e
       {sideOpen && <div className="c-scrim" onClick={() => setSideOpen(false)} />}
       <aside className={`c-side${sideOpen ? ' open' : ''}`} aria-label="CMS navigation">
         <div className="c-brand">
-          <div className="c-mark" aria-hidden="true">z</div>
+          <div className="c-mark" aria-hidden="true"><ZajelBird size={21} color="#fff" /></div>
           <div>
             <b>Zajel CMS</b>
             <span>zajel.com</span>

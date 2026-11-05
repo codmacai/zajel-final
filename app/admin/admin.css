@@ -384,19 +384,42 @@ textarea.c-input { min-height: 96px; resize: vertical; line-height: 1.55; displa
 /* ---------------- login ---------------- */
 .c-login { min-height: 100dvh; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
 .c-login-art {
-  position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: 44px;
-  color: #fff; background: radial-gradient(900px 600px at 10% 0%, #2fae36 0%, transparent 60%), radial-gradient(800px 600px at 100% 100%, #0d5a2a 0%, transparent 60%), #0a3a1d;
+  position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;
+  gap: 40px; padding: clamp(28px, 4vw, 56px); color: #fff;
+  background:
+    radial-gradient(900px 620px at 0% 0%, rgba(80, 210, 90, 0.55), transparent 60%),
+    radial-gradient(700px 520px at 100% 100%, rgba(18, 120, 60, 0.7), transparent 62%),
+    radial-gradient(500px 400px at 85% 15%, rgba(160, 255, 170, 0.14), transparent 70%),
+    linear-gradient(160deg, #0b4a26 0%, #06301a 48%, #031c0f 100%);
+}
+.c-login-art::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; opacity: 0.22;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.35) 1px, transparent 1px);
+  background-size: 56px 56px; mask-image: radial-gradient(ellipse 80% 60% at 30% 25%, #000 10%, transparent 75%);
 }
 .c-login-art::after {
-  content: ''; position: absolute; inset: 0; opacity: 0.18;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
-  background-size: 44px 44px; mask-image: radial-gradient(circle at 30% 30%, #000, transparent 75%);
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.06) 50%, transparent 60%);
 }
-.c-login-art > * { position: relative; z-index: 1; }
-.c-login-art h2 { margin: 0; max-width: 15ch; font: 700 clamp(32px, 3.6vw, 48px)/1.05 var(--font-display); letter-spacing: -0.035em; }
-.c-login-art p { margin: 14px 0 0; max-width: 40ch; color: rgba(255, 255, 255, 0.78); font-size: 16px; }
-.c-login-art .c-mark { width: 44px; height: 44px; border-radius: 13px; font-size: 22px; background: rgba(255, 255, 255, 0.16); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25); }
-.c-login-art small { color: rgba(255, 255, 255, 0.6); font-size: 13px; }
+.c-login-watermark { position: absolute; z-index: -1; right: -14%; bottom: -18%; width: min(78%, 720px); height: auto; color: rgba(255, 255, 255, 0.07); transform: rotate(-8deg); }
+.c-login-top { display: flex; align-items: center; gap: 14px; }
+.c-login-tag { padding: 4px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; background: rgba(255, 255, 255, 0.12); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2); }
+.c-login-copy { max-width: 560px; }
+.c-login-eyebrow { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 18px; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #a8f0b0; }
+.c-login-eyebrow::before { content: ''; width: 22px; height: 1.5px; border-radius: 2px; background: currentColor; }
+.c-login-art h2 { margin: 0; max-width: 16ch; font: 700 clamp(34px, 3.8vw, 54px)/1.04 var(--font-display); letter-spacing: -0.04em; text-wrap: balance; }
+.c-login-art p { margin: 18px 0 0; max-width: 44ch; color: rgba(255, 255, 255, 0.74); font-size: 16.5px; line-height: 1.55; }
+.c-login-points { list-style: none; margin: 34px 0 0; padding: 0; display: grid; gap: 10px; max-width: 460px; }
+.c-login-points li {
+  display: flex; gap: 14px; align-items: flex-start; padding: 14px 16px; border-radius: 18px; font-size: 13.5px; line-height: 1.45; color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.06); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1), 0 10px 30px -18px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+}
+.c-login-points b { display: block; margin-bottom: 1px; color: #fff; font-size: 14.5px; font-weight: 600; }
+.c-login-points .ic { width: 34px; height: 34px; flex: none; display: grid; place-items: center; border-radius: 11px; background: linear-gradient(160deg, #4fd04f, #23962a); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35); }
+.c-login-points .ic svg { width: 17px; height: 17px; color: #fff; }
+.c-login-foot { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: rgba(255, 255, 255, 0.5); font-size: 12.5px; }
+.c-login-badge { width: 52px; height: 52px; margin-bottom: 22px; display: grid; place-items: center; border-radius: 16px; background: linear-gradient(160deg, #4fd04f, #22952a); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 12px 28px -12px rgba(42, 159, 42, 0.8); }
 .c-login-form { display: grid; place-items: center; padding: 40px 20px; }
 .c-login-box { width: min(380px, 100%); }
 .c-login-box h1 { margin: 0; font: 700 30px/1.15 var(--font-display); letter-spacing: -0.03em; }
@@ -428,7 +451,10 @@ textarea.c-input { min-height: 96px; resize: vertical; line-height: 1.55; displa
   .c-pair .c-input[dir='rtl'] { margin-top: 2px; }
   .c-image { grid-template-columns: 1fr; }
   .c-login { grid-template-columns: 1fr; }
-  .c-login-art { min-height: 240px; padding: 28px; }
+  .c-login-art { min-height: 0; padding: 28px 22px 26px; }
+  .c-login-points, .c-login-foot { display: none; }
+  .c-login-art h2 { font-size: 30px; }
+  .c-login-badge { display: none; }
 }
 @media (max-width: 560px) {
   .c-row .meta .c-pill { display: none; }
