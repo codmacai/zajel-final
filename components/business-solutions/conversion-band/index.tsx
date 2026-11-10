@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { QuoteIcon, TeamIcon, CalculatorIcon } from '../icons';
 import { ctaButtons, conversionBandContent } from '../data';
+import { pickIcon } from '@/lib/cms/pick-icon';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -66,7 +67,7 @@ export default function ConversionBand() {
 
           <div className="flex flex-wrap items-center justify-center gap-3.5 sm:gap-5">
             {ctaButtons.map((btn) => {
-              const Icon = iconMap[btn.id];
+              const Icon = pickIcon(iconMap, btn.id);
               return (
                 <Link
                   key={btn.id}

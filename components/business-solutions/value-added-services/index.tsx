@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { FileCheck2, Warehouse, PackageOpen, ShieldPlus, ArrowRight, type LucideIcon } from 'lucide-react';
 import { BUSINESS_VALUE_ADDED, type BUSINESS_VALUE_ADDEDContent } from '../content';
 import { cmsSection } from '@/components/cms/CmsProvider';
+import { pickIcon } from '@/lib/cms/pick-icon';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
@@ -54,7 +55,7 @@ function ValueAddedServices({ content, quoteHref = '/support', contactHref = '/s
           className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[#0A4D26]/15 bg-[#0A4D26]/15 shadow-sm lg:grid-cols-4"
         >
           {content.services.map(({ id, title, description, href }, i) => {
-            const Icon = iconMap[id];
+            const Icon = pickIcon(iconMap, id);
             return (
               <div
                 key={id}

@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useId, useState } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 import { Manrope } from 'next/font/google';
 import { CONTACT_PAGE, CONTACT_PAGE_SVGBASE, type CONTACT_PAGEContent } from '@/components/contact/content';
 import { cmsSection } from '@/components/cms/CmsProvider';
+import { sendMessageAction } from './actions';
 
 // Only 400 and 500 are loaded, so nothing on this page can render bold.
 const manrope = Manrope({
@@ -43,18 +44,30 @@ const primaryButton =
 
 function ContactPage({ content }: { content: CONTACT_PAGEContent }) {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [error, setError] = useState('');
+  const shownAt = useRef(0);
+  useEffect(() => {
+    shownAt.current = performance.now();
+  }, [status]);
 
+  // Saved in the CMS (Messages), where the team reads and answers it.
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
     setStatus('submitting');
-
-    const data = Object.fromEntries(new FormData(e.currentTarget));
-
-    // TODO: replace with your API call, e.g.
-    // await fetch('/api/contact', { method: 'POST', body: JSON.stringify(data) });
-    void data;
-    await new Promise((r) => setTimeout(r, 900));
-
+    setError('');
+    const res = await sendMessageAction({
+      form: 'contact',
+      page: window.location.pathname,
+      values: Object.fromEntries(new FormData(form)),
+      elapsed: performance.now() - shownAt.current,
+    });
+    if (!res.ok) {
+      setError(res.error);
+      setStatus('idle');
+      return;
+    }
+    form.reset();
     setStatus('success');
   };
 
@@ -153,7 +166,9 @@ function ContactPage({ content }: { content: CONTACT_PAGEContent }) {
                     {content.formTitle}
                   </h2>
 
-                  <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
+                  <form onSubmit={handleSubmit} className="relative space-y-5 sm:space-y-6">
+                    {/* Left empty by people; bots fill it in. */}
+                    <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] h-px w-px opacity-0" />
                     <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2">
                       <InputField name="name" label={content.nameLabel} placeholder={content.namePlaceholder} autoComplete="name" />
                       <InputField
@@ -199,6 +214,11 @@ function ContactPage({ content }: { content: CONTACT_PAGEContent }) {
                         {content.replyNote}
                       </p>
                     </div>
+                    {error && (
+                      <p role="alert" className="text-center text-[13px] font-medium text-red-600 sm:text-left">
+                        {error}
+                      </p>
+                    )}
                   </form>
                 </>
               )}

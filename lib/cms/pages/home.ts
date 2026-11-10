@@ -64,6 +64,8 @@ export const HOME: PageDef = {
         government: { label: 'Government & legal card' },
         experience: { label: 'Years of experience card' },
         shipments: { label: 'Shipments delivered card' },
+        'experience.statSuffix': { hidden: true },
+        'shipments.statSuffix': { hidden: true },
       },
     },
     {

@@ -35,7 +35,7 @@ export const BUSINESS_SOLUTIONS: PageDef = {
     { id: 'value-added', label: 'More ways we support you', defaults: B.BUSINESS_VALUE_ADDED, hints: { services: { itemLabel: 'Service' } } },
     { id: 'built-for', label: 'Built for your business', defaults: B.BUSINESS_BUILT_FOR, hints: { blocks: { itemLabel: 'Block' } } },
     { id: 'technology', label: 'Technology & visibility', defaults: B.BUSINESS_TECHNOLOGY, hints: { text: { label: 'Text' }, 'text.image': { kind: 'image' }, features: { itemLabel: 'Feature' } } },
-    { id: 'why', label: 'Why businesses choose Zajel', defaults: B.BUSINESS_WHY, hints: { header: { label: 'Heading & button' }, items: { itemLabel: 'Reason' } } },
+    { id: 'why', label: 'Why businesses choose Zajel', defaults: B.BUSINESS_WHY, hints: { header: { label: 'Heading & button' }, 'header.ctaLabel': { label: 'Button text', help: 'The button fills the empty space in the grid, so it shows only when the number of reasons leaves a gap' }, 'header.ctaDescription': { label: 'Button description', help: 'Shown with the button' }, items: { itemLabel: 'Reason' } } },
     { id: 'cta', label: 'Bottom banner', defaults: B.BUSINESS_CTA, hints: CTA_HINTS },
   ],
 };

@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { CheckIcon, CleanBoxIcon, CleanPlaneIcon, CleanShipIcon, CleanTruckIcon } from '../icons';
 import { BUSINESS_SERVICES, type BUSINESS_SERVICESContent } from '../content';
 import { cmsSection } from '@/components/cms/CmsProvider';
+import { pickIcon } from '@/lib/cms/pick-icon';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
@@ -38,7 +39,7 @@ function ServiceCards({ content }: { content: BUSINESS_SERVICESContent }) {
 
         <div className="grid grid-cols-1 gap-5 sm:gap-6 lg:gap-8 md:grid-cols-2">
           {content.cards.map((card, i) => {
-            const DecorativeIcon = cleanIconMap[card.id];
+            const DecorativeIcon = pickIcon<(typeof cleanIconMap)[keyof typeof cleanIconMap]>(cleanIconMap, card.id);
             // Alternates strictly based on index: 0=Green, 1=White, 2=Green, 3=White
             const isGreen = i % 2 === 0;
 

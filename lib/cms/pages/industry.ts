@@ -12,6 +12,6 @@ export const INDUSTRY: PageDef = {
     { id: 'hero', label: 'Hero', defaults: serviceHeroData.industry, hints: SERVICE_HERO_HINTS },
     { id: 'expertise', label: 'Industry expertise', defaults: C.INDUSTRY_EXPERTISE, hints: { industries: { itemLabel: 'Industry' } } },
     { id: 'faq', label: 'FAQs', defaults: C.INDUSTRY_FAQ, hints: FAQ_HINTS },
-    { id: 'contact', label: 'Contact band', defaults: C.INDUSTRY_CONTACT, hints: CONTACT_BAND_HINTS },
+    { id: 'contact', label: 'Contact band', defaults: C.INDUSTRY_CONTACT, hints: { ...CONTACT_BAND_HINTS, 'contactInfo.email': { hidden: true } } },
   ],
 };

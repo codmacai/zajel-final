@@ -7,6 +7,7 @@ import {
   ArrowUp,
   ChevronLeft,
   ChevronRight,
+  CircleAlert,
   Copy,
   ExternalLink,
   History,
@@ -21,8 +22,9 @@ import {
 import Link from 'next/link';
 import { historyAction, saveSectionAction, setSectionEnabledAction } from '@/app/admin/actions';
 import { getAt, mergeContent, type ArabicMap, type Plain } from '@/lib/cms/content';
-import { isTranslatable, itemTitle, resolveField, translatablePaths, type Hints } from '@/lib/cms/fields';
+import { isTranslatable, itemTitle, pattern, resolveField, translatablePaths, type Hints } from '@/lib/cms/fields';
 import type { CmsVersion } from '@/lib/cms/store';
+import { builtIns, listCanBeEmpty, validateContent, valueCanBeEmpty, type Problem } from '@/lib/cms/validate';
 import { uploadImage } from './upload';
 import { useToast } from './Toast';
 import { fullDate, timeAgo } from './time';
@@ -82,19 +84,48 @@ function setIn(obj: Plain, parts: string[], value: Plain): Plain {
   return { ...base, [head]: setIn(base[head] ?? null, rest, value) };
 }
 
-/** A new list item shaped like `template`, with its text cleared (images and links kept as a start). */
-function blankFrom(template: Plain, hints: Hints, path: string): Plain {
+/**
+ * A new list item shaped like `template`, with its text cleared (images, links and dates kept
+ * as a start). Lists inside it start with one blank item, or none if they may be empty.
+ */
+function blankFrom(template: Plain, hints: Hints, path: string, canBeEmpty: (path: string) => boolean): Plain {
+  const key = path.split('.').pop() ?? '';
   if (typeof template === 'string') {
-    const f = resolveField(path, path.split('.').pop() ?? '', template, hints);
-    return !f.hidden && isTranslatable(f.kind) ? '' : template;
+    const f = resolveField(path, key, template, hints);
+    return !f.hidden && (isTranslatable(f.kind) || f.kind === 'slug') ? '' : template;
   }
-  if (Array.isArray(template)) return template;
+  if (Array.isArray(template)) {
+    if (resolveField(path, key, template, hints).hidden || !template.length) return template;
+    return canBeEmpty(path) ? [] : [blankFrom(template[0], hints, `${path}.0`, canBeEmpty)];
+  }
   if (isObj(template)) {
     const out: Obj = {};
-    for (const [k, v] of Object.entries(template)) out[k] = blankFrom(v, hints, `${path}.${k}`);
+    for (const [k, v] of Object.entries(template)) out[k] = blankFrom(v, hints, `${path}.${k}`, canBeEmpty);
     return out;
   }
   return template;
+}
+
+const TITLE_KEYS = ['title', 'name', 'question', 'q', 'label', 'heading', 'text', 'city', 'country', 'value', 'role'];
+
+/** A copy of a list item, marked "(copy)" so it can be told apart; page addresses get "-copy". */
+function copyOf(item: Plain, hints: Hints, path: string): Plain {
+  if (!isObj(item)) return item;
+  const out: Obj = { ...item };
+  let marked = false;
+  for (const k of [...TITLE_KEYS, ...Object.keys(item)]) {
+    const v = out[k];
+    if (marked || typeof v !== 'string' || !v.trim()) continue;
+    const f = resolveField(`${path}.${k}`, k, v, hints);
+    if (!f.hidden && isTranslatable(f.kind)) {
+      out[k] = `${v} (copy)`;
+      marked = true;
+    }
+  }
+  for (const [k, v] of Object.entries(item)) {
+    if (typeof v === 'string' && v && resolveField(`${path}.${k}`, k, v, hints).kind === 'slug') out[k] = `${v}-copy`;
+  }
+  return out;
 }
 
 /* ---------- the editor ---------- */
@@ -114,6 +145,10 @@ export default function Editor(props: EditorProps) {
 
   const arMap = useMemo(() => arabicMap(en, ar, hints), [en, ar, hints]);
   const dirty = JSON.stringify([en, arMap]) !== baseline;
+  // The same checks the server runs on save, shown next to each field as you type.
+  const problems = useMemo(() => validateContent(en, original, hints), [en, original, hints]);
+  const problemAt = useMemo(() => new Map(problems.map((p: Problem) => [p.path, p.message])), [problems]);
+  const originals = useMemo(() => builtIns(original), [original]);
   const missing = useMemo(
     () => translatablePaths(en, hints).filter((p) => {
       const v = getAt(en, p);
@@ -134,8 +169,20 @@ export default function Editor(props: EditorProps) {
     setAr((prev) => setIn(prev, parts, fnAr([...((getAt(prev, path) as Plain[]) ?? [])])));
   }, []);
 
+  const showProblem = useCallback(() => {
+    const first = problems[0];
+    if (!first) return;
+    const el = document.querySelector(`[data-path="${CSS.escape(first.path)}"]`);
+    el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el?.querySelector<HTMLElement>('input, textarea, select, button')?.focus({ preventScroll: true });
+  }, [problems]);
+
   const save = useCallback(() => {
     if (!dirty || saving) return;
+    if (problems.length) {
+      showProblem();
+      return toast(problems.length === 1 ? 'Fix the highlighted field before saving.' : `Fix the ${problems.length} highlighted fields before saving.`, 'error');
+    }
     startSave(async () => {
       const res = await saveSectionAction({ key: sectionKey, en, ar: arMap, enabled });
       if (!res.ok) return toast(res.error, 'error');
@@ -144,7 +191,7 @@ export default function Editor(props: EditorProps) {
       toast('Published. Live on zajel.com in a few seconds.');
       router.refresh();
     });
-  }, [dirty, saving, sectionKey, en, arMap, enabled, toast, router]);
+  }, [dirty, saving, problems, showProblem, sectionKey, en, arMap, enabled, toast, router]);
 
   const discard = () => {
     const [c, a] = JSON.parse(baseline) as [Plain, ArabicMap];
@@ -196,7 +243,7 @@ export default function Editor(props: EditorProps) {
     };
   }, [save, dirty]);
 
-  const ctx: Ctx = { en, ar, hints, original, update, updateList, sectionKey, writable, toast };
+  const ctx: Ctx = { en, ar, hints, original, originals, problemAt, update, updateList, sectionKey, writable, toast };
 
   return (
     <>
@@ -240,8 +287,14 @@ export default function Editor(props: EditorProps) {
       {dirty && (
         <div className="c-savebar" role="region" aria-label="Unsaved changes">
           <span className="msg">Unsaved changes<span>{missing > 0 ? `${missing} without Arabic` : 'English and Arabic'}</span></span>
+          {problems.length > 0 && (
+            <button className="c-btn danger" onClick={showProblem}>
+              <CircleAlert aria-hidden="true" />
+              {problems.length === 1 ? '1 field to fix' : `${problems.length} fields to fix`}
+            </button>
+          )}
           <button className="c-btn" onClick={discard} disabled={saving}>Discard</button>
-          <button className="c-btn primary" onClick={save} disabled={saving || !writable}>
+          <button className="c-btn primary" onClick={save} disabled={saving || !writable || problems.length > 0}>
             {saving ? <LoaderCircle className="c-spin" aria-hidden="true" /> : null}
             {saving ? 'Publishing…' : 'Save and publish'}
             {!saving && <kbd>⌘S</kbd>}
@@ -261,6 +314,10 @@ interface Ctx {
   ar: Plain;
   hints: Hints;
   original: Plain;
+  /** Built-in values by field pattern, e.g. every "events.*.cover.src". */
+  originals: Map<string, Plain[]>;
+  /** What's wrong with a field, by path. */
+  problemAt: Map<string, string>;
   sectionKey: string;
   writable: boolean;
   update: (lang: 'en' | 'ar', path: string, value: Plain) => void;
@@ -270,6 +327,19 @@ interface Ctx {
 
 const join = (path: string, key: string | number) => (path ? `${path}.${key}` : String(key));
 const isSimple = (v: Plain) => v === null || typeof v !== 'object';
+const knownAt = (ctx: Ctx, path: string) => ctx.originals.get(pattern(path)) ?? [];
+const hasProblemIn = (ctx: Ctx, path: string) => [...ctx.problemAt.keys()].some((p) => p === path || p.startsWith(`${path}.`));
+
+function FieldError({ ctx, path }: { ctx: Ctx; path: string }) {
+  const message = ctx.problemAt.get(path);
+  if (!message) return null;
+  return (
+    <p className="c-field-error" role="alert">
+      <CircleAlert aria-hidden="true" />
+      {message}
+    </p>
+  );
+}
 
 /** Top level: plain fields share one card; each group or list gets its own card. */
 function Fields({ value, path, ctx }: { value: Plain; path: string; ctx: Ctx }) {
@@ -298,7 +368,7 @@ function Fields({ value, path, ctx }: { value: Plain; path: string; ctx: Ctx }) 
       const f = resolveField(join(path, k), k, v, ctx.hints);
       if (f.hidden) continue;
       blocks.push(
-        <section className="c-group" key={k}>
+        <section className="c-group" key={k} data-path={join(path, k)}>
           <div className="c-group-head">
             <div>
               <h3>{f.label}</h3>
@@ -308,7 +378,10 @@ function Fields({ value, path, ctx }: { value: Plain; path: string; ctx: Ctx }) 
           </div>
           <div className="c-card">
             {Array.isArray(v) ? (
-              <ListField value={v} path={join(path, k)} k={k} ctx={ctx} />
+              <>
+                <ListField value={v} path={join(path, k)} k={k} ctx={ctx} />
+                <div style={{ padding: '0 14px' }}><FieldError ctx={ctx} path={join(path, k)} /></div>
+              </>
             ) : (
               <div className="c-fields">
                 <ObjectFields value={v} path={join(path, k)} ctx={ctx} />
@@ -343,9 +416,10 @@ function ObjectFields({ value, path, ctx }: { value: Obj; path: string; ctx: Ctx
         if (f.hidden) return null;
         if (Array.isArray(v)) {
           return (
-            <div className="c-field" key={k}>
+            <div className="c-field" key={k} data-path={p}>
               <div className="c-label"><b>{f.label}</b>{f.help && <span>{f.help}</span>}</div>
               <div className="c-nested"><ListField value={v} path={p} k={k} ctx={ctx} /></div>
+              <FieldError ctx={ctx} path={p} />
             </div>
           );
         }
@@ -373,48 +447,81 @@ function Field({ k, value, path, ctx }: { k: string; value: Plain; path: string;
     </div>
   );
   const id = `f-${path}`;
+  const bad = ctx.problemAt.has(path);
+  const cls = `c-input${bad ? ' invalid' : ''}`;
+  const wrap = (body: ReactNode) => (
+    <div className="c-field" data-path={path}>
+      {label}
+      {body}
+      <FieldError ctx={ctx} path={path} />
+    </div>
+  );
 
-  if (f.kind === 'image') return <div className="c-field">{label}<ImageField value={String(value ?? '')} path={path} ctx={ctx} /></div>;
+  if (f.kind === 'image') return wrap(<ImageField value={String(value ?? '')} path={path} ctx={ctx} optional={valueCanBeEmpty(f.optional, knownAt(ctx, path))} />);
 
   if (f.kind === 'toggle') {
     return (
-      <div className="c-field" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+      <div className="c-field" data-path={path} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
         {label}
         <button className="c-switch" role="switch" aria-checked={Boolean(value)} aria-label={f.label} onClick={() => ctx.update('en', path, !value)} />
       </div>
     );
   }
   if (f.kind === 'number') {
-    return (
-      <div className="c-field">
-        {label}
-        <input id={id} className="c-input" type="number" value={typeof value === 'number' ? value : ''} style={{ maxWidth: 220 }}
-          onChange={(e) => ctx.update('en', path, e.target.value === '' ? 0 : Number(e.target.value))} />
-      </div>
+    return wrap(
+      <input id={id} className={cls} type="number" value={typeof value === 'number' ? value : ''} style={{ maxWidth: 220 }}
+        onChange={(e) => ctx.update('en', path, e.target.value === '' ? 0 : Number(e.target.value))} />,
+    );
+  }
+  if (f.kind === 'date') {
+    const optional = valueCanBeEmpty(f.optional, knownAt(ctx, path));
+    return wrap(
+      <div className="c-inline">
+        <input id={id} className={cls} type="date" value={String(value ?? '')} style={{ maxWidth: 220 }} aria-label={f.label}
+          onChange={(e) => ctx.update('en', path, e.target.value)} />
+        {optional && value ? (
+          <button className="c-btn sm plain" onClick={() => ctx.update('en', path, '')}>
+            <X aria-hidden="true" />Clear
+          </button>
+        ) : null}
+      </div>,
+    );
+  }
+  if (f.kind === 'select') {
+    const v = String(value ?? '');
+    const options = f.options ?? [];
+    return wrap(
+      <select id={id} className={`${cls} c-select`} value={v} style={{ maxWidth: 320 }} aria-label={f.label} onChange={(e) => ctx.update('en', path, e.target.value)}>
+        {!options.includes(v) && <option value={v}>{v || 'Choose…'}</option>}
+        {options.map((o) => <option key={o} value={o}>{o}</option>)}
+      </select>,
+    );
+  }
+  if (f.kind === 'slug') {
+    return wrap(
+      <div className="c-affix text">
+        {f.prefix && <span className="pre">{f.prefix}</span>}
+        <input id={id} className={cls} value={String(value ?? '')} spellCheck={false} autoCapitalize="none" placeholder="my-page-address"
+          onChange={(e) => ctx.update('en', path, e.target.value.toLowerCase().replace(/\s+/g, '-'))} />
+      </div>,
     );
   }
   if (f.kind === 'color') {
     const v = String(value ?? '');
-    return (
-      <div className="c-field">
-        {label}
-        <div className="c-color">
-          <input type="color" value={/^#[0-9a-f]{6}$/i.test(v) ? v : '#36b936'} aria-label={f.label} onChange={(e) => ctx.update('en', path, e.target.value)} />
-          <input className="c-input" value={v} style={{ maxWidth: 160, fontFamily: 'var(--font-mono)' }} onChange={(e) => ctx.update('en', path, e.target.value)} aria-label={`${f.label} code`} />
-        </div>
-      </div>
+    return wrap(
+      <div className="c-color">
+        <input type="color" value={/^#[0-9a-f]{6}$/i.test(v) ? v : '#36b936'} aria-label={f.label} onChange={(e) => ctx.update('en', path, e.target.value)} />
+        <input className={cls} value={v} style={{ maxWidth: 160, fontFamily: 'var(--font-mono)' }} onChange={(e) => ctx.update('en', path, e.target.value)} aria-label={`${f.label} code`} />
+      </div>,
     );
   }
   if (f.kind === 'link') {
-    return (
-      <div className="c-field">
-        {label}
-        <div className="c-affix">
-          <Link2 aria-hidden="true" />
-          <input id={id} className="c-input" value={String(value ?? '')} spellCheck={false} placeholder="/page or https://…"
-            onChange={(e) => ctx.update('en', path, e.target.value)} />
-        </div>
-      </div>
+    return wrap(
+      <div className="c-affix">
+        <Link2 aria-hidden="true" />
+        <input id={id} className={cls} value={String(value ?? '')} spellCheck={false} placeholder="/page or https://…"
+          onChange={(e) => ctx.update('en', path, e.target.value)} />
+      </div>,
     );
   }
 
@@ -423,35 +530,32 @@ function Field({ k, value, path, ctx }: { k: string; value: Plain; path: string;
   const arV = String(getAt(ctx.ar, path) ?? '');
   const long = f.kind === 'textarea';
   const missing = Boolean(enV.trim()) && !arV.trim();
-  const common = { className: 'c-input', spellCheck: true };
-  return (
-    <div className="c-field">
-      {label}
-      <div className="c-pair">
-        <div className="c-input-wrap">
-          {long ? (
-            <textarea {...common} id={id} value={enV} aria-label={`${f.label} (English)`} rows={Math.min(8, Math.max(3, Math.ceil(enV.length / 70)))}
-              onChange={(e) => ctx.update('en', path, e.target.value)} />
-          ) : (
-            <input {...common} id={id} value={enV} aria-label={`${f.label} (English)`} onChange={(e) => ctx.update('en', path, e.target.value)} />
-          )}
-          {long && <span className="c-count">{enV.length}</span>}
-        </div>
-        <div className="c-input-wrap">
-          {long ? (
-            <textarea {...common} className={`c-input${missing ? ' missing' : ''}`} dir="rtl" lang="ar" value={arV} placeholder="أضف الترجمة العربية"
-              aria-label={`${f.label} (Arabic)`} rows={Math.min(8, Math.max(3, Math.ceil(arV.length / 70)))} onChange={(e) => ctx.update('ar', path, e.target.value)} />
-          ) : (
-            <input {...common} className={`c-input${missing ? ' missing' : ''}`} dir="rtl" lang="ar" value={arV} placeholder="أضف الترجمة العربية"
-              aria-label={`${f.label} (Arabic)`} onChange={(e) => ctx.update('ar', path, e.target.value)} />
-          )}
-        </div>
+  const common = { className: cls, spellCheck: true };
+  return wrap(
+    <div className="c-pair">
+      <div className="c-input-wrap">
+        {long ? (
+          <textarea {...common} id={id} value={enV} aria-label={`${f.label} (English)`} rows={Math.min(8, Math.max(3, Math.ceil(enV.length / 70)))}
+            onChange={(e) => ctx.update('en', path, e.target.value)} />
+        ) : (
+          <input {...common} id={id} value={enV} aria-label={`${f.label} (English)`} onChange={(e) => ctx.update('en', path, e.target.value)} />
+        )}
+        {long && <span className="c-count">{enV.length}</span>}
       </div>
-    </div>
+      <div className="c-input-wrap">
+        {long ? (
+          <textarea {...common} className={`c-input${missing ? ' missing' : ''}`} dir="rtl" lang="ar" value={arV} placeholder="أضف الترجمة العربية"
+            aria-label={`${f.label} (Arabic)`} rows={Math.min(8, Math.max(3, Math.ceil(arV.length / 70)))} onChange={(e) => ctx.update('ar', path, e.target.value)} />
+        ) : (
+          <input {...common} className={`c-input${missing ? ' missing' : ''}`} dir="rtl" lang="ar" value={arV} placeholder="أضف الترجمة العربية"
+            aria-label={`${f.label} (Arabic)`} onChange={(e) => ctx.update('ar', path, e.target.value)} />
+        )}
+      </div>
+    </div>,
   );
 }
 
-function ImageField({ value, path, ctx }: { value: string; path: string; ctx: Ctx }) {
+function ImageField({ value, path, ctx, optional }: { value: string; path: string; ctx: Ctx; optional: boolean }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
   const [drag, setDrag] = useState(false);
@@ -493,14 +597,14 @@ function ImageField({ value, path, ctx }: { value: string; path: string; ctx: Ct
           <button className="c-btn sm" onClick={() => inputRef.current?.click()} disabled={busy || !ctx.writable}>
             <Upload aria-hidden="true" />{value ? 'Replace image' : 'Upload image'}
           </button>
-          {value && (
+          {value && optional && (
             <button className="c-btn sm plain" onClick={() => ctx.update('en', path, '')}>
               <X aria-hidden="true" />Remove
             </button>
           )}
         </div>
         <input
-          className="c-input"
+          className={`c-input${ctx.problemAt.has(path) ? ' invalid' : ''}`}
           value={value}
           spellCheck={false}
           onChange={(e) => { setBroken(false); ctx.update('en', path, e.target.value); }}
@@ -508,7 +612,7 @@ function ImageField({ value, path, ctx }: { value: string; path: string; ctx: Ct
           placeholder="/folder/image.webp or https://…"
           style={{ fontFamily: 'var(--font-mono)', fontSize: 13 }}
         />
-        <input ref={inputRef} type="file" accept="image/jpeg,image/png,image/webp,image/avif,image/gif,image/svg+xml" hidden onChange={(e) => { upload(e.target.files?.[0]); e.target.value = ''; }} />
+        <input ref={inputRef} type="file" accept="image/jpeg,image/png,image/webp,image/avif,image/gif" hidden onChange={(e) => { upload(e.target.files?.[0]); e.target.value = ''; }} />
       </div>
     </div>
   );
@@ -519,11 +623,17 @@ function ListField({ value, path, k, ctx }: { value: Plain[]; path: string; k: s
   const [open, setOpen] = useState<number | null>(value.length === 1 ? 0 : null);
   const itemLabel = f.itemLabel ?? 'item';
   const simpleItems = value.every((v) => typeof v === 'string');
+  const canBeEmpty = (p: string) => {
+    const k = p.split('.').pop() ?? '';
+    return listCanBeEmpty(resolveField(p, k, [], ctx.hints).allowEmpty, knownAt(ctx, p));
+  };
+  const atMinimum = value.length <= 1 && !canBeEmpty(path);
 
   const template = (): Plain => {
-    const fromOriginal = getAt(ctx.original, path.replace(/\.\d+\./g, '.0.'));
-    const src = value[value.length - 1] ?? (Array.isArray(fromOriginal) ? fromOriginal[0] : '') ?? '';
-    return blankFrom(src, ctx.hints, `${path}.${value.length}`);
+    // The last item, or else the first item of this list anywhere in the original content.
+    const example = knownAt(ctx, path).find((l) => Array.isArray(l) && l.length) as Plain[] | undefined;
+    const src = value[value.length - 1] ?? example?.[0] ?? '';
+    return blankFrom(src, ctx.hints, `${path}.${value.length}`, canBeEmpty);
   };
   const add = () => {
     const item = template();
@@ -531,7 +641,8 @@ function ListField({ value, path, k, ctx }: { value: Plain[]; path: string; k: s
     setOpen(value.length);
   };
   const duplicate = (i: number) => {
-    ctx.updateList(path, (l) => [...l.slice(0, i + 1), l[i], ...l.slice(i + 1)], (l) => [...l.slice(0, i + 1), l[i], ...l.slice(i + 1)]);
+    const copy = copyOf(value[i], ctx.hints, `${path}.${i}`);
+    ctx.updateList(path, (l) => [...l.slice(0, i + 1), copy, ...l.slice(i + 1)], (l) => [...l.slice(0, i + 1), l[i], ...l.slice(i + 1)]);
     setOpen(i + 1);
   };
   const remove = (i: number) => {
@@ -550,7 +661,7 @@ function ListField({ value, path, k, ctx }: { value: Plain[]; path: string; k: s
     <div className="c-items">
       {value.map((item, i) => {
         const p = `${path}.${i}`;
-        const isOpen = open === i || simpleItems;
+        const isOpen = open === i || simpleItems || hasProblemIn(ctx, p);
         const arItem = getAt(ctx.ar, p);
         const itemMissing = translatablePaths(item, ctx.hints, p).some((tp) => {
           const ev = getAt(ctx.en, tp);
@@ -571,7 +682,7 @@ function ListField({ value, path, k, ctx }: { value: Plain[]; path: string; k: s
                 <button className="c-item-toggle" onClick={() => setOpen(isOpen ? null : i)} aria-expanded={isOpen}>
                   <span className="n">{i + 1}</span>
                   <b>{itemTitle(item, i)}</b>
-                  {itemMissing && <span className="c-pill warn" style={{ height: 20 }}>Arabic</span>}
+                  {hasProblemIn(ctx, p) ? <span className="c-pill bad" style={{ height: 20 }}>Fix</span> : itemMissing && <span className="c-pill warn" style={{ height: 20 }}>Arabic</span>}
                   <ChevronRight className="chev" aria-hidden="true" />
                 </button>
               )}
@@ -581,7 +692,10 @@ function ListField({ value, path, k, ctx }: { value: Plain[]; path: string; k: s
                 {!f.fixed && (
                   <>
                     <button className="c-icon-btn" onClick={() => duplicate(i)} aria-label="Duplicate" title="Duplicate"><Copy aria-hidden="true" /></button>
-                    <button className="c-icon-btn" onClick={() => remove(i)} aria-label="Delete" title="Delete" style={{ color: 'var(--red)' }}><Trash2 aria-hidden="true" /></button>
+                    <button className="c-icon-btn" onClick={() => remove(i)} disabled={atMinimum} aria-label="Delete"
+                      title={atMinimum ? `Keep at least one ${itemLabel.toLowerCase()}. Edit it instead.` : 'Delete'} style={{ color: 'var(--red)' }}>
+                      <Trash2 aria-hidden="true" />
+                    </button>
                   </>
                 )}
               </div>

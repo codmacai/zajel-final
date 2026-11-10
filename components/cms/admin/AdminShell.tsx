@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { ChevronRight, LayoutGrid, LogOut, Menu, Search, X } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState, type MouseEvent, type ReactNode } from 'react';
+import { ChevronRight, Inbox, LayoutGrid, LogOut, Menu, Search, X } from 'lucide-react';
 import { logoutAction } from '@/app/admin/actions';
 import type { NavPage } from '@/lib/cms/admin';
 import { pageIcon } from './icons';
@@ -20,22 +20,34 @@ function initials(email: string) {
   return ((parts[0]?.[0] ?? '') + (parts[1]?.[0] ?? parts[0]?.[1] ?? '')).toUpperCase() || 'Z';
 }
 
-export default function AdminShell({ nav, email, children }: { nav: NavPage[]; email: string; children: ReactNode }) {
+export default function AdminShell({ nav, email, newMessages, children }: { nav: NavPage[]; email: string; newMessages: number; children: ReactNode }) {
   const pathname = usePathname();
   const [sideOpen, setSideOpen] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  // The link just clicked: highlighted at once, before the next screen arrives.
+  const [pendingHref, setPendingHref] = useState<string | null>(null);
+
   const [, , pageId, sectionId] = pathname.split('/');
   const page = nav.find((p) => p.id === pageId);
   const section = page?.sections.find((s) => s.id === sectionId);
+  const target = pendingHref ?? pathname;
+  const activePageId = target.split('/')[2];
 
-  // Close the mobile menu when the page changes.
+  // When the page changes: close the mobile menu, and the click is done.
   const [lastPath, setLastPath] = useState(pathname);
   if (lastPath !== pathname) {
     setLastPath(pathname);
     setSideOpen(false);
+    setPendingHref(null);
   }
+
+  const onNavigate = (href: string) => (e?: MouseEvent) => {
+    if (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0)) return;
+    if (href !== pathname) setPendingHref(href);
+    setSideOpen(false);
+  };
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
@@ -57,6 +69,7 @@ export default function AdminShell({ nav, email, children }: { nav: NavPage[]; e
   return (
     <ToastProvider>
     <div className="c-shell">
+      {pendingHref && <div className="c-progress" role="progressbar" aria-label="Loading" />}
       {sideOpen && <div className="c-scrim" onClick={() => setSideOpen(false)} />}
       <aside className={`c-side${sideOpen ? ' open' : ''}`} aria-label="CMS navigation">
         <div className="c-brand">
@@ -73,9 +86,14 @@ export default function AdminShell({ nav, email, children }: { nav: NavPage[]; e
         </button>
         <nav className="c-nav">
           <div className="c-nav-group">
-            <Link href="/admin" className="c-nav-link" aria-current={pathname === '/admin' ? 'page' : undefined}>
+            <Link href="/admin" className="c-nav-link" aria-current={target === '/admin' ? 'page' : undefined} onClick={onNavigate('/admin')}>
               <LayoutGrid className="c-nav-ic" aria-hidden="true" />
               Overview
+            </Link>
+            <Link href="/admin/messages" className="c-nav-link" aria-current={target === '/admin/messages' ? 'page' : undefined} onClick={onNavigate('/admin/messages')}>
+              <Inbox className="c-nav-ic" aria-hidden="true" />
+              <span>Messages</span>
+              {newMessages > 0 && <span className="c-nav-dot new" title={`${newMessages} new`}>{newMessages}</span>}
             </Link>
           </div>
           {groups.map(({ g, pages }) => (
@@ -84,7 +102,7 @@ export default function AdminShell({ nav, email, children }: { nav: NavPage[]; e
               {pages.map((p) => {
                 const Icon = pageIcon(p.id);
                 return (
-                  <Link key={p.id} href={`/admin/${p.id}`} className="c-nav-link" aria-current={p.id === pageId ? 'page' : undefined}>
+                  <Link key={p.id} href={`/admin/${p.id}`} className="c-nav-link" aria-current={p.id === activePageId ? 'page' : undefined} onClick={onNavigate(`/admin/${p.id}`)}>
                     <Icon className="c-nav-ic" aria-hidden="true" />
                     <span>{p.label}</span>
                     {p.missingArabic > 0 && (
@@ -118,7 +136,7 @@ export default function AdminShell({ nav, email, children }: { nav: NavPage[]; e
             <Menu aria-hidden="true" />
           </button>
           <nav className="c-crumbs" aria-label="Breadcrumb">
-            {page ? <Link href="/admin">Overview</Link> : <b>Overview</b>}
+            {pageId === 'messages' ? <><Link href="/admin">Overview</Link><ChevronRight aria-hidden="true" /><b>Messages</b></> : page ? <Link href="/admin">Overview</Link> : <b>Overview</b>}
             {page && <ChevronRight aria-hidden="true" />}
             {page && (section ? <Link href={`/admin/${page.id}`}>{page.label}</Link> : <b>{page.label}</b>)}
             {section && <ChevronRight aria-hidden="true" />}
@@ -129,13 +147,13 @@ export default function AdminShell({ nav, email, children }: { nav: NavPage[]; e
         <main className="c-content">{children}</main>
       </div>
 
-      {paletteOpen && <Palette nav={nav} onClose={() => setPaletteOpen(false)} />}
+      {paletteOpen && <Palette nav={nav} onClose={() => setPaletteOpen(false)} onNavigate={(href) => onNavigate(href)()} />}
     </div>
     </ToastProvider>
   );
 }
 
-function Palette({ nav, onClose }: { nav: NavPage[]; onClose: () => void }) {
+function Palette({ nav, onClose, onNavigate }: { nav: NavPage[]; onClose: () => void; onNavigate: (href: string) => void }) {
   const router = useRouter();
   const [q, setQ] = useState('');
   const [sel, setSel] = useState(0);
@@ -144,6 +162,7 @@ function Palette({ nav, onClose }: { nav: NavPage[]; onClose: () => void }) {
   const all = useMemo(
     () => [
       { href: '/admin', label: 'Overview', hint: '', icon: LayoutGrid },
+      { href: '/admin/messages', label: 'Messages', hint: 'Contact form', icon: Inbox },
       ...nav.flatMap((p) => [
         { href: `/admin/${p.id}`, label: p.label, hint: p.group, icon: pageIcon(p.id) },
         ...p.sections.map((s) => ({ href: `/admin/${p.id}/${s.id}`, label: s.label, hint: p.label, icon: ChevronRight })),
@@ -163,6 +182,7 @@ function Palette({ nav, onClose }: { nav: NavPage[]; onClose: () => void }) {
 
   const go = (href: string) => {
     onClose();
+    onNavigate(href);
     router.push(href);
   };
 

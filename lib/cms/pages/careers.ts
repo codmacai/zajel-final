@@ -13,6 +13,6 @@ export const CAREERS: PageDef = {
     { id: 'values', label: 'Our values', defaults: CONTENT.careers_values.en, hints: { heading: { kind: 'textarea' }, values: { itemLabel: 'Value', fixed: true, help: 'Exactly six, to match the six icons' } } },
     { id: 'life', label: 'Life at Zajel', defaults: CAREERS_LIFE, hints: { photos: { label: 'Photos' } } },
     { id: 'benefits', label: 'Benefits', defaults: CONTENT.careers_benefits.en },
-    { id: 'jobs', label: 'Job openings', defaults: CAREERS_JOBS, hints: { jobs: { itemLabel: 'Job' }, 'jobs.*.href': { label: 'Apply link', help: 'A page, or mailto:email@zajel.ae' }, buttonLabel: { label: 'Apply button text' } } },
+    { id: 'jobs', label: 'Job openings', defaults: CAREERS_JOBS, hints: { jobs: { itemLabel: 'Job', allowEmpty: true, help: 'With no jobs, this section is hidden from the page' }, 'jobs.*.href': { label: 'Apply link', help: 'A page, or mailto:email@zajel.ae' }, buttonLabel: { label: 'Apply button text' } } },
   ],
 };

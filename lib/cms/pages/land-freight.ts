@@ -20,7 +20,7 @@ export const LAND_FREIGHT: PageDef = {
     { id: 'border-crossings', label: 'Border crossings', defaults: C.LAND_BORDERS, hints: { rows: { label: 'Border crossings table', itemLabel: 'Row' }, contactLabel: { label: 'Button text' } } },
     { id: 'quote-steps', label: 'How a freight quote works', defaults: C.LAND_QUOTE_STEPS, hints: STEPS_HINTS },
     { id: 'tir', label: 'TIR transport', defaults: C.LAND_TIR, hints: { benefits: { label: 'Advantages', itemLabel: 'Advantage' }, chips: { label: 'Tags', itemLabel: 'Tag' }, whatTextBefore: { label: 'What is TIR? (before the highlight)', kind: 'textarea' }, whatHighlight: { label: 'Highlighted words' }, whatTextAfter: { label: 'What is TIR? (after the highlight)' } } },
-    { id: 'cold-chain', label: 'Cold chain logistics', defaults: C.LAND_COLD_CHAIN, hints: { cards: { itemLabel: 'Card' }, suitable: { label: 'Suitable for', itemLabel: 'Item' } } },
+    { id: 'cold-chain', label: 'Cold chain logistics', defaults: C.LAND_COLD_CHAIN, hints: { cards: { itemLabel: 'Card' }, 'cards.*.number': { hidden: true }, suitable: { label: 'Suitable for', itemLabel: 'Item' } } },
     { id: 'faq', label: 'FAQs', defaults: C.LAND_FAQ, hints: FAQ_HINTS },
   ],
 };

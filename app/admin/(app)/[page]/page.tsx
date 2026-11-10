@@ -14,10 +14,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PageSections({ params }: Props) {
   const { page: pageId } = await params;
-  await requireAdmin(`/admin/${pageId}`);
   const page = findPage(pageId);
+  const [, all] = await Promise.all([requireAdmin(`/admin/${pageId}`), allStatuses()]);
   if (!page) notFound();
-  const statuses = (await allStatuses()).filter((s) => s.page.id === page.id);
+  const statuses = all.filter((s) => s.page.id === page.id);
   const missing = statuses.reduce((n, s) => n + s.missingArabic, 0);
 
   return (

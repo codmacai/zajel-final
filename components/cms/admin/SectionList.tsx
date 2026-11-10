@@ -5,6 +5,7 @@ import { useState, useTransition } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { setSectionEnabledAction } from '@/app/admin/actions';
 import { useToast } from './Toast';
+import LinkPending from './LinkPending';
 
 interface Item {
   id: string;
@@ -39,7 +40,9 @@ export default function SectionList({ pageId, sections }: { pageId: string; sect
         const on = enabled[s.key];
         return (
           <div key={s.key} className={`c-row link${on ? '' : ' off'}`}>
-            <Link href={`/admin/${pageId}/${s.id}`} className="c-row-link" aria-label={`Edit ${s.label}`} />
+            <Link href={`/admin/${pageId}/${s.id}`} className="c-row-link" aria-label={`Edit ${s.label}`}>
+              <LinkPending />
+            </Link>
             <div className="c-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</div>
             <div className="t">
               <b>{s.label}</b>

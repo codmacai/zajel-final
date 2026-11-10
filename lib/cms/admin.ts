@@ -1,6 +1,7 @@
 // What the admin shows for each section: its current content, its Arabic and its status.
 // Server only.
 
+import { cache } from 'react';
 import AR_JSON from '@/locales/ar.json';
 import { getAt, mergeContent, normText, toPlain, type ArabicMap, type Plain } from './content';
 import { translatablePaths } from './fields';
@@ -93,11 +94,11 @@ export async function sectionStatus(key: string): Promise<SectionStatus | null> 
   return buildStatus(found.page, found.section, row);
 }
 
-/** Status of every section (one database read). */
-export async function allStatuses(): Promise<SectionStatus[]> {
+/** Status of every section: one database read, shared by everything on the same request. */
+export const allStatuses = cache(async (): Promise<SectionStatus[]> => {
   const rows = new Map((await readRowsFresh()).map((r) => [r.key, r]));
   return allSections().map(({ page, section, key }) => buildStatus(page, section, rows.get(key)));
-}
+});
 
 /** The sidebar: pages by group, with how many sections still need Arabic. */
 export function navFrom(statuses: SectionStatus[]) {

@@ -1,7 +1,19 @@
 // How each field of a section is edited, worked out from its name and built-in value.
 // A section can override any of this with hints (see cms/registry.ts).
 
-export type FieldKind = 'text' | 'textarea' | 'image' | 'link' | 'number' | 'toggle' | 'color' | 'list' | 'group';
+export type FieldKind =
+  | 'text'
+  | 'textarea'
+  | 'image'
+  | 'link'
+  | 'number'
+  | 'toggle'
+  | 'color'
+  | 'date'
+  | 'select'
+  | 'slug'
+  | 'list'
+  | 'group';
 
 export interface FieldHint {
   label?: string;
@@ -13,6 +25,14 @@ export interface FieldHint {
   fixed?: boolean;
   /** For lists: what one item is called, e.g. "Question". */
   itemLabel?: string;
+  /** For lists: may have no items (the design shows nothing, or a message). */
+  allowEmpty?: boolean;
+  /** For images and dates: may be left empty. */
+  optional?: boolean;
+  /** For select fields: the choices. */
+  options?: string[];
+  /** For slug fields: what comes before it in the address, e.g. "/events/". */
+  prefix?: string;
 }
 
 /** Hints by field path, with * for list positions, e.g. { "items.*.icon": { hidden: true } }. */
@@ -113,6 +133,8 @@ export function itemTitle(item: unknown, index: number): string {
 }
 
 /** Resolves how one field is edited, applying the section's hints. */
+export type ResolvedField = ReturnType<typeof resolveField>;
+
 export function resolveField(path: string, key: string, value: unknown, hints: Hints = {}) {
   const hint = hints[pattern(path)] ?? {};
   const inferred = inferKind(key, value);
@@ -125,6 +147,10 @@ export function resolveField(path: string, key: string, value: unknown, hints: H
     help: hint.help ?? helpFor(key),
     fixed: hint.fixed ?? false,
     itemLabel: hint.itemLabel,
+    allowEmpty: hint.allowEmpty ?? false,
+    optional: hint.optional ?? false,
+    options: hint.options,
+    prefix: hint.prefix,
   };
 }
 

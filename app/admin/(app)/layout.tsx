@@ -1,15 +1,17 @@
 import { requireAdmin } from '@/lib/cms/auth';
 import { allStatuses, navFrom } from '@/lib/cms/admin';
+import { countNewMessages } from '@/lib/cms/store';
 import AdminShell from '@/components/cms/admin/AdminShell';
 
 // Admin pages always show the latest content.
 export const dynamic = 'force-dynamic';
 
 export default async function AdminAppLayout({ children }: { children: React.ReactNode }) {
-  const admin = await requireAdmin();
-  const nav = navFrom(await allStatuses().catch(() => []));
+  // Checked side by side; nothing is shown unless the sign-in check passes.
+  const [admin, statuses, newMessages] = await Promise.all([requireAdmin(), allStatuses().catch(() => []), countNewMessages()]);
+  const nav = navFrom(statuses);
   return (
-    <AdminShell nav={nav} email={admin.email}>
+    <AdminShell nav={nav} email={admin.email} newMessages={newMessages}>
       {children}
     </AdminShell>
   );

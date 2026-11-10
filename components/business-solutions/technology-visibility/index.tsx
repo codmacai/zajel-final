@@ -6,6 +6,7 @@ import { Radar, Wallet, BellRing, BarChart3, Plug, type LucideIcon } from 'lucid
 import Link from 'next/link';
 import { BUSINESS_TECHNOLOGY, type BUSINESS_TECHNOLOGYContent } from '../content';
 import { cmsSection } from '@/components/cms/CmsProvider';
+import { pickIcon } from '@/lib/cms/pick-icon';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
@@ -85,7 +86,7 @@ function TechnologyVisibility({ content, quoteHref = '/support' }: TechnologyVis
             {/* Features: 2-column grid */}
             <div className="mb-8 grid grid-cols-2 gap-x-4 gap-y-5 sm:gap-x-6 sm:gap-y-6">
               {content.features.map(({ id, title, description }) => {
-                const Icon = iconMap[id];
+                const Icon = pickIcon(iconMap, id);
                 return (
                   <div key={id} className="flex min-w-0 flex-col items-start gap-2.5 sm:flex-row sm:gap-3">
                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#36B936]/10 sm:mt-0.5 sm:h-9 sm:w-9">

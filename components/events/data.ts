@@ -168,10 +168,16 @@ export const EVENTS: ZajelEvent[] = [
 export const getEvent = (slug: string) => EVENTS.find((e) => e.slug === slug);
 
 /** Last day of the event (end date, or start date for one-day events). */
-export const lastDay = (e: ZajelEvent) => e.endDate ?? e.startDate;
+export const lastDay = (e: ZajelEvent) => e.endDate || e.startDate;
 
-/** Every event as one CMS section (Events → Events list). */
-export const EVENTS_LIST = { events: EVENTS };
+/**
+ * Every event as one CMS section (Events → Events list). Each event gets every field, empty
+ * where it has none, so editors can add an end date, highlights, photos or a link to any
+ * event (empty means "none" everywhere these are shown).
+ */
+export const EVENTS_LIST = {
+  events: EVENTS.map((e): ZajelEvent => ({ endDate: '', time: '', highlights: [], gallery: [], href: '', ...e })),
+};
 
 /** The text of the events page (Events → Page text). */
 export const EVENTS_PAGE = {

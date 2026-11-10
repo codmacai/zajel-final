@@ -7,6 +7,7 @@ import type { SolutionCard } from "@/components/freightsolutions/types";
 import type { FreightCard } from "@/data/air-freight/solutions";
 import { AIR_SOLUTIONS, type AIR_SOLUTIONSContent } from '../content';
 import { cmsSection } from '@/components/cms/CmsProvider';
+import { pickIcon } from '@/lib/cms/pick-icon';
 
 const iconBase: SVGProps<SVGSVGElement> = {
   width: 20,
@@ -54,7 +55,7 @@ const ICONS_BY_ID: Record<FreightCard["id"], SolutionCard["Icon"]> = {
 function AirFreightSolutions({ content }: { content: AIR_SOLUTIONSContent }) {
   const CARDS: SolutionCard[] = content.cards.map((card) => ({
     ...card,
-    Icon: ICONS_BY_ID[card.id] ?? PlaneIcon,
+    Icon: pickIcon(ICONS_BY_ID, card.id, PlaneIcon),
   }));
   return (
     <DynamicSolutions

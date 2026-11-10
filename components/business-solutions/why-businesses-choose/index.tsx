@@ -5,6 +5,7 @@ import { ShieldCheck, Layers, MapPin, TrendingUp, ArrowRight, type LucideIcon } 
 import Link from 'next/link';
 import { BUSINESS_WHY, type BUSINESS_WHYContent } from '../content';
 import { cmsSection } from '@/components/cms/CmsProvider';
+import { pickIcon } from '@/lib/cms/pick-icon';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 const GRID_COLUMNS_MOBILE = 2;
@@ -90,7 +91,7 @@ function WhyBusinessesChoose({ content, ctaHref }: WhyBusinessesChooseProps & { 
           className="grid grid-cols-2 overflow-hidden rounded-2xl border border-[#1b4332]/15 shadow-sm lg:grid-cols-4"
         >
           {content.items.map((item, i) => {
-            const Icon = iconMap[item.id];
+            const Icon = pickIcon(iconMap, item.id);
             return (
               <div
                 key={item.id}

@@ -63,6 +63,8 @@ export async function storeSession(tokens: TokenResponse) {
 
 export async function clearSession() {
   const jar = await cookies();
+  const token = jar.get(ACCESS_COOKIE)?.value;
+  if (token) recentlyChecked.delete(token);
   jar.delete(ACCESS_COOKIE);
   jar.delete(REFRESH_COOKIE);
 }
@@ -101,16 +103,29 @@ export async function refreshSession(): Promise<boolean> {
   return true;
 }
 
-/** The signed-in admin, or null. Checked with Supabase once per request. */
+// Sessions checked in the last minute, so moving around the admin doesn't wait for Supabase
+// on every click. Signing out deletes the cookies, so it still takes effect at once.
+const recentlyChecked = new Map<string, { admin: Admin; until: number }>();
+const TRUST_MS = 60_000;
+
+/** The signed-in admin, or null. Checked with Supabase at most once a minute per session. */
 export const getAdmin = cache(async (): Promise<Admin | null> => {
   if (!cmsConfigured) return null;
   const token = (await cookies()).get(ACCESS_COOKIE)?.value;
   if (!token) return null;
+  const known = recentlyChecked.get(token);
+  if (known && known.until > Date.now() && allowed(known.admin.email)) return known.admin;
   const res = await authRequest('user', { token });
-  if (!res.ok) return null;
+  if (!res.ok) {
+    recentlyChecked.delete(token);
+    return null;
+  }
   const user = (await res.json()) as { id: string; email?: string };
   if (!user.email || !allowed(user.email)) return null;
-  return { id: user.id, email: user.email };
+  const admin = { id: user.id, email: user.email };
+  if (recentlyChecked.size > 200) recentlyChecked.clear();
+  recentlyChecked.set(token, { admin, until: Date.now() + TRUST_MS });
+  return admin;
 });
 
 /** For admin pages: the admin, or a redirect to sign in (renewing an expired session first). */

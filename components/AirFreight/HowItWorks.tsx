@@ -6,7 +6,7 @@ import { serverSection } from '@/lib/cms/server';
 const HowFreightQuoteWorks = ({ content }: { content: AIR_QUOTE_STEPSContent }) => (
   <ProcessStepsSection
     eyebrow={content.eyebrow}
-    heading={<>How a Freight<br />Quote Works</>}
+    heading={<>{content.headingLine1}<br />{content.headingLine2}</>}
     description={content.description}
     steps={content.steps}
   />

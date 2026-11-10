@@ -94,7 +94,7 @@ const HowWeWork: FC<{ content: typeof ABOUT_HOW_WE_WORK }> = ({ content }) => {
           {/* Right: accreditation list, distributed to match the left column height */}
           <div className="flex flex-col justify-between gap-3 sm:gap-4 lg:col-span-5">
             {data.certifications.map((cert, idx) => {
-              const Mark = certMarks[idx];
+              const Mark = certMarks[idx % certMarks.length];
               return (
                 <motion.div
                   key={cert.code}

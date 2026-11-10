@@ -10,7 +10,7 @@ export const ECOMMERCE: PageDef = {
   sections: [
     { id: 'hero', label: 'Hero', defaults: C.ECOMMERCE_HERO, hints: HERO_HINTS },
     { id: 'benefits', label: 'What your business gets', defaults: C.ECOMMERCE_BENEFITS, hints: { cards: { itemLabel: 'Card' } } },
-    { id: 'cod', label: 'Cash on delivery', defaults: C.ECOMMERCE_COD, hints: { rows: { itemLabel: 'Row' }, headingHighlight: { label: 'Highlighted words', help: 'Shown in green inside the heading' } } },
+    { id: 'cod', label: 'Cash on delivery', defaults: C.ECOMMERCE_COD, hints: { rows: { itemLabel: 'Row' }, 'rows.*.number': { hidden: true }, headingHighlight: { label: 'Highlighted words', help: 'Shown in green inside the heading' } } },
     { id: 'getting-started', label: 'Getting started', defaults: C.ECOMMERCE_GETTING_STARTED, hints: STEPS_HINTS },
     { id: 'integrations', label: 'Platform integrations', defaults: C.ECOMMERCE_INTEGRATIONS, hints: { integrations: { itemLabel: 'Platform' }, api: { label: 'API access card' } } },
     { id: 'dashboard', label: 'Dashboard & reporting', defaults: C.ECOMMERCE_DASHBOARD, hints: { image: { kind: 'image' }, features: { itemLabel: 'Feature' } } },

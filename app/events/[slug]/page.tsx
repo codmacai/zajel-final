@@ -27,12 +27,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     name: event.title,
     description: event.summary,
     startDate: event.startDate,
-    endDate: event.endDate ?? event.startDate,
+    endDate: event.endDate || event.startDate,
     eventAttendanceMode: `https://schema.org/${online ? 'Online' : 'Offline'}EventAttendanceMode`,
     location: online
       ? { '@type': 'VirtualLocation', url: `${SITE.url}/events/${event.slug}` }
       : { '@type': 'Place', name: event.venue, address: { '@type': 'PostalAddress', addressLocality: event.city, addressCountry: 'AE' } },
-    image: [event.cover, ...(event.gallery ?? [])].map((i) => `${SITE.url}${i.src}`),
+    image: [event.cover, ...(event.gallery ?? [])].map((i) => (/^https?:/.test(i.src) ? i.src : `${SITE.url}${i.src}`)),
     organizer: { '@type': 'Organization', name: SITE.name, url: SITE.url },
   };
 

@@ -17,8 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function SectionEditor({ params }: Props) {
   const { page, section } = await params;
   const key = sectionKey(page, section);
-  await requireAdmin(`/admin/${page}/${section}`);
-  const s = await sectionStatus(key);
+  const [, s] = await Promise.all([requireAdmin(`/admin/${page}/${section}`), sectionStatus(key)]);
   if (!s) notFound();
   return (
     <Editor

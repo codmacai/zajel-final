@@ -47,14 +47,16 @@ drop policy if exists "Anyone can read site content" on public.cms_content;
 create policy "Anyone can read site content" on public.cms_content
   for select to anon, authenticated using (true);
 
-grant select on public.cms_content to anon, authenticated;
+-- Only the content columns: who saved a section stays private.
+revoke select on public.cms_content from anon, authenticated;
+grant select (key, en, ar, enabled) on public.cms_content to anon, authenticated;
 grant all on public.cms_content, public.cms_history to service_role;
 revoke all on public.cms_history from anon, authenticated;
 
 -- Public image folder for uploads. Uploads go through the server only.
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values ('cms-media', 'cms-media', true, 10485760,
-        array['image/jpeg','image/png','image/webp','image/avif','image/gif','image/svg+xml'])
+        array['image/jpeg','image/png','image/webp','image/avif','image/gif'])
 on conflict (id) do update set public = excluded.public,
   file_size_limit = excluded.file_size_limit,
   allowed_mime_types = excluded.allowed_mime_types;

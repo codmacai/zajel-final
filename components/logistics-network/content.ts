@@ -11,7 +11,7 @@ import type { ContactBandProps } from '@/components/dynamic-contact';
 export const NETWORK_HUB = {
   eyebrow: "Global Logistics Hub",
   heading: "A Logistics Network Built from the UAE",
-  paragraph1: "Situated at the crossroads of Asia, Europe, and Africa, the UAE is one of the world’s most connected logistics hubs. Dubai serves as a primary gateway for global air cargo and maritime container traffic through Jebel Ali Port and its international airports.",
+  paragraph1: "Situated at the crossroads of Asia, Europe, and Africa, the UAE is one of the world's most connected logistics hubs. Dubai serves as a primary gateway for global air cargo and maritime container traffic through Jebel Ali Port and its international airports.",
   paragraph2: "Headquartered at the center of this infrastructure, Zajel leverages the UAE’s established trade facilities and efficient customs systems for air, sea, and land shipments. This geographic advantage delivers shorter transit times to key markets across the GCC, Indian subcontinent, East Africa, and Europe—connecting your cargo onward without unnecessary repositioning or transshipment delays.",
   imageSrc: "/network/jebel-ali-port-dubai-air-cargo.webp",
   imageAlt: "Jebel Ali Port and Dubai Air Cargo Infrastructure",

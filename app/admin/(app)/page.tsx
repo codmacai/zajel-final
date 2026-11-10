@@ -6,6 +6,7 @@ import { PAGES } from '@/lib/cms/registry';
 import { cmsWritable } from '@/lib/cms/store';
 import { timeAgo } from '@/components/cms/admin/time';
 import { pageIcon } from '@/components/cms/admin/icons';
+import LinkPending from '@/components/cms/admin/LinkPending';
 
 function greeting() {
   const h = Number(new Intl.DateTimeFormat('en-GB', { hour: 'numeric', hour12: false, timeZone: 'Asia/Dubai' }).format(new Date()));
@@ -13,11 +14,13 @@ function greeting() {
 }
 
 export default async function Overview() {
-  const admin = await requireAdmin();
-  const { statuses, error } = await allStatuses().then(
-    (statuses) => ({ statuses, error: '' }),
-    (e: Error) => ({ statuses: [], error: e.message }),
-  );
+  const [admin, { statuses, error }] = await Promise.all([
+    requireAdmin(),
+    allStatuses().then(
+      (statuses) => ({ statuses, error: '' }),
+      (e: Error) => ({ statuses: [] as Awaited<ReturnType<typeof allStatuses>>, error: e.message }),
+    ),
+  ]);
   const name = admin.email.split('@')[0].split(/[._-]/)[0];
   const sections = statuses.length;
   const edited = statuses.filter((s) => s.edited);
@@ -75,6 +78,7 @@ export default async function Overview() {
                   <span>{s.updatedBy ?? 'Someone'} · {timeAgo(s.updatedAt)}</span>
                 </div>
                 <ChevronRight className="chev" aria-hidden="true" />
+                <LinkPending />
               </Link>
             );
           })}
@@ -90,6 +94,7 @@ export default async function Overview() {
               </div>
               <span className="c-pill warn">{s.missingArabic} missing</span>
               <ChevronRight className="chev" aria-hidden="true" />
+              <LinkPending />
             </Link>
           ))}
         </div>

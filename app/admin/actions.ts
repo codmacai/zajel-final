@@ -7,9 +7,20 @@ import { CMS_TAG } from '@/lib/cms/config';
 import { getAt, sanitize, toPlain, type ArabicMap, type Plain } from '@/lib/cms/content';
 import { translatablePaths } from '@/lib/cms/fields';
 import { findSection } from '@/lib/cms/registry';
-import { cmsWritable, createUpload, readHistory, readRowFresh, writeRow, type CmsVersion } from '@/lib/cms/store';
+import {
+  cmsWritable,
+  createUpload,
+  deleteMessage,
+  readHistory,
+  readRowFresh,
+  updateMessage,
+  writeRow,
+  type CmsVersion,
+  type MessageStatus,
+} from '@/lib/cms/store';
+import { validateContent, type Problem } from '@/lib/cms/validate';
 
-export type ActionResult<T = object> = ({ ok: true } & T) | { ok: false; error: string };
+export type ActionResult<T = object> = ({ ok: true } & T) | { ok: false; error: string; problems?: Problem[] };
 
 export async function loginAction(_prev: string | null, form: FormData): Promise<string | null> {
   const email = String(form.get('email') ?? '').trim();
@@ -63,6 +74,12 @@ export async function saveSectionAction(input: {
 
   const original = toPlain(found.section.defaults) ?? {};
   const en = sanitize(original, input.en) ?? original;
+  // The same checks the editor shows as you type, so nothing that breaks the site is saved.
+  const problems = validateContent(en, original, found.section.hints);
+  if (problems.length) {
+    const n = problems.length;
+    return { ok: false, error: `Fix ${n === 1 ? 'the highlighted field' : `the ${n} highlighted fields`} before saving.`, problems };
+  }
   const ar = cleanArabic(en, input.ar, found.section.hints);
   try {
     const row = await writeRow({ key: input.key, en, ar, enabled: Boolean(input.enabled), updated_by: who.email });
@@ -106,7 +123,6 @@ const IMAGE_TYPES: Record<string, string> = {
   'image/webp': 'webp',
   'image/avif': 'avif',
   'image/gif': 'gif',
-  'image/svg+xml': 'svg',
 };
 
 /** An address the browser can upload one image to, and where it will be shown from. */
@@ -119,8 +135,9 @@ export async function prepareUploadAction(
   const who = await guard();
   if ('error' in who) return { ok: false, error: who.error };
   const ext = IMAGE_TYPES[type];
-  if (!ext) return { ok: false, error: 'Use a JPG, PNG, WebP, AVIF, GIF or SVG image.' };
+  if (!ext) return { ok: false, error: 'Use a JPG, PNG, WebP, AVIF or GIF image.' };
   if (size > 10 * 1024 * 1024) return { ok: false, error: 'This image is over 10 MB. Make it smaller and try again.' };
+  if (!findSection(key)) return { ok: false, error: 'This section no longer exists. Reload the page.' };
   const base = fileName.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) || 'image';
   const folder = key.replace(/[^a-z0-9.-]/gi, '-');
   const path = `${folder}/${Date.now().toString(36)}-${base}.${ext}`;
@@ -128,5 +145,35 @@ export async function prepareUploadAction(
     return { ok: true, ...(await createUpload(path)) };
   } catch (e) {
     return { ok: false, error: e instanceof Error ? e.message : 'Couldn’t prepare the upload.' };
+  }
+}
+
+/* ---------------- messages ---------------- */
+
+const STATUSES: MessageStatus[] = ['new', 'read', 'done'];
+
+/** Marks a message as opened, done, or back to new. */
+export async function setMessageStatusAction(id: number, status: MessageStatus): Promise<ActionResult> {
+  const who = await guard();
+  if ('error' in who) return { ok: false, error: who.error };
+  if (!Number.isInteger(id) || !STATUSES.includes(status)) return { ok: false, error: 'Unknown message. Reload the page.' };
+  try {
+    const handled = status === 'done' ? { handled_by: who.email, handled_at: new Date().toISOString() } : status === 'new' ? { handled_by: null, handled_at: null } : {};
+    await updateMessage(id, { status, ...handled });
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : 'Couldn’t update the message.' };
+  }
+}
+
+export async function deleteMessageAction(id: number): Promise<ActionResult> {
+  const who = await guard();
+  if ('error' in who) return { ok: false, error: who.error };
+  if (!Number.isInteger(id)) return { ok: false, error: 'Unknown message. Reload the page.' };
+  try {
+    await deleteMessage(id);
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : 'Couldn’t delete the message.' };
   }
 }

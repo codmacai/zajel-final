@@ -29,7 +29,7 @@ export const FAQ_HINTS: Hints = {
 export const STEPS_HINTS: Hints = {
   headingLine1: { label: 'Heading, line 1' },
   headingLine2: { label: 'Heading, line 2' },
-  footnote: { label: 'Note under the steps' },
+  footnote: { label: 'Note under the heading', help: 'Shown only when there is a single step' },
   steps: { itemLabel: 'Step' },
 };
 
@@ -38,6 +38,7 @@ export const WHEN_HINTS: Hints = {
   body: { label: 'Text', itemLabel: 'Part', help: 'The paragraph in parts; switch on “Emphasis” to show a part in bold green.' },
   'body.*.emphasis': { label: 'Emphasis' },
   alternatives: { label: 'Other options', itemLabel: 'Link' },
+  'alternatives.*.sublabel': { hidden: true },
 };
 
 export const DELIVERY_HINTS: Hints = {
@@ -83,7 +84,11 @@ export const SERVICE_HERO_HINTS: Hints = {
   imageOpacity: { hidden: true },
   overlayVariant: { hidden: true },
   showGlowOrbs: { hidden: true },
+  ctaVariant: { hidden: true },
+  sectionBg: { hidden: true },
+  headingSize: { hidden: true },
   stats: { itemLabel: 'Number' },
+  'stats.*.type': { hidden: true },
 };
 
 export const CONTACT_BAND_HINTS: Hints = {

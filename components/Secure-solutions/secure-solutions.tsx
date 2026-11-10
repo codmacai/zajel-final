@@ -23,6 +23,7 @@ import Image from 'next/image';
 import { Manrope } from 'next/font/google';
 import { type ServiceCard, SECURE_PAGE, SECURE_PAGE_SVGBASE, type SECURE_PAGEContent } from './content';
 import { cmsSection } from '@/components/cms/CmsProvider';
+import { pickIcon } from '@/lib/cms/pick-icon';
 
 const manrope = Manrope({
   subsets: ['latin'],
@@ -431,7 +432,7 @@ const ServiceCardsSection = ({ content }: { content: SECURE_PAGEContent }) => (
 
       <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 sm:gap-6 sm:auto-rows-fr">
         {content.cards.map((card, i) => {
-          const CardCleanIcon = cleanIconMap[card.id];
+          const CardCleanIcon = pickIcon<React.ComponentType<{ className?: string }>>(cleanIconMap, card.id);
           const isGreen = (Math.floor(i / 2) + (i % 2)) % 2 === 0;
 
           return (
