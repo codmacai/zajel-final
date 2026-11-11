@@ -33,6 +33,13 @@ export interface FieldHint {
   options?: string[];
   /** For slug fields: what comes before it in the address, e.g. "/events/". */
   prefix?: string;
+  /** Must be filled in (text, images, dates) or have at least one item (lists). */
+  required?: boolean;
+  /**
+   * Only used when a field next to it has one of these values, e.g. a block's photo only
+   * when its type is "Image": { key: 'type', is: ['Image'] }. Hidden and not checked otherwise.
+   */
+  when?: { key: string; is: string[] };
 }
 
 /** Hints by field path, with * for list positions, e.g. { "items.*.icon": { hidden: true } }. */
@@ -126,6 +133,11 @@ export function itemTitle(item: unknown, index: number): string {
   if (typeof item === 'string') return item || `Item ${index + 1}`;
   if (item && typeof item === 'object') {
     const o = item as Record<string, unknown>;
+    // Content blocks (they have a type but no title): "Heading: Why multimodal matters".
+    if (typeof o.type === 'string' && !('title' in o) && !('name' in o)) {
+      const first = [o.text, o.caption, ...(Array.isArray(o.items) ? o.items : [])].find((v) => typeof v === 'string' && v.trim());
+      return first ? `${o.type}: ${first}` : String(o.type || `Item ${index + 1}`);
+    }
     for (const k of TITLE_KEYS) if (typeof o[k] === 'string' && o[k]) return o[k] as string;
     for (const v of Object.values(o)) if (typeof v === 'string' && v && !/^(\/|https?:|#)/.test(v)) return v;
   }
@@ -151,8 +163,14 @@ export function resolveField(path: string, key: string, value: unknown, hints: H
     optional: hint.optional ?? false,
     options: hint.options,
     prefix: hint.prefix,
+    required: hint.required ?? false,
+    when: hint.when,
   };
 }
+
+/** Whether a field applies, given the object it sits in (see FieldHint.when). */
+export const fieldApplies = (when: FieldHint['when'], parent: unknown) =>
+  !when || (!!parent && typeof parent === 'object' && when.is.includes(String((parent as Record<string, unknown>)[when.key])));
 
 /** Paths of every Arabic-translatable text field in the content. */
 export function translatablePaths(content: unknown, hints: Hints = {}, prefix = '', key = ''): string[] {
@@ -169,7 +187,10 @@ export function translatablePaths(content: unknown, hints: Hints = {}, prefix = 
   if (content && typeof content === 'object') {
     const f = prefix ? resolveField(prefix, key, content, hints) : null;
     if (f?.hidden) return [];
-    return Object.entries(content).flatMap(([k, v]) => translatablePaths(v, hints, prefix ? `${prefix}.${k}` : k, k));
+    return Object.entries(content).flatMap(([k, v]) => {
+      const p = prefix ? `${prefix}.${k}` : k;
+      return fieldApplies(resolveField(p, k, v, hints).when, content) ? translatablePaths(v, hints, p, k) : [];
+    });
   }
   return [];
 }

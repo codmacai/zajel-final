@@ -22,7 +22,7 @@ import {
 import Link from 'next/link';
 import { historyAction, saveSectionAction, setSectionEnabledAction } from '@/app/admin/actions';
 import { getAt, mergeContent, type ArabicMap, type Plain } from '@/lib/cms/content';
-import { isTranslatable, itemTitle, pattern, resolveField, translatablePaths, type Hints } from '@/lib/cms/fields';
+import { fieldApplies, isTranslatable, itemTitle, pattern, resolveField, translatablePaths, type Hints } from '@/lib/cms/fields';
 import type { CmsVersion } from '@/lib/cms/store';
 import { builtIns, listCanBeEmpty, validateContent, valueCanBeEmpty, type Problem } from '@/lib/cms/validate';
 import { uploadImage } from './upload';
@@ -413,7 +413,8 @@ function ObjectFields({ value, path, ctx }: { value: Obj; path: string; ctx: Ctx
       {Object.entries(value).map(([k, v]) => {
         const p = join(path, k);
         const f = resolveField(p, k, v, ctx.hints);
-        if (f.hidden) return null;
+        // Hidden, or not used here (e.g. a photo field on a text block).
+        if (f.hidden || !fieldApplies(f.when, value)) return null;
         if (Array.isArray(v)) {
           return (
             <div className="c-field" key={k} data-path={p}>
@@ -457,7 +458,7 @@ function Field({ k, value, path, ctx }: { k: string; value: Plain; path: string;
     </div>
   );
 
-  if (f.kind === 'image') return wrap(<ImageField value={String(value ?? '')} path={path} ctx={ctx} optional={valueCanBeEmpty(f.optional, knownAt(ctx, path))} />);
+  if (f.kind === 'image') return wrap(<ImageField value={String(value ?? '')} path={path} ctx={ctx} optional={!f.required && valueCanBeEmpty(f.optional, knownAt(ctx, path))} />);
 
   if (f.kind === 'toggle') {
     return (
@@ -474,7 +475,7 @@ function Field({ k, value, path, ctx }: { k: string; value: Plain; path: string;
     );
   }
   if (f.kind === 'date') {
-    const optional = valueCanBeEmpty(f.optional, knownAt(ctx, path));
+    const optional = !f.required && valueCanBeEmpty(f.optional, knownAt(ctx, path));
     return wrap(
       <div className="c-inline">
         <input id={id} className={cls} type="date" value={String(value ?? '')} style={{ maxWidth: 220 }} aria-label={f.label}
@@ -624,8 +625,8 @@ function ListField({ value, path, k, ctx }: { value: Plain[]; path: string; k: s
   const itemLabel = f.itemLabel ?? 'item';
   const simpleItems = value.every((v) => typeof v === 'string');
   const canBeEmpty = (p: string) => {
-    const k = p.split('.').pop() ?? '';
-    return listCanBeEmpty(resolveField(p, k, [], ctx.hints).allowEmpty, knownAt(ctx, p));
+    const r = resolveField(p, p.split('.').pop() ?? '', [], ctx.hints);
+    return !r.required && listCanBeEmpty(r.allowEmpty, knownAt(ctx, p));
   };
   const atMinimum = value.length <= 1 && !canBeEmpty(path);
 

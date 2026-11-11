@@ -113,6 +113,7 @@ const nextConfig = {
       { source: '/find-us', destination: '/network', permanent: true },
       { source: '/app-download', destination: '/#download-app', permanent: false },
       { source: '/blog', destination: '/#news', permanent: false },
+      { source: '/news', destination: '/#news', permanent: false },
       // The React app's old tracking sub-pages were folded into /trackresults.
       { source: '/shipment-timeline', destination: '/trackresults', permanent: false },
       { source: '/proof-of-delivery', destination: '/trackresults', permanent: false },

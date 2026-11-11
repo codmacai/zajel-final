@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { SITE } from '@/lib/seo';
 import { getEvents } from '@/components/events/cms';
+import { getArticles } from '@/components/news/cms';
 
 type Entry = { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] };
 
@@ -47,7 +48,8 @@ const ROUTES: Entry[] = [
 // real per-page date here only if one is tracked.
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const events: Entry[] = (await getEvents()).map(({ slug }) => ({ path: `/events/${slug}`, priority: 0.4, changeFrequency: 'monthly' }));
-  return [...ROUTES, ...events].map(({ path, priority, changeFrequency }) => ({
+  const news: Entry[] = (await getArticles()).map(({ slug }) => ({ path: `/news/${slug}`, priority: 0.5, changeFrequency: 'monthly' }));
+  return [...ROUTES, ...events, ...news].map(({ path, priority, changeFrequency }) => ({
     url: `${SITE.url}${path}`,
     changeFrequency,
     priority,

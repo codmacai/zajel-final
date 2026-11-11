@@ -3,7 +3,7 @@
 // would stop the page from loading, and an empty list can leave a section broken.
 
 import { isSafeImage, type Plain } from './content';
-import { pattern, resolveField, type Hints } from './fields';
+import { fieldApplies, isTranslatable, pattern, resolveField, type Hints } from './fields';
 
 export interface Problem {
   path: string;
@@ -57,7 +57,7 @@ export function validateContent(content: Plain, original: Plain, hints: Hints = 
 
     if (Array.isArray(value)) {
       const item = lower(f?.itemLabel ?? 'item');
-      const canBeEmpty = listCanBeEmpty(f?.allowEmpty, known);
+      const canBeEmpty = !f?.required && listCanBeEmpty(f?.allowEmpty, known);
       const fixedLength = known.find(Array.isArray)?.length;
       if (f?.fixed && fixedLength !== undefined && value.length !== fixedLength) {
         add(path, `This list needs exactly ${fixedLength} ${fixedLength === 1 ? item : `${item}s`} to fit the design.`);
@@ -80,7 +80,11 @@ export function validateContent(content: Plain, original: Plain, hints: Hints = 
     }
 
     if (value && typeof value === 'object') {
-      for (const [k, v] of Object.entries(value)) visit(v, path ? `${path}.${k}` : k, k);
+      for (const [k, v] of Object.entries(value)) {
+        const p = path ? `${path}.${k}` : k;
+        // Fields that don't apply here (e.g. a photo on a text block) aren't checked.
+        if (fieldApplies(resolveField(p, k, v, hints).when, value)) visit(v, p, k);
+      }
       // A date range can't end before it starts.
       const { startDate, endDate } = value as Record<string, Plain>;
       if (typeof startDate === 'string' && typeof endDate === 'string' && isValidDate(startDate) && isValidDate(endDate) && endDate < startDate) {
@@ -93,7 +97,11 @@ export function validateContent(content: Plain, original: Plain, hints: Hints = 
     // The site's own content is always allowed back.
     if (value !== '' && known.includes(value)) return;
     const v = value.trim();
-    const canBeEmpty = valueCanBeEmpty(f.optional, known);
+    const canBeEmpty = !f.required && valueCanBeEmpty(f.optional, known);
+    if (f.required && !v && isTranslatable(f.kind)) {
+      add(path, 'This can’t be empty.');
+      return;
+    }
 
     switch (f.kind) {
       case 'image':

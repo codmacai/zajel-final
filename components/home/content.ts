@@ -53,53 +53,12 @@ export const HOME_ZAJEL_NOW = {
 };
 export type HomeZajelNowContent = typeof HOME_ZAJEL_NOW;
 
-export type Article = {
-  date: string;
-  category: string;
-  title: string;
-  excerpt: string;
-  href: string;
-  accent: string;
-  image: string;
-};
-
+/** The home page news section. The articles themselves are edited under News (components/news/data.ts). */
 export const HOME_NEWS = {
   eyebrow: 'Newsroom',
   heading: 'Latest news',
   description: 'Global logistics, freight forwarding, and supply chain briefings.',
   readMore: 'Read more',
-  articles: [
-  {
-    date: "14 May 2026",
-    category: "Global Freight",
-    title: "Expanding Air & Sea Trade Corridors Across 500+ Destinations",
-    excerpt:
-      "Enhancing multimodal freight connectivity between key trade hubs across Asia, Europe, and the Middle East to accelerate transit times for bulk cargo.",
-    href: "#",
-    accent: "#36B936",
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    date: "28 Feb 2026",
-    category: "Customs & Trade",
-    title: "Streamlined GCC Cross-Border Clearance Network Launched",
-    excerpt:
-      "Accelerating border clearance operations through automated documentation workflows and dedicated customs brokerage hubs across regional gateways.",
-    href: "#",
-    accent: "#5FD37A",
-    image: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    date: "12 Nov 2025",
-    category: "Smart Warehousing",
-    title: "Next-Generation Fulfillment Center Operational in Dubai",
-    excerpt:
-      "Opening high-capacity, climate-controlled fulfillment facilities equipped with automated inventory sorting to power seamless e-commerce distribution.",
-    href: "#",
-    accent: "#7FD79A",
-    image: "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=900&q=80",
-  },
-] as Article[],
 };
 export type HomeNewsContent = typeof HOME_NEWS;
 

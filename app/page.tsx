@@ -17,7 +17,7 @@ export const generateMetadata = cmsMetadata('home', '/');
 export default async function Home() {
   const appDownload = await getSection("home.app-download", HOME_APP_DOWNLOAD);
   return (
-    <CmsScope page={["home", "projects"]}>
+    <CmsScope page={["home", "projects", "news"]}>
     <main>
       <Hero />
       <ServicesSection/>

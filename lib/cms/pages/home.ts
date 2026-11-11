@@ -79,11 +79,8 @@ export const HOME: PageDef = {
       id: 'news',
       label: 'Latest news',
       defaults: HOME_NEWS,
-      hints: {
-        articles: { itemLabel: 'Article' },
-        'articles.*.accent': { kind: 'color', label: 'Dot colour' },
-        'articles.*.date': { kind: 'text' },
-      },
+      note: 'Shows the newest 3 articles. Write and edit articles under News',
+      hints: { readMore: { label: '“Read more” text' } },
     },
     {
       id: 'app-download',

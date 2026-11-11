@@ -20,6 +20,10 @@ Edit the text, images and Arabic of every page at **/admin**. Changes go live wi
   `cms_messages`; the team reads, answers and marks them done under **Messages**. Support tickets are
   separate: they go to Freshdesk through the Zajel API, as before.
 - The website re-reads the CMS at most every 5 minutes on its own, and immediately after each save.
+- **News**: articles are written under **News → Articles** from blocks (paragraph, heading, quote,
+  bullet list, photo). The newest three show on the home page (Latest news); each article has its
+  own page at `/news/<page-address>`, is listed in the sitemap and shares with its cover photo.
+  Code: `components/news/`, `app/news/[slug]/`.
 
 ## Setup
 
@@ -66,4 +70,6 @@ from the existing items (when a component picks an icon by item id, use `pickIco
 
 Useful field hints: `fixed: true` (the design needs exactly this many items), `allowEmpty: true` (the
 list may have none), `optional: true` (an image or date may be empty), `kind: 'date' | 'select' | 'slug'`
-with `options` or `prefix`, and `hidden: true` for values editors shouldn't change.
+with `options` or `prefix`, `required: true` (must be filled in), `when: { key, is }` (a field used only
+when a field next to it has one of those values, e.g. a block's photo only for "Image" blocks), and
+`hidden: true` for values editors shouldn't change.

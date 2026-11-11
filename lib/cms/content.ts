@@ -94,6 +94,7 @@ const idOf = (v: unknown) => (isPlainObject(v) && (typeof v.id === 'string' || t
  *   3. else the nearest built-in item with the same fields (items in some lists differ,
  *      e.g. only some events have an end date),
  *   4. else the item at that position, or the last one for new items.
+ * Items with a type (e.g. article blocks: paragraph, image…) prefer one of the same type.
  */
 function templateFor(defaults: unknown[], i: number, saved: unknown): unknown {
   const positional = i < defaults.length ? defaults[i] : defaults[defaults.length - 1];
@@ -104,16 +105,21 @@ function templateFor(defaults: unknown[], i: number, saved: unknown): unknown {
     if (same) return same;
   }
   const shape = shapeOf(saved);
-  if (shapeOf(positional) === shape) return positional;
-  let best: unknown;
-  let bestDistance = Infinity;
-  defaults.forEach((d, j) => {
-    if (Math.abs(j - i) < bestDistance && shapeOf(d) === shape) {
-      best = d;
-      bestDistance = Math.abs(j - i);
-    }
-  });
-  return best ?? positional;
+  const type = typeof saved.type === 'string' ? saved.type : undefined;
+  const sameType = (d: unknown) => type === undefined || (isPlainObject(d) && d.type === type);
+  const nearest = (fits: (d: unknown) => boolean) => {
+    let best: unknown;
+    let bestDistance = Infinity;
+    defaults.forEach((d, j) => {
+      if (Math.abs(j - i) < bestDistance && fits(d)) {
+        best = d;
+        bestDistance = Math.abs(j - i);
+      }
+    });
+    return best;
+  };
+  if (shapeOf(positional) === shape && sameType(positional)) return positional;
+  return nearest((d) => shapeOf(d) === shape && sameType(d)) ?? nearest((d) => shapeOf(d) === shape) ?? positional;
 }
 
 /**
