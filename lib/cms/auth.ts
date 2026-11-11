@@ -71,7 +71,7 @@ export async function clearSession() {
 
 /** Signs in with email and password. Returns an error message for the form, or null. */
 export async function signIn(email: string, password: string): Promise<string | null> {
-  if (!cmsConfigured) return 'The CMS is not connected to Supabase yet. Add the Supabase keys to the server settings.';
+  if (!cmsConfigured) return 'Sign-in is not available right now. Please try again later.';
   if (!allowed(email)) return 'This email is not allowed to use the CMS. Ask an admin to add it.';
   const res = await authRequest('token?grant_type=password', {
     method: 'POST',
@@ -80,7 +80,7 @@ export async function signIn(email: string, password: string): Promise<string | 
   if (!res.ok) {
     if (res.status === 400) return 'That email and password don’t match. Check them and try again.';
     if (res.status === 429) return 'Too many attempts. Wait a minute, then try again.';
-    if (res.status === 503) return 'Couldn’t reach Supabase. Check the server’s internet connection and try again.';
+    if (res.status === 503) return 'Couldn’t connect. Please try again in a moment.';
     return `Couldn’t sign in (error ${res.status}). Try again in a moment.`;
   }
   await storeSession((await res.json()) as TokenResponse);

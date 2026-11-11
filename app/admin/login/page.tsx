@@ -50,7 +50,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           <h1>Sign in</h1>
           <p>Use the email and password your admin set up for you.</p>
           <LoginForm next={next} configured={cmsConfigured} />
-          <p className="foot">Forgotten your password? Ask an admin to reset it in Supabase.</p>
+          <p className="foot">Forgotten your password? Ask your administrator to reset it.</p>
         </div>
       </main>
     </div>

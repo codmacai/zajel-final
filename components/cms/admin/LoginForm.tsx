@@ -5,7 +5,7 @@ import { CircleAlert, LoaderCircle } from 'lucide-react';
 import { loginAction } from '@/app/admin/actions';
 
 export default function LoginForm({ next, configured }: { next: string; configured: boolean }) {
-  const [error, action, pending] = useActionState(loginAction, configured ? null : 'The CMS is not connected to Supabase yet. Add the Supabase keys to the server settings.');
+  const [error, action, pending] = useActionState(loginAction, configured ? null : 'Sign-in is not available right now. Please try again later.');
   return (
     <form action={action}>
       <input type="hidden" name="next" value={next} />
