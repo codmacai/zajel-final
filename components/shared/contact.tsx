@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useId, useRef, useState } from 'react';
-import { sendMessageAction } from '@/app/contact/actions';
+import { useId, useState } from 'react';
 import { useInView } from '../../hooks/useInView';
 import { seaFreightContent } from '@/data/contact-content';
 
@@ -122,22 +121,13 @@ const InquiryForm = ({
 }: Pick<ContactContent, 'fields' | 'submitLabel' | 'success'> & Pick<ContactSectionProps, 'onSubmit'>) => {
   const uid = useId();
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle');
-  const shownAt = useRef(0);
-  useEffect(() => {
-    shownAt.current = performance.now();
-  }, []);
 
-  // Without an onSubmit, inquiries are saved in the CMS (Messages).
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const values = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
     try {
       setStatus('loading');
-      if (onSubmit) await onSubmit(values);
-      else {
-        const res = await sendMessageAction({ form: 'quote', page: window.location.pathname, values, elapsed: performance.now() - shownAt.current });
-        if (!res.ok) throw new Error(res.error);
-      }
+      await onSubmit?.(values);
       setStatus('done');
     } catch {
       setStatus('error');
@@ -159,9 +149,7 @@ const InquiryForm = ({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="relative grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-      {/* Left empty by people; bots fill it in. */}
-      <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] h-px w-px opacity-0" />
+    <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
       {fields.map(({ name, label, type = 'text', placeholder, required = true, options, fullWidth }) => {
         const id = `${uid}-${name}`;
         return (

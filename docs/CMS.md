@@ -16,9 +16,7 @@ Edit the text, images and Arabic of every page at **/admin**. Changes go live wi
   the server: images must be uploaded (or be on this site), lists keep at least one item unless the
   section allows none, dates are real and end after they start, page addresses are unique, links are
   safe. Anything that could break a page can't be saved.
-- **Messages**: the contact form (and the quote form on the freight pages, if switched back on) saves to
-  `cms_messages`; the team reads, answers and marks them done under **Messages**. Support tickets are
-  separate: they go to Freshdesk through the Zajel API, as before.
+- **Support tickets** are not in the CMS: they go to Freshdesk through the Zajel API.
 - The website re-reads the CMS at most every 5 minutes on its own, and immediately after each save.
 - **News**: articles are written under **News → Articles** from blocks (paragraph, heading, quote,
   bullet list, photo). The newest three show on the home page (Latest news); each article has its
@@ -28,7 +26,7 @@ Edit the text, images and Arabic of every page at **/admin**. Changes go live wi
 ## Setup
 
 1. Run both files in `supabase/migrations/` once, in order, in Supabase → SQL Editor
-   (`…_cms.sql`, then `…_cms_hardening.sql`, which adds the Messages inbox).
+   (`…_cms.sql`, then `…_cms_hardening.sql`, which tightens public access and uploads).
 2. Set the environment variables listed in `.env.example` (Zajel CMS block) on the server.
 3. In Supabase → Authentication:
    - turn off **Allow new users to sign up**;
@@ -47,8 +45,7 @@ Edit the text, images and Arabic of every page at **/admin**. Changes go live wi
 | `lib/cms/content.ts` | Merging saved content over built-in content, and cleaning saves |
 | `lib/cms/validate.ts` | The checks run before a save (editor and server) |
 | `lib/cms/fields.ts` | How each field is edited (text, image, link, list…) and its label |
-| `lib/cms/store.ts` | Supabase reads and writes (content, history, uploads, messages) |
-| `app/contact/actions.ts` | Receives website form messages (spam checks, limits) |
+| `lib/cms/store.ts` | Supabase reads and writes (content, history, uploads) |
 | `lib/cms/auth.ts` | Admin sign-in (Supabase Auth) |
 | `components/cms/CmsProvider.tsx` | `cmsSection()` / `useSection()` for client sections |
 | `lib/cms/server.tsx` | `getSection()` / `serverSection()` / `cmsMetadata()` for server code |

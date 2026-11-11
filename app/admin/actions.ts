@@ -10,13 +10,10 @@ import { findSection } from '@/lib/cms/registry';
 import {
   cmsWritable,
   createUpload,
-  deleteMessage,
   readHistory,
   readRowFresh,
-  updateMessage,
   writeRow,
   type CmsVersion,
-  type MessageStatus,
 } from '@/lib/cms/store';
 import { validateContent, type Problem } from '@/lib/cms/validate';
 
@@ -145,35 +142,5 @@ export async function prepareUploadAction(
     return { ok: true, ...(await createUpload(path)) };
   } catch (e) {
     return { ok: false, error: e instanceof Error ? e.message : 'Couldn’t prepare the upload.' };
-  }
-}
-
-/* ---------------- messages ---------------- */
-
-const STATUSES: MessageStatus[] = ['new', 'read', 'done'];
-
-/** Marks a message as opened, done, or back to new. */
-export async function setMessageStatusAction(id: number, status: MessageStatus): Promise<ActionResult> {
-  const who = await guard();
-  if ('error' in who) return { ok: false, error: who.error };
-  if (!Number.isInteger(id) || !STATUSES.includes(status)) return { ok: false, error: 'Unknown message. Reload the page.' };
-  try {
-    const handled = status === 'done' ? { handled_by: who.email, handled_at: new Date().toISOString() } : status === 'new' ? { handled_by: null, handled_at: null } : {};
-    await updateMessage(id, { status, ...handled });
-    return { ok: true };
-  } catch (e) {
-    return { ok: false, error: e instanceof Error ? e.message : 'Couldn’t update the message.' };
-  }
-}
-
-export async function deleteMessageAction(id: number): Promise<ActionResult> {
-  const who = await guard();
-  if ('error' in who) return { ok: false, error: who.error };
-  if (!Number.isInteger(id)) return { ok: false, error: 'Unknown message. Reload the page.' };
-  try {
-    await deleteMessage(id);
-    return { ok: true };
-  } catch (e) {
-    return { ok: false, error: e instanceof Error ? e.message : 'Couldn’t delete the message.' };
   }
 }

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState, type MouseEvent, type ReactNode } from 'react';
-import { ChevronRight, Inbox, LayoutGrid, LogOut, Menu, Search, X } from 'lucide-react';
+import { ChevronRight, LayoutGrid, LogOut, Menu, Search, X } from 'lucide-react';
 import { logoutAction } from '@/app/admin/actions';
 import type { NavPage } from '@/lib/cms/admin';
 import { pageIcon } from './icons';
@@ -20,7 +20,7 @@ function initials(email: string) {
   return ((parts[0]?.[0] ?? '') + (parts[1]?.[0] ?? parts[0]?.[1] ?? '')).toUpperCase() || 'Z';
 }
 
-export default function AdminShell({ nav, email, newMessages, children }: { nav: NavPage[]; email: string; newMessages: number; children: ReactNode }) {
+export default function AdminShell({ nav, email, children }: { nav: NavPage[]; email: string; children: ReactNode }) {
   const pathname = usePathname();
   const [sideOpen, setSideOpen] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
@@ -90,11 +90,6 @@ export default function AdminShell({ nav, email, newMessages, children }: { nav:
               <LayoutGrid className="c-nav-ic" aria-hidden="true" />
               Overview
             </Link>
-            <Link href="/admin/messages" className="c-nav-link" aria-current={target === '/admin/messages' ? 'page' : undefined} onClick={onNavigate('/admin/messages')}>
-              <Inbox className="c-nav-ic" aria-hidden="true" />
-              <span>Messages</span>
-              {newMessages > 0 && <span className="c-nav-dot new" title={`${newMessages} new`}>{newMessages}</span>}
-            </Link>
           </div>
           {groups.map(({ g, pages }) => (
             <div className="c-nav-group" key={g}>
@@ -136,7 +131,7 @@ export default function AdminShell({ nav, email, newMessages, children }: { nav:
             <Menu aria-hidden="true" />
           </button>
           <nav className="c-crumbs" aria-label="Breadcrumb">
-            {pageId === 'messages' ? <><Link href="/admin">Overview</Link><ChevronRight aria-hidden="true" /><b>Messages</b></> : page ? <Link href="/admin">Overview</Link> : <b>Overview</b>}
+            {page ? <Link href="/admin">Overview</Link> : <b>Overview</b>}
             {page && <ChevronRight aria-hidden="true" />}
             {page && (section ? <Link href={`/admin/${page.id}`}>{page.label}</Link> : <b>{page.label}</b>)}
             {section && <ChevronRight aria-hidden="true" />}
@@ -162,7 +157,6 @@ function Palette({ nav, onClose, onNavigate }: { nav: NavPage[]; onClose: () => 
   const all = useMemo(
     () => [
       { href: '/admin', label: 'Overview', hint: '', icon: LayoutGrid },
-      { href: '/admin/messages', label: 'Messages', hint: 'Contact form', icon: Inbox },
       ...nav.flatMap((p) => [
         { href: `/admin/${p.id}`, label: p.label, hint: p.group, icon: pageIcon(p.id) },
         ...p.sections.map((s) => ({ href: `/admin/${p.id}/${s.id}`, label: s.label, hint: p.label, icon: ChevronRight })),
