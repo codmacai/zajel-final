@@ -55,13 +55,12 @@ function Block({ block, index, first }: { block: NewsBlock; index: number; first
     }
     case 'Image':
       return block.image && isSafeImage(block.image) ? (
-        // Photos run a little wider than the text on large screens.
-        <figure className="my-10 lg:-mx-14">
+        <figure className="my-10">
           <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[1.25rem] bg-[#1b4332]/5 sm:rounded-[1.5rem]">
-            <Image src={block.image} alt={block.caption} fill sizes="(min-width: 1024px) 800px, 100vw" className="object-cover" />
+            <Image src={block.image} alt={block.caption} fill sizes="(min-width: 768px) 680px, 100vw" className="object-cover" />
           </div>
           {block.caption.trim() && (
-            <figcaption className="mx-auto mt-3.5 max-w-[680px] text-center text-[13px] leading-relaxed text-[#1b4332]/55">{block.caption}</figcaption>
+            <figcaption className="mt-3.5 text-center text-[13px] leading-relaxed text-[#1b4332]/55">{block.caption}</figcaption>
           )}
         </figure>
       ) : null;
@@ -188,17 +187,18 @@ export default function NewsArticleView({ article, more, page }: { article: News
           </div>
         )}
 
-        {/* Body, with the contents on the left and the details on the right on large screens */}
-        <div className="mx-auto grid max-w-[1200px] gap-10 px-5 py-12 sm:px-8 sm:py-16 lg:grid-cols-[200px_minmax(0,680px)_200px] lg:justify-between lg:gap-8 lg:py-20">
-          <aside className="hidden lg:block">
+        {/* Body. On wide screens (1280px+) the contents sit on the left and the details on the right,
+            each in its own column so nothing overlaps the text. */}
+        <div className="mx-auto grid max-w-[1240px] px-5 py-12 sm:px-8 sm:py-16 xl:grid-cols-[200px_minmax(0,1fr)_232px] xl:gap-x-10 xl:py-20">
+          <aside className="hidden xl:block">
             <div className="sticky top-32">
               <TableOfContents items={toc} label={page.tocLabel} />
             </div>
           </aside>
 
-          <div id="article-body" className="min-w-0">
+          <div id="article-body" className="mx-auto w-full min-w-0 max-w-[680px]">
             {toc.length > 1 && (
-              <details className="group mb-10 rounded-[1.25rem] border border-[#1b4332]/10 bg-[#F6FAF7] px-5 py-4 lg:hidden">
+              <details className="group mb-10 rounded-[1.25rem] border border-[#1b4332]/10 bg-[#F6FAF7] px-5 py-4 xl:hidden">
                 <summary className="flex cursor-pointer list-none items-center justify-between text-[14px] font-medium text-[#0b2e1b]">
                   {page.tocLabel}
                   <ChevronRight aria-hidden="true" className="h-4 w-4 transition-transform group-open:rotate-90" />
@@ -239,8 +239,8 @@ export default function NewsArticleView({ article, more, page }: { article: News
             </div>
           </div>
 
-          <aside className="hidden lg:block">
-            <div className="sticky top-32 rounded-[1.25rem] border border-[#1b4332]/10 p-5">
+          <aside className="hidden xl:block">
+            <div className="sticky top-32 rounded-[1.25rem] border border-[#1b4332]/10 bg-white p-5">
               <dl className="space-y-4">
                 {details.map(({ icon: Icon, label, value }) => (
                   <div key={label} className="flex items-start gap-3">

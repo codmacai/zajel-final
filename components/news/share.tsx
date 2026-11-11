@@ -3,12 +3,13 @@
 import { useState } from 'react';
 import { Check, Link2, Mail } from 'lucide-react';
 
-const btn =
-  'flex h-10 w-10 items-center justify-center rounded-full border border-[#1b4332]/10 bg-white text-[#1b4332]/70 transition-colors hover:border-[#36B936]/40 hover:bg-[#36B936]/10 hover:text-[#1b4332] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#36B936]';
+const btnBase =
+  'flex items-center justify-center rounded-full border border-[#1b4332]/10 bg-white text-[#1b4332]/70 transition-colors hover:border-[#36B936]/40 hover:bg-[#36B936]/10 hover:text-[#1b4332] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#36B936]';
 
 /** Share buttons for an article: LinkedIn, X, WhatsApp, email and copy link. */
 export default function ShareBar({ url, title, label, copiedLabel, compact = false }: { url: string; title: string; label: string; copiedLabel: string; compact?: boolean }) {
   const [copied, setCopied] = useState(false);
+  const btn = `${btnBase} ${compact ? 'h-8 w-8' : 'h-10 w-10'}`;
   const u = encodeURIComponent(url);
   const t = encodeURIComponent(title);
 
@@ -21,7 +22,7 @@ export default function ShareBar({ url, title, label, copiedLabel, compact = fal
   };
 
   return (
-    <div className={`flex flex-wrap items-center ${compact ? 'gap-2' : 'gap-2.5 sm:gap-3'}`}>
+    <div className={`flex flex-wrap items-center ${compact ? 'gap-1.5' : 'gap-2.5 sm:gap-3'}`}>
       <span
         className={
           compact
