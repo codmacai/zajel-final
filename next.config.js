@@ -78,6 +78,23 @@ const nextConfig = {
     remotePatterns: SUPABASE_MEDIA ? [new URL(`${SUPABASE_MEDIA}/**`)] : [],
   },
 
+  // The CMS admin can't be shown inside another site (clickjacking), isn't cached and isn't indexed.
+  async headers() {
+    return [
+      {
+        source: '/admin/:path*',
+        headers: [
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'Content-Security-Policy', value: "frame-ancestors 'none'" },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'same-origin' },
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+          { key: 'Cache-Control', value: 'no-store' },
+        ],
+      },
+    ];
+  },
+
   async redirects() {
     const permanent = { statusCode: 301 };
     return [

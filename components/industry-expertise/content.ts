@@ -27,5 +27,6 @@ export const INDUSTRY_CONTACT: ContactBandProps = {
           phone: "600 53 11 11",
           address: "Dubai Office, Al Rostamani Building, Al Ittihad Rd, E11, Dubai",
         },
+  phoneLabel: "Call Directly",
   primaryCta: { label: "Contact Our Team", url: "/support" },
 };

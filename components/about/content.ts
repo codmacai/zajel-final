@@ -101,6 +101,7 @@ export const ABOUT_HOW_WE_WORK = {
 // `title` is no longer shown visually; it is used for accessibility (alt / heading).
 // ---------------------------------------------------------------------------
 export const ABOUT_ALLIANCES = {
+  verifiedLabel: 'Verified Alliance',
   eyebrow: 'Worldwide Recognition',
   heading: 'Our Alliances & Accreditations',
   intro:
@@ -325,6 +326,7 @@ export const ABOUT_JOURNEY_STOPS: Stop[] = [
 
 export const ABOUT_JOURNEY = {
   heading: ABOUT_JOURNEY_SECTIONHEADING,
+  presentLabel: 'Today',
   stops: ABOUT_JOURNEY_STOPS,
 };
 export type ABOUT_JOURNEYContent = typeof ABOUT_JOURNEY;
@@ -334,6 +336,8 @@ export type ABOUT_JOURNEYContent = typeof ABOUT_JOURNEY;
 // Put your PDFs in /public/documents/ and the paths below resolve as-is.
 // ---------------------------------------------------------------------------
 export const ABOUT_DOCUMENTS = {
+  readyLabel: 'PDF · Ready to download',
+  requestLabel: 'PDF · Request a copy',
   eyebrow: "Our Documents",
   heading: "Company Documents",
   description:

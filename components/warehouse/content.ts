@@ -77,6 +77,9 @@ export const WAREHOUSE_INDUSTRIES = {
   heading: "Industries We Serve",
   description: "Zajel's warehousing adapts to the operational, compliance, and storage requirements of each industry we serve.",
   items: WAREHOUSE_INDUSTRIES_INDUSTRIES,
+  ctaLabel: "Don't see your industry?",
+  ctaDescription: 'Get in touch — we tailor logistics solutions for every sector.',
+  ctaTag: 'CTA',
 };
 export type WAREHOUSE_INDUSTRIESContent = typeof WAREHOUSE_INDUSTRIES;
 

@@ -62,6 +62,8 @@ export const LAND_WHEN_TO_CHOOSE = {
   image: IMAGE_SRC,
   body: BODY,
   alternatives: ALTERNATIVES,
+  alternativesTitle: 'Not the right fit?',
+  alternativesLead: 'Explore',
 };
 export type LAND_WHEN_TO_CHOOSEContent = typeof LAND_WHEN_TO_CHOOSE;
 
@@ -269,6 +271,9 @@ export const LAND_INDUSTRIES = {
   heading: "Industries We Serve",
   description: "Zajel's air freight network moves time-critical cargo for industries where speed and reliability are non-negotiable.",
   items: industries,
+  ctaLabel: "Don't see your industry?",
+  ctaDescription: 'Get in touch — we tailor logistics solutions for every sector.',
+  ctaTag: 'CTA',
 };
 export type LAND_INDUSTRIESContent = typeof LAND_INDUSTRIES;
 

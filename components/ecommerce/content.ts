@@ -66,6 +66,7 @@ export const ECOMMERCE_INTEGRATIONS = {
 export type ECOMMERCE_INTEGRATIONSContent = typeof ECOMMERCE_INTEGRATIONS;
 
 export const ECOMMERCE_PRICING = {
+  recommendedLabel: 'Recommended',
   eyebrow: Pricing.EYEBROW,
   headingLine1: Pricing.HEADING_LINE_1,
   headingLine2: Pricing.HEADING_LINE_2,

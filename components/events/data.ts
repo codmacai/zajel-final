@@ -191,6 +191,29 @@ export const EVENTS_PAGE = {
     descriptionLead:
       'Schedule time with our team at any upcoming event to discuss your courier, freight, customs or warehousing requirements.',
     descriptionDetail: "Reach out by email or phone and we'll arrange a meeting at the venue or at one of our offices.",
+    phoneLabel: 'Call Directly',
     primaryCta: { label: 'Contact Our Team', url: '/support' },
   },
+  /** Words on the events list and on each event's page. */
+  labels: {
+    upcoming: 'Upcoming',
+    past: 'Past Events',
+    sortedUpcoming: 'Sorted by date',
+    sortedPast: 'Most recent first',
+    noUpcoming: 'No upcoming events right now. Check back soon.',
+    noPast: 'No past events yet.',
+    nextEvent: 'Next Event',
+    register: 'Register Interest',
+    details: 'View Details',
+    ended: 'This event has ended',
+    allEvents: 'All Events',
+    about: 'About the Event',
+    highlights: 'Highlights',
+    gallery: 'Gallery',
+    eventDetails: 'Event Details',
+    date: 'Date',
+    time: 'Time',
+    location: 'Location',
+  },
 };
+export type EventLabels = typeof EVENTS_PAGE.labels;

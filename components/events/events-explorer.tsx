@@ -5,15 +5,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight, CalendarDays, MapPin } from 'lucide-react';
 import { typo } from '@/components/ui copy/typography';
-import { lastDay, type ZajelEvent } from './data';
+import { lastDay, type EventLabels, type ZajelEvent } from './data';
 import { dateRange, fmt, todayIso } from './format';
 
 type Tab = 'upcoming' | 'past';
 
-const TABS: { key: Tab; label: string }[] = [
-  { key: 'upcoming', label: 'Upcoming' },
-  { key: 'past', label: 'Past Events' },
-];
 
 /** Square date tile laid over a card image. */
 function DateTile({ iso }: { iso: string }) {
@@ -40,7 +36,7 @@ function TypeBadge({ type, light = false }: { type: string; light?: boolean }) {
 }
 
 /** Next upcoming event: wide card with a large image. */
-function FeaturedEvent({ event }: { event: ZajelEvent }) {
+function FeaturedEvent({ event, labels }: { event: ZajelEvent; labels: EventLabels }) {
   return (
     <article className="group relative grid overflow-hidden rounded-[1.75rem] border border-[#1b4332]/10 bg-[#F8F9F8] transition-shadow duration-500 hover:shadow-[0_24px_60px_-30px_rgba(27,67,50,0.35)] lg:grid-cols-[1.15fr_1fr]">
       <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:min-h-[420px]">
@@ -56,7 +52,7 @@ function FeaturedEvent({ event }: { event: ZajelEvent }) {
           <DateTile iso={event.startDate} />
           <span className="inline-flex items-center gap-1.5 rounded-full bg-[#1b4332] px-3 py-1 text-[10.5px] font-medium uppercase tracking-wider text-white">
             <span className="h-1.5 w-1.5 rounded-full bg-[#36B936]" />
-            Next Event
+            {labels.nextEvent}
           </span>
         </div>
       </div>
@@ -89,7 +85,7 @@ function FeaturedEvent({ event }: { event: ZajelEvent }) {
               href={event.href}
               className="inline-flex items-center gap-2 rounded-full bg-[#36B936] px-6 py-3 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#2ea22e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1b4332]"
             >
-              Register Interest
+              {labels.register}
               <span aria-hidden="true" className="rtl:rotate-180">→</span>
             </Link>
           )}
@@ -97,7 +93,7 @@ function FeaturedEvent({ event }: { event: ZajelEvent }) {
             href={`/events/${event.slug}`}
             className="inline-flex items-center gap-1.5 text-sm font-medium text-[#1b4332] underline-offset-4 hover:underline"
           >
-            View Details
+            {labels.details}
             <ArrowUpRight aria-hidden="true" className="h-4 w-4 rtl:-scale-x-100" />
           </Link>
         </div>
@@ -152,7 +148,11 @@ function EventCard({ event, past }: { event: ZajelEvent; past: boolean }) {
   );
 }
 
-export default function EventsExplorer({ events }: { events: ZajelEvent[] }) {
+export default function EventsExplorer({ events, labels }: { events: ZajelEvent[]; labels: EventLabels }) {
+  const TABS: { key: Tab; label: string }[] = [
+    { key: 'upcoming', label: labels.upcoming },
+    { key: 'past', label: labels.past },
+  ];
   const [tab, setTab] = useState<Tab>('upcoming');
 
   const { upcoming, past } = useMemo(() => {
@@ -203,19 +203,19 @@ export default function EventsExplorer({ events }: { events: ZajelEvent[] }) {
         </div>
         <p className="flex items-center gap-2 text-[13px] text-[#1b4332]/50">
           <CalendarDays aria-hidden="true" className="h-4 w-4 text-[#36B936]" />
-          {tab === 'upcoming' ? 'Sorted by date' : 'Most recent first'}
+          {tab === 'upcoming' ? labels.sortedUpcoming : labels.sortedPast}
         </p>
       </div>
 
       {list.length === 0 ? (
         <div className="rounded-[1.5rem] border border-dashed border-[#1b4332]/15 bg-[#F8F9F8] px-6 py-16 text-center">
           <p className={`${typo.body} text-[#2d6a4f]`}>
-            {tab === 'upcoming' ? 'No upcoming events right now. Check back soon.' : 'No past events yet.'}
+            {tab === 'upcoming' ? labels.noUpcoming : labels.noPast}
           </p>
         </div>
       ) : (
         <div className="space-y-5 sm:space-y-6">
-          {featured && <FeaturedEvent event={featured} />}
+          {featured && <FeaturedEvent event={featured} labels={labels} />}
           {rest.length > 0 && (
             <ul className={`grid gap-5 sm:grid-cols-2 sm:gap-6 ${rest.length >= 3 ? 'lg:grid-cols-3' : ''}`}>
               {rest.map((event) => (

@@ -15,6 +15,8 @@ function WhenToChooseLandFreight({ content }: { content: LAND_WHEN_TO_CHOOSECont
       imageAlt={content.imageAlt}
       body={content.body}
       alternatives={content.alternatives}
+      alternativesTitle={content.alternativesTitle}
+      alternativesLead={content.alternativesLead}
     />
   );
 }

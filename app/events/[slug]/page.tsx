@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import { pageMetadata, SITE } from '@/lib/seo';
 import EventDetail from '@/components/events/event-detail';
 import { findEvent, getEvents } from '@/components/events/cms';
+import { EVENTS_PAGE } from '@/components/events/data';
+import { getSection } from '@/lib/cms/server';
 
 // Every event page is built ahead of time; events added later in the CMS are built on first visit.
 export async function generateStaticParams() {
@@ -43,7 +45,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         // `<` escaped so text can never close the script tag
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
       />
-      <EventDetail event={event} />
+      <EventDetail event={event} page={(await getSection('events.page', EVENTS_PAGE)) ?? EVENTS_PAGE} />
     </main>
   );
 }

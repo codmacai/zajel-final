@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { useAuthContext } from "@/components/providers/AuthProvider";
+import { useNavigation } from "./useNavigation";
 
 /**
  * The navbar's "Login" button — swaps to the signed-in user's name (linking to /account)
@@ -11,11 +12,12 @@ import { useAuthContext } from "@/components/providers/AuthProvider";
 export default function AccountLink({ onClick, style }: { onClick?: () => void; style?: CSSProperties }) {
   const { ready, isAuthenticated, isPendingRegistration, displayName } = useAuthContext();
   const signedIn = ready && (isAuthenticated || isPendingRegistration);
+  const loginLabel = useNavigation().labels.login;
 
   if (!signedIn) {
     return (
       <Link href="/login" className="btn-login" onClick={onClick} style={style}>
-        Login
+        {loginLabel}
       </Link>
     );
   }

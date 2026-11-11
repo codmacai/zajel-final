@@ -329,6 +329,7 @@ export const FAQ_PAGE = {
       'Our support team and dedicated logistics account managers are ready to help you navigate your shipping requirements across the UAE and worldwide.',
     descriptionDetail: "Reach out by email or phone, or request a quote and we'll get back to you.",
     phone: CONTACT.phone,
+    phoneLabel: 'Call Directly',
     address: CONTACT.office,
     buttonLabel: 'Request a Quote',
   },

@@ -47,6 +47,7 @@ export default async function FaqPage({ quoteHref = '/support' }: FaqPageProps) 
         descriptionLead={page.contact.descriptionLead}
         descriptionDetail={page.contact.descriptionDetail}
         contactInfo={{ phone: page.contact.phone, address: page.contact.address }}
+        phoneLabel={page.contact.phoneLabel}
         primaryCta={{ label: page.contact.buttonLabel, url: quoteHref }}
       />
     </div>

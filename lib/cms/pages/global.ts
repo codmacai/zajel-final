@@ -23,6 +23,7 @@ export const GLOBAL: PageDef = {
       hints: {
         labels: { label: 'Menu names' },
         'labels.quote': { label: 'Get a Quote button' },
+        'labels.login': { label: 'Login button' },
         solutions: { label: 'Solutions menu', itemLabel: 'Column', fixed: true },
         'solutions.*.label': { hidden: true },
         'solutions.*.tagline': { hidden: true },

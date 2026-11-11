@@ -57,6 +57,8 @@ export const AIR_WHEN_TO_CHOOSE = {
   image: TRANSIT_GUIDE_IMAGE_SRC,
   body: TRANSIT_GUIDE_BODY,
   alternatives: CROSS_SELL_ROUTES,
+  alternativesTitle: 'Not the right fit?',
+  alternativesLead: 'Explore',
 };
 export type AIR_WHEN_TO_CHOOSEContent = typeof AIR_WHEN_TO_CHOOSE;
 
@@ -126,6 +128,9 @@ export const AIR_INDUSTRIES = {
   heading: "Industries We Serve",
   description: "Zajel's air freight network moves time-critical cargo for industries where speed and reliability are non-negotiable.",
   items: industries,
+  ctaLabel: "Don't see your industry?",
+  ctaDescription: 'Get in touch — we tailor logistics solutions for every sector.',
+  ctaTag: 'CTA',
 };
 export type AIR_INDUSTRIESContent = typeof AIR_INDUSTRIES;
 

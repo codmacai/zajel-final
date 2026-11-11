@@ -43,6 +43,8 @@ interface MarqueeSectionProps {
   items: readonly IndustryItem[];
   ctaLabel?: string;
   ctaDescription?: string;
+  /** Small label in the corner of the last card. */
+  ctaTag?: string;
   ctaHref?: string;
   onCtaClick?: () => void;
 }
@@ -75,6 +77,7 @@ export function MarqueeSection({
   items,
   ctaLabel = "Don't see your industry?",
   ctaDescription = "Get in touch — we tailor logistics solutions for every sector.",
+  ctaTag = "CTA",
   ctaHref,
   onCtaClick,
 }: MarqueeSectionProps) {
@@ -93,7 +96,7 @@ export function MarqueeSection({
           "text-[11px] font-medium tracking-wide transition-colors duration-300",
           isMobileDark ? "text-white/60 group-hover:text-white/80" : "text-[#1b4332]/40 group-hover:text-white/70"
         )}>
-          CTA
+          {ctaTag}
         </span>
         <ArrowRight
           className={cx(

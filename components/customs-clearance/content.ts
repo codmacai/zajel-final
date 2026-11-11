@@ -86,6 +86,9 @@ export const CUSTOMS_INDUSTRIES = {
   heading: INDUSTRIES_WE_SERVE_HEADING,
   description: INDUSTRIES_WE_SERVE_DESCRIPTION,
   items: INDUSTRIES,
+  ctaLabel: "Don't see your industry?",
+  ctaDescription: 'Get in touch — we tailor logistics solutions for every sector.',
+  ctaTag: 'CTA',
 };
 export type CUSTOMS_INDUSTRIESContent = typeof CUSTOMS_INDUSTRIES;
 

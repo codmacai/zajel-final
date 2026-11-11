@@ -18,6 +18,9 @@ type WhenToChooseFreightProps = {
   body: readonly BodyPart[];
   /** The other freight modes to link to (first = green button, second = dark button) */
   alternatives: readonly AlternativeRoute[];
+  /** The box that links to the other freight modes. */
+  alternativesTitle?: string;
+  alternativesLead?: string;
 };
 
 const ArrowRightIcon = ({ className }: { className?: string }) => (
@@ -43,6 +46,8 @@ export default function WhenToChooseFreight({
   imageAlt,
   body,
   alternatives,
+  alternativesTitle = 'Not the right fit?',
+  alternativesLead = 'Explore',
 }: WhenToChooseFreightProps) {
   const alternativesText = alternatives.map((a) => a.label).join(' or ');
 
@@ -101,10 +106,10 @@ export default function WhenToChooseFreight({
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 px-4 py-4 sm:px-6 sm:py-5">
             <div className="flex flex-col gap-0.5">
               <span className="text-[14px] sm:text-[15px] font-medium text-[#0A4D26]">
-                Not the right fit?
+                {alternativesTitle}
               </span>
               <p className="text-[13px] sm:text-[14px] leading-snug tracking-tight text-[#0A4D26]/65 font-light">
-                Explore {alternativesText}.
+                {alternativesLead} {alternativesText}.
               </p>
             </div>
 

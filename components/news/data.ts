@@ -131,9 +131,16 @@ export type NewsArticlesContent = typeof NEWS_ARTICLES;
 
 /** The words on every article page (News → Article page text). */
 export const NEWS_PAGE = {
+  homeLabel: 'Home',
+  newsLabel: 'News',
   backLabel: 'Back to news',
-  byLabel: 'By',
+  tocLabel: 'On this page',
+  authorLabel: 'Written by',
+  authorNote: 'News, insights and updates from the Zajel team.',
+  publishedLabel: 'Published',
+  readingLabel: 'Reading time',
   readTimeLabel: 'min read',
+  topicLabel: 'Topic',
   shareLabel: 'Share this article',
   copiedLabel: 'Link copied',
   moreLabel: 'More news',

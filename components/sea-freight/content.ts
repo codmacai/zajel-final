@@ -81,6 +81,8 @@ export const SEA_WHEN_TO_CHOOSE = {
   image: IMAGE_SRC,
   body: BODY,
   alternatives: ALTERNATIVES,
+  alternativesTitle: 'Not the right fit?',
+  alternativesLead: 'Explore',
 };
 export type SEA_WHEN_TO_CHOOSEContent = typeof SEA_WHEN_TO_CHOOSE;
 
@@ -413,6 +415,9 @@ export const SEA_INDUSTRIES = {
   heading: "Industries We Serve",
   description: "Zajel works across diverse industries, adapting logistics strategies to meet unique operational, regulatory, and delivery requirements.",
   items: industries,
+  ctaLabel: "Don't see your industry?",
+  ctaDescription: 'Get in touch — we tailor logistics solutions for every sector.',
+  ctaTag: 'CTA',
 };
 export type SEA_INDUSTRIESContent = typeof SEA_INDUSTRIES;
 

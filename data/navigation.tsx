@@ -318,6 +318,7 @@ export const NAVIGATION = {
     resources: "Resources",
     support: "Support Center",
     quote: "Get a Quote",
+    login: "Login",
   },
   solutions: solutionsCategories,
   about: aboutItems,

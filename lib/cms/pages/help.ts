@@ -12,7 +12,7 @@ export const EVENTS: PageDef = {
   path: '/events',
   group: 'Company',
   sections: [
-    { id: 'page', label: 'Page text', defaults: EVENTS_PAGE, hints: { contact: { label: 'Contact band' }, ...Object.fromEntries(Object.entries(CONTACT_BAND_HINTS).map(([k, v]) => [`contact.${k}`, v])) } },
+    { id: 'page', label: 'Page text', defaults: EVENTS_PAGE, note: 'Also the labels and buttons on each event’s page', hints: { labels: { label: 'Labels and buttons' }, contact: { label: 'Contact band' }, ...Object.fromEntries(Object.entries(CONTACT_BAND_HINTS).map(([k, v]) => [`contact.${k}`, v])) } },
     {
       id: 'list',
       label: 'Events',

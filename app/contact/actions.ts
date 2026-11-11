@@ -17,7 +17,8 @@ const FIELDS = {
   message: ['message', 'details', 'notes', 'comments', 'enquiry', 'inquiry'],
 } as const;
 const HONEYPOT = 'website';
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+// No characters that could change a reply link (mailto:) built from the address.
+const EMAIL = /^[^\s@<>"'?&,;:()\\]+@[^\s@<>"'?&,;:()\\]+\.[^\s@<>"'?&,;:()\\]{2,}$/;
 
 // At most 5 messages per visitor and 60 in total per server every 10 minutes.
 const WINDOW_MS = 10 * 60_000;

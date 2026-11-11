@@ -8,6 +8,9 @@ const IndustriesWeServe = ({ content }: { content: SEA_INDUSTRIESContent }) => (
     heading={content.heading}
     description={content.description}
     items={content.items}
+    ctaLabel={content.ctaLabel}
+    ctaDescription={content.ctaDescription}
+    ctaTag={content.ctaTag}
   />
 );
 

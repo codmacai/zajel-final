@@ -10,6 +10,9 @@ const IndustriesWeServe = ({ content }: { content: AIR_INDUSTRIESContent }) => (
         heading={content.heading}
         description={content.description}
         items={content.items}
+        ctaLabel={content.ctaLabel}
+        ctaDescription={content.ctaDescription}
+        ctaTag={content.ctaTag}
       />
     </div>
   </section>

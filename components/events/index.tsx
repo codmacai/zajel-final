@@ -32,7 +32,7 @@ export default async function EventsPage() {
       {/* Events */}
       <section className="w-full py-10 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-[1100px] px-5 sm:px-8">
-          <EventsExplorer events={events} />
+          <EventsExplorer events={events} labels={page.labels} />
         </div>
       </section>
 

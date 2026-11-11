@@ -117,7 +117,7 @@ const GlobalAlliances: FC<{ content: typeof ABOUT_ALLIANCES }> = ({ content }) =
 
               <div className="mt-5 flex items-center justify-between border-t border-[#064423]/[0.08] pt-4 text-[#36B936] sm:mt-6">
                 <span className="text-[11px] font-medium uppercase tracking-wider transition-transform duration-300 group-hover:translate-x-1">
-                  Verified Alliance
+                  {content.verifiedLabel}
                 </span>
                 <span aria-hidden="true" className="text-sm leading-none">
                   →

@@ -135,7 +135,7 @@ const OurJourney = ({ content }: { content: ABOUT_JOURNEYContent }) => {
                     <div>
                       <h3 className="mb-3 text-[1.0625rem] font-medium leading-snug tracking-tight text-white sm:mb-4 sm:text-xl lg:text-2xl">
                         {stop.eyebrow}
-                        {stop.isPresent ? ' (Today)' : ''}
+                        {stop.isPresent ? ` (${content.presentLabel})` : ''}
                       </h3>
                       <div className="flex max-w-[62ch] flex-col gap-2.5 sm:gap-3.5">
                         {stop.beats.map((beat, i) => (

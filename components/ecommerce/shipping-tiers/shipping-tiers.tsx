@@ -60,7 +60,7 @@ const ShippingTiers = ({ content }: { content: ECOMMERCE_PRICINGContent }) => {
         {/* Tier cards */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
           {content.tiers.map((tier, i) => (
-            <TierCard key={tier.id} {...tier} position={i} />
+            <TierCard key={tier.id} {...tier} position={i} recommendedLabel={content.recommendedLabel} />
           ))}
         </div>
 

@@ -23,6 +23,8 @@ export interface ContactBandProps {
   descriptionLead?: string;
   descriptionDetail?: string;
   contactInfo?: ContactInfo;
+  /** Small label above the phone number. */
+  phoneLabel?: string;
   primaryCta?: CtaItem;
   secondaryCta?: CtaItem;
   onCtaClick?: () => void;
@@ -41,6 +43,7 @@ export default function ContactBand({
   descriptionLead = "Whether you are shipping a single consignment to a new market or establishing regular freight routes across multiple continents, Zajel's network provides the coverage, reliability, and coordination to keep your cargo moving.",
   descriptionDetail = 'Contact our team to discuss your shipping requirements, explore route options, or request a freight quote.',
   contactInfo = DEFAULT_CONTACT_INFO,
+  phoneLabel = 'Call Directly',
   primaryCta = {
     label: 'Request a Freight Quote',
     url: '/support',
@@ -108,7 +111,7 @@ export default function ContactBand({
                     <Phone className="h-4.5 w-4.5" strokeWidth={1.75} />
                   </span>
                   <span className="text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-white/50">
-                    Call Directly
+                    {phoneLabel}
                   </span>
                   <span className="mt-0.5 text-xs sm:text-sm font-medium text-white/95 truncate max-w-full">
                     {mergedContact.phone}

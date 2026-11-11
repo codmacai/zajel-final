@@ -167,7 +167,7 @@ const CompanyDocuments: FC<{ available?: string[]; content: typeof ABOUT_DOCUMEN
                       </p>
 
                       <span className={`mt-auto pt-3 text-[11px] font-medium sm:text-xs ${t.foot}`}>
-                        {ready ? "PDF · Ready to download" : "PDF · Request a copy"}
+                        {ready ? content.readyLabel : content.requestLabel}
                       </span>
                     </div>
                   </a>

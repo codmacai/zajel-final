@@ -7,7 +7,7 @@ const btn =
   'flex h-10 w-10 items-center justify-center rounded-full border border-[#1b4332]/10 bg-white text-[#1b4332]/70 transition-colors hover:border-[#36B936]/40 hover:bg-[#36B936]/10 hover:text-[#1b4332] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#36B936]';
 
 /** Share buttons for an article: LinkedIn, X, WhatsApp, email and copy link. */
-export default function ShareBar({ url, title, label, copiedLabel }: { url: string; title: string; label: string; copiedLabel: string }) {
+export default function ShareBar({ url, title, label, copiedLabel, compact = false }: { url: string; title: string; label: string; copiedLabel: string; compact?: boolean }) {
   const [copied, setCopied] = useState(false);
   const u = encodeURIComponent(url);
   const t = encodeURIComponent(title);
@@ -21,8 +21,16 @@ export default function ShareBar({ url, title, label, copiedLabel }: { url: stri
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
-      <span className="w-full text-[13px] font-medium text-[#1b4332]/60 sm:me-1 sm:w-auto">{label}</span>
+    <div className={`flex flex-wrap items-center ${compact ? 'gap-2' : 'gap-2.5 sm:gap-3'}`}>
+      <span
+        className={
+          compact
+            ? 'mb-1 w-full text-[11px] font-medium uppercase tracking-[0.12em] text-[#1b4332]/45'
+            : 'w-full text-[13px] font-medium text-[#1b4332]/60 sm:me-1 sm:w-auto'
+        }
+      >
+        {label}
+      </span>
       <a className={btn} href={`https://www.linkedin.com/sharing/share-offsite/?url=${u}`} target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />

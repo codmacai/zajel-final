@@ -15,6 +15,8 @@ function WhenToChooseSeaFreight({ content }: { content: SEA_WHEN_TO_CHOOSEConten
       imageAlt={content.imageAlt}
       body={content.body}
       alternatives={content.alternatives}
+      alternativesTitle={content.alternativesTitle}
+      alternativesLead={content.alternativesLead}
     />
   );
 }

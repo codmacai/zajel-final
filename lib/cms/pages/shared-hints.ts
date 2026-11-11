@@ -39,6 +39,8 @@ export const WHEN_HINTS: Hints = {
   'body.*.emphasis': { label: 'Emphasis' },
   alternatives: { label: 'Other options', itemLabel: 'Link' },
   'alternatives.*.sublabel': { hidden: true },
+  alternativesTitle: { label: 'Other options: title' },
+  alternativesLead: { label: 'Other options: text before the links', help: 'For example “Explore”' },
 };
 
 export const DELIVERY_HINTS: Hints = {
@@ -62,6 +64,9 @@ export const SOLUTIONS_HINTS: Hints = {
 
 export const MARQUEE_HINTS: Hints = {
   items: { label: 'Industries', itemLabel: 'Industry' },
+  ctaLabel: { label: 'Last card: title' },
+  ctaDescription: { label: 'Last card: text', kind: 'textarea' },
+  ctaTag: { label: 'Last card: small label', help: 'In the corner of the card' },
 };
 
 export const CTA_HINTS: Hints = {
@@ -96,6 +101,7 @@ export const CONTACT_BAND_HINTS: Hints = {
   descriptionLead: { label: 'Intro', kind: 'textarea' },
   descriptionDetail: { label: 'Details' },
   contactInfo: { label: 'Contact details' },
+  phoneLabel: { label: 'Label above the phone number' },
   primaryCta: { label: 'Button' },
   'primaryCta.url': { label: 'Link' },
 };

@@ -8,6 +8,8 @@ import type { ShippingTier } from './types';
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 interface TierCardProps extends ShippingTier {
+  /** Label on the highlighted plan. */
+  recommendedLabel?: string;
   /** Position in the grid, used only to stagger the entrance animation. */
   position: number;
 }
@@ -22,6 +24,7 @@ const TierCard = ({
   buttonLabel,
   buttonUrl,
   recommended,
+  recommendedLabel = 'Recommended',
   position,
 }: TierCardProps) => {
   return (
@@ -52,7 +55,7 @@ const TierCard = ({
             {tierNumber}
           </span>
           {recommended && (
-            <span className="text-[#36B936] text-[0.7rem] font-medium tracking-[0.08em] uppercase">Recommended</span>
+            <span className="text-[#36B936] text-[0.7rem] font-medium tracking-[0.08em] uppercase">{recommendedLabel}</span>
           )}
         </div>
 

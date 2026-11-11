@@ -3,17 +3,18 @@ import Link from 'next/link';
 import { ArrowLeft, CalendarDays, Check, Clock, MapPin } from 'lucide-react';
 import { typo } from '@/components/ui copy/typography';
 import ContactBand from '../dynamic-contact';
-import type { ZajelEvent } from './data';
+import type { EVENTS_PAGE, ZajelEvent } from './data';
 import EventCta from './event-cta';
 import EventGallery from './event-gallery';
 import { dateRange } from './format';
 
 /** Detail page for one event. Server component; only the gallery and CTA ship client JS. */
-export default function EventDetail({ event }: { event: ZajelEvent }) {
+export default function EventDetail({ event, page }: { event: ZajelEvent; page: typeof EVENTS_PAGE }) {
+  const labels = page.labels;
   const facts = [
-    { icon: CalendarDays, label: 'Date', value: dateRange(event) },
-    ...(event.time ? [{ icon: Clock, label: 'Time', value: event.time }] : []),
-    { icon: MapPin, label: 'Location', value: `${event.venue}, ${event.city}` },
+    { icon: CalendarDays, label: labels.date, value: dateRange(event) },
+    ...(event.time ? [{ icon: Clock, label: labels.time, value: event.time }] : []),
+    { icon: MapPin, label: labels.location, value: `${event.venue}, ${event.city}` },
   ];
 
   return (
@@ -30,7 +31,7 @@ export default function EventDetail({ event }: { event: ZajelEvent }) {
             className="mb-8 inline-flex items-center gap-2 text-[13px] font-medium text-[#1b4332]/60 transition-colors hover:text-[#1b4332] sm:mb-10"
           >
             <ArrowLeft aria-hidden="true" className="h-4 w-4 rtl:rotate-180" />
-            All Events
+            {labels.allEvents}
           </Link>
 
           <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2">
@@ -63,7 +64,7 @@ export default function EventDetail({ event }: { event: ZajelEvent }) {
       <section className="w-full py-10 sm:py-14 lg:py-20">
         <div className="mx-auto grid max-w-[1100px] gap-10 px-5 sm:px-8 lg:grid-cols-[1fr_320px] lg:gap-16">
           <div className="min-w-0">
-            <h2 className={`${typo.subheading} mb-4 text-[#1b4332]`}>About the Event</h2>
+            <h2 className={`${typo.subheading} mb-4 text-[#1b4332]`}>{labels.about}</h2>
             <div className="space-y-4">
               {event.description.map((p) => (
                 <p key={p.slice(0, 40)} className={`${typo.lead} text-[#2d6a4f]`}>
@@ -74,7 +75,7 @@ export default function EventDetail({ event }: { event: ZajelEvent }) {
 
             {event.highlights && event.highlights.length > 0 && (
               <div className="mt-10">
-                <h2 className={`${typo.subheading} mb-4 text-[#1b4332]`}>Highlights</h2>
+                <h2 className={`${typo.subheading} mb-4 text-[#1b4332]`}>{labels.highlights}</h2>
                 <ul className="space-y-3">
                   {event.highlights.map((h) => (
                     <li key={h} className={`${typo.lead} flex items-start gap-3 text-[#2d6a4f]`}>
@@ -90,7 +91,7 @@ export default function EventDetail({ event }: { event: ZajelEvent }) {
 
             {event.gallery && event.gallery.length > 0 && (
               <div className="mt-12">
-                <h2 className={`${typo.subheading} mb-5 text-[#1b4332]`}>Gallery</h2>
+                <h2 className={`${typo.subheading} mb-5 text-[#1b4332]`}>{labels.gallery}</h2>
                 <EventGallery images={event.gallery} />
               </div>
             )}
@@ -99,7 +100,7 @@ export default function EventDetail({ event }: { event: ZajelEvent }) {
           {/* Sidebar: first on phones, sticks beside the text on desktop */}
           <aside className="order-first lg:order-none lg:sticky lg:top-28 lg:self-start">
             <div className="rounded-[1.5rem] border border-[#1b4332]/10 bg-[#F8F9F8] p-6 sm:p-7">
-              <h2 className={`${typo.cardTitle} mb-5 text-[#1b4332]`}>Event Details</h2>
+              <h2 className={`${typo.cardTitle} mb-5 text-[#1b4332]`}>{labels.eventDetails}</h2>
               <dl className="space-y-4">
                 {facts.map(({ icon: Icon, label, value }) => (
                   <div key={label} className="flex items-start gap-3">
@@ -112,20 +113,14 @@ export default function EventDetail({ event }: { event: ZajelEvent }) {
                 ))}
               </dl>
               <div className="mt-6 border-t border-[#1b4332]/10 pt-6">
-                <EventCta event={event} />
+                <EventCta event={event} labels={labels} />
               </div>
             </div>
           </aside>
         </div>
       </section>
 
-      <ContactBand
-        badgeText="Book a Meeting"
-        title="Planning to Attend?"
-        descriptionLead="Schedule time with our team at any upcoming event to discuss your courier, freight, customs or warehousing requirements."
-        descriptionDetail="Reach out by email or phone and we'll arrange a meeting at the venue or at one of our offices."
-        primaryCta={{ label: 'Contact Our Team', url: '/support' }}
-      />
+      <ContactBand {...page.contact} />
     </div>
   );
 }

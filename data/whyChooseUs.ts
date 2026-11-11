@@ -24,4 +24,12 @@ export const whyChooseUsContent = {
       statSuffix: "M+",
       title: "Shipments Delivered",
     },
+    reach: {
+      title: "International Reach",
+      description: "Nationwide coverage across every emirate.",
+    },
+    countries: {
+      value: "195",
+      label: "Countries Served",
+    },
   };

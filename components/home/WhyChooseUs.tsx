@@ -83,8 +83,8 @@ function WhyChooseUs({ content }: { content: typeof whyChooseUsContent }) {
                 />
               </svg>
             </div>
-            <h3 className="wcz-card-title">International Reach</h3>
-            <p className="wcz-card-desc">Nationwide coverage across every emirate.</p>
+            <h3 className="wcz-card-title">{content.reach.title}</h3>
+            <p className="wcz-card-desc">{content.reach.description}</p>
           </div>
 
           {/* Experience Card */}
@@ -185,9 +185,9 @@ function WhyChooseUs({ content }: { content: typeof whyChooseUsContent }) {
               </svg>
             </div>
             <div className="wcz-dest-value">
-              195
+              {content.countries.value}
             </div>
-            <div className="wcz-dest-label">Countries Served</div>
+            <div className="wcz-dest-label">{content.countries.label}</div>
           </div>
         </div>
       </div>
