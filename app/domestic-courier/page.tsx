@@ -1,4 +1,4 @@
-import { cmsMetadata, getSection } from '@/lib/cms/server';
+import { cmsMetadata, getSection, notFoundIfHidden } from '@/lib/cms/server';
 import {
   DeliverySpeedAndDoorstep,
   WhyChooseZajel,
@@ -17,6 +17,8 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('domestic-courier', '/domestic-courier');
 
 export default async function DomesticOnDemandPage() {
+  // Switched off in the CMS: "page not found".
+  await notFoundIfHidden('domestic-courier');
   const cta = await getSection("domestic-courier.cta", DOMESTIC_CTA);
   return (
     <CmsScope page="domestic-courier">

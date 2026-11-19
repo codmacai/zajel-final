@@ -20,7 +20,7 @@ function initials(email: string) {
   return ((parts[0]?.[0] ?? '') + (parts[1]?.[0] ?? parts[0]?.[1] ?? '')).toUpperCase() || 'Z';
 }
 
-export default function AdminShell({ nav, email, children }: { nav: NavPage[]; email: string; children: ReactNode }) {
+export default function AdminShell({ nav, email, hiddenPages = [], children }: { nav: NavPage[]; email: string; hiddenPages?: string[]; children: ReactNode }) {
   const pathname = usePathname();
   const [sideOpen, setSideOpen] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
@@ -100,6 +100,7 @@ export default function AdminShell({ nav, email, children }: { nav: NavPage[]; e
                   <Link key={p.id} href={`/admin/${p.id}`} className="c-nav-link" aria-current={p.id === activePageId ? 'page' : undefined} onClick={onNavigate(`/admin/${p.id}`)}>
                     <Icon className="c-nav-ic" aria-hidden="true" />
                     <span>{p.label}</span>
+                    {hiddenPages.includes(p.id) && <span className="c-nav-off" title="Hidden from the website">Off</span>}
                     {p.missingArabic > 0 && (
                       <span className="c-nav-dot" title={`${p.missingArabic} texts without Arabic`}>
                         {p.missingArabic}

@@ -7,6 +7,15 @@ import { getAt, mergeContent, normText, toPlain, type ArabicMap, type Plain } fr
 import { translatablePaths } from './fields';
 import { allSections, findSection, PAGES, sectionKey, type PageDef, type SectionDef } from './registry';
 import { readRowsFresh, type CmsRow } from './store';
+import { PAGES_KEY, parseVisibility } from './visibility';
+
+/** Every saved row, read once per request. */
+const freshRows = cache(() => readRowsFresh());
+
+/** Ids of the pages switched off on the website. */
+export const hiddenPageIds = cache(async (): Promise<string[]> =>
+  parseVisibility((await freshRows().catch(() => [])).find((r) => r.key === PAGES_KEY)?.en).pages,
+);
 
 const AR = AR_JSON as Record<string, string>;
 
@@ -96,7 +105,7 @@ export async function sectionStatus(key: string): Promise<SectionStatus | null> 
 
 /** Status of every section: one database read, shared by everything on the same request. */
 export const allStatuses = cache(async (): Promise<SectionStatus[]> => {
-  const rows = new Map((await readRowsFresh()).map((r) => [r.key, r]));
+  const rows = new Map((await freshRows()).map((r) => [r.key, r]));
   return allSections().map(({ page, section, key }) => buildStatus(page, section, rows.get(key)));
 });
 

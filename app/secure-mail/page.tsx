@@ -1,10 +1,12 @@
-import { cmsMetadata } from '@/lib/cms/server';
+import { cmsMetadata, notFoundIfHidden } from '@/lib/cms/server';
 import { SecureMailHero, SecureMailProtocol, SecureMailDetails } from '@/components/services/secure-mail';
 import CmsScope from '@/components/cms/CmsScope';
 
 export const generateMetadata = cmsMetadata('secure-mail', '/secure-mail');
 
-export default function SecureMailPage() {
+export default async function SecureMailPage() {
+  // Switched off in the CMS: "page not found".
+  await notFoundIfHidden('secure-mail');
   return (
     <CmsScope page="secure-mail">
     <main className="bg-white overflow-x-clip selection:bg-[#36B936] selection:text-white">

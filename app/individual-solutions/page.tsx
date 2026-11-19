@@ -1,4 +1,4 @@
-import { cmsMetadata, getSection } from '@/lib/cms/server';
+import { cmsMetadata, getSection, notFoundIfHidden } from '@/lib/cms/server';
 import {
   BookNow,
   IndividualHero,
@@ -15,6 +15,8 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('individual-solutions', '/individual-solutions');
 
 export default async function IndividualSolutionsPage() {
+  // Switched off in the CMS: "page not found".
+  await notFoundIfHidden('individual-solutions');
   const cta = await getSection("individual-solutions.cta", INDIVIDUAL_CTA);
   return (
     <CmsScope page="individual-solutions">

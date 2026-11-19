@@ -1,4 +1,4 @@
-import { cmsMetadata } from '@/lib/cms/server';
+import { cmsMetadata, notFoundIfHidden } from '@/lib/cms/server';
 import {
   LandFreightSolutions,
   WhenToChooseLandFreight,
@@ -20,7 +20,9 @@ import CmsScope from '@/components/cms/CmsScope';
 
 export const generateMetadata = cmsMetadata('land-freight', '/land-freight');
 
-export default function LandFreightPage() {
+export default async function LandFreightPage() {
+  // Switched off in the CMS: "page not found".
+  await notFoundIfHidden('land-freight');
   return (
     <CmsScope page="land-freight">
     <main>

@@ -18,6 +18,11 @@ Edit the text, images and Arabic of every page at **/admin**. Changes go live wi
   safe. Anything that could break a page can't be saved.
 - **Support tickets** are not in the CMS: they go to Freshdesk through the Zajel API.
 - The website re-reads the CMS at most every 5 minutes on its own, and immediately after each save.
+- **Pages on/off**: each page's screen in the CMS has a switch. A page that is off answers "page not
+  found", leaves the sitemap, and its links leave the menu and footer (`lib/cms/visibility.ts`; every page
+  calls `notFoundIfHidden()`).
+- **Arabic digits**: in Arabic, numbers show as ٠١٢٣٤٥٦٧٨٩ (`lib/i18n/translator.ts`). Email and web
+  addresses keep 0-9; add `data-latin-digits` to keep 0-9 anywhere else. Tracking accepts both kinds.
 - **News**: articles are written under **News → Articles** from blocks (paragraph, heading, quote,
   bullet list, photo). The newest three show on the home page (Latest news); each article has its
   own page at `/news/<page-address>`, is listed in the sitemap and shares with its cover photo.

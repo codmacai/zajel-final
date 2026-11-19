@@ -1,4 +1,4 @@
-import { cmsMetadata } from '@/lib/cms/server';
+import { cmsMetadata, notFoundIfHidden } from '@/lib/cms/server';
 import ServiceHero from "@/components/sections/ServiceHero/ServiceHero";
 import SupplyChainWarehousingSection from "@/components/warehouse/supply-chain-warehousing-section";
 import InventoryManagement from "@/components/warehouse/inventory-management";
@@ -12,7 +12,9 @@ import CmsScope from '@/components/cms/CmsScope';
 
 export const generateMetadata = cmsMetadata('warehouse', '/warehouse');
 
-export default function WarehousePage() {
+export default async function WarehousePage() {
+  // Switched off in the CMS: "page not found".
+  await notFoundIfHidden('warehouse');
   return (
     <CmsScope page="warehouse">
     <main>

@@ -2,6 +2,8 @@ import type { MetadataRoute } from 'next';
 import { SITE } from '@/lib/seo';
 import { getEvents } from '@/components/events/cms';
 import { getArticles } from '@/components/news/cms';
+import { hiddenPages } from '@/lib/cms/server';
+import { linksToHidden } from '@/lib/cms/visibility';
 
 type Entry = { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] };
 
@@ -49,7 +51,8 @@ const ROUTES: Entry[] = [
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const events: Entry[] = (await getEvents()).map(({ slug }) => ({ path: `/events/${slug}`, priority: 0.4, changeFrequency: 'monthly' }));
   const news: Entry[] = (await getArticles()).map(({ slug }) => ({ path: `/news/${slug}`, priority: 0.5, changeFrequency: 'monthly' }));
-  return [...ROUTES, ...events, ...news].map(({ path, priority, changeFrequency }) => ({
+  const { paths } = await hiddenPages();
+  return [...ROUTES, ...events, ...news].filter((r) => !linksToHidden(r.path, paths)).map(({ path, priority, changeFrequency }) => ({
     url: `${SITE.url}${path}`,
     changeFrequency,
     priority,

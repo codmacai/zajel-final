@@ -1,4 +1,4 @@
-import { cmsMetadata, getSection } from '@/lib/cms/server';
+import { cmsMetadata, getSection, notFoundIfHidden } from '@/lib/cms/server';
 import FaqPage from '@/components/faq';
 import { FAQ_PAGE } from '@/components/faq/data';
 
@@ -20,6 +20,8 @@ function faqJsonLd(categories: typeof FAQ_PAGE.categories) {
 }
 
 export default async function Page() {
+  // Switched off in the CMS: "page not found".
+  await notFoundIfHidden('faq');
   const page = (await getSection('faq.page', FAQ_PAGE)) ?? FAQ_PAGE;
   const jsonLd = faqJsonLd(page.categories);
   return (

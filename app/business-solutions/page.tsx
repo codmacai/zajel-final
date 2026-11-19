@@ -1,4 +1,4 @@
-import { cmsMetadata, getSection } from '@/lib/cms/server';
+import { cmsMetadata, getSection, notFoundIfHidden } from '@/lib/cms/server';
 // Drop this in at app/business-solutions/page.tsx (or wherever this route
 // lives). HowBusinessOnboardingWorks wasn't sent over as source (only
 // imported by name, like ZajelProcess was on the Individual Solutions
@@ -21,6 +21,8 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('business-solutions', '/business-solutions');
 
 export default async function BusinessSolutionsPage() {
+  // Switched off in the CMS: "page not found".
+  await notFoundIfHidden('business-solutions');
   const cta = await getSection("business-solutions.cta", BUSINESS_CTA);
   return (
     <CmsScope page="business-solutions">

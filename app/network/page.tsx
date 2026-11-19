@@ -1,4 +1,4 @@
-import { cmsMetadata, getSection } from '@/lib/cms/server';
+import { cmsMetadata, getSection, notFoundIfHidden } from '@/lib/cms/server';
 import { NETWORK_CONTACT } from '@/components/logistics-network/content';
 import ServiceHero from "@/components/sections/ServiceHero/ServiceHero";
 import LogisticsNetworkSection from "@/components/logistics-network/logistics-network";
@@ -14,6 +14,8 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('network', '/network');
 
 export default async function NetworkPage() {
+  // Switched off in the CMS: "page not found".
+  await notFoundIfHidden('network');
   const contact = await getSection("network.contact", NETWORK_CONTACT);
   return (
     <CmsScope page="network">

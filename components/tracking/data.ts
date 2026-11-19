@@ -77,14 +77,19 @@ export function detectTrackType(value: string): TrackTabId {
 }
 
 /** /trackresults?q=...&type=awb|mobile — the query lives in the URL so results can be shared. */
+/** Arabic (٠-٩) and Persian (۰-۹) digits as 0-9, so numbers copied from the Arabic site or typed
+ *  on an Arabic keyboard still track. */
+export const toLatinDigits = (s: string) => s.replace(/[٠-٩۰-۹]/g, (d) => String((d.charCodeAt(0) & 0xf) % 10));
+
 export function trackResultsHref(value: string, type?: TrackTabId): string {
+  value = toLatinDigits(value);
   const params = new URLSearchParams({ q: value.trim(), type: type ?? detectTrackType(value) });
   return `${TRACK_ROUTES.results}?${params.toString()}`;
 }
 
 /** Reads ?q= and ?type= back into the query the tracking API expects. */
 export function parseTrackQuery(params: URLSearchParams | null): ShipmentQuery | null {
-  const value = params?.get('q')?.trim();
+  const value = toLatinDigits(params?.get('q') ?? '').trim();
   if (!value) return null;
   const rawType = params?.get('type');
   const type: TrackTabId = rawType === 'mobile' || rawType === 'awb' ? rawType : detectTrackType(value);

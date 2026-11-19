@@ -1,10 +1,12 @@
 import { Suspense } from 'react';
-import { cmsMetadata } from '@/lib/cms/server';
+import { cmsMetadata, notFoundIfHidden } from '@/lib/cms/server';
 import TrackingResults from '@/components/tracking/TrackingResults';
 
 export const generateMetadata = cmsMetadata('trackresults', '/trackresults', { noIndex: true });
 
-export default function TrackResultsPage() {
+export default async function TrackResultsPage() {
+  // Switched off in the CMS: "page not found".
+  await notFoundIfHidden('trackresults');
   // useSearchParams() in the client component requires a Suspense boundary.
   return (
     <main>

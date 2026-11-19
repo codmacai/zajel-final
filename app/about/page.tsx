@@ -1,6 +1,6 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { cmsMetadata, getSection } from '@/lib/cms/server';
+import { cmsMetadata, getSection, notFoundIfHidden } from '@/lib/cms/server';
 import {
   AboutHero,
   OurStory,
@@ -25,6 +25,8 @@ const DOCUMENTS_READY = ['company-profile.pdf', 'ims-policy.pdf'].filter((f) =>
 export const generateMetadata = cmsMetadata('about', '/about');
 
 export default async function AboutPage() {
+  // Switched off in the CMS: "page not found".
+  await notFoundIfHidden('about');
   const appDownload = await getSection("about.app-download", ABOUT_APP_DOWNLOAD);
   const cta = await getSection("about.cta", ABOUT_CTA);
   return (

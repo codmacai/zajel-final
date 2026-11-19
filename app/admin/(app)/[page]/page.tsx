@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { ExternalLink } from 'lucide-react';
 import { requireAdmin } from '@/lib/cms/auth';
-import { allStatuses } from '@/lib/cms/admin';
+import { allStatuses, hiddenPageIds } from '@/lib/cms/admin';
+import { canHide } from '@/lib/cms/visibility';
+import PageSwitch from '@/components/cms/admin/PageSwitch';
 import { findPage } from '@/lib/cms/registry';
 import SectionList from '@/components/cms/admin/SectionList';
 
@@ -15,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PageSections({ params }: Props) {
   const { page: pageId } = await params;
   const page = findPage(pageId);
-  const [, all] = await Promise.all([requireAdmin(`/admin/${pageId}`), allStatuses()]);
+  const [, all, hidden] = await Promise.all([requireAdmin(`/admin/${pageId}`), allStatuses(), hiddenPageIds()]);
   if (!page) notFound();
   const statuses = all.filter((s) => s.page.id === page.id);
   const missing = statuses.reduce((n, s) => n + s.missingArabic, 0);
@@ -41,6 +43,7 @@ export default async function PageSections({ params }: Props) {
           )}
         </div>
       </div>
+      {canHide(page.path) && <PageSwitch key={String(hidden.includes(page.id))} pageId={page.id} label={page.label} enabled={!hidden.includes(page.id)} />}
       <SectionList
         pageId={page.id}
         sections={statuses.map((s) => ({

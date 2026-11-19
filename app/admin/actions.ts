@@ -6,7 +6,8 @@ import { clearSession, getAdmin, safeNext, signIn } from '@/lib/cms/auth';
 import { CMS_TAG } from '@/lib/cms/config';
 import { getAt, sanitize, toPlain, type ArabicMap, type Plain } from '@/lib/cms/content';
 import { translatablePaths } from '@/lib/cms/fields';
-import { findSection } from '@/lib/cms/registry';
+import { findPage, findSection, PAGES } from '@/lib/cms/registry';
+import { canHide, PAGES_KEY, parseVisibility } from '@/lib/cms/visibility';
 import {
   cmsWritable,
   createUpload,
@@ -142,5 +143,31 @@ export async function prepareUploadAction(
     return { ok: true, ...(await createUpload(path)) };
   } catch (e) {
     return { ok: false, error: e instanceof Error ? e.message : 'Couldn’t prepare the upload.' };
+  }
+}
+
+/** Shows or hides a whole page on the website. A hidden page answers "page not found". */
+export async function setPageEnabledAction(pageId: string, enabled: boolean): Promise<ActionResult> {
+  const who = await guard();
+  if ('error' in who) return { ok: false, error: who.error };
+  const page = findPage(pageId);
+  if (!page || !canHide(page.path)) return { ok: false, error: 'This page can’t be switched off.' };
+  try {
+    const current = parseVisibility((await readRowFresh(PAGES_KEY))?.en);
+    const ids = new Set(current.pages.filter((id) => findPage(id)));
+    if (enabled) ids.delete(pageId);
+    else ids.add(pageId);
+    const pages = PAGES.filter((p) => ids.has(p.id));
+    await writeRow({
+      key: PAGES_KEY,
+      en: { pages: pages.map((p) => p.id), paths: pages.map((p) => p.path!) },
+      ar: {},
+      enabled: true,
+      updated_by: who.email,
+    });
+    publish();
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : 'Couldn’t change the page. Try again.' };
   }
 }

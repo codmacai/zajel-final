@@ -1,4 +1,4 @@
-import { cmsMetadata } from '@/lib/cms/server';
+import { cmsMetadata, notFoundIfHidden } from '@/lib/cms/server';
 import ChooseDeliveryAndCompliance from "@/components/AirFreight/Delivery/DeiveryCompliance";
 import AirFreightFaq from "@/components/AirFreight/faq";
 import AirFreightGuide from "@/components/AirFreight/Global/AirFreightGuide";
@@ -17,7 +17,9 @@ import CmsScope from '@/components/cms/CmsScope';
 
 export const generateMetadata = cmsMetadata('air-freight', '/air-freight');
 
-export default function Home() {
+export default async function Home() {
+  // Switched off in the CMS: "page not found".
+  await notFoundIfHidden('air-freight');
   return (
     <CmsScope page="air-freight">
     <main>

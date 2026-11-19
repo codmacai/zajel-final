@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { cmsMetadata, getSection } from '@/lib/cms/server';
+import { cmsMetadata, getSection, notFoundIfHidden } from '@/lib/cms/server';
 import { LEGAL_PAGE } from '@/components/legal-content';
 
 // The footer's legal links land here. The full documents are being finalised;
@@ -9,6 +9,8 @@ export const generateMetadata = cmsMetadata('legal', '/legal');
 
 
 export default async function LegalPage() {
+  // Switched off in the CMS: "page not found".
+  await notFoundIfHidden('legal');
   const page = (await getSection('legal.page', LEGAL_PAGE)) ?? LEGAL_PAGE;
   return (
     <main className="w-full bg-white px-4 pb-16 pt-28 sm:px-6 sm:pb-20 sm:pt-32 md:px-10 md:pt-40 lg:px-20">

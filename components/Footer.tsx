@@ -3,7 +3,8 @@ import Link from 'next/link';
 // Move the <Logo /> component out of Navbar.tsx into components/Logo.tsx
 // (export default Logo) and import it in both Navbar and Footer.
 import Logo from '@/components/Logo';
-import { getSection } from '@/lib/cms/server';
+import { getSection, hiddenPages } from '@/lib/cms/server';
+import { linksToHidden } from '@/lib/cms/visibility';
 import { FOOTER } from '@/components/footer-content';
 
 /* -------------------------------------------------------------------------- */
@@ -77,7 +78,14 @@ const linkClass = `text-body-inverse block w-fit rounded py-0.5 transition-color
 /* -------------------------------------------------------------------------- */
 
 export default async function Footer() {
-  const content = (await getSection('global.footer', FOOTER)) ?? FOOTER;
+  const saved = (await getSection('global.footer', FOOTER)) ?? FOOTER;
+  // No links to pages switched off in the CMS.
+  const { paths } = await hiddenPages();
+  const content = {
+    ...saved,
+    columns: saved.columns.map((c) => ({ ...c, links: c.links.filter((l) => !linksToHidden(l.href, paths)) })),
+    legalLinks: saved.legalLinks.filter((l) => !linksToHidden(l.href, paths)),
+  };
   const socials = content.socials.map((s, i) => ({ ...s, icon: SOCIALS.find((x) => x.label === s.label)?.icon ?? SOCIALS[i]?.icon }));
   return (
     <footer

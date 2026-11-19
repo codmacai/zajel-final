@@ -1,4 +1,4 @@
-import { cmsMetadata } from '@/lib/cms/server';
+import { cmsMetadata, notFoundIfHidden } from '@/lib/cms/server';
 import ServiceHero from "@/components/sections/ServiceHero/ServiceHero";
 import CustomsClearanceServices from "@/components/customs-clearance/customs-clearance-services";
 import CustomsLocationCoverage from "@/components/customs-location-coverage/customs-location-coverage";
@@ -11,7 +11,9 @@ import CmsScope from '@/components/cms/CmsScope';
 
 export const generateMetadata = cmsMetadata('customs-clearance', '/customs-clearance');
 
-export default function CustomsClearancePage() {
+export default async function CustomsClearancePage() {
+  // Switched off in the CMS: "page not found".
+  await notFoundIfHidden('customs-clearance');
   return (
     <CmsScope page="customs-clearance">
     <main>

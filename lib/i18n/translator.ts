@@ -15,6 +15,9 @@
 // To translate new copy: add "English text": "Arabic text" to locales/ar.json, or edit the
 // section in the CMS (/admin), whose Arabic is loaded from /cms/ar.
 // To keep something in English, put data-no-translate on it.
+//
+// Numbers are shown in Arabic digits too (2026 → ٢٠٢٦). Email and web addresses keep their
+// digits; to keep digits in one place (e.g. a code people copy), put data-latin-digits on it.
 // ===========================================================================
 
 export type Lang = "en" | "ar";
@@ -50,6 +53,14 @@ function skipped(el: Element | null): boolean {
   return false;
 }
 
+const ARABIC_DIGITS = "٠١٢٣٤٥٦٧٨٩";
+
+/** 0-9 as Arabic digits, except in email and web addresses or where data-latin-digits is set. */
+function arabicDigits(s: string, el: Element | null): string {
+  if (!/[0-9]/.test(s) || /@|https?:|www\./i.test(s) || el?.closest("[data-latin-digits]")) return s;
+  return s.replace(/[0-9]/g, (d) => ARABIC_DIGITS[Number(d)]);
+}
+
 /** Arabic for one piece of English, or null. Keeps a trailing colon, ellipsis or asterisk. */
 function lookup(en: string): string | null {
   if (!dict) return null;
@@ -67,10 +78,10 @@ function doText(t: Text) {
   if (done && v === done.ar) return;
   if (skipped(t.parentElement)) return;
   const ar = lookup(v);
-  if (!ar) return;
   const lead = v.match(/^\s*/)![0];
   const trail = v.match(/\s*$/)![0];
-  const next = lead + ar + trail;
+  const next = arabicDigits(ar ? lead + ar + trail : v, t.parentElement);
+  if (next === v) return;
   texts.set(t, { en: v, ar: next });
   t.nodeValue = next;
 }

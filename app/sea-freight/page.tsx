@@ -1,4 +1,4 @@
-import { cmsMetadata } from '@/lib/cms/server';
+import { cmsMetadata, notFoundIfHidden } from '@/lib/cms/server';
 import WhenToChooseSeaFreight from "@/components/sea-freight/when-to-choose-sea-freight";
 import SeaWhatWeMove from "@/components/sea-freight/sea-what-we-move";
 import OceanCargoVessels from "@/components/sea-freight/ocean-cargo-vessels";
@@ -19,7 +19,9 @@ import CmsScope from '@/components/cms/CmsScope';
 
 export const generateMetadata = cmsMetadata('sea-freight', '/sea-freight');
 
-export default function SeaFreightPage() {
+export default async function SeaFreightPage() {
+  // Switched off in the CMS: "page not found".
+  await notFoundIfHidden('sea-freight');
   return (
     <CmsScope page="sea-freight">
     <main>

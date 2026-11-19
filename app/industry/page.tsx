@@ -1,4 +1,4 @@
-import { cmsMetadata, getSection } from '@/lib/cms/server';
+import { cmsMetadata, getSection, notFoundIfHidden } from '@/lib/cms/server';
 import ServiceHero from "@/components/sections/ServiceHero/ServiceHero";
 import IndustryExpertise from "@/components/industry-expertise/industry-expertise";
 import IndustryFaq from "@/components/industry-expertise/faq";
@@ -9,6 +9,8 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('industry', '/industry');
 
 export default async function IndustryPage() {
+  // Switched off in the CMS: "page not found".
+  await notFoundIfHidden('industry');
   const contact = await getSection("industry.contact", INDUSTRY_CONTACT);
   return (
     <CmsScope page="industry">
