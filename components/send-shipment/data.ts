@@ -1,4 +1,5 @@
-import { Globe, Motorbike, Truck, Van, type LucideIcon } from 'lucide-react';
+import type { ComponentType } from 'react';
+import { Globe, Motorbike, Truck, Van } from 'lucide-react';
 import { EMPTY_GEO_ADDRESS, type GeoAddress, type ParcelVehicleType } from '@/types/shipment';
 
 // All copy, options and routes for the send-shipment flow live here.
@@ -109,10 +110,13 @@ export interface ChoiceOption<T extends string> {
   value: T;
   title: string;
   description: string;
-  Icon: LucideIcon;
+  /** A lucide icon, or a custom SVG component accepting the same className/strokeWidth props. */
+  Icon: ComponentType<{ className?: string; strokeWidth?: number }>;
   disabled?: boolean;
   /** Short highlight shown as a pill next to the title (e.g. a capacity like "Up to 5 kg"). */
   badge?: string;
+  /** Branded vehicle photo (transparent PNG) shown instead of `Icon` when set — see VEHICLE_OPTIONS. */
+  image?: string;
 }
 
 export type DestinationType = 'domestic' | 'international';
@@ -132,13 +136,12 @@ export const DESTINATION_OPTIONS: ChoiceOption<DestinationType>[] = [
 ];
 
 /**
- * Domestic vehicles: a bike carries up to 5 kg, a car up to 30 kg. Anything heavier can't be
- * booked online. The booking wizard asks Bike or Car (no weight field) and sends that
- * vehicle's limit as the weight; the rate calculator still takes a weight and picks the
- * vehicle from it (vehicleForWeight). Either way the vehicle is sent as `parcelType` to
- * ShipmentValidation.
+ * Domestic vehicles: a bike carries up to 10 kg, a car up to 30 kg. Anything heavier can't be
+ * booked online. Both the booking wizard and the rate calculator ask Bike or Car directly (no
+ * weight field) and send that vehicle's limit as the weight. Either way the vehicle is sent as
+ * `parcelType` to ShipmentValidation.
  */
-export const BIKE_MAX_KG = 5;
+export const BIKE_MAX_KG = 10;
 export const CAR_MAX_KG = 30;
 
 export type DomesticVehicle = Extract<ParcelVehicleType, 'bike' | 'car'>;
@@ -146,11 +149,25 @@ export type DomesticVehicle = Extract<ParcelVehicleType, 'bike' | 'car'>;
 export const VEHICLE_MAX_KG: Record<DomesticVehicle, number> = { bike: BIKE_MAX_KG, car: CAR_MAX_KG };
 
 export const VEHICLE_OPTIONS: ChoiceOption<DomesticVehicle>[] = [
-  { value: 'bike', title: 'Bike', badge: `Up to ${BIKE_MAX_KG} kg`, description: 'Documents and small parcels', Icon: Motorbike },
-  { value: 'car', title: 'Car', badge: `Up to ${CAR_MAX_KG} kg`, description: 'Bigger parcels and boxes', Icon: Van },
+  {
+    value: 'bike',
+    title: 'Bike',
+    badge: `Up to ${BIKE_MAX_KG} kg`,
+    description: 'Documents and small parcels',
+    Icon: Motorbike,
+    image: '/domestic/zajel-delivery-motorbike.png',
+  },
+  {
+    value: 'car',
+    title: 'Car',
+    badge: `Up to ${CAR_MAX_KG} kg`,
+    description: 'Bigger parcels and boxes',
+    Icon: Van,
+    image: '/domestic/zajel-delivery-van.png',
+  },
 ];
 
-/** 'bike' up to 5 kg, 'car' above that up to 30 kg, null when heavier (or no weight yet). */
+/** 'bike' up to 10 kg, 'car' above that up to 30 kg, null when heavier (or no weight yet). */
 export function vehicleForWeight(kg: number): ParcelVehicleType | null {
   if (!(kg > 0) || kg > CAR_MAX_KG) return null;
   return kg <= BIKE_MAX_KG ? 'bike' : 'car';

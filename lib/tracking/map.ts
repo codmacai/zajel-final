@@ -1,6 +1,6 @@
 // Pure mapping helpers for the MobileApp.API tracking responses (ported 1:1 from the Zajel-2
 // React app's trackingApi.ts). Used server-side by app/api/track — no secrets in here.
-import type { LatLng, RawShipment, RawShipmentStage, Shipment, TimelineStep } from '@/components/tracking/types';
+import type { LatLng, RawShipment, RawShipmentStage, RawTrackingEvent, Shipment, TimelineStep } from '@/components/tracking/types';
 
 const EVENT_NAMES_BY_STAGE_KEY: Record<string, string[]> = {
   pickup_completed: ['pickup_completed'],
@@ -147,6 +147,38 @@ export function mapRawShipmentToViewModel(raw: RawShipment): Shipment {
           }
         : undefined,
   };
+}
+
+function normalizeStatusKey(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+}
+
+/**
+ * Builds the timeline straight off TrackingShipment's own event log (api/shipments/tracking)
+ * instead of the fixed 5-stage shipmentStages model above — every event the real API has ever
+ * recorded for this AWB (pickup, hub scans, out-for-delivery, RTO, delivered, ...) renders as
+ * its own step, so the UI never has to know the full set of statuses in advance.
+ *
+ * Rendered newest-first (top to bottom) — the most recent event is the current/active step and
+ * sits at the top. Every event here already happened, so unlike the old fixed-stage model
+ * there's no "not yet reached" step.
+ */
+export function mapTrackingEventsToTimeline(events: RawTrackingEvent[]): TimelineStep[] {
+  const sorted = [...events].sort((a, b) => new Date(b.eventTime).getTime() - new Date(a.eventTime).getTime());
+  return sorted.map((event, index) => ({
+    status: normalizeStatusKey(event.statusExternal || event.type),
+    label: event.customerUpdate || event.type,
+    // currentLocation is always the internal hub name ("ZAJEL HQ") on every event, not a
+    // customer-facing place — left blank so the timeline step just shows the label/date.
+    location: '',
+    dateLabel: formatDateTimeLabel(event.eventTime),
+    done: true,
+    isActive: index === 0,
+  }));
 }
 
 function collectUrlsFromUnknown(value: unknown, out: string[]): void {

@@ -146,3 +146,31 @@ export interface RawShipmentApiResponse {
   pageShipmentCount: number;
   shipments: RawShipment[];
 }
+
+/* ------------------------------------------------------------------------ */
+/* Raw shape returned by Zajel.PrePaid.Api's api/shipments/tracking (a pure */
+/* passthrough of the real TrackingShipment endpoint) — the full event log  */
+/* that drives the timeline, replacing the fixed shipmentStages model above.*/
+/* ------------------------------------------------------------------------ */
+
+export interface RawTrackingPlace {
+  country: string;
+  city: string;
+  area: string;
+}
+
+export interface RawTrackingEvent {
+  type: string;
+  eventTime: string;
+  currentLocation: string;
+  customerUpdate: string;
+  statusExternal: string;
+  signatureImage: string | null;
+  proofAcceptanceImage: string | null;
+}
+
+export interface RawTrackingShipmentResponse {
+  shipmentFrom?: RawTrackingPlace;
+  shipmentTo?: RawTrackingPlace;
+  shipmentEvents: RawTrackingEvent[];
+}

@@ -109,6 +109,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <AuthProvider>
           <SiteChrome>
             <Navbar />
+            {/* Keeps page content below the fixed scam banner (height set by Navbar) */}
+            <div aria-hidden className="site-alert-spacer" />
           </SiteChrome>
           <div className="flex-grow">{children}</div>
           <SiteChrome>

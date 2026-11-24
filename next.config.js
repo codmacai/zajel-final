@@ -127,6 +127,8 @@ const nextConfig = {
       },
       { source: '/platformredirect', destination: '/platformredirect.html' },
       { source: '/qr', destination: '/qr.html' },
+      // Old/external links point here instead of the file's real location.
+      { source: '/assets/zajel_terms_conditions.pdf', destination: '/support/zajel_terms_conditions.pdf' },
     ];
   },
 

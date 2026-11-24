@@ -9,6 +9,7 @@ import Chevron from "./Chevron";
 import SolutionsMegaMenu from "./SolutionsMegaMenu";
 import FlatMegaMenu from "./FlatMegaMenu";
 import MobileMenu from "./MobileMenu";
+import ScamAlertBanner from "../ScamAlertBanner";
 import { aboutItems, resourcesItems } from "@/data/navigation";
 import "./Navbar.css";
 
@@ -63,10 +64,14 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
+    // --navbar-h is the bar itself (heroes pad by it); --site-alert-h is the scam banner above
+    // it, which the layout's spacer reserves so the banner never covers page content.
     const setNavHeight = () => {
       if (navOuterRef.current) {
-        const h = navOuterRef.current.getBoundingClientRect().height;
-        document.documentElement.style.setProperty("--navbar-h", `${h}px`);
+        const total = navOuterRef.current.getBoundingClientRect().height;
+        const alert = navOuterRef.current.querySelector("[data-site-alert]")?.getBoundingClientRect().height ?? 0;
+        document.documentElement.style.setProperty("--navbar-h", `${total - alert}px`);
+        document.documentElement.style.setProperty("--site-alert-h", `${alert}px`);
       }
     };
     setNavHeight();
@@ -97,6 +102,7 @@ export default function Navbar() {
   return (
     <>
       <nav ref={navOuterRef} className={`nav-outer ${isHidden ? "nav-outer-hidden" : ""}`}>
+        <ScamAlertBanner />
         <div className={`nav-shell ${scrolled || activeMenu ? "nav-snapped" : "nav-top-glass"}`}>
           <div className="nav-inner">
             <div className="logo-mark" style={{ flexShrink: 0, display: "flex" }}>

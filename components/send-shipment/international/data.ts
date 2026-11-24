@@ -1,6 +1,7 @@
-import { Box, FileText, Luggage, Package, PlaneLanding, PlaneTakeoff } from 'lucide-react';
+import { PlaneLanding, PlaneTakeoff } from 'lucide-react';
 import { EMPTY_GEO_ADDRESS, type GeoAddress } from '@/types/shipment';
 import type { ChoiceOption } from '../data';
+import { DocumentIllustration, ParcelIllustration } from './icons';
 
 // International booking — mirrors the Quote Desk dashboard's create-shipment flow
 // (DashbaordProject/src/app/customer_support/components/create-shipment):
@@ -13,9 +14,14 @@ import type { ChoiceOption } from '../data';
 //   - Nothing is asked twice: the booker's contact comes from the UAE-side party (+ account
 //     email), the document/non-document choice lives on the Package step, and incoterms are
 //     always DDU (not asked).
-//   - Only DOCUMENT shipments are priced and paid online (GetRateCard → CreateShipment →
-//     payment popup, same as domestic). NON-DOCUMENT shipments are created with no amount and
-//     no payment — the sales team follows up with a price — so no HS code is collected here.
+//   - Both DOCUMENT and NON-DOCUMENT shipments are priced and paid online with the same quote
+//     flow as the mobile app: GetRateCard (pieces, X-Version 2.0) → quote id → CreateShipment
+//     (quoteId) → GeneratePaymentLink → payment popup → ConfirmInternationalShipment. CRM prices
+//     non-documents on chargeable weight — per piece the higher of the actual weight and the
+//     volumetric weight (L × W × H / divisor) — and stores the quoted pieces and amount, so the
+//     shipment, payment link and Shipsy booking all use exactly what was quoted. Documents are
+//     one piece priced on the picked weight. No HS code is collected here (not required until
+//     customs clearance).
 
 export const UAE_COUNTRY_CODE = 'AE';
 export const UAE_COUNTRY_NAME = 'United Arab Emirates';
@@ -47,28 +53,21 @@ export const DIRECTION_OPTIONS: ChoiceOption<ShipmentDirection>[] = [
 ];
 
 export const PRODUCT_TYPE_OPTIONS: ChoiceOption<ProductType>[] = [
-  { value: 'DOCUMENT', title: 'Document', description: 'Letters and papers · instant price, pay online', Icon: FileText },
-  { value: 'NON-DOCUMENT', title: 'Non-document', description: 'Goods and parcels · our sales team will send you a price', Icon: Package },
+  { value: 'DOCUMENT', title: 'Document', description: 'Letters and papers · instant price, pay online', Icon: DocumentIllustration },
+  { value: 'NON-DOCUMENT', title: 'Non-document', description: 'Goods and parcels · instant price, pay online', Icon: ParcelIllustration },
 ];
+
+/** CRM's default MaxPiecesPerQuote — CRM enforces the real limit and answers with a message. */
+export const MAX_NON_DOC_PIECES = 10;
 
 /**
- * Non-document shipments pick a box size instead of typing weight and dimensions. The box's
- * weight limit and standard dimensions are what's sent to CreateShipment; the sales team
- * confirms the real details with the customer before pricing.
+ * Only for the live "≈ volumetric weight" hint while typing. The price, the chargeable weight
+ * and the limit (is_above_limit / max_weight) always come from CRM's quote.
  */
-export type BoxSize = 'small' | 'medium' | 'large';
+export const VOLUMETRIC_DIVISOR_HINT = 5000;
 
-export const BOX_SPECS: Record<BoxSize, { label: string; maxKg: number; lengthCm: number; widthCm: number; heightCm: number }> = {
-  small: { label: 'Small box', maxKg: 5, lengthCm: 30, widthCm: 20, heightCm: 15 },
-  medium: { label: 'Medium box', maxKg: 10, lengthCm: 40, widthCm: 30, heightCm: 25 },
-  large: { label: 'Large box / luggage', maxKg: 30, lengthCm: 70, widthCm: 50, heightCm: 40 },
-};
-
-export const BOX_OPTIONS: ChoiceOption<BoxSize>[] = [
-  { value: 'small', title: BOX_SPECS.small.label, badge: `Up to ${BOX_SPECS.small.maxKg} kg`, description: 'Small items and accessories', Icon: Package },
-  { value: 'medium', title: BOX_SPECS.medium.label, badge: `Up to ${BOX_SPECS.medium.maxKg} kg`, description: 'Clothes, shoes and gifts', Icon: Box },
-  { value: 'large', title: BOX_SPECS.large.label, badge: `Up to ${BOX_SPECS.large.maxKg} kg`, description: 'Bulky items or a suitcase', Icon: Luggage },
-];
+/** Documents are one flat piece — CRM prices them on weight only and ignores dimensions. */
+export const DOCUMENT_DIMENSION_CM = 1;
 
 export const STEPS = [
   { id: 'details', label: 'Direction', title: 'Which way is it going?', subtitle: 'Are you sending abroad or receiving from abroad?' },
@@ -122,18 +121,34 @@ export interface InternationalDetailsForm {
   direction: ShipmentDirection | null;
 }
 
-/** Dashboard step 3 — packageForm. */
-export interface InternationalPackageForm {
-  productType: ProductType | null;
-  /** Non-document only — replaces the weight and dimension fields (see BOX_SPECS). */
-  box: BoxSize | null;
-  numberOfPieces: string;
-  weight: string;
+/** One non-document piece — sent to GetRateCard as a QuotePieceRequest. */
+export interface InternationalPieceForm {
+  description: string;
   declaredValue: string;
+  weight: string;
   length: string;
   width: string;
   height: string;
-  packageDescription: string;
+  quantity: string;
+}
+
+export const EMPTY_INTERNATIONAL_PIECE: InternationalPieceForm = {
+  description: '',
+  declaredValue: '',
+  weight: '',
+  length: '',
+  width: '',
+  height: '',
+  quantity: '1',
+};
+
+/** Dashboard step 3 — packageForm. */
+export interface InternationalPackageForm {
+  productType: ProductType | null;
+  /** Documents only — picked from the GetDocumentWeights brackets. */
+  weight: string;
+  /** Non-documents only — priced on chargeable weight per piece. */
+  pieces: InternationalPieceForm[];
 }
 
 export interface InternationalShipmentForm {
@@ -149,14 +164,8 @@ export const INITIAL_INTERNATIONAL_FORM: InternationalShipmentForm = {
   receiver: EMPTY_INTERNATIONAL_PARTY,
   pkg: {
     productType: null,
-    box: null,
-    numberOfPieces: '1',
     weight: '',
-    declaredValue: '',
-    length: '1',
-    width: '1',
-    height: '1',
-    packageDescription: '',
+    pieces: [EMPTY_INTERNATIONAL_PIECE],
   },
 };
 
@@ -166,6 +175,9 @@ export const INTERNATIONAL_REVIEW_CONTENT = {
   pay: 'Proceed to payment',
   preparing: 'Preparing payment…',
   bookedTitle: 'Shipment booked',
+  // 'submit'/'submitting'/'requestedTitle' are currently unreachable — both product types
+  // require an online quote before Review now, so "Proceed to payment" is always what renders.
+  // Left in place as a fallback in case a future product type ships without online pricing.
   submit: 'Submit request',
   submitting: 'Submitting…',
   requestedTitle: 'Request received',

@@ -26,7 +26,7 @@ export const seaFreightContent: ContactContent = {
     description: "Prefer to talk it through? We're available directly too.",
     details: [
       { label: 'Email', value: 'sales@zajel.com', href: 'mailto:sales@zajel.com', icon: 'email' },
-      { label: 'Phone', value: '600 53 11 11', href: 'tel:+97160053111', icon: 'phone' }, // TODO: confirm dialable number
+      { label: 'Phone', value: '600 53 11 11', href: 'tel:+971600531111', icon: 'phone' }, // TODO: confirm dialable number
       {
         label: 'Headquarters',
         value: 'Dubai Office: Al Rostamani Building - Al Ittihad Rd - E11 - Dubai',
@@ -62,7 +62,7 @@ export const airFreightContent: ContactContent = {
     description: "Prefer to talk it through? We're available directly too.",
     details: [
       { label: 'Email', value: 'sales@zajel.com', href: 'mailto:sales@zajel.com', icon: 'email' },
-      { label: 'Phone', value: '600 53 11 11', href: 'tel:+97160053111', icon: 'phone' }, // TODO: confirm dialable number
+      { label: 'Phone', value: '600 53 11 11', href: 'tel:+971600531111', icon: 'phone' }, // TODO: confirm dialable number
       {
         label: 'Headquarters',
         value: 'Dubai Office: Al Rostamani Building - Al Ittihad Rd - E11 - Dubai',

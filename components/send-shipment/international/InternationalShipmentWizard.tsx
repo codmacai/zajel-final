@@ -2,37 +2,61 @@
 
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Check, Loader2, Lock, Pencil, ShieldAlert } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Loader2, Lock, Pencil, Plus, ShieldAlert, Trash2 } from 'lucide-react';
 import { useAuthContext } from '@/components/providers/AuthProvider';
 import { useAccountAddresses } from '@/hooks/useAccountAddresses';
 import { useCountries, useCities, useDocumentWeights } from '@/hooks/useInternationalReferenceData';
-import { useRateCard, useCreateInternationalShipment, useGenerateInternationalPaymentLink } from '@/hooks/useInternationalShipment';
-import { expandDocumentWeightOptions, parseRateQuote, pickNumber } from '@/lib/shipment/rateCard';
+import {
+  useRateCard,
+  useCreateInternationalShipment,
+  useGenerateInternationalPaymentLink,
+  useConfirmInternationalShipment,
+} from '@/hooks/useInternationalShipment';
+import {
+  expandDocumentWeightOptions,
+  parseIntlQuote,
+  parseQuoteWeights,
+  parseRateQuote,
+  pickNumber,
+  rateUnavailableMessage,
+} from '@/lib/shipment/rateCard';
 import AddressAutocompleteInput from '@/components/shipment/AddressAutocompleteInput';
 import SavedAddressPicker, { type PartyMode } from '../SavedAddressPicker';
 import { CARD_HOVER, CARD_TAP, PAGE_VARIANTS, SOFT_SPRING, SPRING, useAutoAdvance } from '../motion';
 import type { SavedAddress } from '@/types/account';
-import { lookupKey, type GeoAddress, type InternationalLookupItem, type RateCardResult } from '@/types/shipment';
+import {
+  lookupKey,
+  QUOTE_ERROR_CODES,
+  type GeoAddress,
+  type IntlQuote,
+  type InternationalLookupItem,
+  type QuotePieceRequest,
+  type QuoteWeights,
+  type RateCardResult,
+} from '@/types/shipment';
 import InternationalPaymentModal, { type InternationalPaymentOutcome } from './InternationalPaymentModal';
 import {
   BOOKING_SOURCE,
-  BOX_OPTIONS,
-  BOX_SPECS,
   CASH_CUSTOMER_CODE,
   CUSTOMER_MASK,
   DECLARED_CURRENCY,
   DIRECTION_OPTIONS,
+  DOCUMENT_DIMENSION_CM,
   EMPTY_INTERNATIONAL_PARTY,
+  EMPTY_INTERNATIONAL_PIECE,
   INCO_TERMS,
   INITIAL_INTERNATIONAL_FORM,
   INTERNATIONAL_REVIEW_CONTENT,
+  MAX_NON_DOC_PIECES,
   PRODUCT_TYPE_OPTIONS,
   SERVICE_TYPES,
   STEPS,
   UAE_COUNTRY_CODE,
   UAE_COUNTRY_NAME,
+  VOLUMETRIC_DIVISOR_HINT,
   type InternationalPackageForm,
   type InternationalPartyForm,
+  type InternationalPieceForm,
   type InternationalShipmentForm,
   type InternationalStepId,
   type ShipmentDirection,
@@ -105,19 +129,75 @@ function toUaeMsisdn(phone: string): string {
   return d;
 }
 
+const pieceValid = (p: InternationalPieceForm) =>
+  num(p.weight) > 0 &&
+  num(p.length) > 0 &&
+  num(p.width) > 0 &&
+  num(p.height) > 0 &&
+  Number.isInteger(num(p.quantity)) &&
+  num(p.quantity) >= 1 &&
+  !blank(p.description) &&
+  !blank(p.declaredValue) &&
+  num(p.declaredValue) >= 0;
+
+/** Live hint only — CRM's quote is what prices the shipment. */
+const volumetricHint = (p: InternationalPieceForm) =>
+  num(p.length) > 0 && num(p.width) > 0 && num(p.height) > 0
+    ? Math.round(((num(p.length) * num(p.width) * num(p.height)) / VOLUMETRIC_DIVISOR_HINT) * 1000) / 1000
+    : null;
+
+/**
+ * GetRateCard V2 pieces — the same QuotePieceRequest the mobile app sends. Item details (description,
+ * declared value) go on the quote too, so CreateShipment only needs the quoteId. Documents are one
+ * piece priced on the picked weight; non-documents on chargeable weight per piece.
+ */
+function buildQuotePieces(pkg: InternationalPackageForm): QuotePieceRequest[] | null {
+  if (pkg.productType === 'DOCUMENT') {
+    if (!(num(pkg.weight) > 0)) return null;
+    return [
+      {
+        description: 'Documents',
+        declaredValue: 0,
+        hsCode: '',
+        weightInKg: num(pkg.weight),
+        lengthInCm: DOCUMENT_DIMENSION_CM,
+        widthInCm: DOCUMENT_DIMENSION_CM,
+        heightInCm: DOCUMENT_DIMENSION_CM,
+        quantity: 1,
+      },
+    ];
+  }
+  if (pkg.productType !== 'NON-DOCUMENT' || pkg.pieces.length === 0 || !pkg.pieces.every(pieceValid)) return null;
+  return pkg.pieces.map((p) => ({
+    description: p.description.trim(),
+    declaredValue: num(p.declaredValue),
+    hsCode: '',
+    weightInKg: num(p.weight),
+    lengthInCm: num(p.length),
+    widthInCm: num(p.width),
+    heightInCm: num(p.height),
+    quantity: num(p.quantity),
+  }));
+}
+
 /**
  * Same CreateShipment body the dashboard builds (prepareShipmentData), in the camelCase keys
- * MobileApp.API's International/CreateShipment binds (System.Text.Json) — it re-serialises to
- * the CRM's snake_case itself. City is sent the dashboard way: name AND code = city NAME in caps.
+ * MobileApp.API's International/CreateShipment binds — it re-serialises to the CRM's snake_case
+ * itself. City is sent the dashboard way: name AND code = city NAME in caps.
+ *
+ * Booked against the quote (quoteId → X-Version 2.0 upstream): CRM replaces the pieces, weights,
+ * product type and amount with the quoted ones and refuses the booking if the quote is expired,
+ * used, someone else's, or for another route/doc type. The quoted pieces and amount are still
+ * sent below so the body reads the same as before.
  */
 function buildCreateShipmentPayload(
   form: InternationalShipmentForm,
+  intlQuote: IntlQuote,
   totalAmount: number,
   account: { name: string; phone: string; email: string },
 ) {
   const { details, pkg } = form;
   const direction = details.direction ?? 'OUTBOUND';
-  const isDoc = pkg.productType === 'DOCUMENT';
   // The booker is the customer on the UAE side (sender when sending abroad, receiver when
   // receiving) — already entered on Origin/Destination, so it isn't asked again. Their account
   // fills any gap (email, or a phone that isn't a UAE mobile).
@@ -126,12 +206,13 @@ function buildCreateShipmentPayload(
   const customerPhone = /^971\d{9}$/.test(partyMsisdn) ? partyMsisdn : toUaeMsisdn(account.phone);
   const customerName = uaeParty.name.trim() || account.name;
   const customerEmail = account.email.trim();
-  // Pieces aren't asked any more — every booking is one piece.
-  const pieces = 1;
-  const box = !isDoc && pkg.box ? BOX_SPECS[pkg.box] : null;
-  // No HS code on the website: documents don't need one, and non-documents are handed to the
-  // sales team, who complete the details with the customer.
+  // No HS code on the website — not required until customs clearance.
   const hsCode = '';
+  const quotedPieces = intlQuote.pieces ?? [];
+  const description =
+    pkg.productType === 'DOCUMENT'
+      ? 'Documents'
+      : quotedPieces.map((p) => p.description).filter(Boolean).join(', ') || 'Product';
 
   const party = (p: InternationalPartyForm, isUae: boolean) => {
     const cityName = (p.cityName || p.place.city).toUpperCase();
@@ -149,16 +230,17 @@ function buildCreateShipmentPayload(
   };
 
   return {
+    quoteId: intlQuote.quote_id,
     direction,
     customerReferenceNumber: '',
     customerCode: CASH_CUSTOMER_CODE,
     customerMask: CUSTOMER_MASK,
     serviceType: SERVICE_TYPES[direction],
     productType: pkg.productType,
-    description: pkg.packageDescription.trim(),
+    description,
     consignmentType: '',
     declaredCurrency: DECLARED_CURRENCY,
-    numberOfPeices: pieces,
+    numberOfPeices: quotedPieces.length,
     incoTerms: INCO_TERMS,
     paymentReference: '',
     invoiceNumber: '',
@@ -166,19 +248,16 @@ function buildCreateShipmentPayload(
     origin: party(form.sender, direction === 'OUTBOUND'),
     destination: party(form.receiver, direction === 'INBOUND'),
     autoCreatePickup: false,
-    piecesDetail: [
-      {
-        description: pkg.packageDescription.trim() || 'Product',
-        declaredValue: isDoc ? 0 : num(pkg.declaredValue) || 0,
-        // Non-documents: the chosen box's weight limit and standard size (not asked separately).
-        weightInKg: box ? box.maxKg : num(pkg.weight) || 0,
-        lengthInCm: box ? box.lengthCm : num(pkg.length) || 1,
-        widthInCm: box ? box.widthCm : num(pkg.width) || 1,
-        heightInCm: box ? box.heightCm : num(pkg.height) || 1,
-        quantity: pieces,
-        piecesItemDetails: [{ hsCode }],
-      },
-    ],
+    piecesDetail: quotedPieces.map((p) => ({
+      description: p.description || description,
+      declaredValue: p.declared_value ?? 0,
+      weightInKg: p.weight_in_kg,
+      lengthInCm: p.length_in_cm,
+      widthInCm: p.width_in_cm,
+      heightInCm: p.height_in_cm,
+      quantity: p.quantity,
+      piecesItemDetails: [{ hsCode }],
+    })),
     hsCode,
     hsCodeDescription: '',
     amountDetails: { amount: totalAmount, totalAmount, additionalAmounts: [] },
@@ -459,7 +538,10 @@ function ReviewBlock({ title, onEdit, disabled, children }: { title: string; onE
 /* -------------------------------------------------------------------------- */
 
 // 'requested' = a non-document shipment was created for the sales team to price (no payment).
-type SubmitPhase = 'idle' | 'creating' | 'awaiting-payment' | 'success' | 'requested' | 'failed';
+// 'confirming' = paid; CRM is verifying the payment and booking the shipment with Shipsy.
+type SubmitPhase = 'idle' | 'creating' | 'awaiting-payment' | 'confirming' | 'success' | 'requested' | 'failed';
+
+const isQuoteError = (code: string | null) => !!code && (QUOTE_ERROR_CODES as readonly string[]).includes(code);
 
 export default function InternationalShipmentWizard({ onBack }: { onBack: () => void }) {
   const auth = useAuthContext();
@@ -467,8 +549,9 @@ export default function InternationalShipmentWizard({ onBack }: { onBack: () => 
   const { getCities, loading: loadingCities } = useCities();
   const { getRateCard, loading: ratingLoading, error: rateError } = useRateCard();
   const { getDocumentWeights } = useDocumentWeights();
-  const { createShipment, error: createError } = useCreateInternationalShipment();
+  const { createShipment, error: createError, errorCode: createErrorCode } = useCreateInternationalShipment();
   const { generatePaymentLink, error: paymentLinkError } = useGenerateInternationalPaymentLink();
+  const { confirmShipment } = useConfirmInternationalShipment();
   const { addresses: savedAddresses, loading: savedLoading } = useAccountAddresses();
 
   const [step, setStep] = useState(1);
@@ -511,38 +594,51 @@ export default function InternationalShipmentWizard({ onBack }: { onBack: () => 
   // Dashboard: postal code required for non-GCC countries — the API flags those directly.
   const postalCodeRequired = !!foreignCountry && foreignCountry.postalCodeRequired !== false;
 
-  // Rate card inputs — fetched automatically (debounced) as soon as they're all known, i.e.
-  // once the foreign country and the weight are filled in. A quote only counts if it was
-  // fetched for exactly the current inputs, so editing the weight/country/type can never
-  // leave a stale price on screen or in the booking.
+  // Quote inputs — fetched automatically (debounced) as soon as they're all known, i.e. once
+  // the foreign country and every piece are filled in. A quote only counts if it was fetched
+  // for exactly the current inputs, so editing a piece/country/type can never leave a stale
+  // price (or quote id) on screen or in the booking.
   const rateFrom = direction === 'OUTBOUND' ? UAE_COUNTRY_CODE : form.sender.countryCode;
   const rateTo = direction === 'OUTBOUND' ? form.receiver.countryCode : UAE_COUNTRY_CODE;
-  const rateWeight = num(form.pkg.weight);
   // GetDocumentWeights answers { weights: [0.5, 4] } — treated as the range of document weights
   // (the rate card has 0.5 kg brackets up to 4 kg), so the picker offers every 0.5 kg step in it.
   // A longer list is used as-is.
   const docWeightOptions = expandDocumentWeightOptions(documentWeights);
 
-  // Only documents are priced online — non-documents go to the sales team for a quote.
-  const rateDocType = 'DOC';
+  // Same quote flow as the mobile app for both product types (GetRateCard with pieces →
+  // X-Version 2.0): CRM prices on chargeable weight and returns the quote the booking,
+  // payment link and Shipsy booking are all tied to.
+  const rateDocType = isDoc ? 'DOC' : 'NON_DOC';
+  const quotePieces = buildQuotePieces(form.pkg);
   const rateKey =
-    direction && form.pkg.productType === 'DOCUMENT' && rateFrom && rateTo && rateWeight > 0
-      ? `${rateFrom}|${rateTo}|${rateDocType}|${rateWeight}`
-      : null;
+    direction && rateFrom && rateTo && quotePieces ? `${rateFrom}|${rateTo}|${rateDocType}|${JSON.stringify(quotePieces)}` : null;
   const rateCurrent = rateKey !== null && rateState.key === rateKey;
-  const quote = rateCurrent ? parseRateQuote(rateState.rate) : null;
-  // The call succeeded but returned no usable price (no rate_detail for this route/weight).
+  const priced = rateCurrent ? parseRateQuote(rateState.rate) : null;
+  const intlQuote = rateCurrent ? parseIntlQuote(rateState.rate) : null;
+  // A price only counts with a quote id to book it against.
+  const quote = priced && intlQuote ? priced : null;
+  const quoteWeights: QuoteWeights | null = rateCurrent ? parseQuoteWeights(rateState.rate) : null;
+  // The call succeeded but returned no usable price (no rate for this route / chargeable weight).
   const noRate = rateCurrent && rateState.rate !== null && quote === null;
+  // Priced but no quote id = the API answered with V1 pricing (X-Version 2.0 didn't reach
+  // MobileApp.API). Can't be booked, and it isn't "no rate" either.
+  const pricedWithoutQuote = noRate && priced !== null && intlQuote === null;
+  if (pricedWithoutQuote) console.warn('[international] GetRateCard returned a price without a quote — is the Prepaid API sending X-Version 2.0?');
+  const noRateMessage = pricedWithoutQuote
+    ? 'We couldn’t lock in a price for this shipment right now. Please try again shortly.'
+    : noRate
+      ? rateUnavailableMessage(rateState.rate)
+      : null;
   const rateFailed = rateCurrent && rateState.rate === null;
   const ratePending = rateKey !== null && !rateCurrent;
 
   useEffect(() => {
-    if (!rateKey || rateState.key === rateKey) return undefined;
+    if (!rateKey || !quotePieces || rateState.key === rateKey) return undefined;
     const mine = ++rateSeq.current;
     const timer = window.setTimeout(async () => {
-      const result = await getRateCard({ fromCountry: rateFrom, toCountry: rateTo, docType: rateDocType, weight: rateWeight });
+      const result = await getRateCard({ fromCountry: rateFrom, toCountry: rateTo, docType: rateDocType, pieces: quotePieces });
       if (mine === rateSeq.current) setRateState({ key: rateKey, rate: result });
-    }, 400);
+    }, 500);
     return () => window.clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rateKey, rateState.key]);
@@ -606,6 +702,20 @@ export default function InternationalShipmentWizard({ onBack }: { onBack: () => 
   };
 
   const chooseProductType = (t: InternationalPackageForm['productType']) => setPkg('productType')(t);
+
+  const setPiece = (index: number, key: keyof InternationalPieceForm) => (value: string) =>
+    setForm((f) => ({
+      ...f,
+      pkg: { ...f.pkg, pieces: f.pkg.pieces.map((p, i) => (i === index ? { ...p, [key]: value } : p)) },
+    }));
+
+  const addPiece = () =>
+    setForm((f) =>
+      f.pkg.pieces.length >= MAX_NON_DOC_PIECES ? f : { ...f, pkg: { ...f.pkg, pieces: [...f.pkg.pieces, EMPTY_INTERNATIONAL_PIECE] } },
+    );
+
+  const removePiece = (index: number) =>
+    setForm((f) => (f.pkg.pieces.length <= 1 ? f : { ...f, pkg: { ...f.pkg, pieces: f.pkg.pieces.filter((_, i) => i !== index) } }));
 
   const setParty = (who: 'sender' | 'receiver') => (key: keyof InternationalPartyForm) => (value: string) =>
     setForm((f) => ({ ...f, [who]: { ...f[who], [key]: value, savedAddressId: key === 'postalCode' ? f[who].savedAddressId : null } }));
@@ -698,13 +808,24 @@ export default function InternationalShipmentWizard({ onBack }: { onBack: () => 
     if (id === 'package') {
       const p = form.pkg;
       if (!p.productType) e.productType = 'Choose document or non-document.';
-      if (isDoc) {
+      else if (isDoc) {
         if (!(num(p.weight) > 0)) e['p-weight'] = 'Choose the weight of your documents.';
         else if (!quote) e.rate = ratePending ? 'Getting your rate — one moment.' : 'We need a rate for this shipment before you can continue.';
-      } else if (p.productType) {
-        if (!p.box) e['p-box'] = 'Choose a box size.';
-        if (blank(p.declaredValue) || !(num(p.declaredValue) >= 0)) e['p-value'] = 'Enter the declared value.';
-        if (blank(p.packageDescription)) e['p-description'] = 'Tell us what you are sending.';
+      } else {
+        p.pieces.forEach((piece, i) => {
+          const k = (field: string) => `p${i}-${field}`;
+          if (blank(piece.description)) e[k('description')] = 'Tell us what is in this piece.';
+          if (blank(piece.declaredValue) || !(num(piece.declaredValue) >= 0)) e[k('value')] = 'Enter the declared value.';
+          if (!(num(piece.weight) > 0)) e[k('weight')] = 'Enter the weight.';
+          if (!(num(piece.length) > 0)) e[k('length')] = 'Enter the length.';
+          if (!(num(piece.width) > 0)) e[k('width')] = 'Enter the width.';
+          if (!(num(piece.height) > 0)) e[k('height')] = 'Enter the height.';
+          if (!Number.isInteger(num(piece.quantity)) || !(num(piece.quantity) >= 1)) e[k('quantity')] = 'At least 1.';
+        });
+        // The quote needs every piece — don't pile a rate error onto incomplete pieces.
+        if (Object.keys(e).length === 0 && !quote) {
+          e.rate = ratePending ? 'Getting your rate — one moment.' : 'We need a rate for this shipment before you can continue.';
+        }
       }
     }
     return e;
@@ -740,20 +861,28 @@ export default function InternationalShipmentWizard({ onBack }: { onBack: () => 
   /* ------------------------------ Booking -------------------------------- */
 
   // Shipment already created in this session (kept so a cancelled/failed payment can be retried
-  // without creating a duplicate shipment). Cleared if the booking details change.
+  // without creating a duplicate shipment — a quote can only be booked once). Cleared if the
+  // booking details or the quote change.
   const [createdShipment, setCreatedShipment] = useState<{ id: number; signature: string } | null>(null);
-  const bookingSignature = JSON.stringify(form);
+  const bookingSignature = JSON.stringify({ form, quoteId: intlQuote?.quote_id ?? null });
+  // Shown when CRM refused the quote (expired / used / mismatch) and a fresh one is being fetched.
+  const [quoteNotice, setQuoteNotice] = useState<string | null>(null);
 
   const handleCreateShipment = async () => {
-    if (submitPhase === 'creating' || submitPhase === 'awaiting-payment') return;
-    if (isDoc && !quote) return;
+    if (submitPhase === 'creating' || submitPhase === 'awaiting-payment' || submitPhase === 'confirming') return;
+    // stepErrors already blocks reaching Review without a quote — same guard directly on submit.
+    if (!quote || !intlQuote) return;
+    setQuoteNotice(null);
+
+    // Expiry isn't checked here: CRM's expires_at has no time zone, and CRM refuses an expired
+    // quote anyway (QUOTE_EXPIRED), which re-quotes below.
+    let shipmentId = createdShipment && createdShipment.signature === bookingSignature ? createdShipment.id : null;
+
     setSubmitPhase('creating');
     setPaymentFailureMessage(null);
 
-    let shipmentId = createdShipment && createdShipment.signature === bookingSignature ? createdShipment.id : null;
     if (shipmentId === null) {
-      // Documents carry the rate-card total; non-documents go in with no amount for sales to price.
-      const created = await createShipment(buildCreateShipmentPayload(form, isDoc && quote ? quote.total : 0, account));
+      const created = await createShipment(buildCreateShipmentPayload(form, intlQuote, quote.total, account));
       if (!created) {
         setSubmitPhase('idle');
         return;
@@ -769,12 +898,6 @@ export default function InternationalShipmentWizard({ onBack }: { onBack: () => 
       setCreatedShipment({ id: shipmentId, signature: bookingSignature });
     }
 
-    if (!isDoc) {
-      // Non-document: no payment online — the sales team follows up with a price.
-      setSubmitPhase('requested');
-      return;
-    }
-
     const link = await generatePaymentLink(shipmentId);
     const url = link ? pickString(link, ['paymentUrl', 'PaymentUrl', 'payment_url', 'url']) : null;
     if (!url) {
@@ -787,9 +910,30 @@ export default function InternationalShipmentWizard({ onBack }: { onBack: () => 
     setSubmitPhase('awaiting-payment');
   };
 
+  // Paid → CRM verifies the payment with the gateway and books the (quoted) shipment with Shipsy.
+  // Until this succeeds the shipment is paid but not booked, so a failure keeps a retry.
+  const [paid, setPaid] = useState(false);
+  const confirmPaidShipment = async () => {
+    if (!createdShipment) return;
+    setPaid(true);
+    setSubmitPhase('confirming');
+    setPaymentFailureMessage(null);
+    const confirmed = await confirmShipment(createdShipment.id);
+    if (!confirmed) {
+      setPaymentFailureMessage(
+        'Payment received, but we could not confirm your shipment yet. Please try again in a moment — you will not be charged twice.',
+      );
+      setSubmitPhase('failed');
+      return;
+    }
+    const awb = pickString(confirmed, ['reference_number', 'referenceNumber', 'awb']);
+    if (awb) setBookedAwb(awb);
+    setSubmitPhase('success');
+  };
+
   const handlePaymentOutcome = (outcome: InternationalPaymentOutcome, message?: string) => {
     if (outcome === 'success') {
-      setSubmitPhase('success');
+      void confirmPaidShipment();
       return;
     }
     if (outcome === 'cancelled') {
@@ -801,10 +945,21 @@ export default function InternationalShipmentWizard({ onBack }: { onBack: () => 
     setSubmitPhase('failed');
   };
 
-  const busy = submitPhase === 'creating' || submitPhase === 'awaiting-payment';
+  // A refused quote (expired / used / mismatch) needs a new one — fetch it right away.
+  useEffect(() => {
+    if (!isQuoteError(createErrorCode)) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- re-quote after CRM refused the quote
+    setQuoteNotice(`${createError ?? 'Your price changed.'} We fetched a new price — please check it and pay again.`);
+    retryRate();
+  }, [createErrorCode, createError]);
+
+  // Paid but the confirm call failed — retry the confirm, never the payment.
+  const paidNotConfirmed = submitPhase === 'failed' && paid;
+
+  const busy = submitPhase === 'creating' || submitPhase === 'awaiting-payment' || submitPhase === 'confirming';
   const onReview = step === REVIEW;
   const showingOutcome = onReview && (submitPhase === 'success' || submitPhase === 'requested' || submitPhase === 'failed');
-  const locked = busy || submitPhase === 'success' || submitPhase === 'requested';
+  const locked = busy || paid || submitPhase === 'success' || submitPhase === 'requested';
 
   /* ------------------------------ Step bodies ---------------------------- */
 
@@ -931,12 +1086,47 @@ export default function InternationalShipmentWizard({ onBack }: { onBack: () => 
     );
   };
 
-  // Shown live on the Package step (updates as the weight changes), on Amount, and on Review.
+  const kg = (n: number | null | undefined) => `${(Number(n) || 0).toLocaleString(undefined, { maximumFractionDigits: 3 })} kg`;
+
+  // How CRM worked out the chargeable weight — per piece the higher of actual and volumetric.
+  const weightBreakdown = (w: QuoteWeights) => (
+    <div className="mt-4 border-t border-[#064423]/10 pt-3 text-[12px] text-[#064423]/70">
+      <div className="grid grid-cols-3 gap-2">
+        <div>
+          <p className="text-[11px] uppercase tracking-wider text-[#064423]/45">Actual</p>
+          <p className="font-medium text-[#064423]">{kg(w.total_actual_weight)}</p>
+        </div>
+        <div>
+          <p className="text-[11px] uppercase tracking-wider text-[#064423]/45">Volumetric</p>
+          <p className="font-medium text-[#064423]">{kg(w.total_volumetric_weight)}</p>
+        </div>
+        <div>
+          <p className="text-[11px] uppercase tracking-wider text-[#064423]/45">Chargeable</p>
+          <p className="font-medium text-[#064423]">{kg(w.chargeable_weight)}</p>
+        </div>
+      </div>
+      {w.pieces?.length > 1 && (
+        <ul className="mt-2 space-y-0.5">
+          {w.pieces.map((p) => (
+            <li key={p.piece_number}>
+              Piece {p.piece_number}
+              {p.quantity > 1 ? ` × ${p.quantity}` : ''}: charged on {p.charged_on === 'VOLUMETRIC' ? 'volumetric' : 'actual'} weight ({kg(p.chargeable_weight)} each)
+            </li>
+          ))}
+        </ul>
+      )}
+      <p className="mt-2 text-[11px] text-[#064423]/45">
+        Volumetric weight = L × W × H (cm) ÷ {w.volumetric_divisor || VOLUMETRIC_DIVISOR_HINT}. You pay on whichever is higher.
+      </p>
+    </div>
+  );
+
+  // Shown live on the Package step (updates as the pieces change) and on Review.
   const rateBox = (
     <div aria-live="polite">
       {!rateKey ? (
         <p className="rounded-[14px] border border-dashed border-[#E5EBE7] p-4 text-[13px] text-[#064423]/55">
-          Choose the weight to see your price.
+          {isDoc ? 'Choose the weight to see your price.' : 'Fill in every piece to see your price.'}
         </p>
       ) : ratePending || ratingLoading ? (
         <div className="flex items-center gap-2 rounded-[14px] border border-[#E5EBE7] p-4 text-[14px] text-[#064423]/60">
@@ -966,16 +1156,18 @@ export default function InternationalShipmentWizard({ onBack }: { onBack: () => 
               Includes a discount of {quote.currency} {quote.discount.toFixed(2)}
             </p>
           )}
+          {!isDoc && quoteWeights && weightBreakdown(quoteWeights)}
         </motion.div>
       ) : (
         <div className="flex flex-col items-start gap-3 rounded-[14px] border border-amber-200 bg-amber-50 p-5 text-[13px] text-amber-900">
           <p>
             {noRate
-              ? 'We don’t have an online rate for this destination, weight and product type. Our team can quote it for you.'
+              ? noRateMessage ?? 'We don’t have an online rate for this destination, weight and product type. Our team can quote it for you.'
               : rateFailed
                 ? rateError ?? 'We couldn’t get a rate for this shipment.'
                 : 'We couldn’t get a rate for this shipment.'}
           </p>
+          {!isDoc && noRate && quoteWeights && <div className="w-full">{weightBreakdown(quoteWeights)}</div>}
           <div className="flex flex-wrap gap-3">
             <button type="button" onClick={retryRate} className="font-medium text-[#064423] underline">
               Try again
@@ -1039,35 +1231,70 @@ export default function InternationalShipmentWizard({ onBack }: { onBack: () => 
 
       {form.pkg.productType === 'NON-DOCUMENT' && (
         <motion.div key="nondoc" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={SOFT_SPRING} className="flex flex-col gap-5">
-          <p className="rounded-[14px] border border-[#36B936]/25 bg-[#36B936]/[0.04] p-4 text-[13px] leading-relaxed text-[#064423]/75">
-            Parcels and goods are priced by our sales team. Send us the details below — we&apos;ll create your shipment request and
-            get back to you with a price. No payment is taken now.
-          </p>
-          <div className="grid grid-cols-1 gap-x-4 gap-y-5 md:grid-cols-2">
-            <Field
-              id="p-description"
-              label="What's inside?"
-              className="md:col-span-2"
-              placeholder="e.g. Clothes, electronics, spare parts"
-              value={form.pkg.packageDescription}
-              onChange={setPkg('packageDescription')}
-              error={errors['p-description']}
-            />
-            <Field
-              id="p-value"
-              label="Declared value (AED)"
-              type="number"
-              inputMode="decimal"
-              className="md:col-span-2"
-              value={form.pkg.declaredValue}
-              onChange={setPkg('declaredValue')}
-              error={errors['p-value']}
-            />
-          </div>
-          <div>
-            <p className="mx-1 mb-2 text-[12px] text-[#064423] sm:text-[13px]">Box size</p>
-            <ChoiceGroup options={BOX_OPTIONS} value={form.pkg.box} onSelect={setPkg('box')} error={errors['p-box']} columns={3} />
-          </div>
+          {form.pkg.pieces.map((piece, i) => {
+            const id = (field: string) => `p${i}-${field}`;
+            const vol = volumetricHint(piece);
+            return (
+              <div key={i} className="rounded-[14px] border border-[#E5EBE7] p-4 sm:p-5">
+                <div className="mb-4 flex items-center justify-between">
+                  <p className="text-[13px] font-medium text-[#064423]">Piece {i + 1}</p>
+                  {form.pkg.pieces.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removePiece(i)}
+                      className="inline-flex items-center gap-1 rounded-full px-1 text-[12px] text-red-600 outline-none hover:underline focus-visible:ring-2 focus-visible:ring-red-400"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" aria-hidden="true" /> Remove <span className="sr-only">piece {i + 1}</span>
+                    </button>
+                  )}
+                </div>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-5 md:grid-cols-4">
+                  <Field
+                    id={id('description')}
+                    label="What's inside?"
+                    className="col-span-2 md:col-span-3"
+                    placeholder="e.g. Clothes, electronics, spare parts"
+                    value={piece.description}
+                    onChange={setPiece(i, 'description')}
+                    error={errors[id('description')]}
+                  />
+                  <Field
+                    id={id('value')}
+                    label="Declared value (AED)"
+                    className="col-span-2 md:col-span-1"
+                    type="number"
+                    inputMode="decimal"
+                    value={piece.declaredValue}
+                    onChange={setPiece(i, 'declaredValue')}
+                    error={errors[id('value')]}
+                  />
+                  <Field id={id('weight')} label="Weight (kg)" type="number" inputMode="decimal" value={piece.weight} onChange={setPiece(i, 'weight')} error={errors[id('weight')]} />
+                  <Field id={id('quantity')} label="Quantity" type="number" inputMode="numeric" value={piece.quantity} onChange={setPiece(i, 'quantity')} error={errors[id('quantity')]} />
+                  <div className="hidden md:block" aria-hidden="true" />
+                  <div className="hidden md:block" aria-hidden="true" />
+                  <Field id={id('length')} label="Length (cm)" type="number" inputMode="decimal" value={piece.length} onChange={setPiece(i, 'length')} error={errors[id('length')]} />
+                  <Field id={id('width')} label="Width (cm)" type="number" inputMode="decimal" value={piece.width} onChange={setPiece(i, 'width')} error={errors[id('width')]} />
+                  <Field id={id('height')} label="Height (cm)" type="number" inputMode="decimal" value={piece.height} onChange={setPiece(i, 'height')} error={errors[id('height')]} />
+                </div>
+                {vol !== null && (
+                  <p className="mx-1 mt-3 text-[12px] text-[#064423]/55">
+                    ≈ {kg(vol)} volumetric{num(piece.weight) > 0 ? ` · charged on ${vol > num(piece.weight) ? 'volumetric' : 'actual'} weight` : ''}
+                    {num(piece.quantity) > 1 ? ', per item' : ''}
+                  </p>
+                )}
+              </div>
+            );
+          })}
+          {form.pkg.pieces.length < MAX_NON_DOC_PIECES && (
+            <button
+              type="button"
+              onClick={addPiece}
+              className="inline-flex items-center gap-1.5 self-start rounded-full px-1 text-[13px] font-medium text-[#36B936] outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[#36B936]"
+            >
+              <Plus className="h-4 w-4" aria-hidden="true" /> Add another piece
+            </button>
+          )}
+          {rateBox}
         </motion.div>
       )}
     </div>
@@ -1136,25 +1363,43 @@ export default function InternationalShipmentWizard({ onBack }: { onBack: () => 
             ) : (
               <>
                 <p className="text-[14px] font-medium text-[#064423]">
-                  {form.pkg.box ? `${BOX_SPECS[form.pkg.box].label} (up to ${BOX_SPECS[form.pkg.box].maxKg} kg)` : '—'}
+                  Non-document · {form.pkg.pieces.length} {form.pkg.pieces.length === 1 ? 'piece' : 'pieces'}
+                  {quoteWeights ? ` · ${kg(quoteWeights.chargeable_weight)} chargeable` : ''}
                 </p>
-                <p className="text-[12px] text-[#064423]/60">
-                  {[form.pkg.packageDescription, form.pkg.declaredValue && `Declared AED ${num(form.pkg.declaredValue).toFixed(2)}`].filter(Boolean).join(' · ')}
-                </p>
+                <ul className="mt-1 space-y-0.5 text-[12px] text-[#064423]/60">
+                  {form.pkg.pieces.map((p, i) => (
+                    <li key={i}>
+                      {[
+                        p.description,
+                        `${num(p.quantity) > 1 ? `${num(p.quantity)} × ` : ''}${kg(num(p.weight))}`,
+                        `${num(p.length)} × ${num(p.width)} × ${num(p.height)} cm`,
+                        `Declared AED ${num(p.declaredValue).toFixed(2)}`,
+                      ].join(' · ')}
+                    </li>
+                  ))}
+                </ul>
               </>
             )}
           </ReviewBlock>
-          {isDoc ? (
-            <div className="flex items-center justify-between rounded-[14px] border border-[#36B936]/30 bg-[#36B936]/[0.04] p-4 sm:p-5">
-              <p className="text-[11px] uppercase tracking-wider text-[#064423]/45">Total to pay</p>
-              <p className="text-[20px] font-medium text-[#064423]">{quote ? `${quote.currency} ${quote.total.toFixed(2)}` : '—'}</p>
-            </div>
-          ) : (
-            <p className="rounded-[14px] border border-[#E5EBE7] bg-white p-4 text-[13px] text-[#064423]/70">
-              No payment now — our sales team will contact you with a price for this shipment.
+          <div className="flex items-center justify-between rounded-[14px] border border-[#36B936]/30 bg-[#36B936]/[0.04] p-4 sm:p-5">
+            <p className="text-[11px] uppercase tracking-wider text-[#064423]/45">Total to pay</p>
+            <p className="flex items-center gap-2 text-[20px] font-medium text-[#064423]">
+              {ratePending || ratingLoading ? (
+                <Loader2 className="h-5 w-5 animate-spin text-[#36B936]" aria-label="Getting a new price" />
+              ) : quote ? (
+                `${quote.currency} ${quote.total.toFixed(2)}`
+              ) : (
+                '—'
+              )}
+            </p>
+          </div>
+          {submitPhase === 'confirming' && (
+            <p className="flex items-center gap-2 text-[13px] text-[#064423]/70" aria-live="polite">
+              <Loader2 className="h-4 w-4 animate-spin text-[#36B936]" aria-hidden="true" /> Payment received — confirming your shipment…
             </p>
           )}
-          {createError && <ErrorBanner>{createError}</ErrorBanner>}
+          {quoteNotice ? <ErrorBanner>{quoteNotice}</ErrorBanner> : createError && <ErrorBanner>{createError}</ErrorBanner>}
+          {noRate && !ratePending && <ErrorBanner>{noRateMessage ?? 'We could not price this shipment any more. Please edit the package or contact support.'}</ErrorBanner>}
         </>
       )}
     </div>
@@ -1165,7 +1410,7 @@ export default function InternationalShipmentWizard({ onBack }: { onBack: () => 
   return (
     <div className="mx-auto w-full max-w-[1040px]">
       <div className="mx-auto max-w-[640px] lg:ml-0">
-        <Stepper current={step} onJump={(n) => !locked && goTo(n)} reviewLabel={isDoc ? 'Review & pay' : 'Review & submit'} />
+        <Stepper current={step} onJump={(n) => !locked && goTo(n)} reviewLabel="Review & pay" />
       </div>
 
       <div className={`${card} mx-auto max-w-[640px] min-w-0 p-4 sm:p-6 md:p-8 lg:ml-0`}>
@@ -1184,14 +1429,10 @@ export default function InternationalShipmentWizard({ onBack }: { onBack: () => 
             {!showingOutcome || submitPhase === 'failed' ? (
               <div className="mb-6 sm:mb-8">
                 <h2 className="text-xl font-medium tracking-tight text-[#064423] sm:text-2xl">
-                  {currentStep ? currentStep.title : isDoc ? INTERNATIONAL_REVIEW_CONTENT.title : 'Review & submit'}
+                  {currentStep ? currentStep.title : INTERNATIONAL_REVIEW_CONTENT.title}
                 </h2>
                 <p className="mt-1 text-[13px] text-[#064423]/60 sm:text-[14px]">
-                  {currentStep
-                    ? currentStep.subtitle
-                    : isDoc
-                      ? INTERNATIONAL_REVIEW_CONTENT.subtitle
-                      : 'Double-check everything before you send the request to our sales team.'}
+                  {currentStep ? currentStep.subtitle : INTERNATIONAL_REVIEW_CONTENT.subtitle}
                 </p>
               </div>
             ) : null}
@@ -1215,28 +1456,23 @@ export default function InternationalShipmentWizard({ onBack }: { onBack: () => 
                 </button>
 
                 {onReview ? (
-                  <button type="button" onClick={handleCreateShipment} disabled={busy || (isDoc && !quote)} className={primaryButton}>
+                  <button type="button" onClick={handleCreateShipment} disabled={busy || !quote} className={primaryButton}>
                     {busy ? (
                       <>
-                        <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />{' '}
-                        {isDoc ? INTERNATIONAL_REVIEW_CONTENT.preparing : INTERNATIONAL_REVIEW_CONTENT.submitting}
-                      </>
-                    ) : isDoc ? (
-                      <>
-                        <Lock className="h-4 w-4" aria-hidden="true" /> {INTERNATIONAL_REVIEW_CONTENT.pay}
+                        <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> {INTERNATIONAL_REVIEW_CONTENT.preparing}
                       </>
                     ) : (
                       <>
-                        {INTERNATIONAL_REVIEW_CONTENT.submit}
-                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                        <Lock className="h-4 w-4" aria-hidden="true" /> {INTERNATIONAL_REVIEW_CONTENT.pay}
                       </>
                     )}
                   </button>
                 ) : (
                   <button
                     type="submit"
-                    // No price yet → can't move past Package/Amount (dashboard requires the amount too).
-                    disabled={currentStep?.id === 'package' && isDoc && !quote}
+                    // No price yet → can't move past the Package step (both product types need
+                    // an online quote now).
+                    disabled={currentStep?.id === 'package' && !quote}
                     className={`${primaryButton} disabled:cursor-not-allowed`}
                   >
                     Continue
@@ -1247,8 +1483,12 @@ export default function InternationalShipmentWizard({ onBack }: { onBack: () => 
             )}
             {showingOutcome && submitPhase === 'failed' && (
               <div className="mt-8 flex justify-end border-t border-[#E5EBE7] pt-6">
-                <button type="button" onClick={() => setSubmitPhase('idle')} className={primaryButton}>
-                  Try again
+                <button
+                  type="button"
+                  onClick={() => (paidNotConfirmed ? void confirmPaidShipment() : setSubmitPhase('idle'))}
+                  className={primaryButton}
+                >
+                  {paidNotConfirmed ? 'Confirm shipment again' : 'Try again'}
                 </button>
               </div>
             )}

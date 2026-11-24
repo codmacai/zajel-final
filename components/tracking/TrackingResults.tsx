@@ -7,7 +7,6 @@ import TrackingPageHeader from './TrackingPageHeader';
 import TrackingActionButtons from './TrackingActionButtons';
 import TrackingStateMessage from './TrackingStateMessage';
 import { useShipment } from './useShipment';
-import { useMapEmbedUrl } from './useMapEmbedUrl';
 import { fetchPodImages } from './trackingApi';
 import { ShipmentIcon, UserIcon, PinIcon, CheckCircleIcon, ClockIcon, PackageIcon, ImageIcon } from './TrackingIcons';
 import { RESULTS_CONTENT as C, TRACK_CONTENT, TRACK_ROUTES, parseTrackQuery } from './data';
@@ -24,12 +23,17 @@ function last5Digits(value: string): string {
 }
 
 const STEP_ICON_MAP: Record<string, ComponentType<{ className?: string }>> = {
+  pickup_awaited: ClockIcon,
+  pickup_scheduled: ClockIcon,
   pickup_completed: PackageIcon,
   inscan_at_hub: PinIcon,
   reached_at_hub: PinIcon,
   accept: ShipmentIcon,
   out_for_delivery: ShipmentIcon,
   delivered: CheckCircleIcon,
+  rto: ClockIcon,
+  rto_delivered: CheckCircleIcon,
+  returned_successfully: CheckCircleIcon,
 };
 
 /* -------------------------------------------------------------------------- */
@@ -180,10 +184,12 @@ function TimelineItem({ step, isLast }: { step: TimelineStep; isLast: boolean })
         <div className={`mb-1 text-[13px] font-medium sm:text-[14px] ${step.done ? 'text-[#064423]' : 'text-[#064423]/40'}`}>
           {step.label}
         </div>
-        <div className={`mb-1 flex items-center gap-1 text-[10px] sm:text-[11px] ${step.done ? 'text-[#064423]/60' : 'text-[#064423]/30'}`}>
-          <PinIcon className="h-[12px] w-[10px]" />
-          <span className="truncate">{step.location}</span>
-        </div>
+        {step.location && (
+          <div className={`mb-1 flex items-center gap-1 text-[10px] sm:text-[11px] ${step.done ? 'text-[#064423]/60' : 'text-[#064423]/30'}`}>
+            <PinIcon className="h-[12px] w-[10px]" />
+            <span className="truncate">{step.location}</span>
+          </div>
+        )}
         {step.dateLabel ? (
           <div className="text-[10px] text-[#064423]/50 sm:text-[11px]">{step.dateLabel}</div>
         ) : (
@@ -203,7 +209,6 @@ export default function TrackingResults() {
   const searchParams = useSearchParams();
   const query = parseTrackQuery(searchParams);
   const { shipment, loading, error } = useShipment(query);
-  const { url: mapUrl, loading: mapLoading } = useMapEmbedUrl(shipment);
 
   const [verified, setVerified] = useState(false);
   const [code, setCode] = useState('');
@@ -369,21 +374,6 @@ export default function TrackingResults() {
                 ))}
               </ol>
             </div>
-          </div>
-
-          {/* Route map */}
-          <div
-            className="relative flex w-full items-center justify-center overflow-hidden rounded-[1.5rem] md:rounded-[2rem]"
-            style={{ background: '#064423', minHeight: '360px' }}
-          >
-            {mapUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element -- remote Google Static Maps URL with a signed key
-              <img src={mapUrl} alt={C.mapAlt} className="absolute inset-0 h-full w-full object-cover" />
-            ) : mapLoading ? (
-              <span className="text-[13px] text-white/40">{C.mapLoading}</span>
-            ) : (
-              <span className="px-6 text-center text-[13px] text-white/40">{C.mapUnavailable}</span>
-            )}
           </div>
 
           <div className="mx-auto w-full max-w-[420px]">

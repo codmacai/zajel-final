@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 import {
@@ -229,7 +230,7 @@ function ChoiceGroup<T extends string>({
   return (
     <div>
       <div role="radiogroup" aria-label={label} className="grid grid-cols-2 gap-3">
-        {options.map(({ value: v, title, description, Icon, disabled, badge }) => {
+        {options.map(({ value: v, title, description, Icon, disabled, badge, image }) => {
           const selected = value === v;
           return (
             <motion.button
@@ -249,7 +250,11 @@ function ChoiceGroup<T extends string>({
                   : `bg-white hover:border-[#064423]/25 ${error ? 'border-red-400' : 'border-[#E5EBE7]'}`
               }`}
             >
-              {iconTile ? (
+              {image ? (
+                <span className="relative block h-12 w-20 sm:h-14 sm:w-24">
+                  <Image src={image} alt="" fill sizes="96px" className="object-contain object-left" />
+                </span>
+              ) : iconTile ? (
                 <span
                   className={`flex h-12 w-12 items-center justify-center rounded-[12px] transition-colors duration-200 sm:h-14 sm:w-14 ${
                     selected ? 'bg-[#36B936] text-white shadow-[0_6px_16px_-6px_rgba(54,185,54,0.55)]' : 'bg-[#F0F4F2] text-[#064423]/70 group-hover:text-[#064423]'

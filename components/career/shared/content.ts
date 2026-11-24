@@ -12,6 +12,7 @@ export interface SectionContent {
 export const CONTENT: Record<string, SectionContent> = {
   careers_hero: {
     en: {
+      eyebrow: 'Careers at Zajel',
       title: 'Deliver Your Future\nwith Zajel',
       description: "Join a team that's transforming the way the UAE moves — powered by technology and trust.",
       buttonLabel: 'Open positions',

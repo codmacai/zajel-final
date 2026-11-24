@@ -241,12 +241,76 @@ export const lookupKey = (code: string, name: string) => `${code}::${name}`;
 export type DocumentWeightOption = number;
 export type PickupDayOption = string;
 
-export interface RateCardRequest {
+/**
+ * One piece for an international quote — MobileApp.API's QuotePieceRequest. Item details are
+ * captured here too, so CreateShipment only needs the quoteId.
+ *
+ * camelCase on purpose: MobileApp.API binds request bodies with System.Text.Json, which ignores the
+ * model's Newtonsoft [JsonProperty("weight_in_kg")] attributes and matches the C# property names
+ * (WeightInKg) case-insensitively — snake_case keys arrive as 0. MobileApp.API re-serialises them
+ * to CRM's snake_case itself. (Responses come back from CRM in snake_case — see QuotePiece.)
+ */
+export interface QuotePieceRequest {
+  description: string;
+  declaredValue: number;
+  hsCode: string;
+  weightInKg: number;
+  lengthInCm: number;
+  widthInCm: number;
+  heightInCm: number;
+  quantity: number;
+}
+
+/**
+ * GetRateCard. With `pieces` it is the quote flow (X-Version 2.0 upstream): priced on chargeable
+ * weight (higher of actual and volumetric per piece) and answered with a `quote` whose id the
+ * booking is created against. Weight only (the rate calculator) is the legacy V1 pricing.
+ */
+export type RateCardRequest = {
   fromCountry: string;
   toCountry: string;
-  docType: 'DOC' | 'NON-DOC';
-  weight: number;
+  docType: 'DOC' | 'NON_DOC';
+} & ({ pieces: QuotePieceRequest[]; weight?: never } | { weight: number; pieces?: never });
+
+/** A piece as priced on the quote (CRM QuotePiece, snake_case). */
+export interface QuotePiece {
+  piece_number: number;
+  description: string | null;
+  declared_value: number;
+  hs_code: string | null;
+  weight_in_kg: number;
+  length_in_cm: number;
+  width_in_cm: number;
+  height_in_cm: number;
+  quantity: number;
+  volumetric_weight: number;
+  chargeable_weight: number;
+  /** ACTUAL | VOLUMETRIC */
+  charged_on: string;
 }
+
+/** How the chargeable weight was worked out — GetRateCard V2's `weights` (always) and `quote` (when priced). */
+export interface QuoteWeights {
+  num_of_pieces: number;
+  total_actual_weight: number;
+  total_volumetric_weight: number;
+  chargeable_weight: number;
+  volumetric_divisor: number;
+  /** ACTUAL | VOLUMETRIC | MIXED */
+  charged_on: string;
+  pieces: QuotePiece[];
+  /** `weights` only: the heaviest weight the rate card covers for this route */
+  max_weight?: number | null;
+  is_above_limit?: boolean;
+}
+
+export interface IntlQuote extends QuoteWeights {
+  quote_id: string;
+  expires_at: string;
+}
+
+/** Quote errors CRM returns from CreateShipment V2 (as ApiError.code). */
+export const QUOTE_ERROR_CODES = ['QUOTE_NOT_FOUND', 'QUOTE_EXPIRED', 'QUOTE_ALREADY_USED', 'QUOTE_MISMATCH', 'QUOTE_AMOUNT_MISMATCH'] as const;
 
 /** GetRateCard's response shape isn't confirmed either — kept as an open record so the UI can
  * read whatever fields are actually present (e.g. amount/totalAmount) without this type
@@ -260,6 +324,9 @@ export type InternationalCreateShipmentResult = Record<string, unknown>;
 /** International/GeneratePaymentLink's response shape isn't confirmed — expected to contain a
  * hosted payment URL akin to CreateShipmentV2Result.paymentUrl. */
 export type InternationalPaymentLinkResult = Record<string, unknown>;
+
+/** International/ConfirmInternationalShipment — CRM's { success, reference_number (final AWB), pickup_id, message }. */
+export type InternationalConfirmShipmentResult = Record<string, unknown>;
 
 /** Printable receipt for one paid shipment (GET /api/shipments/{shipmentId}/receipt). */
 export interface ShipmentReceipt {
