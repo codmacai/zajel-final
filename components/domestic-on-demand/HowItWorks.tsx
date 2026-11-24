@@ -20,7 +20,7 @@ const STEPS: ProcessStep[] = [
   {
     number: '03',
     title: 'Delivery',
-    description: 'Your courier arrives within 1 hour of your scheduled slot, and your package is delivered within 2 hours of pickup.',
+    description: 'Your courier arrives within 1 hour of your scheduled slot, and your package is delivered within 1 hour of pickup.',
   },
 ];
 

@@ -9,7 +9,7 @@ export const Network_Faq: FaqQuestion[] = [
       {
         question: 'Does Zajel have offices outside the UAE?',
         answer:
-          "Zajel's offices and direct operations are based in the UAE, with locations in Dubai, Abu Dhabi, Sharjah, and Ajman. International coverage is provided through our strategic alliance partnerships, which give us vetted, on the ground logistics partners in over 190 countries.",
+          "Zajel's offices and direct operations are based in the UAE, with locations in Dubai, Abu Dhabi and Al Ain. International coverage is provided through our strategic alliance partnerships, which give us vetted, on the ground logistics partners in over 190 countries.",
       },
       {
         question: 'Can Zajel handle shipments to remote or less common destinations?',
@@ -20,10 +20,10 @@ export const Network_Faq: FaqQuestion[] = [
         question: 'Does Zajel offer multimodal shipping?',
         answer:
           'Yes. A shipment can combine air, sea, and land transport within a single journey. For example, cargo can arrive by sea at Jebel Ali, transfer to our warehouse, and then move to its final destination by road or air, all coordinated by a single team.',
-      },
-      {
-        question: 'What is the DF Alliance?',
-        answer:
-          "The DF Alliance is a global freight forwarder network by DP World, spanning more than 190 countries. Zajel's membership provides access to vetted logistics partners worldwide, ensuring reliable local handling at destinations where we do not maintain a direct presence.",
-      },
+      }
+      // {
+      //   question: 'What is the DF Alliance?',
+      //   answer:
+      //     "The DF Alliance is a global freight forwarder network by DP World, spanning more than 190 countries. Zajel's membership provides access to vetted logistics partners worldwide, ensuring reliable local handling at destinations where we do not maintain a direct presence.",
+      // },
 ];

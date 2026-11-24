@@ -3,11 +3,13 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import LanguageSwitcher from "./LanguageSwitcher";
+import AccountLink from "./AccountLink";
 import Logo from "./Logo";
 import Chevron from "./Chevron";
 import SolutionsMegaMenu from "./SolutionsMegaMenu";
 import FlatMegaMenu from "./FlatMegaMenu";
 import MobileMenu from "./MobileMenu";
+import ScamAlertBanner from "../ScamAlertBanner";
 import { aboutItems, resourcesItems } from "@/data/navigation";
 import "./Navbar.css";
 
@@ -62,10 +64,14 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
+    // --navbar-h is the bar itself (heroes pad by it); --site-alert-h is the scam banner above
+    // it, which the layout's spacer reserves so the banner never covers page content.
     const setNavHeight = () => {
       if (navOuterRef.current) {
-        const h = navOuterRef.current.getBoundingClientRect().height;
-        document.documentElement.style.setProperty("--navbar-h", `${h}px`);
+        const total = navOuterRef.current.getBoundingClientRect().height;
+        const alert = navOuterRef.current.querySelector("[data-site-alert]")?.getBoundingClientRect().height ?? 0;
+        document.documentElement.style.setProperty("--navbar-h", `${total - alert}px`);
+        document.documentElement.style.setProperty("--site-alert-h", `${alert}px`);
       }
     };
     setNavHeight();
@@ -87,6 +93,8 @@ export default function Navbar() {
   const toggleMenu = (key: string) => setActiveMenu((p) => (p === key ? null : key));
 
   const navLinks = [{ label: "Track", path: "/track" }];
+  // Rendered after the dropdowns so it's the last item in the menu.
+  const trailingLinks = [{ label: "Support Center", path: "/support" }];
 
   // Keep the bar visible whenever a menu is open.
   const isHidden = hidden && !activeMenu && !mobileOpen;
@@ -94,6 +102,7 @@ export default function Navbar() {
   return (
     <>
       <nav ref={navOuterRef} className={`nav-outer ${isHidden ? "nav-outer-hidden" : ""}`}>
+        <ScamAlertBanner />
         <div className={`nav-shell ${scrolled || activeMenu ? "nav-snapped" : "nav-top-glass"}`}>
           <div className="nav-inner">
             <div className="logo-mark" style={{ flexShrink: 0, display: "flex" }}>
@@ -146,6 +155,19 @@ export default function Navbar() {
                   <Chevron open={activeMenu === key} />
                 </button>
               ))}
+
+              {trailingLinks.map(({ label, path }) => (
+                <Link
+                  key={path}
+                  href={path}
+                  onClick={() => setActiveMenu(null)}
+                  onMouseEnter={closeMenu}
+                  className="nav-link"
+                  style={{ fontSize: 14, textDecoration: "none" }}
+                >
+                  {label}
+                </Link>
+              ))}
             </div>
 
             <div
@@ -156,9 +178,7 @@ export default function Navbar() {
                 Download the app
               </Link>
               <LanguageSwitcher />
-              <Link href="/login" className="btn-login" onClick={() => setActiveMenu(null)}>
-                Login
-              </Link>
+              <AccountLink onClick={() => setActiveMenu(null)} />
             </div>
 
             <div className="mobile-only" style={{ display: "none" }}>

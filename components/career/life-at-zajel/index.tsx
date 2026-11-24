@@ -7,7 +7,6 @@ import { Reveal, Stagger, StaggerItem } from '../shared/motion';
 const PHOTOS = {
   exhibition: { src: '/career/life-at-zajel-exhibition.webp', alt: 'Zajel Exhibition' },
   team: { src: '/career/life-at-zajel-team.webp', alt: 'Team' },
-  award: { src: '/career/life-at-zajel-employee-award.png', alt: 'Employee Award' },
   operations: { src: '/career/life-at-zajel-operations.webp', alt: 'Operations' },
 } as const;
 
@@ -55,23 +54,16 @@ const LifeAtZajel = () => {
         <Stagger stagger={0.15} margin="-100px" className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6">
           <StaggerItem
             scale={0.95}
-            className="group relative h-[220px] overflow-hidden rounded-[20px] md:col-span-3 md:h-[380px]"
+            className="group relative h-[220px] overflow-hidden rounded-[20px] sm:h-[300px] md:col-span-6 md:h-[380px]"
           >
-            <Photo {...PHOTOS.team} sizes="(min-width: 768px) 25vw, 100vw" />
+            <Photo {...PHOTOS.team} sizes="(min-width: 768px) 50vw, 100vw" />
           </StaggerItem>
 
           <StaggerItem
             scale={0.95}
-            className="group relative h-[220px] overflow-hidden rounded-[20px] md:col-span-6 md:h-[380px]"
+            className="group relative h-[220px] overflow-hidden rounded-[20px] sm:h-[300px] md:col-span-6 md:h-[380px]"
           >
-            <Photo {...PHOTOS.award} sizes="(min-width: 768px) 50vw, 100vw" />
-          </StaggerItem>
-
-          <StaggerItem
-            scale={0.95}
-            className="group relative h-[220px] overflow-hidden rounded-[20px] md:col-span-3 md:h-[380px]"
-          >
-            <Photo {...PHOTOS.operations} sizes="(min-width: 768px) 25vw, 100vw" />
+            <Photo {...PHOTOS.operations} sizes="(min-width: 768px) 50vw, 100vw" />
           </StaggerItem>
         </Stagger>
       </div>

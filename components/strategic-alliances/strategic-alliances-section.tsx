@@ -60,47 +60,47 @@ export default function StrategicAlliancesSection() {
   const { ref: sectionRef, isVisible } = useInView<HTMLElement>();
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative flex min-h-[650px] w-full flex-col justify-center overflow-hidden py-16 sm:py-20 lg:py-24 font-['Manrope',sans-serif] text-white"
-      style={{
-        background: "radial-gradient(120% 140% at 78% 85%, #1F7A45 0%, #0F5C2E 32%, #0A4D26 58%, #073A1D 100%)",
-      }}
-    >
-      <div
-        className="pointer-events-none absolute bottom-[-10%] right-[-8%] h-[85%] w-[55%]"
-        style={{ background: "radial-gradient(closest-side, rgba(123,224,123,0.22) 0%, rgba(123,224,123,0) 70%)" }}
-      />
-      <div
-        className="pointer-events-none absolute left-[-5%] top-[10%] h-[65%] w-[45%] opacity-40 blur-[100px]"
-        style={{ background: "radial-gradient(circle, rgba(54,185,54,0.3) 0%, rgba(10,77,38,0) 70%)" }}
-      />
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 z-10 h-px"
-        style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent)" }}
-      />
+  <section
+    ref={sectionRef}
+    className="relative flex min-h-[650px] w-full flex-col justify-center overflow-hidden py-16 sm:py-20 lg:py-24 font-['Manrope',sans-serif] text-white"
+    style={{
+      background: "radial-gradient(120% 140% at 78% 85%, #1F7A45 0%, #0F5C2E 32%, #0A4D26 58%, #073A1D 100%)",
+    }}
+  >
+    <div
+      className="pointer-events-none absolute bottom-[-10%] right-[-8%] h-[85%] w-[55%]"
+      style={{ background: "radial-gradient(closest-side, rgba(123,224,123,0.22) 0%, rgba(123,224,123,0) 70%)" }}
+    />
+    <div
+      className="pointer-events-none absolute left-[-5%] top-[10%] h-[65%] w-[45%] opacity-40 blur-[100px]"
+      style={{ background: "radial-gradient(circle, rgba(54,185,54,0.3) 0%, rgba(10,77,38,0) 70%)" }}
+    />
+    <div
+      className="pointer-events-none absolute inset-x-0 top-0 z-10 h-px"
+      style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent)" }}
+    />
 
-      <div className="relative z-10 mx-auto flex h-full w-full max-w-[1240px] flex-col justify-center px-4 sm:px-6 md:px-12 lg:px-20">
-        <div className={cx("mx-auto mb-10 sm:mb-12 max-w-[850px] shrink-0 text-center lg:mb-16", ANIMATE_BASE, fadeIn(isVisible))}>
-          <span className="mb-2 block text-xs sm:text-sm font-medium uppercase tracking-widest" style={{ color: LIME }}>
-            {STRATEGIC_ALLIANCES_EYEBROW}
-          </span>
+    <div className="relative z-10 mx-auto flex h-full w-full max-w-[1240px] flex-col justify-center px-4 sm:px-6 md:px-12 lg:px-20">
+      <div className={cx("mx-auto mb-10 sm:mb-12 max-w-[850px] shrink-0 text-center lg:mb-16", ANIMATE_BASE, fadeIn(isVisible))}>
+        <span className="mb-2 block text-xs sm:text-sm font-medium uppercase tracking-widest" style={{ color: LIME }}>
+          {STRATEGIC_ALLIANCES_EYEBROW}
+        </span>
 
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white leading-tight">
-            {STRATEGIC_ALLIANCES_HEADING}
-          </h2>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white leading-tight">
+          {STRATEGIC_ALLIANCES_HEADING}
+        </h2>
 
-          <p className="mx-auto mt-3 max-w-[65ch] text-[13px] sm:text-[13.5px] lg:text-[14px] font-normal leading-relaxed text-white/70">
-            {STRATEGIC_ALLIANCES_INTRO}
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-3">
-          {STRATEGIC_ALLIANCES.map((card, index) => (
-            <AllianceCard key={card.title} card={card} isVisible={isVisible} delayMs={index * 150} />
-          ))}
-        </div>
+        <p className="mx-auto mt-3 max-w-[65ch] text-[13px] sm:text-[13.5px] lg:text-[14px] font-normal leading-relaxed text-white/70">
+          {STRATEGIC_ALLIANCES_INTRO}
+        </p>
       </div>
-    </section>
-  );
+
+      <div className="mx-auto grid w-full max-w-[900px] grid-cols-1 items-stretch gap-5 sm:gap-6 md:grid-cols-2">
+        {STRATEGIC_ALLIANCES.map((card, index) => (
+          <AllianceCard key={card.title} card={card} isVisible={isVisible} delayMs={index * 150} />
+        ))}
+      </div>
+    </div>
+  </section>
+);
 }

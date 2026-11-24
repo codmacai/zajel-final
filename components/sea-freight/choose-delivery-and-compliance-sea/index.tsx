@@ -23,7 +23,7 @@ const ChooseDeliveryAndComplianceSea = () => (
       title: "Door-to-Door",
       body: "Pickup at your origin address, delivered straight to the final destination — no extra coordination required on your end. This is how most Zajel sea freight shipments move, start to finish.",
       ctaLabel: "Request Door-to-Door Quote",
-      ctaUrl: "/quotation?arrangement=door-to-door",
+      ctaUrl: "/support",
       baseImage: BASE_IMAGE_SRC,
       cutoutImage: CUTOUT_IMAGE_SRC,
       baseAlt: "Door-to-Door sea freight background",

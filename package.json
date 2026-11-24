@@ -6,9 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "build:staging": "node scripts/build-env.mjs build .env.staging",
+    "start:staging": "node scripts/build-env.mjs start .env.staging"
   },
   "dependencies": {
+    "fast-xml-parser": "^5.11.2",
     "framer-motion": "^13.4.4",
     "i18next": "^26.4.2",
     "lucide-react": "^1.48.0",

@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 const LINKS = [
   { label: 'Track a shipment', href: '/track' },
   { label: 'Send a shipment', href: '/send-shipment' },
-  { label: 'Get a quote', href: '/quotation' },
-  { label: 'Contact us', href: '/contact' },
+  { label: 'Get a quote', href: '/support' },
+  { label: 'Contact us', href: '/support' },
 ];
 
 export default function NotFound() {
@@ -33,7 +33,7 @@ export default function NotFound() {
         </Link>
         {LINKS.map((l) => (
           <Link
-            key={l.href}
+            key={l.label}
             href={l.href}
             className="inline-flex h-11 items-center rounded-full border border-[#E5EBE7] px-5 text-[14px] text-[#064423] transition-colors hover:border-[#36B936]"
           >

@@ -13,7 +13,7 @@ export interface FaqCategory {
 }
 
 export const CONTACT = {
-  email: 'sales@zajel.com',
+  // email: 'sales@zajel.com',
   phone: '600 53 11 11',
   phoneHref: 'tel:600531111',
   office: 'Dubai Office, Al Ittihad Rd',
@@ -31,7 +31,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: 'Where is Zajel based and which regions do you cover?',
-        a: 'Zajel is headquartered in Dubai, UAE, with additional offices and operations in Abu Dhabi, Sharjah, and Ajman. Domestically, we cover all seven emirates. Internationally, our network spans 195 countries through our direct freight forwarding operations and strategic partnerships within the DF Alliance (by DP World), JCtrans, and IATA NAFL networks.',
+        a: 'Zajel is headquartered in Dubai, UAE, with additional offices and operations in Abu Dhabi and Al Ain. Domestically, we cover all seven emirates. Internationally, our network spans 195 countries through our direct freight forwarding operations and strategic partnerships within the DF Alliance (by DP World), JCtrans, and IATA NAFL networks.',
       },
       {
         q: 'What certifications does Zajel hold?',
@@ -50,7 +50,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
     questions: [
       {
         q: 'How do I open a business account with Zajel?',
-        a: 'You can open a business account by contacting our sales team directly at sales@zajel.com or by calling 600 53 11 11. A dedicated account manager will guide you through the onboarding process, which includes setting up portal access, defining your shipping requirements, and configuring your preferred services.',
+        a: 'You can open a business account by contacting us directly through our Support Center or by calling 600 53 11 11. A dedicated account manager will guide you through the onboarding process, which includes setting up portal access, defining your shipping requirements, and configuring your preferred services.',
       },
       {
         q: 'What information do I need to request a freight quote?',
@@ -62,7 +62,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: 'Can I use Zajel for a single shipment or do I need an account?',
-        a: 'You can use Zajel for a single shipment without setting up a formal business account. Simply request a quote through our website, by email at sales@zajel.com, or by phone. If you plan to ship regularly, a business account provides benefits including portal access, a dedicated account manager, and potentially better rates.',
+        a: 'You can use Zajel for a single shipment without setting up a formal business account. Simply book a shipment through our website or by our mobile app. If you plan to ship regularly, a business account provides benefits including portal access, a dedicated account manager, and potentially better rates.',
       },
     ],
   },
@@ -93,7 +93,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: 'How do I get an air freight quote?',
-        a: 'You can request an air freight quote through the quote form on our Air Freight page, by emailing sales@zajel.com, or by calling 600 53 11 11. Provide your cargo type, weight, dimensions, origin, destination, and preferred delivery arrangement, and our team will respond with a tailored quote, typically within 30 minutes during business hours.',
+        a: 'You can request an air freight quote directly through our Support Center or by calling 600 53 11 11. Provide your cargo type, weight, dimensions, origin, destination, and preferred delivery arrangement, and our team will respond with a tailored quote, typically within 30 minutes during business hours.',
       },
     ],
   },
@@ -114,10 +114,10 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         q: 'Does Zajel ship dangerous goods or temperature sensitive cargo by sea?',
         a: 'Yes. Zajel is certified to handle dangerous goods (DG) shipping by sea in full compliance with IMDG regulations. We also offer reefer (refrigerated) container services for temperature-sensitive cargo including pharmaceuticals, food products, and perishable goods.',
       },
-      {
-        q: 'How long does sea freight take from the UAE?',
-        a: 'Transit time varies by destination and service type. As a general reference from Jebel Ali Port: shipments to India (Nhava Sheva) take approximately 6 days, to Saudi Arabia (Dammam) approximately 3 days, to East Africa (Mombasa) approximately 11 days, and to Europe (Rotterdam) approximately 22 days. These are port-to-port times; door-to-door delivery adds time for pickup, customs clearance, and last-mile delivery at each end.',
-      },
+      // {
+      //   q: 'How long does sea freight take from the UAE?',
+      //   a: 'Transit time varies by destination and service type. As a general reference from Jebel Ali Port: shipments to India (Nhava Sheva) take approximately 6 days, to Saudi Arabia (Dammam) approximately 3 days, to East Africa (Mombasa) approximately 11 days, and to Europe (Rotterdam) approximately 22 days. These are port-to-port times; door-to-door delivery adds time for pickup, customs clearance, and last-mile delivery at each end.',
+      // },
       {
         q: 'What kind of cargo is sea freight best suited to?',
         a: 'Sea freight is ideal for large-volume shipments, heavy or oversized cargo, and shipments where cost efficiency is more important than speed. It is commonly used for raw materials, manufactured goods, vehicles, industrial equipment, and bulk commodities.',
@@ -132,7 +132,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: 'How do I get a sea freight quote?',
-        a: 'Request a sea freight quote through the form on our Sea Freight page, by email at sales@zajel.com, or by phone at 600 53 11 11. Include your cargo type, volume, weight, origin port, destination port, and preferred container type (FCL, LCL, or special equipment) for the most accurate quote.',
+        a: 'Request a sea freight quote directly through our Support Center or by calling 600 53 11 11. Include your cargo type, volume, weight, origin port, destination port, and preferred container type (FCL, LCL, or special equipment) for the most accurate quote.',
       },
     ],
   },
@@ -163,7 +163,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: 'How do I get a land freight quote?',
-        a: 'Request a quote through the form on our Land Freight page, by email at sales@zajel.com, or by phone at 600 53 11 11. Provide your cargo type, weight, dimensions, origin, destination, truck type preference, and any special handling requirements for a tailored quote.',
+        a: 'Request a quote directly through our Support Center or by calling 600 53 11 11. Provide your cargo type, weight, dimensions, origin, destination, truck type preference, and any special handling requirements for a tailored quote.',
       },
     ],
   },
@@ -186,37 +186,37 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: "How do I get started with Zajel's e-commerce solutions?",
-        a: 'Getting started involves three steps: first, you are onboarded by a dedicated account manager who sets up your business profile and portal access. Second, you begin submitting orders through the Zajel portal. Third, Zajel handles delivery, COD collection, and remittance from that point forward. Contact our team at sales@zajel.com to begin the onboarding process.',
+        a: 'Getting started involves three steps: first, you are onboarded by a dedicated account manager who sets up your business profile and portal access. Second, you begin submitting orders through the Zajel portal. Third, Zajel handles delivery, COD collection, and remittance from that point forward. Contact our team directly through our Support Center or by calling 600 53 11 11.',
       },
     ],
   },
-  {
-    id: 'warehousing',
-    title: 'Warehousing',
-    heading: 'Warehousing and Distribution',
-    questions: [
-      {
-        q: 'Does Zajel offer warehousing services?',
-        a: 'Yes. Zajel operates dedicated warehouse facilities in Dubai, providing short-term and long-term storage, e-commerce fulfillment warehousing, temperature-controlled and cold chain storage, and specialized storage for dangerous goods and oversized cargo.',
-      },
-      {
-        q: 'Can I monitor my inventory in real time?',
-        a: "Yes. Zajel's warehouse management system provides real-time stock visibility, movement history, and order status through the Zajel portal. You can track stock levels, monitor dispatches, and receive automated low-stock alerts.",
-      },
-      {
-        q: 'Does Zajel offer pick, pack, and fulfillment services?',
-        a: 'Yes. Our warehousing includes value-added services such as pick and pack, kitting and assembly, labeling and branding, quality inspection on arrival, and returns processing for e-commerce businesses.',
-      },
-      {
-        q: 'Can Zajel store temperature-sensitive or dangerous goods?',
-        a: 'Yes. Our facilities include temperature-controlled warehousing with continuous monitoring for pharmaceuticals, food products, and perishable goods. We also accommodate dangerous goods storage with the required infrastructure, permits, and trained personnel.',
-      },
-      {
-        q: "Is warehousing connected to Zajel's freight and delivery services?",
-        a: "Yes. Goods stored in our facilities can move directly into Zajel's air, sea, or land freight network, or into our last-mile delivery operation. This means cargo can go from port clearance to warehouse to final delivery through a single provider.",
-      },
-    ],
-  },
+  // {
+  //   id: 'warehousing',
+  //   title: 'Warehousing',
+  //   heading: 'Warehousing and Distribution',
+  //   questions: [
+  //     {
+  //       q: 'Does Zajel offer warehousing services?',
+  //       a: 'Yes. Zajel operates dedicated warehouse facilities in Dubai, providing short-term and long-term storage, e-commerce fulfillment warehousing, temperature-controlled and cold chain storage, and specialized storage for dangerous goods and oversized cargo.',
+  //     },
+  //     {
+  //       q: 'Can I monitor my inventory in real time?',
+  //       a: "Yes. Zajel's warehouse management system provides real-time stock visibility, movement history, and order status through the Zajel portal. You can track stock levels, monitor dispatches, and receive automated low-stock alerts.",
+  //     },
+  //     {
+  //       q: 'Does Zajel offer pick, pack, and fulfillment services?',
+  //       a: 'Yes. Our warehousing includes value-added services such as pick and pack, kitting and assembly, labeling and branding, quality inspection on arrival, and returns processing for e-commerce businesses.',
+  //     },
+  //     {
+  //       q: 'Can Zajel store temperature-sensitive or dangerous goods?',
+  //       a: 'Yes. Our facilities include temperature-controlled warehousing with continuous monitoring for pharmaceuticals, food products, and perishable goods. We also accommodate dangerous goods storage with the required infrastructure, permits, and trained personnel.',
+  //     },
+  //     {
+  //       q: "Is warehousing connected to Zajel's freight and delivery services?",
+  //       a: "Yes. Goods stored in our facilities can move directly into Zajel's air, sea, or land freight network, or into our last-mile delivery operation. This means cargo can go from port clearance to warehouse to final delivery through a single provider.",
+  //     },
+  //   ],
+  // },
   {
     id: 'customs',
     title: 'Customs',
@@ -241,11 +241,11 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       {
         q: 'What are the benefits of shipping through a UAE free zone?',
         a: 'Goods stored within UAE free zones such as JAFZA, DAFZA, KIZAD, and DMCC are exempt from standard customs duty while they remain within the zone. This is particularly advantageous for businesses that import goods for re-export or regional distribution, as it eliminates duty costs on goods that never enter the UAE mainland market. When goods move from a free zone to the mainland, the standard 5% duty and 5% VAT apply at the point of transfer.',
-      },
-      {
-        q: 'Does Zajel handle restricted or dangerous goods clearance?',
-        a: "Yes. Zajel's licensed customs brokers manage clearance for hazardous materials, chemicals, pharmaceuticals, controlled substances, and other restricted categories. This includes obtaining necessary permits from relevant UAE authorities, coordinating specialized inspections, and ensuring full regulatory compliance throughout the clearance process.",
-      },
+      }
+      // {
+      //   q: 'Does Zajel handle restricted or dangerous goods clearance?',
+      //   a: "Yes. Zajel's licensed customs brokers manage clearance for hazardous materials, chemicals, pharmaceuticals, controlled substances, and other restricted categories. This includes obtaining necessary permits from relevant UAE authorities, coordinating specialized inspections, and ensuring full regulatory compliance throughout the clearance process.",
+      // },
     ],
   },
   {
@@ -261,10 +261,10 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         q: 'Does Zajel offer cargo insurance?',
         a: 'Zajel can arrange cargo insurance to cover loss or damage during transit. Insurance options and coverage levels vary depending on the shipment value, cargo type, and route. We recommend discussing insurance requirements when you request a freight quote so that coverage can be included from the outset.',
       },
-      {
-        q: 'What happens if my shipment is damaged during transit?',
-        a: 'If your shipment arrives damaged, notify Zajel immediately and document the damage with photographs. File a claim through our support process, providing the shipment reference number, a description of the damage, supporting photographs, and any relevant delivery documentation. Our claims team will investigate and process your case.',
-      },
+      // {
+      //   q: 'What happens if my shipment is damaged during transit?',
+      //   a: 'If your shipment arrives damaged, notify Zajel immediately and document the damage with photographs. File a claim through our support process, providing the shipment reference number, a description of the damage, supporting photographs, and any relevant delivery documentation. Our claims team will investigate and process your case.',
+      // },
       {
         q: 'Are there items that Zajel cannot ship?',
         a: 'Zajel cannot ship items that are prohibited by UAE law or international transport regulations. These include counterfeit goods, certain controlled substances, and items restricted by destination country import laws. Specific restrictions may also apply depending on the transport mode. For hazardous materials and other regulated goods, Zajel can ship these under the appropriate permits and compliance procedures. Contact our team if you are unsure whether your goods can be transported.',
@@ -306,11 +306,11 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       {
         q: 'How does COD remittance work for e-commerce sellers?',
         a: 'When Zajel delivers an order with Cash on Delivery, payment is collected from the recipient at the point of delivery. Collected COD amounts are then remitted to your business on a regular cycle as agreed during onboarding. Both prepaid and COD orders move through the same fulfillment workflow with no separate process required on your end.',
-      },
-      {
-        q: 'Are customs duties and taxes included in freight quotes?',
-        a: "Standard freight quotes cover the transportation and handling of your shipment. Customs duties, import VAT, and any additional government fees are typically quoted separately, as these depend on the HS code classification, declared value, and destination-specific tariff rates for your goods. Zajel's customs team can provide an estimate of applicable duties as part of the clearance process.",
-      },
+      }
+      // {
+      //   q: 'Are customs duties and taxes included in freight quotes?',
+      //   a: "Standard freight quotes cover the transportation and handling of your shipment. Customs duties, import VAT, and any additional government fees are typically quoted separately, as these depend on the HS code classification, declared value, and destination-specific tariff rates for your goods. Zajel's customs team can provide an estimate of applicable duties as part of the clearance process.",
+      // },
     ],
   },
 ];

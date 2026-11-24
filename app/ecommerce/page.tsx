@@ -41,8 +41,8 @@ export default function EcommercePage() {
               description="Built for how online sellers in UAE actually operate."
               priority
               buttons={[
-                { label: "Get a Quote", href: "/quotation", variant: "primary" },
-                { label: "Talk to our team", href: "/contact", variant: "secondary" },
+                { label: "Get a Quote", href: "/support", variant: "primary" },
+                { label: "Talk to our team", href: "/support", variant: "secondary" },
                 
               ]}
             />

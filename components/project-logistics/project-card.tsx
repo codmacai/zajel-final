@@ -21,7 +21,7 @@ const ProjectCard = ({
   alt,
   index,
   ctaText = 'Request a Quote',
-  ctaHref = '/quotation',
+  ctaHref = '/support',
 }: ProjectCardProps) => {
   const isReversed = index % 2 === 1;
   const num = String(index + 1).padStart(2, '0');

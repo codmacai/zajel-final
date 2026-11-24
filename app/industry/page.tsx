@@ -8,7 +8,7 @@ import ContactBand from "@/components/dynamic-contact";
 export const metadata: Metadata = pageMetadata({
   title: "Industry Logistics Solutions in the UAE",
   description:
-    "Industry logistics solutions across the UAE shaped by your sector — from cold chain pharma to oversized oil and gas cargo, backed by 45M+ shipments and 4 ISO certifications.",
+    "Industry logistics solutions across the UAE shaped by your sector — from cold chain pharma to oversized oil and gas cargo, backed by 60M+ shipments and 4 ISO certifications.",
   path: '/industry',
 });
 
@@ -28,7 +28,7 @@ export default function IndustryPage() {
           phone: "600 53 11 11",
           address: "Dubai Office, Al Rostamani Building, Al Ittihad Rd, E11, Dubai",
         }}
-        primaryCta={{ label: "Contact Our Team", url: "/contact" }}
+        primaryCta={{ label: "Contact Our Team", url: "/support" }}
       />
     </main>
   );

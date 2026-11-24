@@ -14,7 +14,7 @@ export const SECURE_ID_HERO: HeroContent = {
   primaryLabel: "Track Shipment",
   primaryHref: "/track",
   secondaryLabel: "Contact Support",
-  secondaryHref: "/contact",
+  secondaryHref: "/support",
   image: "/securesol/secure-id-passport-delivery.webp",
   imageAlt: "Courier verifying a recipient before handing over an identity document",
 };

@@ -30,6 +30,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# runtime-only diagnostics (see lib/config/prepaidApiTarget.ts) — never commit, host-local only
+/logs/
+
 # env files (can opt-in for committing if needed)
 .env*
 
@@ -39,3 +42,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+!.env.example

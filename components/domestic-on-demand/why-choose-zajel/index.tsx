@@ -73,8 +73,8 @@ const CARDS: FeatureCard[] = [
   {
     id: 'experience',
     icon: <ExperienceIcon />,
-    title: '15+ Years of Experience',
-    description: 'A track record built on 45M+ shipments.',
+    title: '17+ Years of Experience',
+    description: 'A track record built on 60M+ shipments.',
   },
   {
     id: 'doorstep',

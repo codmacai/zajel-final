@@ -7,7 +7,7 @@ export const heroData = {
   description:
     "Whether you're fulfilling online orders or moving freight across borders, Zajel supports the operation — not just the shipment.",
   buttonLabel: 'Get a Quote',
-  buttonUrl: '/quotation',
+  buttonUrl: '/support',
   heroImage: '/Homepage/business-logistics-port-sea-air.webp',
 };
 
@@ -222,8 +222,8 @@ export interface CtaButton {
 }
 
 export const ctaButtons: CtaButton[] = [
-  { id: 'quote', label: 'Get a Quote', url: '/quotation', variant: 'primary' },
-  { id: 'team', label: 'Talk to Our Team', url: '/contact', variant: 'secondary' },
+  { id: 'quote', label: 'Get a Quote', url: '/support', variant: 'primary' },
+  { id: 'team', label: 'Talk to Our Team', url: '/support', variant: 'secondary' },
   { id: 'calculator', label: 'Calculate Shipping Rate', url: '/rate-calculator', variant: 'secondary' },
 ];
 

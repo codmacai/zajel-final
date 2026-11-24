@@ -12,7 +12,7 @@ export const GOV_HERO: HeroContent = {
   title: "Trusted Logistics for\nGovernment Entities",
   description: "Secure, documented and fully compliant shipping for ministries, public authorities and institutions, handled with the discipline official cargo demands.",
   primaryLabel: "Request a Quote",
-  primaryHref: "/contact",
+  primaryHref: "/support",
   secondaryLabel: "Track Shipment",
   secondaryHref: "/track",
   image: "/services/government/hero.png",

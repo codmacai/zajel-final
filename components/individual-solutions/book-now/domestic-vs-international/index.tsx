@@ -17,7 +17,7 @@ const COMPARISON_ROWS: ComparisonRow[] = [
   {
     feature: 'Speed',
     domestic: 'Same-day and next-day delivery',
-    international: '2 to 7 business days depending on destination',
+    international: '2 to 3 business days depending on destination',
   },
   {
     feature: 'Best for',

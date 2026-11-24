@@ -1,5 +1,6 @@
 "use client";
 
+import { useSupportAction } from '@/hooks/useSupportAction';
 import { motion } from "framer-motion";
 import {
   WEIGHT_DIMENSION_NOTES,
@@ -14,9 +15,10 @@ interface WeightDimensionGuidelinesProps {
 }
 
 export default function WeightDimensionGuidelines({
-  onGetQuote,
-  contactHref = "/contact",
+  onGetQuote: onGetQuoteProp,
+  contactHref = "/support",
 }: WeightDimensionGuidelinesProps) {
+  const onGetQuote = useSupportAction(onGetQuoteProp);
   return (
     <section
       className="relative w-full overflow-hidden px-4 py-12 xs:px-6 sm:py-16 lg:px-12 lg:py-24"
@@ -66,7 +68,7 @@ export default function WeightDimensionGuidelines({
         </motion.div>
 
         {/* True Responsive Table Container */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
@@ -105,7 +107,7 @@ export default function WeightDimensionGuidelines({
               </tbody>
             </table>
           </div>
-        </motion.div>
+        </motion.div> */}
 
         {/* Key notes grid */}
         <motion.div

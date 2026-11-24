@@ -1,5 +1,6 @@
 'use client';
 
+import { useSupportAction } from '@/hooks/useSupportAction';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -30,7 +31,8 @@ interface GccRouteGuidelinesProps {
   contactHref?: string;
 }
 
-const GccRouteGuidelines = ({ onGetQuote, contactHref = '/contact' }: GccRouteGuidelinesProps) => {
+const GccRouteGuidelines = ({ onGetQuote: onGetQuoteProp, contactHref = '/support' }: GccRouteGuidelinesProps) => {
+  const onGetQuote = useSupportAction(onGetQuoteProp);
   return (
     <section
       className="w-full relative overflow-hidden py-[clamp(4.5rem,10vw,9rem)] font-sans"

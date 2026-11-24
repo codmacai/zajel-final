@@ -39,7 +39,7 @@ export default function Home() {
       <HowFreightQuoteWorks/>
       <ValueAddedServices/>
       <WeightDimensionGuidelines/>
-      <ContactSection content={airFreightContent} />
+      {/* <ContactSection content={airFreightContent} /> */}
 
       <AirFreightFaq/>
     </main>

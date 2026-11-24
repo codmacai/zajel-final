@@ -1,17 +1,16 @@
-import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { Stagger, StaggerItem } from '../shared/motion';
 import { typo } from '@/components/ui copy/typography';
 import SectionHeading from '../shared/section-heading';
-import { JOBS, type Job } from './data';
+import type { Job } from './data';
 
 interface JobOpeningsProps {
-  jobs?: Job[];
+  jobs: Job[];
+  /** Linked from the empty state when the feed has no openings (or failed to load). */
+  portalUrl: string;
 }
 
-const JobOpenings = ({ jobs = JOBS }: JobOpeningsProps) => {
-  if (jobs.length === 0) return null;
-
+const JobOpenings = ({ jobs, portalUrl }: JobOpeningsProps) => {
   return (
     // id = target of the hero CTA (#open-positions)
     <section
@@ -28,40 +27,61 @@ const JobOpenings = ({ jobs = JOBS }: JobOpeningsProps) => {
           description="Explore our current openings and become part of one of the UAE's most trusted courier brands."
         />
 
-        <Stagger stagger={0.15} margin="-100px" className="grid w-full grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
-          {jobs.map((job) => (
-            <StaggerItem
-              key={job.id}
-              y={30}
-              className="group flex min-h-[320px] flex-col rounded-[1.5rem] border border-[#1b4332]/10 bg-white p-6 transition-colors duration-500 hover:border-[#36B936]/30 md:min-h-[420px] md:rounded-[2rem] md:p-8 lg:p-10"
+        {jobs.length === 0 ? (
+          <div className="w-full max-w-[640px] rounded-[1.5rem] border border-[#1b4332]/10 bg-white p-6 text-center md:p-10">
+            <p className={`${typo.body} text-[#2d6a4f]`}>
+              There are no open positions at the moment. Please check back later or visit our careers portal.
+            </p>
+            <a
+              href={portalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mx-auto mt-6 flex w-fit items-center gap-3 rounded-xl border border-[#1b4332]/20 px-6 py-3 text-[13px] font-medium tracking-tight text-[#1b4332] transition-all duration-300 hover:bg-[#1b4332] hover:text-white active:scale-95 md:px-8 md:py-3.5 md:text-[14px]"
             >
-              <h3 className="mb-3 text-[18px] font-medium leading-tight tracking-tight text-[#1b4332] sm:text-[20px] md:mb-4 lg:text-[22px]">
-                {job.title}
-              </h3>
-
-              <p className={`${typo.body} mb-5 max-w-[260px] text-[#2d6a4f] md:mb-6`}>
-                {job.description}
-              </p>
-
-              <p className={`${typo.meta} mb-auto uppercase text-[#2d6a4f] sm:text-[12px]`}>
-                {job.location} | {job.type}
-              </p>
-
-              <Link
-                href={job.href}
-                className="mt-8 flex w-fit items-center gap-3 rounded-xl border border-[#1b4332]/20 px-6 py-3 text-[13px] font-medium tracking-tight text-[#1b4332] transition-all duration-300 hover:bg-[#1b4332] hover:text-white active:scale-95 md:mt-12 md:px-8 md:py-3.5 md:text-[14px]"
+              <span>Visit Careers Portal</span>
+              <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+            </a>
+          </div>
+        ) : (
+          <Stagger
+            stagger={0.15}
+            margin="-100px"
+            className="grid w-full grid-cols-1 gap-4 md:grid-cols-3 md:gap-6"
+          >
+            {jobs.map((job) => (
+              <StaggerItem
+                key={job.id}
+                y={30}
+                className="group flex min-h-[320px] flex-col rounded-[1.5rem] border border-[#1b4332]/10 bg-white p-6 transition-colors duration-500 hover:border-[#36B936]/30 md:min-h-[420px] md:rounded-[2rem] md:p-8 lg:p-10"
               >
-                <span>
-                  Join our Team<span className="sr-only"> — {job.title}</span>
-                </span>
-                <ArrowUpRight
-                  className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                  aria-hidden="true"
-                />
-              </Link>
-            </StaggerItem>
-          ))}
-        </Stagger>
+                <h3 className="mb-3 text-[18px] font-medium leading-tight tracking-tight text-[#1b4332] sm:text-[20px] md:mb-4 lg:text-[22px]">
+                  {job.title}
+                </h3>
+
+                <p className={`${typo.body} mb-5 max-w-[260px] text-[#2d6a4f] md:mb-6`}>{job.description}</p>
+
+                <p className={`${typo.meta} mb-auto uppercase text-[#2d6a4f] sm:text-[12px]`}>
+                  {[job.location, job.type].filter(Boolean).join(' | ')}
+                </p>
+
+                <a
+                  href={job.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-8 flex w-fit items-center gap-3 rounded-xl border border-[#1b4332]/20 px-6 py-3 text-[13px] font-medium tracking-tight text-[#1b4332] transition-all duration-300 hover:bg-[#1b4332] hover:text-white active:scale-95 md:mt-12 md:px-8 md:py-3.5 md:text-[14px]"
+                >
+                  <span>
+                    Join our Team<span className="sr-only"> — {job.title}</span>
+                  </span>
+                  <ArrowUpRight
+                    className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
+                </a>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        )}
       </div>
     </section>
   );

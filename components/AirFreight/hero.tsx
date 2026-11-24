@@ -18,7 +18,7 @@ const defaultContent: AirFreightHeroContent = {
   description:
     "From standard cargo to specialized project shipments, Zajel moves it by air, with customs handled and the right delivery arrangement for your business.",
   button: "Get my rate",
-  ctaLink: "/contact",
+  ctaLink: "/support",
   image_url: "/international/international-air-cargo-hero.webp",
 };
 

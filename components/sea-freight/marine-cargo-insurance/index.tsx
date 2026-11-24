@@ -2,6 +2,7 @@
 
 import { ArrowRight, ShieldAlert } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
@@ -232,7 +233,10 @@ interface MarineCargoInsuranceProps {
   seaFreightQuoteHref?: string;
 }
 
-const MarineCargoInsurance = ({ onRequestQuote, seaFreightQuoteHref = '#sea-freight-quote' }: MarineCargoInsuranceProps) => {
+const MarineCargoInsurance = ({ onRequestQuote: onRequestQuoteProp, seaFreightQuoteHref = '/support' }: MarineCargoInsuranceProps) => {
+  const router = useRouter();
+  // Quote requests go to the support center unless a page passes its own handler.
+  const onRequestQuote = onRequestQuoteProp ?? (() => router.push('/support'));
   return (
     <section className="w-full py-12 sm:py-20 lg:py-24 px-4 sm:px-6 md:px-12 lg:px-20 bg-white overflow-hidden font-sans">
       <div className="mx-auto max-w-7xl">

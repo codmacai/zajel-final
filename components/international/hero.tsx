@@ -15,9 +15,9 @@ export interface InternationalHeroContent {
 // Fallback until the CMS entry is ready.
 const defaultContent: InternationalHeroContent = {
   eyebrow: "International Shipping",
-  title: "International Shipping UAE: Doorstep Delivery to 200+ Countries",
+  title: "International Shipping UAE: Doorstep Delivery to 195 Countries",
   description:
-    "Documents or packages, delivered in 3–4 days. Customs handled end to end, with tracking and a delivery arrangement that fits your shipment.",
+    "Documents or packages, delivered in 3–5 days. Customs handled end to end, with tracking and a delivery arrangement that fits your shipment.",
   image_url: "/international/international-air-cargo-hero.webp",
 };
 

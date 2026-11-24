@@ -3,6 +3,10 @@
 import { useSyncExternalStore } from "react";
 import { getLang, setLang, subscribe } from "@/lib/i18n/translator";
 
+// Arabic isn't implemented yet (no translations / RTL layout), so the toggle is hidden.
+// Flip this to true once the i18n setup is in place.
+const SHOW_LANGUAGE_SWITCHER = false;
+
 export default function LanguageSwitcher() {
   const lang = useSyncExternalStore(subscribe, getLang, () => "en" as const);
   const isAr = lang === "ar";

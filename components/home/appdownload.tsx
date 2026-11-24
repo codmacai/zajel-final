@@ -1,4 +1,5 @@
 import React from "react";
+import { APP_LINKS } from "@/data/app-links";
 
 /**
  * CompactSaaSBanner
@@ -54,11 +55,13 @@ const StoreButton: React.FC<{
   <a
     href={href}
     onClick={onClick}
+    target="_blank"
+    rel="noopener noreferrer"
     className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-[#0B140F] px-3.5 py-2 text-white shadow-md transition-transform duration-300 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
   >
     {icon}
     <span className="flex flex-col text-left leading-tight">
-      <span className="text-[9px] font-medium text-white/75">Download on the</span>
+      <span className="text-[9px] font-medium text-white/75">{label === "Google Play" ? "Get it on" : "Download on the"}</span>
       <span className="text-xs font-medium sm:text-sm">{label}</span>
     </span>
   </a>
@@ -71,8 +74,8 @@ const CompactSaaSBanner: React.FC<CompactSaaSBannerProps> = ({
   phoneImageSrc = "/phone-mockup.png",
   desktopImageSrc = "/phone-mockup-desktop.png",
   mobileImageFull = false,
-  appStoreUrl = "#",
-  playStoreUrl = "#",
+  appStoreUrl = APP_LINKS.appStore,
+  playStoreUrl = APP_LINKS.playStore,
   onAppStoreClick,
   onPlayStoreClick,
 }) => {

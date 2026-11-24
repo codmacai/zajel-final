@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { PackageIcon, PhoneIcon, SearchIcon } from './TrackingIcons';
-import { TRACK_CONTENT, TRACK_ROUTES, type TrackTabId } from './data';
+import { TRACK_CONTENT, trackResultsHref, type TrackTabId } from './data';
 
 const TAB_ICONS: Record<TrackTabId, React.ReactNode> = {
   awb: <PackageIcon className="mt-0.5 h-auto w-[14px] sm:w-[16px]" />,
@@ -15,14 +15,16 @@ export default function TrackShipment() {
   const [activeTab, setActiveTab] = useState<TrackTabId>('awb');
   const [inputValue, setInputValue] = useState('');
 
-  const tab = TRACK_CONTENT.tabs.find((t) => t.id === activeTab) ?? TRACK_CONTENT.tabs[0];
+  // Mobile-number search is hidden for now; add 'mobile' back here to re-enable it.
+  const visibleTabs = TRACK_CONTENT.tabs.filter((t) => t.id === 'awb');
+  const tab = visibleTabs.find((t) => t.id === activeTab) ?? visibleTabs[0];
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const query = inputValue.trim();
     if (!query) return;
-    // The query lives in the URL, so results pages can be bookmarked and shared.
-    router.push(`${TRACK_ROUTES.results}?q=${encodeURIComponent(query)}`);
+    // The query (and which field it is) lives in the URL, so results can be bookmarked and shared.
+    router.push(trackResultsHref(query, activeTab));
   };
 
   return (
@@ -37,8 +39,9 @@ export default function TrackShipment() {
         className="w-full max-w-[640px] rounded-[1.25rem] border border-[#E5EBE7] bg-white p-4 shadow-[0_8px_30px_rgba(6,68,35,0.04)] sm:rounded-[1.75rem] sm:p-6 md:p-8"
       >
         {/* Tabs */}
+        {visibleTabs.length > 1 && (
         <div role="tablist" className="relative mb-6 flex rounded-full bg-[#F0F4F2] p-1.5 sm:mb-8">
-          {TRACK_CONTENT.tabs.map(({ id, label }) => {
+          {visibleTabs.map(({ id, label }) => {
             const isActive = activeTab === id;
             return (
               <button
@@ -59,6 +62,7 @@ export default function TrackShipment() {
             );
           })}
         </div>
+        )}
 
         {/* Input */}
         <div className="mb-5 flex flex-col sm:mb-6">
