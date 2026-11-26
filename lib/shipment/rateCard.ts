@@ -1,4 +1,4 @@
-import type { RateCardResult } from '@/types/shipment';
+import type { IntlQuote, QuoteWeights, RateCardResult } from '@/types/shipment';
 
 // GetRateCard response (confirmed):
 //   { header_id, carrier_code, rate_card_name, ...,
@@ -40,6 +40,29 @@ export function parseRateQuote(rate: RateCardResult | null): RateQuote | null {
     weightLabel: str('weight_display'),
     service: str('service_code'),
   };
+}
+
+const asObject = (v: unknown): Record<string, unknown> | null => (v && typeof v === 'object' && !Array.isArray(v) ? (v as Record<string, unknown>) : null);
+
+/**
+ * GetRateCard V2 (pieces sent) answers, next to rate_detail:
+ *   quote:   { quote_id, expires_at, chargeable_weight, charged_on, pieces: [...] }  — only when priced
+ *   weights: { chargeable_weight, total_actual_weight, total_volumetric_weight, is_above_limit, max_weight, … } — always
+ * The booking is created against quote.quote_id; CRM takes pieces, weights and amount from it.
+ */
+export function parseIntlQuote(rate: RateCardResult | null): IntlQuote | null {
+  const quote = asObject(rate?.quote);
+  return quote && typeof quote.quote_id === 'string' && quote.quote_id ? (quote as unknown as IntlQuote) : null;
+}
+
+export function parseQuoteWeights(rate: RateCardResult | null): QuoteWeights | null {
+  return (asObject(rate?.weights) as unknown as QuoteWeights | null) ?? parseIntlQuote(rate);
+}
+
+/** Why no price came back (is_price_available: false) — CRM's own message, e.g. the chargeable weight is over the limit. */
+export function rateUnavailableMessage(rate: RateCardResult | null): string | null {
+  if (!rate || rate.is_price_available !== false) return null;
+  return typeof rate.message === 'string' && rate.message.trim() ? rate.message : null;
 }
 
 /**

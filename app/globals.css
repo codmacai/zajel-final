@@ -109,3 +109,20 @@ html[dir="rtl"] .emx-clip-panel .rtl-copy { width: fit-content; }
 html[dir="rtl"] .rtl-keep-split { direction: ltr; }
 html[dir="rtl"] .rtl-keep-split > * { direction: rtl; }
 html[dir="rtl"] [class*="serviceCardIconWrap"] { margin-right: auto; }
+
+/* Space for the fixed scam banner (components/layout/ScamAlertBanner.tsx). Navbar.tsx sets the
+   exact height on <html>; these defaults match it so the page doesn't jump before that runs. */
+.site-alert-spacer {
+  height: var(--site-alert-h, 115px);
+  flex-shrink: 0;
+}
+@media (min-width: 640px) {
+  .site-alert-spacer {
+    height: var(--site-alert-h, 70px);
+  }
+}
+@media print {
+  .site-alert-spacer {
+    display: none;
+  }
+}

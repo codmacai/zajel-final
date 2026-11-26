@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { trackShipment } from './trackingApi';
+import { fetchTrackingTimeline, trackShipment } from './trackingApi';
 import type { Shipment, ShipmentQuery } from './types';
 
 interface UseShipmentResult {
@@ -30,8 +30,11 @@ export function useShipment(query: ShipmentQuery | null): UseShipmentResult {
     let isMounted = true;
 
     trackShipment({ value, optionCode })
-      .then((shipment) => {
-        if (isMounted) setSettled({ key, shipment, error: null });
+      .then(async (shipment) => {
+        // Best-effort: the real event timeline replaces the fixed-stage one GetShipments gives
+        // us, but a failure here shouldn't take down the rest of the results page.
+        const timeline = await fetchTrackingTimeline(shipment.trackingNumber);
+        if (isMounted) setSettled({ key, shipment: timeline ? { ...shipment, timeline } : shipment, error: null });
       })
       .catch((err) => {
         if (isMounted) setSettled({ key, shipment: null, error: err instanceof Error ? err.message : 'Something went wrong.' });

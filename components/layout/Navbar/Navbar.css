@@ -397,5 +397,5 @@
      bar height into --navbar-h, so this stays correct at every screen size. */
   .mega-backdrop,
   .mega-panel {
-    top: var(--navbar-h, 76px);
+    top: calc(var(--navbar-h, 76px) + var(--site-alert-h, 0px));
   }

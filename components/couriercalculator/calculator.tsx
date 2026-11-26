@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, type FormEvent, type ReactNode } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, ChevronDown, Loader2 } from 'lucide-react';
 import { useAuthContext } from '@/components/providers/AuthProvider';
@@ -10,7 +11,7 @@ import { useRateCard } from '@/hooks/useInternationalShipment';
 import { expandDocumentWeightOptions, parseRateQuote, type RateQuote } from '@/lib/shipment/rateCard';
 import AddressAutocompleteInput from '@/components/shipment/AddressAutocompleteInput';
 import { EMPTY_GEO_ADDRESS, type GeoAddress, type InternationalLookupItem, type ServiceOption } from '@/types/shipment';
-import { BIKE_MAX_KG, CAR_MAX_KG, OVERWEIGHT_MESSAGE, vehicleForWeight } from '@/components/send-shipment/data';
+import { DEFAULT_DIMENSION_CM, VEHICLE_MAX_KG, VEHICLE_OPTIONS, type DomesticVehicle } from '@/components/send-shipment/data';
 
 /* -------------------------------------------------------------------------- */
 /*  Content — edit copy, locations and box presets here                       */
@@ -35,14 +36,11 @@ const CONTENT = {
   toCountry: 'To country',
   dropdownDefault: 'Select',
   countryPlaceholder: 'Select a country',
-  infoBanner: 'Charges are based on the higher of actual weight and volumetric weight.',
+  infoBanner: 'Not sure about the size? Pick the vehicle that fits your parcel.',
   docsOnlyBanner: 'International rates currently cover documents only — parcels are coming soon.',
-  weight: 'Weight',
+  vehicleLabel: 'Vehicle type',
   docWeight: 'Document weight',
   weightPlaceholder: 'Select weight',
-  unsureSize: 'Not sure about the size? Pick a preset box.',
-  dims: { length: 'Length (cm)', width: 'Width (cm)', height: 'Height (cm)' },
-  numberPlaceholder: '0',
   submit: 'Calculate Rate',
   addressPlaceholder: 'Search an address in the UAE',
   resultsTitle: 'Available services',
@@ -59,14 +57,7 @@ const CONTENT = {
  */
 const SHOW_INTERNATIONAL = true;
 
-const BOX_SIZES = [
-  { label: 'Small', dims: 'L23 x W14 x H4CM', l: 23, w: 14, h: 4 },
-  { label: 'Medium', dims: 'L35 x W20 x H15CM', l: 35, w: 20, h: 15 },
-  { label: 'Large', dims: 'L75 x W35 x H35CM', l: 75, w: 35, h: 35 },
-] as const;
-
 type RouteType = 'domestic' | 'international';
-type WeightUnit = 'Kg' | 'G';
 
 /* -------------------------------------------------------------------------- */
 /*  Icons                                                                     */
@@ -99,18 +90,6 @@ const PinToIcon = () => (
 const DocumentIcon = () => (
   <svg aria-hidden="true" width="14" height="17" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M13.5672 4.55781L9.19219 0.182813C9.1341 0.124791 9.06515 0.0787825 8.98928 0.0474149C8.91341 0.0160474 8.8321 -6.43662e-05 8.75 1.93249e-07H1.25C0.918479 1.93249e-07 0.600537 0.131696 0.366116 0.366117C0.131696 0.600537 0 0.91848 0 1.25V15C0 15.3315 0.131696 15.6495 0.366116 15.8839C0.600537 16.1183 0.918479 16.25 1.25 16.25H12.5C12.8315 16.25 13.1495 16.1183 13.3839 15.8839C13.6183 15.6495 13.75 15.3315 13.75 15V5C13.7501 4.9179 13.734 4.83659 13.7026 4.76072C13.6712 4.68485 13.6252 4.6159 13.5672 4.55781ZM9.375 2.13359L11.6164 4.375H9.375V2.13359ZM12.5 15H1.25V1.25H8.125V5C8.125 5.16576 8.19085 5.32473 8.30806 5.44194C8.42527 5.55915 8.58424 5.625 8.75 5.625H12.5V15Z" fill="currentColor"/>
-  </svg>
-);
-
-const BoxPresetIcon = () => (
-  <svg aria-hidden="true" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M21.0489 14.0197L8.97588 11.6097L10.5849 10.5547L26.5469 13.6197L21.9979 19.5897L21.0489 14.0197Z" fill="#354C07"/>
-    <path opacity="0.5" d="M2.55294 10.3239L2.12194 8.78394L9.71894 5.08594L10.5859 10.5509L8.97694 11.6059L2.55294 10.3239Z" fill="#2BA735"/>
-    <path opacity="0.7" d="M22 26.9148L4.205 21.7498L3.855 14.9688L22 19.5888V26.9148ZM9.87 20.6047L4.635 19.2708L6.139 19.6537L9.696 20.5597L9.87 20.6047Z" fill="#2BA735"/>
-    <path d="M8.976 11.6097L21.05 14.0197L22 19.5897L3.854 14.9697L1.188 10.0547L2.553 10.3267L8.976 11.6097Z" fill="#2BA735"/>
-    <path d="M26.5469 17.375V19.915L21.9979 26.914V19.588L26.5469 17.375Z" fill="#2BA735"/>
-    <path opacity="0.5" d="M26.5475 13.6156L30.8125 11.5156L28.3805 16.4816L26.5475 17.3736L21.9985 19.5866L26.5475 13.6156Z" fill="#2BA735"/>
-    <path opacity="0.5" d="M12.6204 5.82031L28.6484 8.32031L26.5494 13.6183L10.5874 10.5523L12.6204 5.82031Z" fill="#2BA735"/>
   </svg>
 );
 
@@ -150,33 +129,6 @@ const FieldLabel = ({ htmlFor, children, optional }: { htmlFor: string; children
       <span className="mx-0.5 text-[#36B936]" aria-hidden="true">*</span>
     )}
   </label>
-);
-
-interface NumberFieldProps {
-  id: string;
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  className?: string;
-  optional?: boolean;
-}
-
-const NumberField = ({ id, label, value, onChange, className = '', optional }: NumberFieldProps) => (
-  <div className={`min-w-0 ${className}`}>
-    <FieldLabel htmlFor={id} optional={optional}>
-      {label}
-    </FieldLabel>
-    <input
-      id={id}
-      type="number"
-      inputMode="decimal"
-      min={0}
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      placeholder={CONTENT.numberPlaceholder}
-      className={INPUT_CLS}
-    />
-  </div>
 );
 
 interface SelectFieldProps<T extends string | number> {
@@ -233,14 +185,9 @@ export default function CourierCalculator() {
   const { getRateCard, loading: rating, error: rateError } = useRateCard();
 
   const [routeType, setRouteType] = useState<RouteType>('domestic');
-  const [weightUnit, setWeightUnit] = useState<WeightUnit>('Kg');
   const [from, setFrom] = useState<GeoAddress>(EMPTY_GEO_ADDRESS);
   const [to, setTo] = useState<GeoAddress>(EMPTY_GEO_ADDRESS);
-  const [weight, setWeight] = useState('');
-  const [length, setLength] = useState('');
-  const [width, setWidth] = useState('');
-  const [height, setHeight] = useState('');
-  const [selectedBox, setSelectedBox] = useState<string | null>(null);
+  const [vehicle, setVehicle] = useState<DomesticVehicle | null>(null);
   const [services, setServices] = useState<ServiceOption[] | null>(null);
 
   // International: country-to-country, documents only — no address autocomplete/dimensions.
@@ -273,6 +220,7 @@ export default function CourierCalculator() {
     setRouteType(type);
     setFrom(EMPTY_GEO_ADDRESS);
     setTo(EMPTY_GEO_ADDRESS);
+    setVehicle(null);
     setServices(null);
     setFromCountry('');
     setToCountry('');
@@ -281,27 +229,17 @@ export default function CourierCalculator() {
     setIntlNoRate(false);
   };
 
-  // Choosing a preset box fills in the dimensions too.
-  const pickBox = (box: (typeof BOX_SIZES)[number]) => {
-    setSelectedBox(box.label);
-    setLength(String(box.l));
-    setWidth(String(box.w));
-    setHeight(String(box.h));
-  };
-
   const positive = (v: string) => Number(v) > 0;
-  const weightKg = positive(weight) ? (weightUnit === 'G' ? Number(weight) / 1000 : Number(weight)) : 0;
-  // Domestic vehicle follows the weight: bike up to 10 kg, car up to 30 kg, nothing heavier.
-  const domesticVehicle = vehicleForWeight(weightKg);
-  const overweight = weightKg > CAR_MAX_KG;
-  const canSubmitDomestic =
-    !!from.latitude && !!to.latitude && !!domesticVehicle && positive(length) && positive(width) && positive(height);
+  // The vehicle's own capacity is sent as the weight — same as the booking wizard, no
+  // separate weight/dimensions input (pricing is driven by vehicle + route).
+  const weightKg = vehicle ? VEHICLE_MAX_KG[vehicle] : 0;
+  const canSubmitDomestic = !!from.latitude && !!to.latitude && !!vehicle;
   const canSubmitIntl = !!fromCountry && !!toCountry && fromCountry !== toCountry && positive(intlWeight);
   const canSubmit = routeType === 'international' ? canSubmitIntl : canSubmitDomestic;
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!canSubmit || (routeType === 'domestic' && !domesticVehicle)) return;
+    if (!canSubmit || (routeType === 'domestic' && !vehicle)) return;
 
     if (routeType === 'international') {
       setIntlQuote(null);
@@ -316,10 +254,12 @@ export default function CourierCalculator() {
     setServices(null);
     const result = await validateShipment({
       phoneNo: phone ?? '',
-      parcelType: domesticVehicle!,
+      parcelType: vehicle!,
       from: { city: from.city, latitude: from.latitude, longitude: from.longitude },
       to: { city: to.city, latitude: to.latitude, longitude: to.longitude },
-      dimensions: [{ lengthCm: Number(length), widthCm: Number(width), heightCm: Number(height), weightKg }],
+      dimensions: [
+        { lengthCm: DEFAULT_DIMENSION_CM, widthCm: DEFAULT_DIMENSION_CM, heightCm: DEFAULT_DIMENSION_CM, weightKg },
+      ],
     });
     if (result) setServices(result.availableServices);
   };
@@ -534,87 +474,41 @@ export default function CourierCalculator() {
                   <p className="text-[11px] leading-snug text-[#064423]/50">{CONTENT.infoBanner}</p>
                 </div>
 
-                {/* Weight */}
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <div className="min-w-0 flex-1">
-                    <FieldLabel htmlFor="calc-weight">{CONTENT.weight}</FieldLabel>
-                    <div className="flex items-center gap-2">
-                      <input
-                        id="calc-weight"
-                        type="number"
-                        inputMode="decimal"
-                        min={0}
-                        value={weight}
-                        onChange={(e) => setWeight(e.target.value)}
-                        placeholder={CONTENT.numberPlaceholder}
-                        className={`${INPUT_CLS} min-w-0 flex-1`}
-                      />
-                      <div className="flex flex-shrink-0 rounded-full bg-[#EFEFEF] p-1" role="group" aria-label="Weight unit">
-                        {(['Kg', 'G'] as const).map((u) => (
-                          <button
-                            key={u}
-                            type="button"
-                            aria-pressed={weightUnit === u}
-                            onClick={() => setWeightUnit(u)}
-                            className={`rounded-full px-3 py-1.5 text-[11px] transition-all duration-200 ${
-                              weightUnit === u
-                                ? 'bg-[#064423] text-[#36B936] shadow-sm'
-                                : 'text-[#064423]/40 hover:text-[#064423]/70'
-                            }`}
-                          >
-                            {u}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    <p className={`mt-1.5 text-[11px] ${overweight ? 'text-red-600' : 'text-[#064423]/50'}`} role={overweight ? 'alert' : undefined}>
-                      {overweight
-                        ? OVERWEIGHT_MESSAGE
-                        : domesticVehicle === 'car'
-                          ? `Goes by car (over ${BIKE_MAX_KG} kg, up to ${CAR_MAX_KG} kg).`
-                          : domesticVehicle === 'bike'
-                            ? `Goes by bike (up to ${BIKE_MAX_KG} kg).`
-                            : `Up to ${BIKE_MAX_KG} kg goes by bike, up to ${CAR_MAX_KG} kg by car.`}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Box presets */}
-                <div>
-                  <p className="mb-2 text-[12px] text-[#064423]/70">{CONTENT.unsureSize}</p>
-                  <div className={`grid gap-2 grid-cols-3`}>
-                    {BOX_SIZES.map((box) => {
-                      const isSelected = selectedBox === box.label;
-                      return (
-                        <button
-                          key={box.label}
-                          type="button"
-                          aria-pressed={isSelected}
-                          onClick={() => pickBox(box)}
-                          className={`flex flex-col items-center gap-1 rounded-2xl border px-2 py-3 text-center transition-all duration-200 ${
-                            isSelected
-                              ? 'border-[#36B936] bg-[#F0FAF0]'
-                              : 'border-[#E8EBE8] bg-white hover:border-[#36B936]/40'
+                {/* Vehicle type — capacity decides the rate, no weight/dimensions to fill in. */}
+                <div role="radiogroup" aria-label={CONTENT.vehicleLabel} className="grid grid-cols-2 gap-3">
+                  {VEHICLE_OPTIONS.map(({ value: v, title, badge, image }) => {
+                    const selected = vehicle === v;
+                    return (
+                      <button
+                        key={v}
+                        type="button"
+                        role="radio"
+                        aria-checked={selected}
+                        onClick={() => {
+                          setVehicle(v);
+                          // Changing the vehicle changes the quote — never leave a stale price on screen.
+                          setServices(null);
+                        }}
+                        className={`flex flex-col items-center gap-2 rounded-2xl border px-3 py-4 text-center transition-all duration-200 ${
+                          selected ? 'border-[#36B936] bg-[#F0FAF0]' : 'border-[#E8EBE8] bg-white hover:border-[#36B936]/40'
+                        }`}
+                      >
+                        {image && (
+                          <span className="relative block h-16 w-24">
+                            <Image src={image} alt="" fill sizes="96px" className="object-contain" />
+                          </span>
+                        )}
+                        <p className={`text-[13px] ${selected ? 'font-semibold text-[#064423]' : 'text-[#064423]/80'}`}>{title}</p>
+                        <span
+                          className={`rounded-full px-2.5 py-0.5 text-[11px] font-medium ${
+                            selected ? 'bg-[#36B936]/15 text-[#1f7a1f]' : 'bg-[#F0F4F2] text-[#064423]/60'
                           }`}
                         >
-                          <BoxPresetIcon />
-                          <p className={`text-[10px] leading-tight ${isSelected ? 'font-semibold text-[#064423]' : 'text-[#064423]/50'}`}>
-                            {box.dims}
-                          </p>
-                          <p className={`mt-1 text-[11px] ${isSelected ? 'font-semibold text-[#064423]' : 'text-[#064423]/60'}`}>
-                            {box.label}
-                          </p>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Dimensions */}
-                <div className="grid grid-cols-3 gap-3">
-                  <NumberField id="calc-length" label={CONTENT.dims.length} value={length} onChange={setLength} />
-                  <NumberField id="calc-width" label={CONTENT.dims.width} value={width} onChange={setWidth} />
-                  <NumberField id="calc-height" label={CONTENT.dims.height} value={height} onChange={setHeight} />
+                          {badge}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
 
                 {validateError && (

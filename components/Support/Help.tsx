@@ -464,7 +464,7 @@ export default function SupportTicketPage() {
                     Emergency support
                   </h3>
                   <a
-                    href="tel:+97160053111"
+                    href="tel:+971600531111"
                     className="mt-1.5 inline-block text-[20px] font-semibold tracking-tight text-[#36B936] focus-visible:outline-none focus-visible:underline"
                   >
                     600 53 11 11
