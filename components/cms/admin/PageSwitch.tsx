@@ -5,7 +5,6 @@ import { useState, useTransition } from 'react';
 import { setPageEnabledAction } from '@/app/admin/actions';
 import { useToast } from './Toast';
 
-/** "Page on the website" switch on a page's screen in the CMS. */
 export default function PageSwitch({ pageId, label, enabled: initial }: { pageId: string; label: string; enabled: boolean }) {
   const router = useRouter();
   const toast = useToast();

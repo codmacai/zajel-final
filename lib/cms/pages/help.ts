@@ -74,7 +74,6 @@ export const LEGAL: PageDef = {
   sections: [{ id: 'page', label: 'Policies & terms', defaults: LEGAL_PAGE, hints: { sections: { label: 'Policies', itemLabel: 'Policy' }, 'sections.*.id': { hidden: true }, email: { kind: 'text', label: 'Email address' } } }],
 };
 
-/** Pages that are tools (tracking, booking): only their Google title and description are edited here. */
 const toolPage = (id: string, label: string, path: string): PageDef => ({ id, label, path, group: 'Help', sections: [] });
 export const TOOL_PAGES: PageDef[] = [
   toolPage('track', 'Track', '/track'),

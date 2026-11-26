@@ -17,7 +17,6 @@ export const viewport: Viewport = {
   ],
 };
 
-/** The admin is English-only and left-to-right, whatever language the visitor chose on the site. */
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className={`cms ${geist.variable} ${geistMono.variable}`} dir="ltr" lang="en" data-no-translate>

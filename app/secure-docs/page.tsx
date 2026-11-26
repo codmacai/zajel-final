@@ -5,7 +5,6 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('secure-docs', '/secure-docs');
 
 export default async function SecureDocsPage() {
-  // Switched off in the CMS: "page not found".
   await notFoundIfHidden('secure-docs');
   return (
     <CmsScope page="secure-docs">

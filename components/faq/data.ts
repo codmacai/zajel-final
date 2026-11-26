@@ -315,7 +315,6 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
   },
 ];
 
-/** The FAQ page as one CMS section (FAQ → Page content). */
 export const FAQ_PAGE = {
   eyebrow: 'FAQ / Knowledge Base',
   heading: 'Shipping FAQ UAE: Frequently Asked Questions on Freight and Logistics',

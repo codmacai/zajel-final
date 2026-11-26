@@ -1,7 +1,6 @@
 import type { PageDef } from '../registry';
 import { BLOCK_TYPES, NEWS_ARTICLES, NEWS_PAGE } from '@/components/news/data';
 
-// The kinds of content a block holds, so each block shows only its own fields.
 const TEXT_BLOCKS = ['Paragraph', 'Heading', 'Quote'];
 
 export const NEWS: PageDef = {

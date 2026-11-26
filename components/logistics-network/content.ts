@@ -1,6 +1,3 @@
-// Built-in content for these sections. The CMS (/admin) edits it; anything not edited
-// there shows exactly as written here.
-
 import { REGIONAL_COVERAGE_COLUMNS, REGIONAL_COVERAGE_HEADING, REGIONAL_COVERAGE_INTRO } from '@/data/regional-coverage';
 import { FREIGHT_SERVICES, FREIGHT_SERVICES_EYEBROW, FREIGHT_SERVICES_HEADING } from '@/data/freight-services';
 import { STRATEGIC_ALLIANCES, STRATEGIC_ALLIANCES_EYEBROW, STRATEGIC_ALLIANCES_HEADING, STRATEGIC_ALLIANCES_INTRO } from '@/data/strategic-alliances';

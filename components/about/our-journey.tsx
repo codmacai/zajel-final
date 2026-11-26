@@ -45,7 +45,6 @@ const OurJourney = ({ content }: { content: ABOUT_JOURNEYContent }) => {
     setActiveIndex((prev) => (prev === idx ? prev : idx));
   });
 
-  // From the CMS content, so edited, added and removed stops all show.
   const stop = content.stops[Math.min(activeIndex, content.stops.length - 1)];
 
   return (

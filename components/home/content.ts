@@ -1,6 +1,3 @@
-// Built-in content for the home page sections. The CMS (/admin → Home) edits these;
-// whatever isn't edited there shows exactly as written here.
-
 import { dockItems } from '@/data/dockItems';
 import { SERVICE_CATEGORIES } from '@/data/services';
 import { APP_LINKS } from '@/data/app-links';
@@ -16,7 +13,6 @@ export const HOME_HERO = {
   trackButton: 'Track',
   image: '/Homepage/hero-zajel-boxes.webp',
   imageAlt: 'Green Zajel parcels on a warehouse floor',
-  /** The quick-action dock under the banner (desktop). Icons stay as designed. */
   actions: dockItems.map((d) => ({ label: d.labelDefault, sublabel: d.sublabelDefault, href: d.href })),
 };
 export type HomeHeroContent = typeof HOME_HERO;
@@ -53,7 +49,6 @@ export const HOME_ZAJEL_NOW = {
 };
 export type HomeZajelNowContent = typeof HOME_ZAJEL_NOW;
 
-/** The home page news section. The articles themselves are edited under News (components/news/data.ts). */
 export const HOME_NEWS = {
   eyebrow: 'Newsroom',
   heading: 'Latest news',

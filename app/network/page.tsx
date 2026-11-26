@@ -14,7 +14,6 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('network', '/network');
 
 export default async function NetworkPage() {
-  // Switched off in the CMS: "page not found".
   await notFoundIfHidden('network');
   const contact = await getSection("network.contact", NETWORK_CONTACT);
   return (

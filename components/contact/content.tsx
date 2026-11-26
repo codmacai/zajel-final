@@ -1,6 +1,3 @@
-// Built-in content for these sections. The CMS (/admin) edits it; anything not edited
-// there shows exactly as written here.
-
 export const CONTACT_PAGE_SVGBASE = {
   fill: 'none',
   stroke: 'currentColor',

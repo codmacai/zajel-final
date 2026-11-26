@@ -79,7 +79,6 @@ const linkClass = `text-body-inverse block w-fit rounded py-0.5 transition-color
 
 export default async function Footer() {
   const saved = (await getSection('global.footer', FOOTER)) ?? FOOTER;
-  // No links to pages switched off in the CMS.
   const { paths } = await hiddenPages();
   const content = {
     ...saved,

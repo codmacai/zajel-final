@@ -1,5 +1,3 @@
-// Built-in content of the legal page. Editable in the CMS: Legal → Page content.
-
 export const LEGAL_PAGE = {
   eyebrow: 'Legal',
   heading: 'Policies & terms',

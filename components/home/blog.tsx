@@ -20,7 +20,6 @@ function ArticleImage({ src, alt, category }: { src: string; alt: string; catego
   );
 }
 
-/** A preview of the newest three articles; each card opens the full article. */
 function LatestNews({ content }: { content: HomeNewsContent }) {
   const { register } = useSharedRevealObserver();
   const { ref: sectionRef, isVisible } = useReveal<HTMLElement>(register);

@@ -6,7 +6,6 @@ import { findEvent, getEvents } from '@/components/events/cms';
 import { EVENTS_PAGE } from '@/components/events/data';
 import { getSection, notFoundIfHidden } from '@/lib/cms/server';
 
-// Every event page is built ahead of time; events added later in the CMS are built on first visit.
 export async function generateStaticParams() {
   return (await getEvents()).map(({ slug }) => ({ slug }));
 }

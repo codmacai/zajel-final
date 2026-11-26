@@ -1,6 +1,3 @@
-// Built-in content for these sections. The CMS (/admin) edits it; anything not edited
-// there shows exactly as written here.
-
 import { SUPPLY_CHAIN_WAREHOUSING_CONTENT } from '@/data/supply-chain-warehousing';
 import { WAREHOUSING_SOLUTIONS_EYEBROW, WAREHOUSING_SOLUTIONS_HEADING, WAREHOUSING_SOLUTIONS_CARDS } from '@/data/warehousing-solutions';
 import { INVENTORY_MANAGEMENT_EYEBROW, INVENTORY_MANAGEMENT_HEADING, INVENTORY_MANAGEMENT_INTRO, INVENTORY_MANAGEMENT_CLOSING, INVENTORY_MANAGEMENT_TILES } from '@/data/inventory-management';

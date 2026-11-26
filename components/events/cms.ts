@@ -1,4 +1,3 @@
-// Events with any CMS edits (Events → Events list). Server only.
 import { getSection } from '@/lib/cms/server';
 import { EVENTS_LIST, type ZajelEvent } from './data';
 

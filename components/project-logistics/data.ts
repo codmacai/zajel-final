@@ -140,7 +140,6 @@ export const PROJECTS: Project[] = [
   },
 ];
 
-/** The projects list as one CMS section (Projects page); the home page shows the first three. */
 export const PROJECT_LIST = {
   eyebrow: 'Selected work',
   heading: "Projects we've moved",

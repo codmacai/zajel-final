@@ -2,7 +2,6 @@
 
 import { prepareUploadAction } from '@/app/admin/actions';
 
-/** Uploads an image straight to Supabase Storage and returns its public address. */
 export async function uploadImage(sectionKey: string, file: File): Promise<{ ok: true; url: string } | { ok: false; error: string }> {
   const prep = await prepareUploadAction(sectionKey, file.name, file.type, file.size);
   if (!prep.ok) return prep;

@@ -21,7 +21,6 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('business-solutions', '/business-solutions');
 
 export default async function BusinessSolutionsPage() {
-  // Switched off in the CMS: "page not found".
   await notFoundIfHidden('business-solutions');
   const cta = await getSection("business-solutions.cta", BUSINESS_CTA);
   return (

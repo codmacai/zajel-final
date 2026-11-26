@@ -50,8 +50,6 @@ export interface EditorProps {
 type Obj = { [k: string]: Plain };
 const isObj = (v: unknown): v is Obj => !!v && typeof v === 'object' && !Array.isArray(v);
 
-/* ---------- Arabic is kept as a tree shaped like the content, so moving items moves both ---------- */
-
 function arabicTree(content: Plain, map: ArabicMap, path = ''): Plain {
   if (typeof content === 'string') return map[path] ?? '';
   if (Array.isArray(content)) return content.map((v, i) => arabicTree(v, map, path ? `${path}.${i}` : String(i)));
@@ -84,10 +82,6 @@ function setIn(obj: Plain, parts: string[], value: Plain): Plain {
   return { ...base, [head]: setIn(base[head] ?? null, rest, value) };
 }
 
-/**
- * A new list item shaped like `template`, with its text cleared (images, links and dates kept
- * as a start). Lists inside it start with one blank item, or none if they may be empty.
- */
 function blankFrom(template: Plain, hints: Hints, path: string, canBeEmpty: (path: string) => boolean): Plain {
   const key = path.split('.').pop() ?? '';
   if (typeof template === 'string') {
@@ -108,7 +102,6 @@ function blankFrom(template: Plain, hints: Hints, path: string, canBeEmpty: (pat
 
 const TITLE_KEYS = ['title', 'name', 'question', 'q', 'label', 'heading', 'text', 'city', 'country', 'value', 'role'];
 
-/** A copy of a list item, marked "(copy)" so it can be told apart; page addresses get "-copy". */
 function copyOf(item: Plain, hints: Hints, path: string): Plain {
   if (!isObj(item)) return item;
   const out: Obj = { ...item };
@@ -128,8 +121,6 @@ function copyOf(item: Plain, hints: Hints, path: string): Plain {
   return out;
 }
 
-/* ---------- the editor ---------- */
-
 export default function Editor(props: EditorProps) {
   const { sectionKey, hints, original, originalArabic, writable } = props;
   const router = useRouter();
@@ -145,7 +136,6 @@ export default function Editor(props: EditorProps) {
 
   const arMap = useMemo(() => arabicMap(en, ar, hints), [en, ar, hints]);
   const dirty = JSON.stringify([en, arMap]) !== baseline;
-  // The same checks the server runs on save, shown next to each field as you type.
   const problems = useMemo(() => validateContent(en, original, hints), [en, original, hints]);
   const problemAt = useMemo(() => new Map(problems.map((p: Problem) => [p.path, p.message])), [problems]);
   const originals = useMemo(() => builtIns(original), [original]);
@@ -162,7 +152,6 @@ export default function Editor(props: EditorProps) {
     (lang === 'en' ? setEn : setAr)((prev) => setIn(prev, parts, value));
   }, []);
 
-  /** List changes apply to the English and Arabic together. */
   const updateList = useCallback((path: string, fn: (list: Plain[]) => Plain[], fnAr: (list: Plain[]) => Plain[]) => {
     const parts = path.split('.');
     setEn((prev) => setIn(prev, parts, fn([...((getAt(prev, path) as Plain[]) ?? [])])));
@@ -307,16 +296,12 @@ export default function Editor(props: EditorProps) {
   );
 }
 
-/* ---------- fields ---------- */
-
 interface Ctx {
   en: Plain;
   ar: Plain;
   hints: Hints;
   original: Plain;
-  /** Built-in values by field pattern, e.g. every "events.*.cover.src". */
   originals: Map<string, Plain[]>;
-  /** What's wrong with a field, by path. */
   problemAt: Map<string, string>;
   sectionKey: string;
   writable: boolean;
@@ -341,7 +326,6 @@ function FieldError({ ctx, path }: { ctx: Ctx; path: string }) {
   );
 }
 
-/** Top level: plain fields share one card; each group or list gets its own card. */
 function Fields({ value, path, ctx }: { value: Plain; path: string; ctx: Ctx }) {
   if (!isObj(value)) return null;
   const blocks: ReactNode[] = [];
@@ -413,7 +397,6 @@ function ObjectFields({ value, path, ctx }: { value: Obj; path: string; ctx: Ctx
       {Object.entries(value).map(([k, v]) => {
         const p = join(path, k);
         const f = resolveField(p, k, v, ctx.hints);
-        // Hidden, or not used here (e.g. a photo field on a text block).
         if (f.hidden || !fieldApplies(f.when, value)) return null;
         if (Array.isArray(v)) {
           return (
@@ -526,7 +509,6 @@ function Field({ k, value, path, ctx }: { k: string; value: Plain; path: string;
     );
   }
 
-  // Text in English and Arabic
   const enV = String(value ?? '');
   const arV = String(getAt(ctx.ar, path) ?? '');
   const long = f.kind === 'textarea';
@@ -631,7 +613,6 @@ function ListField({ value, path, k, ctx }: { value: Plain[]; path: string; k: s
   const atMinimum = value.length <= 1 && !canBeEmpty(path);
 
   const template = (): Plain => {
-    // The last item, or else the first item of this list anywhere in the original content.
     const example = knownAt(ctx, path).find((l) => Array.isArray(l) && l.length) as Plain[] | undefined;
     const src = value[value.length - 1] ?? example?.[0] ?? '';
     return blankFrom(src, ctx.hints, `${path}.${value.length}`, canBeEmpty);
@@ -717,8 +698,6 @@ function ListField({ value, path, k, ctx }: { value: Plain[]; path: string; k: s
     </div>
   );
 }
-
-/* ---------- history ---------- */
 
 function HistorySheet({ sectionKey, onClose, onRestore }: { sectionKey: string; onClose: () => void; onRestore: (v: CmsVersion) => void }) {
   const [versions, setVersions] = useState<CmsVersion[] | null>(null);

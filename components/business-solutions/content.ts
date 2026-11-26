@@ -1,6 +1,3 @@
-// Built-in content for these sections. The CMS (/admin) edits it; anything not edited
-// there shows exactly as written here.
-
 import type { CTABannerProps } from '@/components/shared/CTABanner';
 import * as Business from './data';
 export const BUSINESS_CTA: CTABannerProps = {

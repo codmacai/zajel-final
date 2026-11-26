@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 
-/** A thin bar at the top of the screen that fills as the article is read. */
 export default function ReadingProgress({ target }: { target: string }) {
   const [progress, setProgress] = useState(0);
   useEffect(() => {

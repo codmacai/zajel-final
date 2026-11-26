@@ -14,7 +14,6 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('international-courier', '/international-courier');
 
 export default async function InternationalPage() {
-  // Switched off in the CMS: "page not found".
   await notFoundIfHidden('international-courier');
   const cta = await getSection("international-courier.cta", INTERNATIONAL_CTA);
   return (

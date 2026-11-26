@@ -1,6 +1,3 @@
-// What the admin shows for each section: its current content, its Arabic and its status.
-// Server only.
-
 import { cache } from 'react';
 import AR_JSON from '@/locales/ar.json';
 import { getAt, mergeContent, normText, toPlain, type ArabicMap, type Plain } from './content';
@@ -9,17 +6,14 @@ import { allSections, findSection, PAGES, sectionKey, type PageDef, type Section
 import { readRowsFresh, type CmsRow } from './store';
 import { PAGES_KEY, parseVisibility } from './visibility';
 
-/** Every saved row, read once per request. */
 const freshRows = cache(() => readRowsFresh());
 
-/** Ids of the pages switched off on the website. */
 export const hiddenPageIds = cache(async (): Promise<string[]> =>
   parseVisibility((await freshRows().catch(() => [])).find((r) => r.key === PAGES_KEY)?.en).pages,
 );
 
 const AR = AR_JSON as Record<string, string>;
 
-/** The site's existing Arabic for an English text (same matching as the site translator). */
 export function lookupArabic(en: string): string {
   const k = normText(en);
   if (!k) return '';
@@ -33,18 +27,14 @@ export interface SectionStatus {
   key: string;
   page: PageDef;
   section: SectionDef;
-  /** Built-in content (what "Reset to original" goes back to). */
   original: Plain;
-  /** Content shown on the site now. */
   current: Plain;
-  /** Arabic for each translatable field of `current`, filled in from the site's translations. */
   arabic: ArabicMap;
   originalArabic: ArabicMap;
   enabled: boolean;
   edited: boolean;
   updatedAt: string | null;
   updatedBy: string | null;
-  /** Translatable fields with English but no Arabic. */
   missingArabic: number;
   summary: string;
 }
@@ -103,13 +93,11 @@ export async function sectionStatus(key: string): Promise<SectionStatus | null> 
   return buildStatus(found.page, found.section, row);
 }
 
-/** Status of every section: one database read, shared by everything on the same request. */
 export const allStatuses = cache(async (): Promise<SectionStatus[]> => {
   const rows = new Map((await freshRows()).map((r) => [r.key, r]));
   return allSections().map(({ page, section, key }) => buildStatus(page, section, rows.get(key)));
 });
 
-/** The sidebar: pages by group, with how many sections still need Arabic. */
 export function navFrom(statuses: SectionStatus[]) {
   return PAGES.map((p) => ({
     id: p.id,

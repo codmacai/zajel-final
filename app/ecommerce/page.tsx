@@ -17,7 +17,6 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('ecommerce', '/ecommerce');
 
 export default async function EcommercePage() {
-  // Switched off in the CMS: "page not found".
   await notFoundIfHidden('ecommerce');
   const cta = await getSection("ecommerce.cta", ECOMMERCE_CTA);
   return (

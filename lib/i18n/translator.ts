@@ -12,12 +12,8 @@
 // The choice is remembered in localStorage("lang"); an inline script in the
 // layout applies it before first paint (see I18N_BOOT_SCRIPT).
 //
-// To translate new copy: add "English text": "Arabic text" to locales/ar.json, or edit the
-// section in the CMS (/admin), whose Arabic is loaded from /cms/ar.
+// To translate new copy: add "English text": "Arabic text" to locales/ar.json.
 // To keep something in English, put data-no-translate on it.
-//
-// Numbers are shown in Arabic digits too (2026 → ٢٠٢٦). Email and web addresses keep their
-// digits; to keep digits in one place (e.g. a code people copy), put data-latin-digits on it.
 // ===========================================================================
 
 export type Lang = "en" | "ar";
@@ -55,7 +51,6 @@ function skipped(el: Element | null): boolean {
 
 const ARABIC_DIGITS = "٠١٢٣٤٥٦٧٨٩";
 
-/** 0-9 as Arabic digits, except in email and web addresses or where data-latin-digits is set. */
 function arabicDigits(s: string, el: Element | null): string {
   if (!/[0-9]/.test(s) || /@|https?:|www\./i.test(s) || el?.closest("[data-latin-digits]")) return s;
   return s.replace(/[0-9]/g, (d) => ARABIC_DIGITS[Number(d)]);
@@ -184,7 +179,6 @@ function applyDocument(l: Lang) {
   html.dir = l === "ar" ? "rtl" : "ltr";
 }
 
-/** The site's Arabic (locales/ar.json) plus Arabic for text edited in the CMS (app/cms/ar). */
 async function loadDict(): Promise<Dict> {
   const [base, cms] = await Promise.all([
     import("@/locales/ar.json").then((m) => m.default as Dict),

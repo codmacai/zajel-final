@@ -5,7 +5,6 @@ import TrackingResults from '@/components/tracking/TrackingResults';
 export const generateMetadata = cmsMetadata('trackresults', '/trackresults', { noIndex: true });
 
 export default async function TrackResultsPage() {
-  // Switched off in the CMS: "page not found".
   await notFoundIfHidden('trackresults');
   // useSearchParams() in the client component requires a Suspense boundary.
   return (

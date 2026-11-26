@@ -1,6 +1,3 @@
-// Built-in content for these sections. The CMS (/admin) edits it; anything not edited
-// there shows exactly as written here.
-
 import type { InternationalHeroContent } from './hero';
 import type { CTABannerProps } from '@/components/shared/CTABanner';
 import type { ComponentType } from 'react';

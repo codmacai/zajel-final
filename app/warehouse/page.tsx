@@ -13,7 +13,6 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('warehouse', '/warehouse');
 
 export default async function WarehousePage() {
-  // Switched off in the CMS: "page not found".
   await notFoundIfHidden('warehouse');
   return (
     <CmsScope page="warehouse">

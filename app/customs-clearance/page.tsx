@@ -12,7 +12,6 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('customs-clearance', '/customs-clearance');
 
 export default async function CustomsClearancePage() {
-  // Switched off in the CMS: "page not found".
   await notFoundIfHidden('customs-clearance');
   return (
     <CmsScope page="customs-clearance">

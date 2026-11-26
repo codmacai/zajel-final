@@ -11,11 +11,9 @@ import ReadingProgress from './progress';
 import ShareBar from './share';
 import TableOfContents, { type TocItem } from './toc';
 
-/** An address for each heading, so the contents list can link to it. */
 const headingId = (text: string, i: number) =>
   `${text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48) || 'section'}-${i}`;
 
-/** One part of the article body. Empty blocks are left out. */
 function Block({ block, index, first }: { block: NewsBlock; index: number; first: boolean }) {
   switch (block.type) {
     case 'Heading':
@@ -112,7 +110,6 @@ function MoreCard({ article }: { article: NewsArticle }) {
   );
 }
 
-/** A full news article. Server component; the progress bar, contents and share buttons are small client parts. */
 export default function NewsArticleView({ article, more, page }: { article: NewsArticle; more: NewsArticle[]; page: NewsPageContent }) {
   const firstText = article.body.findIndex((b) => b.type === 'Paragraph' && b.text.trim());
   const toc: TocItem[] = article.body.flatMap((b, i) => (b.type === 'Heading' && b.text.trim() ? [{ id: headingId(b.text, i), text: b.text }] : []));
@@ -178,7 +175,6 @@ export default function NewsArticleView({ article, more, page }: { article: News
           </div>
         </header>
 
-        {/* Cover */}
         {isSafeImage(article.image) && (
           <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
             <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[1.5rem] bg-[#1b4332]/5 shadow-[0_30px_80px_-40px_rgba(6,68,35,0.45)] sm:aspect-[21/10] sm:rounded-[2rem]">
@@ -187,8 +183,6 @@ export default function NewsArticleView({ article, more, page }: { article: News
           </div>
         )}
 
-        {/* Body. On wide screens (1280px+) the contents sit on the left and the details on the right,
-            each in its own column so nothing overlaps the text. */}
         <div className="mx-auto grid max-w-[1240px] px-5 py-12 sm:px-8 sm:py-16 xl:grid-cols-[200px_minmax(0,1fr)_232px] xl:gap-x-10 xl:py-20">
           <aside className="hidden xl:block">
             <div className="sticky top-32">
@@ -219,7 +213,6 @@ export default function NewsArticleView({ article, more, page }: { article: News
               ))}
             </div>
 
-            {/* Topic, sharing and the author */}
             <div className="mt-14 flex flex-wrap items-center justify-between gap-5 border-y border-[#1b4332]/10 py-6">
               <span className="inline-flex items-center gap-2 rounded-full bg-[#F2F8F3] px-3.5 py-1.5 text-[13px] font-medium text-[#1b4332]/80">
                 <Tag aria-hidden="true" className="h-3.5 w-3.5 text-[#36B936]" />
@@ -260,7 +253,6 @@ export default function NewsArticleView({ article, more, page }: { article: News
         </div>
       </article>
 
-      {/* More news */}
       {more.length > 0 && (
         <section className="w-full bg-[#F6FAF7] py-16 sm:py-20" aria-labelledby="more-news">
           <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
@@ -282,7 +274,6 @@ export default function NewsArticleView({ article, more, page }: { article: News
         </section>
       )}
 
-      {/* Call to action */}
       <section className="w-full bg-white px-5 py-16 sm:px-8 sm:py-20">
         <div className="relative mx-auto max-w-[1200px] overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#0A5A2E] via-[#064423] to-[#042B18] px-6 py-14 text-center sm:px-12 sm:py-16">
           <div aria-hidden="true" className="pointer-events-none absolute -left-24 -top-24 h-[360px] w-[360px] rounded-full bg-[#36B936]/20 blur-[110px]" />

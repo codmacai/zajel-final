@@ -23,7 +23,6 @@ export interface ContactBandProps {
   descriptionLead?: string;
   descriptionDetail?: string;
   contactInfo?: ContactInfo;
-  /** Small label above the phone number. */
   phoneLabel?: string;
   primaryCta?: CtaItem;
   secondaryCta?: CtaItem;

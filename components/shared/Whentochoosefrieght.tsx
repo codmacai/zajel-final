@@ -18,7 +18,6 @@ type WhenToChooseFreightProps = {
   body: readonly BodyPart[];
   /** The other freight modes to link to (first = green button, second = dark button) */
   alternatives: readonly AlternativeRoute[];
-  /** The box that links to the other freight modes. */
   alternativesTitle?: string;
   alternativesLead?: string;
 };

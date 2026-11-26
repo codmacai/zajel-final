@@ -1,6 +1,3 @@
-// Built-in Google title and description of each page. Editable in the CMS (each page's
-// "Google title & description" section); pages read them through cmsMetadata().
-
 export interface PageSeoContent {
   title: string;
   description: string;

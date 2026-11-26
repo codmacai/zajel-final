@@ -1,6 +1,3 @@
-// Built-in content for these sections. The CMS (/admin) edits it; anything not edited
-// there shows exactly as written here.
-
 import { Search, CalendarCheck, Calculator, MessageSquare, Smartphone, Box, FileText, Phone, type LucideIcon } from 'lucide-react';
 export const ACTIONS: { href: string; icon: LucideIcon; title: string; text: string }[] = [
   { href: '/track', icon: Search, title: 'Track your shipment', text: 'Enter your tracking number to see real-time status updates.' },

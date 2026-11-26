@@ -53,7 +53,6 @@ function useFitHeading(deps: unknown[]) {
   return ref;
 }
 
-/** The CMS page each hero belongs to (its key is `${page}.hero`). */
 const PAGE_OF: Record<ServiceHeroKey, string> = {
   customs: 'customs-clearance',
   warehouse: 'warehouse',

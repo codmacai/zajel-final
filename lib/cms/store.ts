@@ -1,7 +1,3 @@
-// Server-only access to the CMS tables in Supabase (see supabase/migrations).
-// The website reads with the public key (cached until the next save); the admin writes with
-// the secret key, which never reaches the browser.
-
 import { CMS_TAG, MEDIA_BUCKET, SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL, cmsConfigured } from './config';
 import type { ArabicMap, Plain } from './content';
 
@@ -26,7 +22,6 @@ export interface CmsVersion {
 
 const secretKey = () => process.env.SUPABASE_SECRET_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY ?? '';
 
-/** True when the admin can save (needs the secret key on the server). */
 export const cmsWritable = () => cmsConfigured && Boolean(secretKey());
 
 function headers(key: string, extra?: Record<string, string>): HeadersInit {
@@ -42,12 +37,6 @@ async function fail(res: Response, what: string): Promise<never> {
   throw new Error(`${what} failed (${res.status})${detail ? `: ${detail}` : ''}`);
 }
 
-/**
- * Every saved section, for the website. Cached and shared by all pages; a save in the admin
- * expires it (CMS_TAG) so changes show within seconds. As a safety net the cache is also
- * renewed every 5 minutes, so the site catches up even if Supabase was briefly unreachable
- * (then it shows its built-in content) or a change was made in Supabase directly.
- */
 export async function readAllRows(): Promise<CmsRow[]> {
   if (!cmsConfigured) return [];
   try {
@@ -63,7 +52,6 @@ export async function readAllRows(): Promise<CmsRow[]> {
   }
 }
 
-/** Fresh rows for the admin (never cached). */
 export async function readRowsFresh(keys?: string[]): Promise<CmsRow[]> {
   if (!cmsWritable()) return [];
   const filter = keys ? `&key=in.(${keys.map((k) => `"${k}"`).join(',')})` : '';
@@ -80,7 +68,6 @@ export async function readRowFresh(key: string): Promise<CmsRow | null> {
   return row ?? null;
 }
 
-/** Saves a section. The database copies every save into the history. */
 export async function writeRow(row: Omit<CmsRow, 'updated_at'>): Promise<CmsRow> {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/cms_content?on_conflict=key`, {
     method: 'POST',
@@ -106,10 +93,6 @@ export async function readHistory(key: string, limit = 30): Promise<CmsVersion[]
   return (await res.json()) as CmsVersion[];
 }
 
-/**
- * A one-time upload address for an image, so the browser sends the file straight to
- * Supabase Storage (no size limit from our server). Returns where the image will be served.
- */
 export async function createUpload(path: string): Promise<{ uploadUrl: string; publicUrl: string }> {
   const res = await fetch(`${SUPABASE_URL}/storage/v1/object/upload/sign/${MEDIA_BUCKET}/${path}`, {
     method: 'POST',

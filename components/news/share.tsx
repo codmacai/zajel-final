@@ -6,7 +6,6 @@ import { Check, Link2, Mail } from 'lucide-react';
 const btnBase =
   'flex items-center justify-center rounded-full border border-[#1b4332]/10 bg-white text-[#1b4332]/70 transition-colors hover:border-[#36B936]/40 hover:bg-[#36B936]/10 hover:text-[#1b4332] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#36B936]';
 
-/** Share buttons for an article: LinkedIn, X, WhatsApp, email and copy link. */
 export default function ShareBar({ url, title, label, copiedLabel, compact = false }: { url: string; title: string; label: string; copiedLabel: string; compact?: boolean }) {
   const [copied, setCopied] = useState(false);
   const btn = `${btnBase} ${compact ? 'h-8 w-8' : 'h-10 w-10'}`;

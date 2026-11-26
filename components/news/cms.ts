@@ -1,4 +1,3 @@
-// News articles with any CMS edits (News → Articles). Server only.
 import { getSection } from '@/lib/cms/server';
 import { NEWS_ARTICLES, NEWS_PAGE, type NewsArticle } from './data';
 import { byNewest, publishable } from './format';

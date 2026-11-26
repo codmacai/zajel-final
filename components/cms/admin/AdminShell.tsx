@@ -26,7 +26,6 @@ export default function AdminShell({ nav, email, hiddenPages = [], children }: {
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // The link just clicked: highlighted at once, before the next screen arrives.
   const [pendingHref, setPendingHref] = useState<string | null>(null);
 
   const [, , pageId, sectionId] = pathname.split('/');
@@ -35,7 +34,6 @@ export default function AdminShell({ nav, email, hiddenPages = [], children }: {
   const target = pendingHref ?? pathname;
   const activePageId = target.split('/')[2];
 
-  // When the page changes: close the mobile menu, and the click is done.
   const [lastPath, setLastPath] = useState(pathname);
   if (lastPath !== pathname) {
     setLastPath(pathname);

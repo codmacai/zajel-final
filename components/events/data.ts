@@ -170,16 +170,10 @@ export const getEvent = (slug: string) => EVENTS.find((e) => e.slug === slug);
 /** Last day of the event (end date, or start date for one-day events). */
 export const lastDay = (e: ZajelEvent) => e.endDate || e.startDate;
 
-/**
- * Every event as one CMS section (Events → Events list). Each event gets every field, empty
- * where it has none, so editors can add an end date, highlights, photos or a link to any
- * event (empty means "none" everywhere these are shown).
- */
 export const EVENTS_LIST = {
   events: EVENTS.map((e): ZajelEvent => ({ endDate: '', time: '', highlights: [], gallery: [], href: '', ...e })),
 };
 
-/** The text of the events page (Events → Page text). */
 export const EVENTS_PAGE = {
   eyebrow: 'Events',
   heading: 'Where Logistics Leaders Meet',
@@ -194,7 +188,6 @@ export const EVENTS_PAGE = {
     phoneLabel: 'Call Directly',
     primaryCta: { label: 'Contact Our Team', url: '/support' },
   },
-  /** Words on the events list and on each event's page. */
   labels: {
     upcoming: 'Upcoming',
     past: 'Past Events',

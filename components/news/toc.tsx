@@ -7,7 +7,6 @@ export interface TocItem {
   text: string;
 }
 
-/** "On this page": the article's headings, with the one being read highlighted. */
 export default function TableOfContents({ items, label }: { items: TocItem[]; label: string }) {
   const [active, setActive] = useState(items[0]?.id ?? '');
   useEffect(() => {

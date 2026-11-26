@@ -21,7 +21,6 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('land-freight', '/land-freight');
 
 export default async function LandFreightPage() {
-  // Switched off in the CMS: "page not found".
   await notFoundIfHidden('land-freight');
   return (
     <CmsScope page="land-freight">

@@ -20,7 +20,6 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('sea-freight', '/sea-freight');
 
 export default async function SeaFreightPage() {
-  // Switched off in the CMS: "page not found".
   await notFoundIfHidden('sea-freight');
   return (
     <CmsScope page="sea-freight">

@@ -1,12 +1,5 @@
 'use client';
 
-// Gives sections on the page their saved CMS content.
-//
-//   const content = useSection('sea-freight.hero', DEFAULT_CONTENT);
-//   if (!content) return null; // the section is switched off in the CMS
-//
-// With nothing saved, a section gets exactly its built-in content.
-
 import { createContext, useContext, useMemo, type ComponentType, type ReactNode } from 'react';
 import { mergeContent, type Plain } from '@/lib/cms/content';
 
@@ -25,7 +18,6 @@ export function CmsProvider({ saved, children }: { saved: Saved; children: React
   return <CmsContext.Provider value={value}>{children}</CmsContext.Provider>;
 }
 
-/** The section's content (built-in content with CMS edits laid over it), or null if switched off. */
 export function useSection<T>(key: string, defaults: T): T | null {
   const row = useContext(CmsContext)[key];
   return useMemo(() => {
@@ -35,14 +27,6 @@ export function useSection<T>(key: string, defaults: T): T | null {
   }, [row, defaults]);
 }
 
-/**
- * Connects a section component to the CMS. The component receives its content as `content`.
- *
- *   export default cmsSection('home.why-choose-us', DEFAULTS, WhyChooseUs);
- *
- * A component used on several pages takes its key and built-in content from the page instead:
- *   <ContactSection cmsKey="sea-freight.contact" content={seaFreightContent} />
- */
 export function cmsSection<T, P extends { content?: T }>(
   key: string | null,
   defaults: T | null,

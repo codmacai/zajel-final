@@ -1,7 +1,3 @@
-// Arabic for text edited in the CMS, as { "English text": "Arabic text" }.
-// The site translator (lib/i18n/translator.ts) adds these to locales/ar.json, so text an
-// editor changes stays in Arabic for Arabic visitors.
-
 import { getAt, normText } from '@/lib/cms/content';
 import { readAllRows } from '@/lib/cms/store';
 

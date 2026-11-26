@@ -1,5 +1,3 @@
-// Built-in footer content. Editable in the CMS: Site-wide → Footer.
-
 export type FooterLink = { label: string; href: string; external?: boolean };
 
 // Dubai Customs / customer portal used for customs submissions. Paste the portal

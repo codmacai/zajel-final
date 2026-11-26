@@ -1,6 +1,3 @@
-// Built-in content for these sections. The CMS (/admin) edits it; anything not edited
-// there shows exactly as written here.
-
 export const HERO_IMAGE = '/images/secure-hero.png';
 
 export const SECURE_PAGE_HERODATA = {

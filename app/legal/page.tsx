@@ -9,7 +9,6 @@ export const generateMetadata = cmsMetadata('legal', '/legal');
 
 
 export default async function LegalPage() {
-  // Switched off in the CMS: "page not found".
   await notFoundIfHidden('legal');
   const page = (await getSection('legal.page', LEGAL_PAGE)) ?? LEGAL_PAGE;
   return (

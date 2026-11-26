@@ -1,6 +1,3 @@
-// How each field of a section is edited, worked out from its name and built-in value.
-// A section can override any of this with hints (see cms/registry.ts).
-
 export type FieldKind =
   | 'text'
   | 'textarea'
@@ -19,30 +16,17 @@ export interface FieldHint {
   label?: string;
   help?: string;
   kind?: FieldKind;
-  /** Keep the field out of the editor (it keeps its built-in value). */
   hidden?: boolean;
-  /** For lists: the number of items can't change (the design needs exactly this many). */
   fixed?: boolean;
-  /** For lists: what one item is called, e.g. "Question". */
   itemLabel?: string;
-  /** For lists: may have no items (the design shows nothing, or a message). */
   allowEmpty?: boolean;
-  /** For images and dates: may be left empty. */
   optional?: boolean;
-  /** For select fields: the choices. */
   options?: string[];
-  /** For slug fields: what comes before it in the address, e.g. "/events/". */
   prefix?: string;
-  /** Must be filled in (text, images, dates) or have at least one item (lists). */
   required?: boolean;
-  /**
-   * Only used when a field next to it has one of these values, e.g. a block's photo only
-   * when its type is "Image": { key: 'type', is: ['Image'] }. Hidden and not checked otherwise.
-   */
   when?: { key: string; is: string[] };
 }
 
-/** Hints by field path, with * for list positions, e.g. { "items.*.icon": { hidden: true } }. */
 export type Hints = Record<string, FieldHint>;
 
 export const pattern = (path: string) => path.replace(/\.\d+(?=\.|$)/g, '.*').replace(/^\d+(?=\.|$)/, '*');
@@ -67,7 +51,6 @@ export function inferKind(key: string, value: unknown): FieldKind | 'hidden' {
   return 'text';
 }
 
-/** Text that is language: shown in both English and Arabic. */
 export const isTranslatable = (kind: FieldKind) => kind === 'text' || kind === 'textarea';
 
 const LABELS: Record<string, string> = {
@@ -128,12 +111,10 @@ export const helpFor = (key: string): string | undefined => HELP[key];
 
 const TITLE_KEYS = ['title', 'name', 'question', 'label', 'heading', 'text', 'city', 'country', 'value', 'role'];
 
-/** A short name for a list item, from its first title-like text. */
 export function itemTitle(item: unknown, index: number): string {
   if (typeof item === 'string') return item || `Item ${index + 1}`;
   if (item && typeof item === 'object') {
     const o = item as Record<string, unknown>;
-    // Content blocks (they have a type but no title): "Heading: Why multimodal matters".
     if (typeof o.type === 'string' && !('title' in o) && !('name' in o)) {
       const first = [o.text, o.caption, ...(Array.isArray(o.items) ? o.items : [])].find((v) => typeof v === 'string' && v.trim());
       return first ? `${o.type}: ${first}` : String(o.type || `Item ${index + 1}`);
@@ -144,7 +125,6 @@ export function itemTitle(item: unknown, index: number): string {
   return `Item ${index + 1}`;
 }
 
-/** Resolves how one field is edited, applying the section's hints. */
 export type ResolvedField = ReturnType<typeof resolveField>;
 
 export function resolveField(path: string, key: string, value: unknown, hints: Hints = {}) {
@@ -168,11 +148,9 @@ export function resolveField(path: string, key: string, value: unknown, hints: H
   };
 }
 
-/** Whether a field applies, given the object it sits in (see FieldHint.when). */
 export const fieldApplies = (when: FieldHint['when'], parent: unknown) =>
   !when || (!!parent && typeof parent === 'object' && when.is.includes(String((parent as Record<string, unknown>)[when.key])));
 
-/** Paths of every Arabic-translatable text field in the content. */
 export function translatablePaths(content: unknown, hints: Hints = {}, prefix = '', key = ''): string[] {
   if (typeof content === 'string') {
     if (!prefix) return [];

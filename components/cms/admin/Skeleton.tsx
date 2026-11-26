@@ -1,5 +1,3 @@
-// Placeholder screens shown the moment a link is clicked, while the next screen loads.
-
 const Line = ({ w, h = 12 }: { w: string; h?: number }) => <div className="c-skel" style={{ width: w, height: h }} />;
 
 function Head() {

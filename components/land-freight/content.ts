@@ -1,6 +1,3 @@
-// Built-in content for these sections. The CMS (/admin) edits it; anything not edited
-// there shows exactly as written here.
-
 import type { LandFreightHeroContent } from './hero';
 import { EYEBROW, HEADING, SUBHEADING, LAND_FREIGHT_CARDS } from './land-freight-solutions/data';
 import type { AlternativeRoute, BodyPart } from '@/components/shared/Whentochoosefrieght';

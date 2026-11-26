@@ -5,7 +5,6 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('secure-mail', '/secure-mail');
 
 export default async function SecureMailPage() {
-  // Switched off in the CMS: "page not found".
   await notFoundIfHidden('secure-mail');
   return (
     <CmsScope page="secure-mail">

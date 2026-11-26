@@ -1,6 +1,3 @@
-// Built-in content for these sections. The CMS (/admin) edits it; anything not edited
-// there shows exactly as written here.
-
 import { Box, Package, Truck, Layers, Flame, Wind, PackageOpen, Snowflake, Droplet, Warehouse, CheckCircle2, Clock, Repeat, type LucideIcon } from 'lucide-react';
 
 import { EYEBROW, HEADING, SUBHEADING, SEA_FREIGHT_CARDS } from './sea-freight-solutions/data';

@@ -1,6 +1,3 @@
-// Built-in content for these sections. The CMS (/admin) edits it; anything not edited
-// there shows exactly as written here.
-
 import { INDUSTRIES, INDUSTRY_EXPERTISE_EYEBROW } from '@/data/industry-expertise';
 import { Industry_Faqs } from '@/data/industry-faqs';
 import type { ContactBandProps } from '@/components/dynamic-contact';

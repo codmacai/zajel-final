@@ -1,11 +1,3 @@
-// Admin sign-in, with Supabase Auth (email and password).
-//
-// Who can sign in: any user created in Supabase → Authentication → Users. To limit the admin
-// to named people, set CMS_ADMIN_EMAILS (comma separated); then only those emails get in,
-// even if someone else manages to create an account.
-//
-// The session lives in two httpOnly cookies: a short-lived access token and a refresh token.
-
 import { cache } from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -13,7 +5,7 @@ import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL, cmsConfigured } from './config'
 
 export const ACCESS_COOKIE = 'zajel_cms_at';
 export const REFRESH_COOKIE = 'zajel_cms_rt';
-const REFRESH_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
+const REFRESH_MAX_AGE = 60 * 60 * 24 * 30;
 
 export interface Admin {
   id: string;
@@ -35,7 +27,6 @@ function allowed(email: string): boolean {
   return list.length === 0 || list.includes(email.toLowerCase());
 }
 
-/** Calls Supabase Auth. A network failure comes back as a 503 response instead of throwing. */
 async function authRequest(path: string, init: RequestInit & { token?: string } = {}): Promise<Response> {
   const { token, headers, ...rest } = init;
   return fetch(`${SUPABASE_URL}/auth/v1/${path}`, {
@@ -50,7 +41,6 @@ async function authRequest(path: string, init: RequestInit & { token?: string } 
   }).catch(() => new Response(null, { status: 503 }));
 }
 
-/** Cookie settings shared by every write. */
 export function cookieOptions(maxAge: number) {
   return { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'lax' as const, path: '/', maxAge };
 }
@@ -69,7 +59,6 @@ export async function clearSession() {
   jar.delete(REFRESH_COOKIE);
 }
 
-/** Signs in with email and password. Returns an error message for the form, or null. */
 export async function signIn(email: string, password: string): Promise<string | null> {
   if (!cmsConfigured) return 'Sign-in is not available right now. Please try again later.';
   if (!allowed(email)) return 'This email is not allowed to use the CMS. Ask an admin to add it.';
@@ -87,7 +76,6 @@ export async function signIn(email: string, password: string): Promise<string | 
   return null;
 }
 
-/** Swaps the refresh token for a new session. Only callable where cookies can be written. */
 export async function refreshSession(): Promise<boolean> {
   const jar = await cookies();
   const refresh = jar.get(REFRESH_COOKIE)?.value;
@@ -103,12 +91,9 @@ export async function refreshSession(): Promise<boolean> {
   return true;
 }
 
-// Sessions checked in the last minute, so moving around the admin doesn't wait for Supabase
-// on every click. Signing out deletes the cookies, so it still takes effect at once.
 const recentlyChecked = new Map<string, { admin: Admin; until: number }>();
 const TRUST_MS = 60_000;
 
-/** The signed-in admin, or null. Checked with Supabase at most once a minute per session. */
 export const getAdmin = cache(async (): Promise<Admin | null> => {
   if (!cmsConfigured) return null;
   const token = (await cookies()).get(ACCESS_COOKIE)?.value;
@@ -128,7 +113,6 @@ export const getAdmin = cache(async (): Promise<Admin | null> => {
   return admin;
 });
 
-/** For admin pages: the admin, or a redirect to sign in (renewing an expired session first). */
 export async function requireAdmin(returnTo = '/admin'): Promise<Admin> {
   const admin = await getAdmin();
   if (admin) return admin;
@@ -137,6 +121,5 @@ export async function requireAdmin(returnTo = '/admin'): Promise<Admin> {
   redirect(hasRefresh ? `/admin/session?next=${next}` : `/admin/login?next=${next}`);
 }
 
-/** Only allows returning to admin pages after sign-in. */
 export const safeNext = (next: string | null | undefined) =>
   next && /^\/admin(\/[\w\-./]*)?$/.test(next) && !next.startsWith('/admin/login') ? next : '/admin';

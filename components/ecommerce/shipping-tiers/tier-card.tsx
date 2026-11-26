@@ -8,7 +8,6 @@ import type { ShippingTier } from './types';
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 interface TierCardProps extends ShippingTier {
-  /** Label on the highlighted plan. */
   recommendedLabel?: string;
   /** Position in the grid, used only to stagger the entrance animation. */
   position: number;

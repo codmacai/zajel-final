@@ -1,4 +1,3 @@
-// Field hints for the section designs that many pages share.
 import type { Hints } from '../fields';
 
 export const HERO_HINTS: Hints = {

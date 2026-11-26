@@ -43,7 +43,6 @@ interface MarqueeSectionProps {
   items: readonly IndustryItem[];
   ctaLabel?: string;
   ctaDescription?: string;
-  /** Small label in the corner of the last card. */
   ctaTag?: string;
   ctaHref?: string;
   onCtaClick?: () => void;

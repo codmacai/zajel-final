@@ -3,7 +3,7 @@
 import type { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 
-// Pages that render standalone, without the site navbar/footer — the CMS admin, and the printable shipment
+// Pages that render standalone, without the site navbar/footer — e.g. the printable shipment
 // receipt, so "Print / Save as PDF" produces a clean document (Zajel-2 rendered that route
 // outside its PublicLayout for the same reason).
 const STANDALONE_PATHS = [/^\/admin(\/|$)/, /^\/account\/shipments\/[^/]+\/receipt\/?$/];

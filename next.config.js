@@ -73,12 +73,10 @@ const nextConfig = {
 
   allowedDevOrigins: ['172.20.10.3:3000', '172.20.10.3'],
 
-  // Images uploaded in the CMS are served from Supabase Storage.
   images: {
     remotePatterns: SUPABASE_MEDIA ? [new URL(`${SUPABASE_MEDIA}/**`)] : [],
   },
 
-  // The CMS admin can't be shown inside another site (clickjacking), isn't cached and isn't indexed.
   async headers() {
     return [
       {

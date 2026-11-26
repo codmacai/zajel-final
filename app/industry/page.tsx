@@ -9,7 +9,6 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('industry', '/industry');
 
 export default async function IndustryPage() {
-  // Switched off in the CMS: "page not found".
   await notFoundIfHidden('industry');
   const contact = await getSection("industry.contact", INDUSTRY_CONTACT);
   return (

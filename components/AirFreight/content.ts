@@ -1,6 +1,3 @@
-// Built-in content for these sections. The CMS (/admin) edits it; anything not edited
-// there shows exactly as written here.
-
 import type { AirFreightHeroContent } from './hero';
 import { FREIGHT_CARDS } from '@/data/air-freight/solutions';
 import { CROSS_SELL_ROUTES, TRANSIT_GUIDE_BODY, TRANSIT_GUIDE_IMAGE_SRC } from '@/data/air-freight/choose';

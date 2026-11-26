@@ -308,7 +308,6 @@ export interface NavItem {
     },
   ];
 
-/** The whole menu as one CMS section (Site-wide → Navigation menu). Icons stay as designed. */
 export const NAVIGATION = {
   labels: {
     home: "Home",

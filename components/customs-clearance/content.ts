@@ -1,6 +1,3 @@
-// Built-in content for these sections. The CMS (/admin) edits it; anything not edited
-// there shows exactly as written here.
-
 import { CUSTOMS_CLEARANCE_CARDS, CUSTOMS_CLEARANCE_HEADING, CUSTOMS_CLEARANCE_INTRO } from '@/data/customs-clearance';
 import { FREE_ZONE_NOTE, LOCATION_COVERAGE_HEADING, LOCATION_COVERAGE_INTRO, LOCATION_GROUPS } from '@/data/customs-location-coverage';
 import { DOC_COMPLIANCE_COLUMNS, DOC_COMPLIANCE_HEADING, DOC_COMPLIANCE_INTRO } from '@/data/customs-documentation-compliance';

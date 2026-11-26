@@ -5,7 +5,6 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('secure-id', '/secure-id');
 
 export default async function SecureIdPage() {
-  // Switched off in the CMS: "page not found".
   await notFoundIfHidden('secure-id');
   return (
     <CmsScope page="secure-id">

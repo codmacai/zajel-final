@@ -5,7 +5,6 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('projects', '/projects');
 
 export default async function ProjectLogisticsPage() {
-  // Switched off in the CMS: "page not found".
   await notFoundIfHidden('projects');
   return (
     <CmsScope page="projects">

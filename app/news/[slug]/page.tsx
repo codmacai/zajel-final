@@ -6,7 +6,6 @@ import { findArticle, getArticles, getNewsPage } from '@/components/news/cms';
 
 const absolute = (src: string) => (/^https?:/.test(src) ? src : `${SITE.url}${src}`);
 
-// Every article page is built ahead of time; articles added later in the CMS are built on first visit.
 export async function generateStaticParams() {
   return (await getArticles()).map(({ slug }) => ({ slug }));
 }
@@ -15,7 +14,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const article = await findArticle((await params).slug);
   if (!article) return {};
   const meta = pageMetadata({ title: article.title, description: article.excerpt, path: `/news/${article.slug}` });
-  // Link previews (WhatsApp, LinkedIn, X) show the article's own cover photo.
   const image = { url: absolute(article.image), alt: article.imageAlt };
   return {
     ...meta,
@@ -30,7 +28,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const article = articles.find((a) => a.slug === slug);
   if (!article) notFound();
 
-  // Article structured data (lets Google show the date and image in results)
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',

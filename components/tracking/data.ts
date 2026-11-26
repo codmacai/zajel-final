@@ -77,8 +77,6 @@ export function detectTrackType(value: string): TrackTabId {
 }
 
 /** /trackresults?q=...&type=awb|mobile — the query lives in the URL so results can be shared. */
-/** Arabic (٠-٩) and Persian (۰-۹) digits as 0-9, so numbers copied from the Arabic site or typed
- *  on an Arabic keyboard still track. */
 export const toLatinDigits = (s: string) => s.replace(/[٠-٩۰-۹]/g, (d) => String((d.charCodeAt(0) & 0xf) % 10));
 
 export function trackResultsHref(value: string, type?: TrackTabId): string {

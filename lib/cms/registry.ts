@@ -1,7 +1,3 @@
-// Every page and section the CMS can edit, in the order they appear on the site.
-// To make a new section editable: give its component built-in content (see components/home/
-// content.ts for examples), connect it with cmsSection()/getSection(), and list it here.
-
 import type { Hints } from './fields';
 import { PAGE_SEO, type PageSeoContent } from './seo';
 import { GLOBAL } from './pages/global';
@@ -27,19 +23,16 @@ import { NEWS } from './pages/news';
 export type PageGroup = 'Site-wide' | 'Main' | 'Solutions' | 'Services' | 'Secure' | 'Company' | 'Help';
 
 export interface SectionDef {
-  /** Unique within the page; the CMS key is `${page}.${id}`. */
   id: string;
   label: string;
   defaults: unknown;
   hints?: Hints;
-  /** Shown under the section name in the admin, e.g. what it is or where it appears. */
   note?: string;
 }
 
 export interface PageDef {
   id: string;
   label: string;
-  /** Address on the site, or null for site-wide content. */
   path: string | null;
   group: PageGroup;
   sections: SectionDef[];

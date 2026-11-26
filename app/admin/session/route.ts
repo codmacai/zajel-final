@@ -1,5 +1,3 @@
-// Renews an expired admin session from the refresh cookie, then returns to the page.
-
 import { NextResponse, type NextRequest } from 'next/server';
 import { clearSession, refreshSession, safeNext } from '@/lib/cms/auth';
 

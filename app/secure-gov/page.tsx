@@ -5,7 +5,6 @@ import CmsScope from '@/components/cms/CmsScope';
 export const generateMetadata = cmsMetadata('secure-gov', '/secure-gov');
 
 export default async function GovernmentPage() {
-  // Switched off in the CMS: "page not found".
   await notFoundIfHidden('secure-gov');
   return (
     <CmsScope page="secure-gov">

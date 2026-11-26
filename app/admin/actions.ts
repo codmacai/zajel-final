@@ -41,13 +41,11 @@ async function guard(): Promise<{ email: string } | { error: string }> {
   return admin;
 }
 
-/** Refreshes every page that shows CMS content. */
 function publish() {
   updateTag(CMS_TAG);
   revalidatePath('/', 'layout');
 }
 
-/** Keeps only Arabic for real text fields of the saved content. */
 function cleanArabic(content: Plain, input: unknown, hints = {}): ArabicMap {
   const out: ArabicMap = {};
   if (!input || typeof input !== 'object') return out;
@@ -72,7 +70,6 @@ export async function saveSectionAction(input: {
 
   const original = toPlain(found.section.defaults) ?? {};
   const en = sanitize(original, input.en) ?? original;
-  // The same checks the editor shows as you type, so nothing that breaks the site is saved.
   const problems = validateContent(en, original, found.section.hints);
   if (problems.length) {
     const n = problems.length;
@@ -88,7 +85,6 @@ export async function saveSectionAction(input: {
   }
 }
 
-/** Shows or hides a section on the site, keeping its content as it is. */
 export async function setSectionEnabledAction(key: string, enabled: boolean): Promise<ActionResult> {
   const who = await guard();
   if ('error' in who) return { ok: false, error: who.error };
@@ -123,7 +119,6 @@ const IMAGE_TYPES: Record<string, string> = {
   'image/gif': 'gif',
 };
 
-/** An address the browser can upload one image to, and where it will be shown from. */
 export async function prepareUploadAction(
   key: string,
   fileName: string,
@@ -146,7 +141,6 @@ export async function prepareUploadAction(
   }
 }
 
-/** Shows or hides a whole page on the website. A hidden page answers "page not found". */
 export async function setPageEnabledAction(pageId: string, enabled: boolean): Promise<ActionResult> {
   const who = await guard();
   if ('error' in who) return { ok: false, error: who.error };

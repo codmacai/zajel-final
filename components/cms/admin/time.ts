@@ -1,4 +1,3 @@
-/** "5 minutes ago", "Yesterday", "3 Nov" — in Dubai time. */
 export function timeAgo(iso: string | null | undefined): string {
   if (!iso) return 'never';
   const then = new Date(iso);

@@ -1,35 +1,20 @@
-/**
- * News articles: the newest three show on the home page (Latest news), and each article has
- * its own page at /news/<slug>. Edited in the CMS under News.
- *
- * DEMO CONTENT — replace with real articles (and photos) in the CMS before going live.
- */
-
-/** One part of an article. Every block has every field; only the ones for its type are used. */
 export interface NewsBlock {
   type: 'Paragraph' | 'Heading' | 'Quote' | 'Bullet list' | 'Image';
-  /** Paragraph, Heading and Quote. */
   text: string;
-  /** Bullet list. */
   items: string[];
-  /** Image: the photo, and its caption (also its description for screen readers). */
   image: string;
   caption: string;
 }
 
 export interface NewsArticle {
-  /** URL name: /news/<slug>. Lowercase words joined by dashes; must be unique. */
   slug: string;
   title: string;
   category: string;
-  /** ISO date, YYYY-MM-DD. The newest articles show first. */
   date: string;
   author: string;
-  /** One or two sentences: the home page card and the Google description. */
   excerpt: string;
   image: string;
   imageAlt: string;
-  /** Colour of the dot next to the category. */
   accent: string;
   body: NewsBlock[];
 }
@@ -125,11 +110,9 @@ const ARTICLES: NewsArticle[] = [
   },
 ];
 
-/** Every article as one CMS section (News → Articles). */
 export const NEWS_ARTICLES = { articles: ARTICLES };
 export type NewsArticlesContent = typeof NEWS_ARTICLES;
 
-/** The words on every article page (News → Article page text). */
 export const NEWS_PAGE = {
   homeLabel: 'Home',
   newsLabel: 'News',
