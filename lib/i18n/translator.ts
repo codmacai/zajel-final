@@ -87,8 +87,8 @@ function doAttrs(el: Element) {
     if (!v) continue;
     const seen = attrs.get(el)?.get(a);
     if (seen && v === seen.ar) continue;
-    const ar = lookup(v);
-    if (!ar) continue;
+    const ar = arabicDigits(lookup(v) ?? v, el);
+    if (ar === v) continue;
     if (!attrs.has(el)) attrs.set(el, new Map());
     attrs.get(el)!.set(a, { en: v, ar });
     el.setAttribute(a, ar);
